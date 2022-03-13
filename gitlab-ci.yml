@@ -1,0 +1,42 @@
+stages:
+  - build
+  - deploy_stage
+  - deploy_production
+
+build_app:
+  image: node:alpine
+  stage: build
+  only:
+    - main
+    - stage
+  script:
+    - export NODE_OPTIONS=--openssl-legacy-provider
+    - npm install
+    - npm run build
+  cache:
+    paths:
+      - node_modules/
+  artifacts:
+    paths:
+      - build/
+    expire_in: 1 hour
+
+stage:
+  image: python:alpine
+  stage: deploy_stage
+  only:
+    - stage
+  script:
+    - pip install awscli
+    - aws s3 sync ./build s3://marafeqreact  --region  eu-west-2
+  when: manual
+
+production:
+  image: python:alpine
+  stage: deploy_production
+  only:
+    - main
+  script:
+    - pip install awscli
+    - aws s3 sync ./build s3://marafeqreact  --region  eu-west-2
+  when: manual
