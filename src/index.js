@@ -3,9 +3,13 @@ import ReactDOM from "react-dom";
 
 import * as serviceWorker from "./serviceWorker";
 
+import "./i18n";
+
+import App from "./modules/App";
+
 ReactDOM.render(
   <React.StrictMode>
-    <h1 style={{ textAlign: "center" }}>Marafiq says: Hello World!</h1>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
