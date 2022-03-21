@@ -1,7 +1,7 @@
 stages:
   - build
   - deploy_stage
-  - deploy_production
+  - deploy_prod
 
 build_app:
   image: node:alpine
@@ -28,15 +28,15 @@ stage:
     - stage
   script:
     - pip install awscli
-    - aws s3 sync ./build s3://marafeqreact  --region  eu-west-2
+    - aws s3 sync ./build s3://marafeqreact --region me-south-1
   when: manual
 
 production:
   image: python:alpine
-  stage: deploy_production
+  stage: deploy_prod
   only:
     - main
   script:
     - pip install awscli
-    - aws s3 sync ./build s3://marafeqreact  --region  eu-west-2
+    - aws s3 sync ./build s3://marafeqreact --region me-south-1
   when: manual
