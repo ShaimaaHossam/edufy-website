@@ -1,7 +1,7 @@
 stages:
   - build
   - deploy_stage
-  - deploy_production
+  - deploy_prod
 
 build_app:
   image: node:alpine
@@ -33,7 +33,7 @@ stage:
 
 production:
   image: python:alpine
-  stage: deploy_production
+  stage: deploy_prod
   only:
     - main
   script:
