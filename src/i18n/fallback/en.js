@@ -1,5 +1,5 @@
 const en = {
-  greeting: "Marafiq says: Hello world!",
+  greeting: "Marafiq says: Hello world!!",
 };
 
 export default en;
