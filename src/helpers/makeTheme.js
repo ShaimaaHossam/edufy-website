@@ -45,6 +45,7 @@ function makeTheme({ lang }) {
 
         action: {
           disabled: "#D5D9E5",
+          disabledBackground: "none",
         },
 
         greyScale: {
@@ -63,6 +64,41 @@ function makeTheme({ lang }) {
         },
       },
       shadows: ["none", "0px 2px 8px #ADB5D12B"],
+
+      // MUI components overrides
+      components: {
+        MuiButton: {
+          defaultProps: {
+            size: "large",
+            color: "primary",
+            variant: "contained",
+            disableElevation: true,
+          },
+          styleOverrides: {
+            root: {
+              textTransform: "none",
+            },
+            sizeLarge: {
+              height: 40,
+            },
+            outlined: {
+              "&:active": {
+                borderColor: "transparent",
+              },
+              "&:disabled": {
+                borderColor: "transparent",
+                backgroundColor: "#FCFCFC",
+              },
+            },
+            contained: {
+              "&:disabled": {
+                color: "#FFF",
+                opacity: 0.3,
+              },
+            },
+          },
+        },
+      },
     },
     localesMap[lang]
   );
