@@ -16,22 +16,53 @@ function makeTheme({ lang }) {
         fontFamily: `${LANGS_FONTS[lang]}, Helvetica, Arial, sans-serif`,
       },
       palette: {
-        primary: { main: "#1E7AF0" },
-        secondary: { main: "#FFA303" },
+        primary: {
+          main: "#1E7AF0",
+        },
+        secondary: {
+          main: "#FFA303",
+        },
 
-        success: { main: "#29BF56" },
-        warning: { main: "#FFA303" },
-        error: { main: "#FC2424" },
+        text: {
+          primary: "#20304F",
+          secondary: "#607180",
+        },
 
-        text: { primary: "#0F0F0F", secondary: "#607180" },
+        success: {
+          main: "#29BF56",
+        },
+        successBg: "#F0FBF3",
+
+        warning: {
+          main: "#FFA303",
+        },
+        warningBg: "#FFF7D4",
+
+        error: {
+          main: "#FC2424",
+        },
+        errorBg: "#FFEFEF",
+
+        action: {
+          disabled: "#D5D9E5",
+        },
+
+        greyScale: {
+          100: "#FDFDFD",
+          200: "#FBFBFB",
+          300: "#F7F8FB",
+        },
 
         divider: "#DBEAFD",
-        background: {
-          default: "#FAFBFF",
-          backgroundPrimary: "#F7F9FD",
-          backgroundSecondary: "#FCFCFC",
+
+        gradients: {
+          primary: "linear-gradient(90deg, #3EE3EF 0%, #1E7AF0 100%)",
+          primaryRadial: "linear-gradient(45deg, #3EE3EF 0%, #1E7AF0 100%)",
+          secondary: "linear-gradient(90deg, #D9FAFC 0%, #D2E5FC 100%)",
+          secondaryRadial: "linear-gradient(45deg, #D9FAFC 0%, #D2E5FC 100%)",
         },
       },
+      shadows: ["none", "0px 2px 8px #ADB5D12B"],
     },
     localesMap[lang]
   );
