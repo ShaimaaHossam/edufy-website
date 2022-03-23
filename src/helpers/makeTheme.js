@@ -49,9 +49,10 @@ function makeTheme({ lang }) {
         },
 
         greyScale: {
-          100: "#FDFDFD",
-          200: "#FBFBFB",
-          300: "#F7F8FB",
+          100: "#FCFCFC",
+          200: "#FDFDFD",
+          300: "#FBFBFB",
+          400: "#F7F8FB",
         },
 
         divider: "#DBEAFD",
@@ -137,6 +138,15 @@ function makeTheme({ lang }) {
               },
             },
           ],
+        },
+        MuiOutlinedInput: {
+          styleOverrides: {
+            input: {
+              "&.Mui-disabled": {
+                WebkitTextFillColor: "inherit",
+              },
+            },
+          },
         },
       },
     },
