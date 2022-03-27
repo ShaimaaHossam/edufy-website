@@ -56,6 +56,7 @@ function makeTheme({ lang }) {
         },
 
         divider: "#DBEAFD",
+        border: "#D5D9E5",
 
         gradients: {
           primary: "linear-gradient(90deg, #3EE3EF 0%, #1E7AF0 100%)",
