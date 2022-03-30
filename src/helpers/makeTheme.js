@@ -28,15 +28,20 @@ function makeTheme({ lang }) {
           secondary: "#607180",
         },
 
-        success: {
-          main: "#29BF56",
+        info: {
+          main: "#03A9F4",
         },
-        successBg: "#F0FBF3",
+        infoBg: "#DAEAFD",
 
         warning: {
           main: "#FFA303",
         },
         warningBg: "#FFF7D4",
+
+        success: {
+          main: "#29BF56",
+        },
+        successBg: "#F0FBF3",
 
         error: {
           main: "#FC2424",
