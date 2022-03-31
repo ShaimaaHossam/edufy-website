@@ -58,6 +58,7 @@ function makeTheme({ lang }) {
           200: "#FDFDFD",
           300: "#FBFBFB",
           400: "#F7F8FB",
+          500: "#F7F9FD",
         },
 
         divider: "#DBEAFD",
