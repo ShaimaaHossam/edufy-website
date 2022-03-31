@@ -32,7 +32,7 @@ function SearchInput({
     validateOnBlur: false,
     initialValues: { keyword: "" },
     validationSchema: Yup.object().shape({
-      keyword: Yup.string().trim().max(25, t("too long keyword")),
+      keyword: Yup.string().trim().max(25, t("long_keyword")),
     }),
   });
 

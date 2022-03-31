@@ -89,7 +89,7 @@ function SearchInput({ onPositionChange }) {
           {...params}
           variant="outlined"
           label={t("location")}
-          placeholder={t("type keywords to search")}
+          placeholder={t("search_locations")}
           InputProps={{
             ...params.InputProps,
             startAdornment: (isFocused || !!keyword) && (
