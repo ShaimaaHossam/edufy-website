@@ -105,46 +105,6 @@ function makeTheme({ lang }) {
             },
           },
         },
-        MuiIconButton: {
-          variants: [
-            {
-              props: { variant: "outlined" },
-              style: {
-                position: "relative",
-                outline: "1px solid",
-                outlineOffset: -1,
-                "&::before": {
-                  content: "''",
-                  position: "absolute",
-                  top: 0,
-                  right: 0,
-                  bottom: 0,
-                  left: 0,
-                  opacity: 0.1,
-                  borderRadius: "50%",
-                  backgroundColor: "currentColor",
-                },
-              },
-            },
-            {
-              props: { variant: "contained" },
-              style: {
-                position: "relative",
-                "&::before": {
-                  content: "''",
-                  position: "absolute",
-                  top: 0,
-                  right: 0,
-                  bottom: 0,
-                  left: 0,
-                  opacity: 0.1,
-                  borderRadius: "50%",
-                  backgroundColor: "currentColor",
-                },
-              },
-            },
-          ],
-        },
         MuiOutlinedInput: {
           styleOverrides: {
             input: {
