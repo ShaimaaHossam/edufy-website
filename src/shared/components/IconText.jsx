@@ -42,7 +42,15 @@ IconText.propTypes = {
   // icon props
   icon: PropTypes.string.isRequired,
   iconSize: PropTypes.string,
-  iconColor: PropTypes.string,
+  iconColor: PropTypes.oneOf([
+    "info",
+    "error",
+    "warning",
+    "success",
+    "action",
+    "primary",
+    "secondary",
+  ]),
 };
 
 export default IconText;
