@@ -71,7 +71,17 @@ function makeTheme({ lang }) {
           secondaryRadial: "linear-gradient(45deg, #D9FAFC 0%, #D2E5FC 100%)",
         },
       },
-      shadows: ["none", "0px 2px 8px #ADB5D12B"],
+      shadows: [
+        "none",
+        "0px 2px 8px #ADB5D12B",
+        "0px 2px 8px #ADB5D12B",
+        "0px 2px 8px #ADB5D12B",
+        "0px 2px 8px #ADB5D12B",
+        "0px 2px 8px #ADB5D12B",
+        "0px 2px 8px #ADB5D12B",
+        "0px 2px 8px #ADB5D12B",
+        "0px 2px 8px #ADB5D12B",
+      ],
 
       // MUI components overrides
       components: {
