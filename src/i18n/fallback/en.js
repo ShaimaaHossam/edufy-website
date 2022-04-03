@@ -1,5 +1,9 @@
 const en = {
-  greeting: "Marafiq says: Hello world!!",
+  location: "Location",
+
+  search_locations: "Search Locations",
+
+  confirm: "Confirm",
 };
 
 export default en;

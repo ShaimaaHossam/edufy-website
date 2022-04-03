@@ -1,5 +1,9 @@
 const ar = {
-  greeting: "مرافِق يقول: مرحبًا بالعالم!",
+  location: "الموقع",
+
+  search_locations: "ابحث عن الموقع",
+
+  confirm: "تأكيد",
 };
 
 export default ar;

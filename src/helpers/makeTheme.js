@@ -28,15 +28,20 @@ function makeTheme({ lang }) {
           secondary: "#607180",
         },
 
-        success: {
-          main: "#29BF56",
+        info: {
+          main: "#03A9F4",
         },
-        successBg: "#F0FBF3",
+        infoBg: "#DAEAFD",
 
         warning: {
           main: "#FFA303",
         },
         warningBg: "#FFF7D4",
+
+        success: {
+          main: "#29BF56",
+        },
+        successBg: "#F0FBF3",
 
         error: {
           main: "#FC2424",
@@ -53,6 +58,7 @@ function makeTheme({ lang }) {
           200: "#FDFDFD",
           300: "#FBFBFB",
           400: "#F7F8FB",
+          500: "#F7F9FD",
         },
 
         divider: "#DBEAFD",
@@ -99,46 +105,6 @@ function makeTheme({ lang }) {
               },
             },
           },
-        },
-        MuiIconButton: {
-          variants: [
-            {
-              props: { variant: "outlined" },
-              style: {
-                position: "relative",
-                outline: "1px solid",
-                outlineOffset: -1,
-                "&::before": {
-                  content: "''",
-                  position: "absolute",
-                  top: 0,
-                  right: 0,
-                  bottom: 0,
-                  left: 0,
-                  opacity: 0.1,
-                  borderRadius: "50%",
-                  backgroundColor: "currentColor",
-                },
-              },
-            },
-            {
-              props: { variant: "contained" },
-              style: {
-                position: "relative",
-                "&::before": {
-                  content: "''",
-                  position: "absolute",
-                  top: 0,
-                  right: 0,
-                  bottom: 0,
-                  left: 0,
-                  opacity: 0.1,
-                  borderRadius: "50%",
-                  backgroundColor: "currentColor",
-                },
-              },
-            },
-          ],
         },
         MuiOutlinedInput: {
           styleOverrides: {
