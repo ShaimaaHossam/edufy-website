@@ -17,7 +17,15 @@ function Icon({ icon, size, color, ...restProps }) {
 Icon.propTypes = {
   icon: PropTypes.string.isRequired,
   size: PropTypes.string,
-  color: PropTypes.string,
+  color: PropTypes.oneOf([
+    "info",
+    "error",
+    "warning",
+    "success",
+    "action",
+    "primary",
+    "secondary",
+  ]),
 };
 
 export default Icon;
