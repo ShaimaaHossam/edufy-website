@@ -6,6 +6,9 @@ const en = {
   access_denied_message: "You don't have permissions to view this page.",
   not_found: "Not Found",
   not_found_message: "The page you requested is not found now.",
+  server_error: "Server Error",
+  server_error_message:
+    "An error occurred on server! We are working on it now.",
 
   confirm: "Confirm",
   go_back: "Go Back",
