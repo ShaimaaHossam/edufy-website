@@ -14,7 +14,7 @@ function NoContent() {
       direction="column"
       alignItems="center"
       justifyContent="center"
-      sx={{ position: "absolute", top: 0, bottom: 0 }}
+      sx={{ height: "100%" }}
     >
       <Grid item>
         <Box component="img" alt="no content" src={emptySvg} width={200} />

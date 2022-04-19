@@ -18,7 +18,7 @@ function AccessDenied() {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      sx={{ position: "absolute", top: 0, bottom: 0 }}
+      sx={{ height: "100%" }}
     >
       <Grid item>
         <Box

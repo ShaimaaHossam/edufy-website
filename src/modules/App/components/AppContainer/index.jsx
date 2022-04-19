@@ -77,7 +77,6 @@ const Main = styled("main", {
       duration: theme.transitions.duration.leavingScreen,
     }),
   }),
-  backgroundColor: "ThreeDShadow",
 }));
 
 function AppContainer({ children }) {
@@ -105,7 +104,11 @@ function AppContainer({ children }) {
         />
       </Drawer>
 
-      <Main open={isDrawerOpen}>{children}</Main>
+      <Main open={isDrawerOpen}>
+        <Box sx={{ position: "absolute", width: "100%", top: 0, bottom: 0 }}>
+          {children}
+        </Box>
+      </Main>
     </Box>
   );
 }
