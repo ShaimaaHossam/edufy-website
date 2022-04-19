@@ -11,13 +11,7 @@ const Greeting = ({ text }) => {
   const { t } = useTranslation();
 
   return (
-    <Typography
-      component="h1"
-      variant="h3"
-      align="center"
-      color="primary"
-      sx={{ mt: 4 }}
-    >
+    <Typography component="h1" variant="h3" align="center" color="primary">
       {t(text)}
     </Typography>
   );
