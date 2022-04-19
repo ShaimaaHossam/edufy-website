@@ -9,6 +9,8 @@ const en = {
   server_error: "Server Error",
   server_error_message:
     "An error occurred on server! We are working on it now.",
+  no_content: "No Content",
+  no_content_message: "There's no content to show right now.",
 
   confirm: "Confirm",
   go_back: "Go Back",
