@@ -13,6 +13,11 @@ const en = {
 
   my_profile: "My Profile",
   logout: "Logout",
+
+  add: "Add",
+  add_user: "Add User",
+  add_order: "Add Order",
+  add_property: "Add Property",
 };
 
 export default en;

@@ -2,13 +2,14 @@ import { Box, Grid } from "@mui/material";
 
 import Link from "../../../../shared/components/Link";
 
+import ActionsMenu from "../ActionsMenu";
 import UserMenu from "../UserMenu";
 
 import brandLogoEn from "../../../../assets/logos/brand_logo_en.svg";
 
 function Header() {
   return (
-    <Grid container spacing={2} alignItems="center">
+    <Grid container spacing={1.5} alignItems="center">
       <Grid item sx={{ mr: "auto" }}>
         <Link to="/">
           <Box
@@ -19,6 +20,10 @@ function Header() {
             height={34}
           />
         </Link>
+      </Grid>
+
+      <Grid item>
+        <ActionsMenu />
       </Grid>
 
       <Grid item>

@@ -13,6 +13,11 @@ const ar = {
 
   my_profile: "حسابي",
   logout: "تسجيل خروج",
+
+  add: "إضافة",
+  add_user: "إضافة مستخدم",
+  add_order: "إضافة طلب",
+  add_property: "إضافة عقار",
 };
 
 export default ar;
