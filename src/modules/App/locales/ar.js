@@ -10,6 +10,9 @@ const ar = {
   services: "الخدمات",
   settings: "الإعدادات",
   help: "المساعدة والدعم",
+
+  my_profile: "حسابي",
+  logout: "تسجيل خروج",
 };
 
 export default ar;

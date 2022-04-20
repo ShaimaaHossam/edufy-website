@@ -2,6 +2,8 @@ import { Box, Grid } from "@mui/material";
 
 import Link from "../../../../shared/components/Link";
 
+import UserMenu from "../UserMenu";
+
 import brandLogoEn from "../../../../assets/logos/brand_logo_en.svg";
 
 function Header() {
@@ -17,6 +19,10 @@ function Header() {
             height={34}
           />
         </Link>
+      </Grid>
+
+      <Grid item>
+        <UserMenu />
       </Grid>
     </Grid>
   );

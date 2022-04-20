@@ -29,7 +29,7 @@ function Menu({
         hideBadgeOnOpen && !isMenuOpened && setIsMenuOpened(true);
       }}
       aria-label={`open ${label} menu`}
-      aria-controls="menu"
+      aria-controls={`${label}-menu`}
       aria-haspopup="true"
     />
   );
@@ -52,7 +52,7 @@ function Menu({
       )}
 
       <MuiMenu
-        id="menu"
+        id={`${label}-menu`}
         aria-label={`${label} menu`}
         anchorEl={anchorEl}
         anchorOrigin={{
@@ -65,13 +65,12 @@ function Menu({
           vertical: "top",
           horizontal: direction === "ltr" ? "right" : "left",
         }}
-        elevation={1}
         open={!!anchorEl}
         onClose={(e) => {
           e.stopPropagation();
           setAnchorEl(null);
         }}
-        MenuListProps={{ dense: true, sx: { minWidth: 240 } }}
+        MenuListProps={{ dense: true, sx: { minWidth: 200 } }}
       >
         {children}
       </MuiMenu>
