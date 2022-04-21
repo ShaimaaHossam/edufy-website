@@ -42,14 +42,7 @@ Link.propTypes = {
   ]).isRequired,
   replace: PropTypes.bool,
 
-  color: PropTypes.oneOf([
-    "info",
-    "error",
-    "warning",
-    "success",
-    "primary",
-    "secondary",
-  ]),
+  color: PropTypes.string,
   display: PropTypes.oneOf(["inline", "block"]),
   underline: PropTypes.oneOf(["always", "hover", "none"]),
 };

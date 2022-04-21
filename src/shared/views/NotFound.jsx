@@ -1,0 +1,52 @@
+import { useNavigate } from "react-router-dom";
+
+import { useTranslation } from "react-i18next";
+
+import { Box, Grid, Typography, Button } from "@mui/material";
+
+import notFoundSvg from "../../assets/errors/404.svg";
+
+function NotFound() {
+  const { t } = useTranslation();
+
+  const navigate = useNavigate();
+
+  return (
+    <Grid
+      container
+      spacing={2}
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      sx={{ height: "100%" }}
+    >
+      <Grid item>
+        <Box
+          component="img"
+          alt="not found"
+          src={notFoundSvg}
+          width={560}
+          height={400}
+        />
+      </Grid>
+
+      <Grid item>
+        <Typography component="h1" variant="h5" color="primary" align="center">
+          {t("not_found")}
+        </Typography>
+
+        <Typography color="textSecondary" align="center">
+          {t("not_found_message")}
+        </Typography>
+      </Grid>
+
+      <Grid item>
+        <Button size="medium" variant="outlined" onClick={() => navigate(-1)}>
+          {t("go_back")}
+        </Button>
+      </Grid>
+    </Grid>
+  );
+}
+
+export default NotFound;

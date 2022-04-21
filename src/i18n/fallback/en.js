@@ -1,9 +1,19 @@
 const en = {
   location: "Location",
-
   search_locations: "Search Locations",
 
+  access_denied: "Access Denied",
+  access_denied_message: "You don't have permissions to view this page.",
+  not_found: "Not Found",
+  not_found_message: "The page you requested is not found now.",
+  server_error: "Server Error",
+  server_error_message:
+    "An error occurred on server! We are working on it now.",
+  no_content: "No Content",
+  no_content_message: "There's no content to show right now.",
+
   confirm: "Confirm",
+  go_back: "Go Back",
 };
 
 export default en;
