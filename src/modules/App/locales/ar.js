@@ -1,0 +1,23 @@
+const ar = {
+  menu: "القائمة",
+
+  dashboard: "لوحة القيادة",
+  properties: "العقارات",
+  people: "الأشخاص",
+  orders: "الطلبات",
+  accounting: "الحسابات",
+  communication: "التواصل",
+  services: "الخدمات",
+  settings: "الإعدادات",
+  help: "المساعدة والدعم",
+
+  my_profile: "حسابي",
+  logout: "تسجيل خروج",
+
+  add: "إضافة",
+  add_user: "إضافة مستخدم",
+  add_order: "إضافة طلب",
+  add_property: "إضافة عقار",
+};
+
+export default ar;
