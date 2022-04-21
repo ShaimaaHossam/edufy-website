@@ -18,7 +18,7 @@ function Menu({
   const { direction } = useTheme();
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isMenuOpened, setIsMenuOpened] = useState(false);
+  const [isBadgeHidden, setIsBadgeHidden] = useState(false);
 
   const renderAnchorElement = () => (
     <AnchorComponent
@@ -26,7 +26,10 @@ function Menu({
       onClick={(e) => {
         e.stopPropagation();
         setAnchorEl(e.currentTarget);
-        hideBadgeOnOpen && !isMenuOpened && setIsMenuOpened(true);
+        !!badgeContent &&
+          hideBadgeOnOpen &&
+          !isBadgeHidden &&
+          setIsBadgeHidden(true);
       }}
       aria-label={`open ${label} menu`}
       aria-controls={`${label}-menu`}
@@ -36,10 +39,10 @@ function Menu({
 
   return (
     <>
-      {badgeContent && !isMenuOpened ? (
+      {!!badgeContent ? (
         <Badge
           color={badgeColor}
-          badgeContent={badgeContent}
+          badgeContent={!isBadgeHidden ? badgeContent : null}
           anchorOrigin={{
             vertical: "top",
             horizontal: direction === "ltr" ? "right" : "left",
@@ -70,7 +73,10 @@ function Menu({
           e.stopPropagation();
           setAnchorEl(null);
         }}
-        MenuListProps={{ dense: true, sx: { minWidth: 200 } }}
+        MenuListProps={{
+          dense: true,
+          sx: { minWidth: 180, maxWidth: 340, maxHeight: 300 },
+        }}
       >
         {children}
       </MuiMenu>

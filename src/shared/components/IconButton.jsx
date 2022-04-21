@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 
 import { styled } from "@mui/material/styles";
@@ -73,7 +72,7 @@ function IconButton({ icon, shape, variant, color, ...restProps }) {
       variant={variant}
       {...restProps}
     >
-      <Icon icon={icon} />
+      <Icon icon={icon} size="small" />
     </CustomIconButton>
   );
 }
