@@ -1,5 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import { Provider } from "react-redux";
+import { store } from "../../redux/store";
+
 import { useTranslation } from "react-i18next";
 
 import { Typography } from "@mui/material";
@@ -21,6 +24,7 @@ function App() {
   const isLoggedIn = false; // try to change this to false
 
   return (
+    <Provider store={store}>
     <Theme>
       <Router>
         {isLoggedIn ? (
@@ -38,6 +42,8 @@ function App() {
         )}
       </Router>
     </Theme>
+    </Provider>
+
   );
 }
 
