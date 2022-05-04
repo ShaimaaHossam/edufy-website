@@ -18,7 +18,7 @@ const Greeting = ({ text }) => {
 };
 
 function App() {
-  const isLoggedIn = true; // try to change this to false
+  const isLoggedIn = false; // try to change this to false
 
   return (
     <Theme>
