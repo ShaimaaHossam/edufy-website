@@ -18,6 +18,7 @@ import { Grid, Button, Typography, Paper } from "@mui/material";
 
 import FormContainer from "../components/FormContainer";
 import TextInput from "../../../shared/components/inputs/TextInput";
+import Link from "../../../shared/components/Link";
 
 function ForgotPassword() {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ function ForgotPassword() {
   }, [isError, isSuccess]);
   return (
     <FormContainer title="Forgot Password">
-      <Grid  spacing={3} padding={2} margin="auto">
+      <Grid spacing={3} padding={2} margin="auto">
         <Grid
           component="form"
           onSubmit={formik.handleSubmit}
@@ -88,15 +89,16 @@ function ForgotPassword() {
                 "&:hover": { backgroundColor: "primary.white" },
                 color: "primary.main",
               }}
-              onClick={() => {
-                navigate("/auth/login");
-              }}
+              component={Link}
+              to="login"
             >
               Back to login
             </Button>
           </Grid>
+        
         </Grid>
       </Grid>
+
     </FormContainer>
   );
 }

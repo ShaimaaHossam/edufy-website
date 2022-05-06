@@ -21,19 +21,16 @@ import {
   Grid,
   Button,
   Typography,
-  useTheme,
 } from "@mui/material";
 
 import TextInput from "../../../shared/components/inputs/TextInput";
 import PasswordInput from "../../../shared/components/inputs/PasswordInput";
+import Link from "../../../shared/components/Link";
 import FormContainer from "../components/FormContainer";
 
 function ResetPasword() {
-  const theme = useTheme();
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError, errorMessage } =
-    useSelector(userSelector);
-  let navigate = useNavigate();
+  const { isFetching, isSuccess, isError, errorMessage } = useSelector(userSelector);
 
   const { t } = useTranslation("Auth");
 
@@ -139,9 +136,8 @@ function ResetPasword() {
               "&:hover": { backgroundColor: "primary.white" },
               color: "primary.main",
             }}
-            onClick={() => {
-              navigate("/auth/login");
-            }}
+            component={Link}
+            to="login"
           >
             Back to login
           </Button>
