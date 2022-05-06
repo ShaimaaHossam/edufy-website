@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import Login from "./views/Login";
+import Login from "./views/Login/index";
 import ResetPassword from "./views/ResetPassword";
 import ForgotPassword from "./views/ForgotPassword";
 import AuthContainer from "./components/AuthContainer";
