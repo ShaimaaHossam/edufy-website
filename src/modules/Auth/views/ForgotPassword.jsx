@@ -43,12 +43,12 @@ function ForgotPassword() {
   }, [isError, isSuccess]);
   return (
     <FormContainer title="Forgot Password">
-      <Grid spacing={3} padding={2} margin="auto">
+      <Grid  padding={2} margin="auto">
         <Grid
           component="form"
           onSubmit={formik.handleSubmit}
           container
-          spacing={5}
+          spacing={3}
           margin="auto"
         >
           <Grid item container spacing={3}>
@@ -71,13 +71,13 @@ function ForgotPassword() {
             </Grid>
           </Grid>
 
-          <Grid item xs={11} paddingBottom={3}>
+          <Grid item xs={11} >
             <Button fullWidth type="submit">
               Reset password
             </Button>
           </Grid>
 
-          <Grid item xs={11} paddingBottom={3}>
+          <Grid item xs={11}>
             <Button
               fullWidth
               disableElevation={false}
