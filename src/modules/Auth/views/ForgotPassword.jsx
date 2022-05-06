@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 
-import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -22,9 +21,7 @@ import Link from "../../../shared/components/Link";
 
 function ForgotPassword() {
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError, errorMessage } =
-    useSelector(userSelector);
-  const navigate = useNavigate();
+  const { isFetching, isSuccess, isError, errorMessage } = useSelector(userSelector);
 
   const { t } = useTranslation("auth");
 

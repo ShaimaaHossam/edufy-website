@@ -7,7 +7,6 @@ import {
   clearState,
 } from "../../../redux/userSlice";
 
-import { useNavigate } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
@@ -32,7 +31,7 @@ function ResetPasword() {
   const dispatch = useDispatch();
   const { isFetching, isSuccess, isError, errorMessage } = useSelector(userSelector);
 
-  const { t } = useTranslation("Auth");
+  const { t } = useTranslation("auth");
 
   const formik = useFormik({
     initialValues: {

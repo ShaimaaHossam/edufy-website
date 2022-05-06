@@ -11,7 +11,7 @@ const ImageEdite = () => {
   return (
     <>
       <label
-        htmlFor="imageFile"
+        htmlFor={`${iamge}-image`}
         style={{
           borderWidth: 3,
           borderRadius: 4,
@@ -27,7 +27,7 @@ const ImageEdite = () => {
         }}
       >
         <input
-          id="imageFile"
+         id={`${iamge}-image`}
           type="file"
           style={{
             display: "none",
