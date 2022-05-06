@@ -21,7 +21,6 @@ import {
   Grid,
   Button,
   Typography,
-  Paper,
   useTheme,
 } from "@mui/material";
 
@@ -73,11 +72,11 @@ function ResetPasword() {
             <Grid item xs={11}>
               <SvgIcon
                 sx={{
-                  backgroundColor: theme.palette.success.main,
+                  backgroundColor: "success.main",
                   width: 129,
                   height: 129,
                   borderRadius: "100%",
-                  color: "#FFF",
+                  color: "primary.white",
                   padding: 3,
                 }}
                 fontSize="small"
@@ -127,7 +126,7 @@ function ResetPasword() {
 
             <Grid item xs={11}>
               <Button type="submit" fullWidth>
-                <Typography>Reset password</Typography>
+                Reset password
               </Button>
             </Grid>
           </Grid>
@@ -136,15 +135,15 @@ function ResetPasword() {
           <Button
             fullWidth
             sx={{
-              backgroundColor: "#FFF",
-              "&:hover": { backgroundColor: "#FFF" },
-              color: "#242E42",
+              backgroundColor: "primary.white",
+              "&:hover": { backgroundColor: "primary.white" },
+              color: "primary.main",
             }}
             onClick={() => {
               navigate("/auth/login");
             }}
           >
-            <Typography color="primary.main">Back to login</Typography>
+            Back to login
           </Button>
         </Grid>
       </Grid>
