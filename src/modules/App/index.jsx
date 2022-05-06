@@ -1,7 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-
-import { Provider } from "react-redux";
-import { store } from "../../redux/store";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
@@ -25,26 +27,24 @@ function App() {
   const isLoggedIn = false; // try to change this to false
 
   return (
-    <Provider store={store}>
-      <Theme>
-        <Router>
-          {isLoggedIn ? (
-            <AppContainer>
-              <Routes>
-                {/* LIST APP ROUTES HERE */}
-                <Route index element={<Greeting text="greeting" />} />
-              </Routes>
-            </AppContainer>
-          ) : (
+    <Theme>
+      <Router>
+        {isLoggedIn ? (
+          <AppContainer>
             <Routes>
-              {/* LIST PUBLIC ROUTES HERE */}
-              <Route index path="/auth/*" element={<Auth />} />
-              <Route path="*" element={<Navigate to="/auth" />} />
+              {/* LIST APP ROUTES HERE */}
+              <Route index element={<Greeting text="greeting" />} />
             </Routes>
-          )}
-        </Router>
-      </Theme>
-    </Provider>
+          </AppContainer>
+        ) : (
+          <Routes>
+            {/* LIST PUBLIC ROUTES HERE */}
+            <Route index path="/auth/*" element={<Auth />} />
+            <Route path="*" element={<Navigate to="/auth" />} />
+          </Routes>
+        )}
+      </Router>
+    </Theme>
   );
 }
 
