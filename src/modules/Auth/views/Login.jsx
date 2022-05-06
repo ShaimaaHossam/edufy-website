@@ -20,6 +20,7 @@ import {
   useTheme,
 } from "@mui/material";
 
+import FormContainer from "../components/FormContainer";
 import TextInput from "../../../shared/components/inputs/TextInput";
 import NumberInput from "../../../shared/components/inputs/NumberInput";
 import PasswordInput from "../../../shared/components/inputs/PasswordInput";
@@ -111,6 +112,7 @@ function Login() {
   }, [otp, otpRef, minutes, seconds]);
 
   return (
+   <FormContainer title="login"> 
     <Grid container spacing={5} margin="auto">
       {phoneLogin ? (
         <>
@@ -287,6 +289,7 @@ function Login() {
         </Paper>
       </Grid>
     </Grid>
+    </FormContainer>
   );
 }
 

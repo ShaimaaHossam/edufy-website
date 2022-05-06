@@ -13,6 +13,7 @@ import { useFormik } from "formik";
 
 import { Grid, Button, Typography, Paper } from "@mui/material";
 
+import FormContainer from "../components/FormContainer";
 import TextInput from "../../../shared/components/inputs/TextInput";
 
 function ForgotPassword() {
@@ -22,7 +23,7 @@ function ForgotPassword() {
   const navigate = useNavigate();
   
 
-  const { t } = useTranslation("Auth");
+  const { t } = useTranslation("auth");
 
   const formik = useFormik({
     initialValues: {
@@ -44,6 +45,7 @@ function ForgotPassword() {
 
   }, [isError, isSuccess]);
   return (
+   <FormContainer title="Forgot Password"> 
     <Grid container spacing={3} padding={2} margin="auto">
       <Grid
         component="form"
@@ -97,6 +99,7 @@ function ForgotPassword() {
         </Grid>
       </Grid>
     </Grid>
+    </FormContainer>
   );
 }
 
