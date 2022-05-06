@@ -5,7 +5,7 @@ import { Typography, Paper, Grid, styled, Box } from "@mui/material";
 import Link from "../../../shared/components/Link";
 import NavBar from "./NavBar";
 
-import headerImage from "../assets/headerImage.png";
+import headerImage from "../assets/pngs/header_image.png";
 
 const HeroSectionColor = styled("div")(({ theme }) => {
   return {

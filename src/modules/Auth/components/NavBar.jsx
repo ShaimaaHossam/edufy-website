@@ -5,7 +5,7 @@ import {
   Grid,
 } from "@mui/material";
 
-import logo from "../assets/logo.svg";
+import logo from "../../../assets/logos/brand_logo_en.svg";
 
 const NavBar = () => {
 
