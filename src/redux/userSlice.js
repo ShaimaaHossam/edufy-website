@@ -19,7 +19,6 @@ export const loginWithEmail = createAsyncThunk(
         }
       );
       let data = await response.json();
-      console.log("response", data, response.status );
       if (response.status === 200) {
         localStorage.setItem("token", data.token);
         return data;
@@ -27,7 +26,6 @@ export const loginWithEmail = createAsyncThunk(
         return thunkAPI.rejectWithValue(data);
       }
     } catch (e) {
-      console.log("Error", e.response.data);
       thunkAPI.rejectWithValue(e.response.data);
     }
   }
@@ -51,7 +49,6 @@ export const loginWithPhone = createAsyncThunk(
         }
       );
       let data = await response.json();
-      console.log("response", data, response.status );
       if (response.status === 200) {
         localStorage.setItem("token", data.token);
         return data;
@@ -59,7 +56,6 @@ export const loginWithPhone = createAsyncThunk(
         return thunkAPI.rejectWithValue(data);
       }
     } catch (e) {
-      console.log("Error", e.response.data);
       thunkAPI.rejectWithValue(e.response.data);
     }
   }
@@ -81,7 +77,6 @@ export const forgetPassword = createAsyncThunk(
         }
       );
       let data = await response.json();
-      console.log("response", data, response.status );
       if (response.status === 200) {
         localStorage.setItem("token", data.token);
         return data;
@@ -89,7 +84,6 @@ export const forgetPassword = createAsyncThunk(
         return thunkAPI.rejectWithValue(data);
       }
     } catch (e) {
-      console.log("Error", e.response.data);
       thunkAPI.rejectWithValue(e.response.data);
     }
   }
@@ -115,7 +109,6 @@ export const updatePassword = createAsyncThunk(
         }
       );
       let data = await response.json();
-      console.log("response", data, response.status );
       if (response.status === 200) {
         localStorage.setItem("token", data.token);
         return data;
@@ -123,7 +116,6 @@ export const updatePassword = createAsyncThunk(
         return thunkAPI.rejectWithValue(data);
       }
     } catch (e) {
-      console.log("Error", e.response.data);
       thunkAPI.rejectWithValue(e.response.data);
     }
   }
@@ -159,7 +151,6 @@ export const userSlice = createSlice({
       return state;
     },
     [loginWithEmail.rejected]: (state, { payload }) => {
-      console.log("payload", payload);
       state.isFetching = false;
       state.isError = true;
       state.errorMessage = payload.message;
@@ -175,7 +166,6 @@ export const userSlice = createSlice({
       return state;
     },
     [loginWithPhone.rejected]: (state, { payload }) => {
-      console.log("payload", payload);
       state.isFetching = false;
       state.isError = true;
       state.errorMessage = payload.message;
@@ -190,7 +180,6 @@ export const userSlice = createSlice({
       return state;
     },
     [forgetPassword.rejected]: (state, { payload }) => {
-      console.log("payload", payload);
       state.isFetching = false;
       state.isError = true;
       state.errorMessage = payload.message;
@@ -206,7 +195,6 @@ export const userSlice = createSlice({
       return state;
     },
     [updatePassword.rejected]: (state, { payload }) => {
-      console.log("payload", payload);
       state.isFetching = false;
       state.isError = true;
       state.errorMessage = payload.message;

@@ -44,7 +44,6 @@ function ResetPasword() {
       password: "",
     },
     onSubmit: (values) => {
-      console.log("Form Data", values);
       dispatch(updatePassword(values));
     },
     validationSchema: Yup.object({

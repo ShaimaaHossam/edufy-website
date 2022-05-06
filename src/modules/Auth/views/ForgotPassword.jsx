@@ -30,14 +30,12 @@ function ForgotPassword() {
       email: "",
     },
     onSubmit: (values) => {
-      console.log("Form Data", values);
       dispatch(forgetPassword(values));
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email formait").required("Required"),
     }),
   });
-  console.log("isSuccess", isSuccess)
   useEffect(() => {
     if (isError) {
       dispatch(clearState());

@@ -18,6 +18,7 @@ function makeTheme({ lang }) {
       palette: {
         primary: {
           main: "#1E7AF0",
+          white:"#FFFFFF"
         },
         secondary: {
           main: "#FFA303",

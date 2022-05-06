@@ -1,37 +1,34 @@
-import {
-  Avatar,
-  Container,
-  AppBar,
-  Grid,
-} from "@mui/material";
+import { Avatar, Container, AppBar, Grid, Box } from "@mui/material";
 
-import logo from "../../../assets/logos/brand_logo_en.svg";
+import Link from "../../../shared/components/Link";
 
-const NavBar = () => {
+import brandLogoEn from "../../../assets/logos/brand_logo_en.svg";
 
+function NavBar() {
   return (
     <AppBar position="static">
       <Container
         maxWidth="xl"
         sx={{
-          backgroundColor: "#FFFFFF",
-          padding:1
+          backgroundColor: "primary.white",
+          padding: 1,
         }}
       >
         <Grid container rowSpacing={12}>
           <Grid item xs={2}>
-            <Avatar
-              src={logo}
-              variant="square"
-              sx={{
-                "& .MuiAvatar-img": { height: "100%" },
-                "&.MuiAvatar-root": { height: "100%", width: "50%" },
-              }}
-            />
+            <Link to="/">
+              <Box
+                component="img"
+                alt="munjz"
+                src={brandLogoEn}
+                display="block"
+                height={34}
+              />
+            </Link>
           </Grid>
         </Grid>
       </Container>
     </AppBar>
   );
-};
+}
 export default NavBar;

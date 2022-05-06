@@ -46,7 +46,6 @@ function Login() {
       otp: "",
     },
     onSubmit: (values) => {
-      console.log("Form Data", values);
       dispatch(loginWithPhone(values));
     },
     validationSchema: Yup.object({
@@ -62,7 +61,6 @@ function Login() {
       remember: false,
     },
     onSubmit: (values) => {
-      console.log("Form Data", values);
       dispatch(loginWithEmail(values));
     },
     validationSchema: Yup.object({
