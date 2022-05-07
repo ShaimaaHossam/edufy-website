@@ -39,8 +39,8 @@ function MobileLogin() {
       dispatch(loginWithPhone(values));
     },
     validationSchema: Yup.object({
-      phone: Yup.string().required("Required"),
-      otp: Yup.string().required("Required"),
+      phone: Yup.string().required(t("inputsErrorMessage")),
+      otp: Yup.string().required(t("inputsErrorMessage")),
     }),
   });
 
@@ -96,24 +96,22 @@ function MobileLogin() {
         >
           <Grid item xs={11}>
             <Typography mb={2}>
-              A 4 digit verification code was sent to your phone number{" "}
+              {t("verificationMessage")}
               <span style={{ color: "primary.main" }}>
                 {phoneFormik.values.phone}
               </span>
             </Typography>
 
             <Typography mb={2}>
-              Verification code expires in{" "}
-              <span
-                style={{ color: "primary.main" }}
-              >{` 0${minutes}:${
+              {t("verificationTime")}
+              <span style={{ color: "primary.main" }}>{` 0${minutes}:${
                 seconds.toString().length === 1 ? "0" + seconds : seconds
               }`}</span>
             </Typography>
 
             <NumberInput
               name="otp"
-              label="Verification Code"
+              label={t("verificationLabel")}
               placeholder={t("verificationCode")}
               {...phoneFormik.getFieldProps("otp")}
               error={phoneFormik.touched.otp && !!phoneFormik.errors.otp}
@@ -121,7 +119,7 @@ function MobileLogin() {
             />
 
             <Typography mt={2}>
-              Didn't Receive a verification code?
+              {t("verificationInsure")}
               <span
                 style={{
                   color: "primary.main",
@@ -131,14 +129,14 @@ function MobileLogin() {
                   resendOtp();
                 }}
               >
-                {" "}
-                Request a new code
+                {t("verificationRequest")}
               </span>
             </Typography>
           </Grid>
+
           <Grid item xs={11}>
             <Button type="submit" fullWidth>
-              Login
+              {t("login")}
             </Button>
           </Grid>
         </Grid>
@@ -148,13 +146,14 @@ function MobileLogin() {
             <TextInput
               type="text"
               name="phone"
-              label="Phone number"
+              placeholder={t("phonePlaceholder")}
+              label={t("phonePlaceholder")}
               {...phoneFormik.getFieldProps("phone")}
-              placeholder={t("loginPhone")}
               error={phoneFormik.touched.phone && !!phoneFormik.errors.phone}
               helperText={phoneFormik.touched.phone && phoneFormik.errors.phone}
             />
           </Grid>
+
           <Grid item xs={11}>
             <Button
               type="submit"
@@ -165,7 +164,7 @@ function MobileLogin() {
               }}
               fullWidth
             >
-              Continue
+              {t("continue")}
             </Button>
           </Grid>
         </Grid>

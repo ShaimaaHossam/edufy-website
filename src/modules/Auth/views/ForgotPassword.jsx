@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 
-
 import { useSelector, useDispatch } from "react-redux";
 import {
   forgetPassword,
@@ -21,7 +20,8 @@ import Link from "../../../shared/components/Link";
 
 function ForgotPassword() {
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError, errorMessage } = useSelector(userSelector);
+  const { isFetching, isSuccess, isError, errorMessage } =
+    useSelector(userSelector);
 
   const { t } = useTranslation("auth");
 
@@ -33,7 +33,9 @@ function ForgotPassword() {
       dispatch(forgetPassword(values));
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email formait").required("Required"),
+      email: Yup.string()
+        .email("Invalid email formait")
+        .required(t("inputsErrorMessage")),
     }),
   });
   useEffect(() => {
@@ -43,7 +45,7 @@ function ForgotPassword() {
   }, [isError, isSuccess]);
   return (
     <FormContainer title="Forgot Password">
-      <Grid  padding={2} margin="auto">
+      <Grid padding={2} margin="auto">
         <Grid
           component="form"
           onSubmit={formik.handleSubmit}
@@ -56,24 +58,23 @@ function ForgotPassword() {
               <TextInput
                 type="text"
                 name="email"
-                label="Email"
+                label={t("emailLabel")}
                 {...formik.getFieldProps("email")}
-                placeholder={t("loginEmail")}
+                placeholder={t("emailPlaceholder")}
                 error={formik.touched.email && !!formik.errors.email}
                 helperText={formik.touched.email && formik.errors.email}
               />
               {isSuccess ? (
                 <Typography mt={2} color="success.main">
-                  An Email was sent to your email address please check the email
-                  to reset your password.
+                  {t("forgotMessage")}
                 </Typography>
               ) : null}
             </Grid>
           </Grid>
 
-          <Grid item xs={11} >
+          <Grid item xs={11}>
             <Button fullWidth type="submit">
-              Reset password
+              {t("resetPassword")}
             </Button>
           </Grid>
 
@@ -89,13 +90,11 @@ function ForgotPassword() {
               component={Link}
               to="login"
             >
-              Back to login
+              {t("backToLogin")}
             </Button>
           </Grid>
-        
         </Grid>
       </Grid>
-
     </FormContainer>
   );
 }

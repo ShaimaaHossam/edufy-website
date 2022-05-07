@@ -42,7 +42,7 @@ function ResetPasword() {
       dispatch(updatePassword(values));
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email formait").required("Required"),
+      email: Yup.string().email("Invalid email formait").required(t("inputsErrorMessage")),
       password: Yup.string().required("Required"),
     }),
   });
@@ -77,13 +77,13 @@ function ResetPasword() {
                 }}
                 fontSize="small"
               >
-                <path d={mdiCheck} />
+                <path d={mdiCheck}/>
               </SvgIcon>
             </Grid>
 
             <Grid item xs={11}>
               <Typography variant="h6" color="success.main">
-                Your password was reset successfully
+                {t("successResetMessage")}
               </Typography>
             </Grid>
           </Grid>
@@ -100,9 +100,9 @@ function ResetPasword() {
                 <TextInput
                   type="text"
                   name="email"
-                  label="Email"
+                  label={t("emailLabel")}
+                  placeholder={t("emailPlaceholder")}
                   {...formik.getFieldProps("email")}
-                  placeholder={t("loginEmail")}
                   error={formik.touched.email && !!formik.errors.email}
                   helperText={formik.touched.email && formik.errors.email}
                 />
@@ -111,8 +111,8 @@ function ResetPasword() {
               <Grid item xs={11}>
                 <PasswordInput
                   name="password"
-                  label="New Password"
-                  placeholder="*******"
+                  label={t("newPassword")}
+                  placeholder={t("passwordPlaceholder")}
                   {...formik.getFieldProps("password")}
                   error={formik.touched.password && !!formik.errors.password}
                   helperText={formik.touched.password && formik.errors.password}
@@ -122,11 +122,13 @@ function ResetPasword() {
 
             <Grid item xs={11}>
               <Button type="submit" fullWidth>
-                Reset password
+                {t("resetPassword")}
               </Button>
             </Grid>
+
           </Grid>
         )}
+
         <Grid item xs={10} margin="auto">
           <Button
             fullWidth
@@ -138,9 +140,10 @@ function ResetPasword() {
             component={Link}
             to="login"
           >
-            Back to login
+           {t("backToLogin")}
           </Button>
         </Grid>
+
       </Grid>
     </FormContainer>
   );

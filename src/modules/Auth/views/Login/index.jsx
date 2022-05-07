@@ -4,11 +4,14 @@ import { Grid, Button, Typography, Divider, Paper } from "@mui/material";
 
 import FormContainer from "../../components/FormContainer";
 
+import { useTranslation } from "react-i18next";
+
 import EmailLogin from "./EmailLogin";
 import MobileLogin from "./MobileLogin";
 
 function Login() {
   const [phoneLogin, setPhoneLogin] = useState(false);
+  const { t } = useTranslation("auth");
 
   return (
     <FormContainer title="login">
@@ -34,7 +37,7 @@ function Login() {
                 setPhoneLogin(!phoneLogin);
               }}
             >
-              {phoneLogin ? "Login with Email" : "Login with Phone Number"}
+              {phoneLogin ? t("loginWithEmail") : t("loginWithPhone")}
             </Button>
           </Paper>
         </Grid>

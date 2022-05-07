@@ -1,11 +1,14 @@
 import { Typography, Box } from "@mui/material";
 
+import { useTranslation } from "react-i18next";
+
 import Link from "../../../shared/components/Link";
 import NavBar from "./NavBar";
 
 import headerImage from "../assets/pngs/header_image.png";
 
 function AuthContainer({ children }) {
+  const { t } = useTranslation("auth");
 
   return (
     <Box>
@@ -35,15 +38,14 @@ function AuthContainer({ children }) {
       {children}
 
       <Typography sx={{ mb: 1, textAlign: "center" }}>
-        Don't have an account?
-        <Link to="/auth/login"> Signup</Link>
+        {t("createAccount")}
+        <Link to="/auth/login">{t("signup")}</Link>
       </Typography>
 
       <Typography sx={{ mb: 1, textAlign: "center" }}>
-        Have troubles logging in?
-        <Link to="/auth/login"> Contact Munjz</Link>
+        {t("signupTroubles")}
+        <Link to="/auth/login">{t("contactUs")}</Link>
       </Typography>
-      
     </Box>
   );
 }

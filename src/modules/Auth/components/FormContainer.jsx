@@ -36,5 +36,4 @@ function FormContainer({ children, title }) {
   );
 }
 
-export default FormContainer; 
-
+export default FormContainer;

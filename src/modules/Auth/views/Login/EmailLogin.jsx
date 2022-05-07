@@ -36,8 +36,8 @@ function EmailLogin() {
       dispatch(loginWithEmail(values));
     },
     validationSchema: Yup.object({
-      email: Yup.string().email().required("Required"),
-      password: Yup.string().required("Required"),
+      email: Yup.string().email().required(t("inputsErrorMessage")),
+      password: Yup.string().required(t("inputsErrorMessage")),
     }),
   });
 
@@ -64,9 +64,9 @@ function EmailLogin() {
         <TextInput
           type="text"
           name="email"
-          label="Email"
+          label={t("emailLabel")}          
+          placeholder={t("emailPlaceholder")}
           {...emailFormik.getFieldProps("email")}
-          placeholder={t("loginEmail")}
           error={emailFormik.touched.email && !!emailFormik.errors.email}
           helperText={emailFormik.touched.email && emailFormik.errors.email}
         />
@@ -75,18 +75,16 @@ function EmailLogin() {
       <Grid item xs={11}>
         <PasswordInput
           name="password"
-          label="Password"
-          placeholder={t("loginPassword")}
+          label={t("passwordLabel")}
+          placeholder={t("passwordPlaceholder")}
           {...emailFormik.getFieldProps("password")}
           error={emailFormik.touched.password && !!emailFormik.errors.password}
-          helperText={
-            emailFormik.touched.password && emailFormik.errors.password
-          }
+          helperText={emailFormik.touched.password && emailFormik.errors.password}
         />
 
         <FormControlLabel
           control={<Checkbox />}
-          label="Remember me"
+          label={t("rememberMe")}
           name="remember"
           {...emailFormik.getFieldProps("remember")}
         />
@@ -95,13 +93,13 @@ function EmailLogin() {
           to="/auth/forget-password"
           sx={{ display: "block", textAlign: "right" }}
         >
-          Forgot password
+          {t("forgotPassword")}
         </Link>
       </Grid>
 
       <Grid item xs={11}>
         <Button type="submit" fullWidth>
-          Login
+          {t("login")}
         </Button>
       </Grid>
     </Grid>
