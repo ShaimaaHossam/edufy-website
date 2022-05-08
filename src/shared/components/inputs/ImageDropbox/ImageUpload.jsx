@@ -1,9 +1,9 @@
-import { SvgIcon, Grid, Typography } from "@mui/material";
+import { SvgIcon, Box, Typography } from "@mui/material";
 import { mdiImagePlus } from "@mdi/js";
 
 function ImageUpload({ lable, uploadImage }) {
   return (
-    <Grid>
+    <>
       <label
         htmlFor={`${lable}-image`}
         style={{
@@ -28,12 +28,13 @@ function ImageUpload({ lable, uploadImage }) {
             display: "none",
           }}
         />
-        <Grid
-          container
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          marginTop={4}
+        <Box
+          sx={{
+            direction: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 4,
+          }}
         >
           <SvgIcon fontSize="small">
             <path d={mdiImagePlus} color="#ADB5D1" />
@@ -41,9 +42,9 @@ function ImageUpload({ lable, uploadImage }) {
           <Typography color="text.primary" variant="subtitle2" mt={4}>
             {lable}
           </Typography>
-        </Grid>
+        </Box>
       </label>
-    </Grid>
+    </>
   );
 }
 

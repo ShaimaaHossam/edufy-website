@@ -1,4 +1,7 @@
 import React from "react";
+
+import { useTranslation } from "react-i18next";
+
 import {
   Stepper,
   Step,
@@ -21,6 +24,7 @@ function CustomStepper({
   stepHeight = 50,
   connectorHeight = 20,
 }) {
+  const { t } = useTranslation();
   const IconContainer = styled("div")(({ theme, ownerState }) => {
     return {
       color: "#242E4261",
@@ -43,10 +47,10 @@ function CustomStepper({
     };
   });
   const STATUS_TYPES = {
-    pending: "pending",
-    active: "active",
-    success: "success",
-    error: "error",
+    pending: t("stepper_pending_status"),
+    active: t("stepper_active_status"),
+    success: t("stepper_success_status"),
+    error: t("stepper_error_status"),
   };
   const STATUS = {
     active: "in progress",

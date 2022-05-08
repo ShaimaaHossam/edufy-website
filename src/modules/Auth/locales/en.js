@@ -6,9 +6,9 @@ const en = {
     " An Email was sent to your email address please check the email to reset your password.",
 
   signup: "Signup",
-  signupTroubles: "Have troubles logging in?",
+  signupTroubles: "Have troubles logging in? ",
   contactUs: "Contact Munjz",
-  createAccount: "Don't have an account?",
+  createAccount: "Don't have an account? ",
 
   loginWithEmail: "Login with email",
   loginWithPhone: "Login with phone number",

@@ -45,54 +45,58 @@ function ForgotPassword() {
   }, [isError, isSuccess]);
   return (
     <FormContainer title="Forgot Password">
-      <Grid padding={2} margin="auto">
+      <Grid
+        component="form"
+        onSubmit={formik.handleSubmit}
+        container
+        spacing={3}
+        margin="auto"
+      >
+        <Grid item container spacing={3}>
+          <Grid item xs={11}>
+            <TextInput
+              type="text"
+              name="email"
+              label={t("emailLabel")}
+              {...formik.getFieldProps("email")}
+              placeholder={t("emailPlaceholder")}
+              error={formik.touched.email && !!formik.errors.email}
+              helperText={formik.touched.email && formik.errors.email}
+            />
+            {isSuccess ? (
+              <Typography mt={2} color="success.main">
+                {t("forgotMessage")}
+              </Typography>
+            ) : null}
+          </Grid>
+        </Grid>
+
+        <Grid item xs={11}>
+          <Button fullWidth type="submit">
+            {t("resetPassword")}
+          </Button>
+        </Grid>
+
         <Grid
-          component="form"
-          onSubmit={formik.handleSubmit}
-          container
-          spacing={3}
-          margin="auto"
+          item
+          xs={11}
+          sx={{
+            paddingBottom: 4,
+          }}
         >
-          <Grid item container spacing={3}>
-            <Grid item xs={11}>
-              <TextInput
-                type="text"
-                name="email"
-                label={t("emailLabel")}
-                {...formik.getFieldProps("email")}
-                placeholder={t("emailPlaceholder")}
-                error={formik.touched.email && !!formik.errors.email}
-                helperText={formik.touched.email && formik.errors.email}
-              />
-              {isSuccess ? (
-                <Typography mt={2} color="success.main">
-                  {t("forgotMessage")}
-                </Typography>
-              ) : null}
-            </Grid>
-          </Grid>
-
-          <Grid item xs={11}>
-            <Button fullWidth type="submit">
-              {t("resetPassword")}
-            </Button>
-          </Grid>
-
-          <Grid item xs={11}>
-            <Button
-              fullWidth
-              disableElevation={false}
-              sx={{
-                backgroundColor: "primary.white",
-                "&:hover": { backgroundColor: "primary.white" },
-                color: "primary.main",
-              }}
-              component={Link}
-              to="login"
-            >
-              {t("backToLogin")}
-            </Button>
-          </Grid>
+          <Button
+            fullWidth
+            disableElevation={false}
+            sx={{
+              backgroundColor: "primary.white",
+              "&:hover": { backgroundColor: "primary.white" },
+              color: "primary.main",
+            }}
+            component={Link}
+            to="login"
+          >
+            {t("backToLogin")}
+          </Button>
         </Grid>
       </Grid>
     </FormContainer>

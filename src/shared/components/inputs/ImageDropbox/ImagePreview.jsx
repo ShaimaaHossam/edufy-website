@@ -1,17 +1,17 @@
 import { useRef } from "react";
 import useBase64 from "../../../hooks/useBase64";
-import { SvgIcon, Grid, Typography, useTheme, IconButton } from "@mui/material";
+import { SvgIcon, IconButton } from "@mui/material";
 
 import { mdiPencil, mdiDelete } from "@mdi/js";
 
-function ImageEdite() {
-  const [iamge, uploadImage, setBaseImage] = useBase64();
+function ImagePreview({ lable }) {
+  const [image, uploadImage, setBaseImage] = useBase64();
   const fileInputRef = useRef();
 
   return (
     <>
       <label
-        htmlFor={`${iamge}-image`}
+        htmlFor={`${lable}-lable`}
         style={{
           borderWidth: 3,
           borderRadius: 4,
@@ -21,13 +21,13 @@ function ImageEdite() {
           height: 123,
           borderColor: "#D5D9E5",
           backgroundColor: "#FCFCFCB0",
-          backgroundImage: `url(${iamge})`,
+          backgroundImage: `url(${image})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}
       >
         <input
-          id={`${iamge}-image`}
+          id={`${lable}-lable`}
           type="file"
           style={{
             display: "none",
@@ -90,4 +90,4 @@ function ImageEdite() {
   );
 }
 
-export default ImageEdite;
+export default ImagePreview;

@@ -6,28 +6,26 @@ import brandLogoEn from "../../../assets/logos/brand_logo_en.svg";
 
 function NavBar() {
   return (
-    <AppBar position="static">
-      <Container
-        maxWidth="xl"
-        sx={{
-          backgroundColor: "primary.white",
-          padding: 1,
-        }}
-      >
-        <Grid container rowSpacing={12}>
-          <Grid item xs={2}>
-            <Link to="/">
-              <Box
-                component="img"
-                alt="munjz"
-                src={brandLogoEn}
-                display="block"
-                height={34}
-              />
-            </Link>
-          </Grid>
+    <AppBar
+      sx={{
+        position: "static",
+        backgroundColor: "primary.white",
+        padding: 1,
+      }}
+    >
+      <Grid container rowSpacing={12}>
+        <Grid item xs={2}>
+          <Link to="/">
+            <Box
+              component="img"
+              alt="munjz"
+              src={brandLogoEn}
+              display="block"
+              height={34}
+            />
+          </Link>
         </Grid>
-      </Container>
+      </Grid>
     </AppBar>
   );
 }

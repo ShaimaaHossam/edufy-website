@@ -11,19 +11,17 @@ function FormContainer({ children, title }) {
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
         position: "relative",
+        paddingTop: 6,
       }}
     >
-      <Box height={50} />
-
       <Box
         sx={{
-          height: 56,
           px: 3,
           py: 1,
           display: "flex",
           alignItems: "center",
           borderBottom: 2,
-          borderBottomColor: "#111B3321",
+          borderBottomColor: "border",
         }}
       >
         <Typography color="text.primary" variant="h5">

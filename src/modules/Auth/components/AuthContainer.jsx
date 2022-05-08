@@ -11,7 +11,7 @@ function AuthContainer({ children }) {
   const { t } = useTranslation("auth");
 
   return (
-    <Box>
+    <>
       <NavBar />
 
       <Box
@@ -26,8 +26,6 @@ function AuthContainer({ children }) {
           sx={{
             backgroundColor: "#000",
             height: 250,
-            backgroundPosition: "center",
-            backgroundSize: "cover",
             opacity: 0.5,
             textAlign: "center",
             paddingTop: 18,
@@ -42,11 +40,11 @@ function AuthContainer({ children }) {
         <Link to="/auth/login">{t("signup")}</Link>
       </Typography>
 
-      <Typography sx={{ mb: 1, textAlign: "center" }}>
+      <Typography sx={{ textAlign: "center", paddingBottom: 4 }}>
         {t("signupTroubles")}
         <Link to="/auth/login">{t("contactUs")}</Link>
       </Typography>
-    </Box>
+    </>
   );
 }
 

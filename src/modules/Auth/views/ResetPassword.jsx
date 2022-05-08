@@ -52,93 +52,103 @@ function ResetPasword() {
 
   return (
     <FormContainer title="Reset Password">
-      <Grid container spacing={3} padding={2} margin="auto">
-        {isSuccess ? (
+      {isSuccess ? (
+        <Grid
+          container
+          spacing={3}
+          textAlign="center"
+          padding={4}
+          justifyContent="center"
+        >
+          <Grid item xs={11}>
+            <SvgIcon
+              sx={{
+                backgroundColor: "success.main",
+                width: 129,
+                height: 129,
+                borderRadius: "100%",
+                color: "primary.white",
+                padding: 3,
+              }}
+              fontSize="small"
+            >
+              <path d={mdiCheck} />
+            </SvgIcon>
+          </Grid>
+
+          <Grid item xs={11}>
+            <Typography variant="h6" color="success.main">
+              {t("successResetMessage")}
+            </Typography>
+          </Grid>
+        </Grid>
+      ) : (
+        <Grid
+          component="form"
+          onSubmit={formik.handleSubmit}
+          container
+          spacing={5}
+          margin="auto"
+        >
+          <Grid item container spacing={3}>
+            <Grid item xs={11}>
+              <TextInput
+                type="text"
+                name="email"
+                label={t("emailLabel")}
+                placeholder={t("emailPlaceholder")}
+                {...formik.getFieldProps("email")}
+                error={formik.touched.email && !!formik.errors.email}
+                helperText={formik.touched.email && formik.errors.email}
+              />
+            </Grid>
+
+            <Grid item xs={11}>
+              <PasswordInput
+                name="password"
+                label={t("newPassword")}
+                placeholder={t("passwordPlaceholder")}
+                {...formik.getFieldProps("password")}
+                error={formik.touched.password && !!formik.errors.password}
+                helperText={formik.touched.password && formik.errors.password}
+              />
+            </Grid>
+          </Grid>
+
           <Grid
             item
-            container
-            spacing={3}
-            textAlign="center"
-            padding={4}
-            justifyContent="center"
-          >
-            <Grid item xs={11}>
-              <SvgIcon
-                sx={{
-                  backgroundColor: "success.main",
-                  width: 129,
-                  height: 129,
-                  borderRadius: "100%",
-                  color: "primary.white",
-                  padding: 3,
-                }}
-                fontSize="small"
-              >
-                <path d={mdiCheck} />
-              </SvgIcon>
-            </Grid>
-
-            <Grid item xs={11}>
-              <Typography variant="h6" color="success.main">
-                {t("successResetMessage")}
-              </Typography>
-            </Grid>
-          </Grid>
-        ) : (
-          <Grid
-            component="form"
-            onSubmit={formik.handleSubmit}
-            container
-            spacing={5}
-            margin="auto"
-          >
-            <Grid item container spacing={3}>
-              <Grid item xs={11}>
-                <TextInput
-                  type="text"
-                  name="email"
-                  label={t("emailLabel")}
-                  placeholder={t("emailPlaceholder")}
-                  {...formik.getFieldProps("email")}
-                  error={formik.touched.email && !!formik.errors.email}
-                  helperText={formik.touched.email && formik.errors.email}
-                />
-              </Grid>
-
-              <Grid item xs={11}>
-                <PasswordInput
-                  name="password"
-                  label={t("newPassword")}
-                  placeholder={t("passwordPlaceholder")}
-                  {...formik.getFieldProps("password")}
-                  error={formik.touched.password && !!formik.errors.password}
-                  helperText={formik.touched.password && formik.errors.password}
-                />
-              </Grid>
-            </Grid>
-
-            <Grid item xs={11}>
-              <Button type="submit" fullWidth>
-                {t("resetPassword")}
-              </Button>
-            </Grid>
-          </Grid>
-        )}
-
-        <Grid item xs={10} margin="auto">
-          <Button
-            fullWidth
+            xs={11}
             sx={{
-              backgroundColor: "primary.white",
-              "&:hover": { backgroundColor: "primary.white" },
-              color: "primary.main",
+              marginBottom: 2,
             }}
-            component={Link}
-            to="login"
           >
-            {t("backToLogin")}
-          </Button>
+            <Button type="submit" fullWidth>
+              {t("resetPassword")}
+            </Button>
+          </Grid>
         </Grid>
+      )}
+
+      <Grid
+        item
+        xs={10}
+        margin="auto"
+        sx={{
+          paddingBottom: 4,
+        }}
+      >
+        <Button
+          fullWidth
+          sx={{
+            backgroundColor: "primary.white",
+            "&:hover": { backgroundColor: "primary.white" },
+            color: "primary.main",
+          }}
+          component={Link}
+          to="login"
+        >
+          {t("backToLogin")}
+        </Button>
       </Grid>
     </FormContainer>
   );

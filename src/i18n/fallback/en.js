@@ -14,6 +14,11 @@ const en = {
 
   confirm: "Confirm",
   go_back: "Go Back",
+
+  stepper_pending_status: "pending",
+  stepper_active_status: "active",
+  stepper_success_status: "success",
+  stepper_error_status: "error",
 };
 
 export default en;
