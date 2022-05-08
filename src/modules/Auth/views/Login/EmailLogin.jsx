@@ -51,7 +51,7 @@ function EmailLogin() {
       navigate("/dashboard");
     }
   }, [isError, isSuccess]);
-  
+
   return (
     <Grid
       item
@@ -64,7 +64,7 @@ function EmailLogin() {
         <TextInput
           type="text"
           name="email"
-          label={t("emailLabel")}          
+          label={t("emailLabel")}
           placeholder={t("emailPlaceholder")}
           {...emailFormik.getFieldProps("email")}
           error={emailFormik.touched.email && !!emailFormik.errors.email}
@@ -79,7 +79,9 @@ function EmailLogin() {
           placeholder={t("passwordPlaceholder")}
           {...emailFormik.getFieldProps("password")}
           error={emailFormik.touched.password && !!emailFormik.errors.password}
-          helperText={emailFormik.touched.password && emailFormik.errors.password}
+          helperText={
+            emailFormik.touched.password && emailFormik.errors.password
+          }
         />
 
         <FormControlLabel

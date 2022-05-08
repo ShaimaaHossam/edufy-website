@@ -7,7 +7,6 @@ import {
   clearState,
 } from "../../../redux/userSlice";
 
-
 import { useTranslation } from "react-i18next";
 
 import { mdiCheck } from "@mdi/js";
@@ -15,12 +14,7 @@ import { mdiCheck } from "@mdi/js";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import {
-  SvgIcon,
-  Grid,
-  Button,
-  Typography,
-} from "@mui/material";
+import { SvgIcon, Grid, Button, Typography } from "@mui/material";
 
 import TextInput from "../../../shared/components/inputs/TextInput";
 import PasswordInput from "../../../shared/components/inputs/PasswordInput";
@@ -29,7 +23,8 @@ import FormContainer from "../components/FormContainer";
 
 function ResetPasword() {
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError, errorMessage } = useSelector(userSelector);
+  const { isFetching, isSuccess, isError, errorMessage } =
+    useSelector(userSelector);
 
   const { t } = useTranslation("auth");
 
@@ -42,8 +37,10 @@ function ResetPasword() {
       dispatch(updatePassword(values));
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email formait").required(t("inputsErrorMessage")),
-      password: Yup.string().required("Required"),
+      email: Yup.string()
+        .email("Invalid email formait")
+        .required(t("inputsErrorMessage")),
+      password: Yup.string().required(t("inputsErrorMessage")),
     }),
   });
 
@@ -77,7 +74,7 @@ function ResetPasword() {
                 }}
                 fontSize="small"
               >
-                <path d={mdiCheck}/>
+                <path d={mdiCheck} />
               </SvgIcon>
             </Grid>
 
@@ -125,7 +122,6 @@ function ResetPasword() {
                 {t("resetPassword")}
               </Button>
             </Grid>
-
           </Grid>
         )}
 
@@ -140,10 +136,9 @@ function ResetPasword() {
             component={Link}
             to="login"
           >
-           {t("backToLogin")}
+            {t("backToLogin")}
           </Button>
         </Grid>
-
       </Grid>
     </FormContainer>
   );

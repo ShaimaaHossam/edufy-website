@@ -3,7 +3,7 @@ import ImageUpload from "./ImageUpload";
 
 import useBase64 from "../../../hooks/useBase64";
 
-const ImageInput = ({ lable, initialValue, onChange }) => {
+function ImageInput({ lable, initialValue, onChange }) {
   const [baseImage, uploadImage, setBaseImage] = useBase64(
     initialValue,
     onChange
@@ -20,6 +20,6 @@ const ImageInput = ({ lable, initialValue, onChange }) => {
       />
     );
   }
-};
+}
 
 export default ImageInput;

@@ -5,7 +5,7 @@ import ResetPassword from "./views/ResetPassword";
 import ForgotPassword from "./views/ForgotPassword";
 import AuthContainer from "./components/AuthContainer";
 
-function Auth(){
+function Auth() {
   return (
     <AuthContainer>
       <Routes>
@@ -17,6 +17,6 @@ function Auth(){
       </Routes>
     </AuthContainer>
   );
-};
+}
 
 export default Auth;

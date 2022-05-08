@@ -4,7 +4,7 @@ import { SvgIcon, Grid, Typography, useTheme, IconButton } from "@mui/material";
 
 import { mdiPencil, mdiDelete } from "@mdi/js";
 
-const ImageEdite = () => {
+function ImageEdite() {
   const [iamge, uploadImage, setBaseImage] = useBase64();
   const fileInputRef = useRef();
 
@@ -27,7 +27,7 @@ const ImageEdite = () => {
         }}
       >
         <input
-         id={`${iamge}-image`}
+          id={`${iamge}-image`}
           type="file"
           style={{
             display: "none",
@@ -53,8 +53,8 @@ const ImageEdite = () => {
             cursor: "pointer",
             color: "text.primary",
             "&:hover": {
-              backgroundColor: '#FFF'
-            }
+              backgroundColor: "#FFF",
+            },
           }}
         >
           <SvgIcon fontSize="small">
@@ -77,8 +77,8 @@ const ImageEdite = () => {
             cursor: "pointer",
             color: "text.primary",
             "&:hover": {
-              backgroundColor: '#FFF'
-            }
+              backgroundColor: "#FFF",
+            },
           }}
         >
           <SvgIcon fontSize="small">
@@ -88,6 +88,6 @@ const ImageEdite = () => {
       </label>
     </>
   );
-};
+}
 
 export default ImageEdite;

@@ -1,15 +1,26 @@
 import React from "react";
-import { Stepper, Step, StepLabel, SvgIcon, Typography, StepConnector, styled, alpha } from "@mui/material";
-
 import {
-  stepConnectorClasses,
-} from "@mui/material/StepConnector";
+  Stepper,
+  Step,
+  StepLabel,
+  SvgIcon,
+  Typography,
+  StepConnector,
+  styled,
+  alpha,
+} from "@mui/material";
+
+import { stepConnectorClasses } from "@mui/material/StepConnector";
 
 import { mdiCheck } from "@mdi/js";
 
-const CustomStepper = ({ orientation = "vertical", steps, activeStep, stepHeight=50, connectorHeight=20  }) => {
-  
-  
+function CustomStepper({
+  orientation = "vertical",
+  steps,
+  activeStep,
+  stepHeight = 50,
+  connectorHeight = 20,
+}) {
   const IconContainer = styled("div")(({ theme, ownerState }) => {
     return {
       color: "#242E4261",
@@ -60,8 +71,8 @@ const CustomStepper = ({ orientation = "vertical", steps, activeStep, stepHeight
     },
     [`&.${stepConnectorClasses.root}`]: {
       marginLeft: 18,
-      height:connectorHeight,
-      marginTop:6
+      height: connectorHeight,
+      marginTop: 6,
     },
     [`&.${stepConnectorClasses.active}`]: {
       [`& .${stepConnectorClasses.line}`]: {
@@ -77,25 +88,22 @@ const CustomStepper = ({ orientation = "vertical", steps, activeStep, stepHeight
       border: 0,
       width: 1,
       borderRadius: 1,
-      background: "#242E4261"
+      background: "#242E4261",
     },
   }));
-
 
   return (
     <Stepper
       orientation={orientation}
       activeStep={activeStep}
       connector={<Connector />}
-      
     >
       {steps.map((step) => (
-        <Step key={step.title}
-        sx={
-          {
-            height:stepHeight
-          }
-        }
+        <Step
+          key={step.title}
+          sx={{
+            height: stepHeight,
+          }}
         >
           <StepLabel StepIconComponent={(props) => renderIcon(props, step)}>
             <Typography variant="subtitle2" color="#242E42">
@@ -111,23 +119,21 @@ const CustomStepper = ({ orientation = "vertical", steps, activeStep, stepHeight
               }}
             >
               {step.title === "Services" ? (
-                <Typography variant="body2" color="#242E4261" >
+                <Typography variant="body2" color="#242E4261">
                   select service to need
                 </Typography>
-              ) : null
-              }
+              ) : null}
               {step.status === STATUS_TYPES.active
                 ? STATUS.active
                 : step.status === STATUS_TYPES.success
                 ? STATUS.success
-                : null
-              }
+                : null}
             </Typography>
           </StepLabel>
         </Step>
       ))}
     </Stepper>
   );
-};
+}
 
 export default CustomStepper;
