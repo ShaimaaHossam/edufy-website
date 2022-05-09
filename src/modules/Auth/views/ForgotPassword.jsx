@@ -35,7 +35,7 @@ function ForgotPassword() {
     validationSchema: Yup.object({
       email: Yup.string()
         .email("Invalid email formait")
-        .required(t("resetEmailError")),
+        .required(t("inputsErrorMessage")),
     }),
   });
   useEffect(() => {

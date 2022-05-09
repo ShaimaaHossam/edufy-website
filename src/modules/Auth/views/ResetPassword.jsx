@@ -42,8 +42,8 @@ function ResetPasword() {
     validationSchema: Yup.object({
       email: Yup.string()
         .email("Invalid email formait")
-        .required(`${t("resetEmailError")} `),
-      password: Yup.string().required(t("resetPasswordError")),
+        .required(`${t("inputsErrorMessage")} `),
+      password: Yup.string().required(t("inputsErrorMessage")),
     }),
   });
 
