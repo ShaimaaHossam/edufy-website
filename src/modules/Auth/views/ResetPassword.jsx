@@ -14,7 +14,7 @@ import { mdiCheck } from "@mdi/js";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { SvgIcon, Grid, Button, Typography } from "@mui/material";
+import { SvgIcon, Grid, Button, Typography, Box } from "@mui/material";
 
 import TextInput from "../../../shared/components/inputs/TextInput";
 import PasswordInput from "../../../shared/components/inputs/PasswordInput";
@@ -125,11 +125,24 @@ function ResetPasword() {
                 error={formik.touched.email && !!formik.errors.email}
                 helperText={formik.touched.email && formik.errors.email}
               />
-              <span>
+              <Box
+                sx={{
+                  position: "relative",
+                }}
+              >
                 {formik.touched.email && !!formik.errors.email ? (
-                  <LinkTOLogin />
+                  <Link
+                    to="/auth/mobile-login"
+                    sx={{
+                      color: "primary.main",
+                      position: "absolute",
+                      transform: "translate(307px, -23px)",
+                    }}
+                  >
+                    {t("backToPhone")}
+                  </Link>
                 ) : null}
-              </span>
+              </Box>
             </Grid>
 
             <Grid item xs={11}>

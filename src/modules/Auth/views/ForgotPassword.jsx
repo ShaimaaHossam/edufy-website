@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Grid, Button, Typography, Paper } from "@mui/material";
+import { Grid, Button, Typography, Box } from "@mui/material";
 
 import FormContainer from "../components/FormContainer";
 import TextInput from "../../../shared/components/inputs/TextInput";
@@ -44,21 +44,6 @@ function ForgotPassword() {
     }
   }, [isError, isSuccess]);
 
-  const LinkTOLogin = () => {
-    return (
-      <Button
-        component={Link}
-        to="/auth/mobile-login"
-        sx={{
-          backgroundColor: "white",
-          "&:hover": { backgroundColor: "white" },
-          color: "primary.main",
-        }}
-      >
-        {t("backToPhone")}
-      </Button>
-    );
-  };
   return (
     <FormContainer title="Forgot Password">
       <Grid
@@ -84,11 +69,24 @@ function ForgotPassword() {
                 {t("forgotMessage")}
               </Typography>
             ) : null}
-            <span>
+            <Box
+              sx={{
+                position: "relative",
+              }}
+            >
               {formik.touched.email && !!formik.errors.email ? (
-                <LinkTOLogin />
+                <Link
+                  to="/auth/mobile-login"
+                  sx={{
+                    color: "primary.main",
+                    position: "absolute",
+                    transform: "translate(307px, -23px)",
+                  }}
+                >
+                  {t("backToPhone")}
+                </Link>
               ) : null}
-            </span>
+            </Box>
           </Grid>
         </Grid>
 
