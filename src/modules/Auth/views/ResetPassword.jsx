@@ -29,7 +29,7 @@ function ResetPasword() {
   const { t } = useTranslation("auth");
 
   const LinkTOLogin = () => {
-    return <Link to="login?id=reset">{t("backToPhone")}</Link>;
+    return <Link to="/auth/mobile-login">{t("backToPhone")}</Link>;
   };
   const formik = useFormik({
     initialValues: {
@@ -159,7 +159,7 @@ function ResetPasword() {
             <Button
               fullWidth
               component={Link}
-              to="login"
+              to="email-login"
               sx={{
                 backgroundColor: "white",
                 "&:hover": { backgroundColor: "white" },

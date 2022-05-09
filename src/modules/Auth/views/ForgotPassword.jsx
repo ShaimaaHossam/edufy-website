@@ -48,7 +48,7 @@ function ForgotPassword() {
     return (
       <Button
         component={Link}
-        to="login?id=reset"
+        to="/auth/mobile-login"
         sx={{
           backgroundColor: "white",
           "&:hover": { backgroundColor: "white" },
@@ -113,7 +113,7 @@ function ForgotPassword() {
               color: "primary.main",
             }}
             component={Link}
-            to="login"
+            to="email-login"
           >
             {t("backToLogin")}
           </Button>

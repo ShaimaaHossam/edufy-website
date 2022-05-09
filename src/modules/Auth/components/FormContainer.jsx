@@ -41,12 +41,12 @@ function FormContainer({ children, title }) {
         <>
           <Typography sx={{ mb: 1, textAlign: "center" }}>
             {t("createAccount")}
-            <Link to="/auth/login">{t("signup")}</Link>
+            <Link to="/auth/email-login">{t("signup")}</Link>
           </Typography>
 
           <Typography sx={{ textAlign: "center", paddingBottom: 4 }}>
             {t("signupTroubles")}
-            <Link to="/auth/login">{t("contactUs")}</Link>
+            <Link to="/auth/email-login">{t("contactUs")}</Link>
           </Typography>
         </>
       )}
