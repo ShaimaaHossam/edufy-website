@@ -28,9 +28,7 @@ function ResetPasword() {
 
   const { t } = useTranslation("auth");
 
-  const LinkTOLogin = () => {
-    return <Link to="/auth/mobile-login">{t("backToPhone")}</Link>;
-  };
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -43,7 +41,9 @@ function ResetPasword() {
       email: Yup.string()
         .email("Invalid email formait")
         .required(`${t("inputsErrorMessage")} `),
-      password: Yup.string().required(t("inputsErrorMessage")),
+      password: Yup.string().required(t("inputsErrorMessage"))
+      .min(8,t("resetPasswordError"))
+
     }),
   });
 

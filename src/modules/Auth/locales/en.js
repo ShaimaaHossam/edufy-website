@@ -29,7 +29,7 @@ const en = {
     "This phone number doesn't exist, please enter a valid phone number.",
   otpError: "Invalid Verification Code, try requesting a new code",
   resetEmailError: "This email doesn't exist, please try again or login with",
-  resetPasswordError: "Password should be a minimum of 8 characters",
+  resetPasswordError: "Password is too short - should be 8 chars minimum.",
 
   verificationCode: "0000",
   verificationLabel: "Verification Code",
