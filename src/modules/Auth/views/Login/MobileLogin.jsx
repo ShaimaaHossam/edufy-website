@@ -39,8 +39,8 @@ function MobileLogin() {
       dispatch(loginWithPhone(values));
     },
     validationSchema: Yup.object({
-      phone: Yup.string().required(t("inputsErrorMessage")),
-      otp: Yup.string().required(t("inputsErrorMessage")),
+      phone: Yup.string().required(t("phoneError")),
+      otp: Yup.string().required(t("otpError")),
     }),
   });
 
@@ -97,14 +97,14 @@ function MobileLogin() {
           <Grid item xs={11}>
             <Typography mb={2}>
               {t("verificationMessage")}
-              <span style={{ color: "primary.main" }}>
+              <span style={{ color: "#1E7AF0" }}>
                 {phoneFormik.values.phone}
               </span>
             </Typography>
 
             <Typography mb={2}>
               {t("verificationTime")}
-              <span style={{ color: "primary.main" }}>{` 0${minutes}:${
+              <span style={{ color: "#1E7AF0" }}>{` 0${minutes}:${
                 seconds.toString().length === 1 ? "0" + seconds : seconds
               }`}</span>
             </Typography>
@@ -122,7 +122,7 @@ function MobileLogin() {
               {t("verificationInsure")}
               <span
                 style={{
-                  color: "primary.main",
+                  color: "#1E7AF0",
                   cursor: "pointer",
                 }}
                 onClick={() => {

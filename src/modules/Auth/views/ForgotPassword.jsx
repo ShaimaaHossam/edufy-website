@@ -35,7 +35,7 @@ function ForgotPassword() {
     validationSchema: Yup.object({
       email: Yup.string()
         .email("Invalid email formait")
-        .required(t("inputsErrorMessage")),
+        .required(t("resetEmailError")),
     }),
   });
   useEffect(() => {
@@ -43,6 +43,22 @@ function ForgotPassword() {
       dispatch(clearState());
     }
   }, [isError, isSuccess]);
+
+  const LinkTOLogin = () => {
+    return (
+      <Button
+        component={Link}
+        to="login?id=reset"
+        sx={{
+          backgroundColor: "white",
+          "&:hover": { backgroundColor: "white" },
+          color: "primary.main",
+        }}
+      >
+        {t("backToPhone")}
+      </Button>
+    );
+  };
   return (
     <FormContainer title="Forgot Password">
       <Grid
@@ -68,6 +84,11 @@ function ForgotPassword() {
                 {t("forgotMessage")}
               </Typography>
             ) : null}
+            <span>
+              {formik.touched.email && !!formik.errors.email ? (
+                <LinkTOLogin />
+              ) : null}
+            </span>
           </Grid>
         </Grid>
 
@@ -86,10 +107,9 @@ function ForgotPassword() {
         >
           <Button
             fullWidth
-            disableElevation={false}
             sx={{
-              backgroundColor: "primary.white",
-              "&:hover": { backgroundColor: "primary.white" },
+              backgroundColor: "white",
+              "&:hover": { backgroundColor: "white" },
               color: "primary.main",
             }}
             component={Link}

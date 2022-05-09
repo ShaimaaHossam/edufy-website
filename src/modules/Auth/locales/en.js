@@ -1,6 +1,7 @@
 const en = {
-  login: "login",
+  login: "Login",
   backToLogin: "Back to login",
+  backToPhone: "Phone Number",
   forgotPassword: "Forgot Password",
   forgotMessage:
     " An Email was sent to your email address please check the email to reset your password.",
@@ -10,8 +11,8 @@ const en = {
   contactUs: "Contact Munjz",
   createAccount: "Don't have an account? ",
 
-  loginWithEmail: "Login with email",
-  loginWithPhone: "Login with phone number",
+  loginWithEmail: "Login with Email",
+  loginWithPhone: "Login with Phone Number",
   rememberMe: "Remember me",
   emailPlaceholder: "email@websit.com",
   passwordPlaceholder: "Password",
@@ -21,6 +22,14 @@ const en = {
   continue: "Continue",
 
   inputsErrorMessage: "Required",
+  passwordError:
+    "Incorrect password, please enter a valid password or try Forgot Password.",
+  emailError: "This email doesn't exist. Please enter a valid email address.",
+  phoneError:
+    "This phone number doesn't exist, please enter a valid phone number.",
+  otpError: "Invalid Verification Code, try requesting a new code",
+  resetEmailError: "This email doesn't exist, please try again or login with",
+  resetPasswordError: "Password should be a minimum of 8 characters",
 
   verificationCode: "0000",
   verificationLabel: "Verification Code",

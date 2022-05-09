@@ -25,21 +25,20 @@ function Login() {
         </Grid>
 
         <Grid item xs={11} paddingBottom={3}>
-          <Paper>
-            <Button
-              fullWidth
-              sx={{
-                backgroundColor: "primary.white",
-                "&:hover": { backgroundColor: "primary.white" },
-                color: "#242E42",
-              }}
-              onClick={() => {
-                setPhoneLogin(!phoneLogin);
-              }}
-            >
-              {phoneLogin ? t("loginWithEmail") : t("loginWithPhone")}
-            </Button>
-          </Paper>
+          <Button
+            disableElevation={false}
+            sx={{
+              backgroundColor: "white",
+              "&:hover": { backgroundColor: "white" },
+              color: "#242E42",
+            }}
+            fullWidth
+            onClick={() => {
+              setPhoneLogin(!phoneLogin);
+            }}
+          >
+            {phoneLogin ? t("loginWithEmail") : t("loginWithPhone")}
+          </Button>
         </Grid>
       </Grid>
     </FormContainer>

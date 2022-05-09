@@ -28,6 +28,9 @@ function ResetPasword() {
 
   const { t } = useTranslation("auth");
 
+  const LinkTOLogin = () => {
+    return <Link to="login?id=reset">{t("backToPhone")}</Link>;
+  };
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -39,8 +42,8 @@ function ResetPasword() {
     validationSchema: Yup.object({
       email: Yup.string()
         .email("Invalid email formait")
-        .required(t("inputsErrorMessage")),
-      password: Yup.string().required(t("inputsErrorMessage")),
+        .required(`${t("resetEmailError")} `),
+      password: Yup.string().required(t("resetPasswordError")),
     }),
   });
 
@@ -67,7 +70,7 @@ function ResetPasword() {
                 width: 129,
                 height: 129,
                 borderRadius: "100%",
-                color: "primary.white",
+                color: "white",
                 padding: 3,
               }}
               fontSize="small"
@@ -80,6 +83,27 @@ function ResetPasword() {
             <Typography variant="h6" color="success.main">
               {t("successResetMessage")}
             </Typography>
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            sx={{
+              paddingBottom: 4,
+            }}
+          >
+            <Button
+              fullWidth
+              component={Link}
+              to="login"
+              sx={{
+                backgroundColor: "white",
+                "&:hover": { backgroundColor: "white" },
+                color: "primary.main",
+              }}
+            >
+              {t("backToLogin")}
+            </Button>
           </Grid>
         </Grid>
       ) : (
@@ -101,6 +125,11 @@ function ResetPasword() {
                 error={formik.touched.email && !!formik.errors.email}
                 helperText={formik.touched.email && formik.errors.email}
               />
+              <span>
+                {formik.touched.email && !!formik.errors.email ? (
+                  <LinkTOLogin />
+                ) : null}
+              </span>
             </Grid>
 
             <Grid item xs={11}>
@@ -115,41 +144,33 @@ function ResetPasword() {
             </Grid>
           </Grid>
 
-          <Grid
-            item
-            xs={11}
-            sx={{
-              marginBottom: 2,
-            }}
-          >
+          <Grid item xs={11}>
             <Button type="submit" fullWidth>
               {t("resetPassword")}
             </Button>
           </Grid>
+          <Grid
+            item
+            xs={11}
+            sx={{
+              paddingBottom: 4,
+            }}
+          >
+            <Button
+              fullWidth
+              component={Link}
+              to="login"
+              sx={{
+                backgroundColor: "white",
+                "&:hover": { backgroundColor: "white" },
+                color: "primary.main",
+              }}
+            >
+              {t("backToLogin")}
+            </Button>
+          </Grid>
         </Grid>
       )}
-
-      <Grid
-        item
-        xs={10}
-        margin="auto"
-        sx={{
-          paddingBottom: 4,
-        }}
-      >
-        <Button
-          fullWidth
-          sx={{
-            backgroundColor: "primary.white",
-            "&:hover": { backgroundColor: "primary.white" },
-            color: "primary.main",
-          }}
-          component={Link}
-          to="login"
-        >
-          {t("backToLogin")}
-        </Button>
-      </Grid>
     </FormContainer>
   );
 }

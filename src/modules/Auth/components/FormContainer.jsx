@@ -1,6 +1,11 @@
 import { Typography, Paper, Box } from "@mui/material";
 
+import Link from "../../../shared/components/Link";
+import { useTranslation } from "react-i18next";
+
 function FormContainer({ children, title }) {
+  const { t } = useTranslation("auth");
+
   return (
     <Paper
       elevation={1}
@@ -12,6 +17,7 @@ function FormContainer({ children, title }) {
         borderTopLeftRadius: 10,
         position: "relative",
         paddingTop: 6,
+        mb: 5,
       }}
     >
       <Box
@@ -30,6 +36,20 @@ function FormContainer({ children, title }) {
       </Box>
 
       <Box mb={3}>{children}</Box>
+
+      {title !== "Reset Password" && (
+        <>
+          <Typography sx={{ mb: 1, textAlign: "center" }}>
+            {t("createAccount")}
+            <Link to="/auth/login">{t("signup")}</Link>
+          </Typography>
+
+          <Typography sx={{ textAlign: "center", paddingBottom: 4 }}>
+            {t("signupTroubles")}
+            <Link to="/auth/login">{t("contactUs")}</Link>
+          </Typography>
+        </>
+      )}
     </Paper>
   );
 }

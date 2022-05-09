@@ -36,8 +36,8 @@ function EmailLogin() {
       dispatch(loginWithEmail(values));
     },
     validationSchema: Yup.object({
-      email: Yup.string().email().required(t("inputsErrorMessage")),
-      password: Yup.string().required(t("inputsErrorMessage")),
+      email: Yup.string().email().required(t("emailError")),
+      password: Yup.string().required(t("passwordError")),
     }),
   });
 
