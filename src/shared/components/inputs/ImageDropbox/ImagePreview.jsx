@@ -1,13 +1,10 @@
 import { useRef } from "react";
-import useBase64 from "../../../hooks/useBase64";
 import { SvgIcon, IconButton } from "@mui/material";
 
 import { mdiPencil, mdiDelete } from "@mdi/js";
 
-function ImagePreview({ lable }) {
-  const [image, uploadImage, setBaseImage] = useBase64();
+function ImagePreview({ lable, baseImage, uploadImage, setBaseImage }) {
   const fileInputRef = useRef();
-
   return (
     <>
       <label
@@ -21,7 +18,7 @@ function ImagePreview({ lable }) {
           height: 123,
           borderColor: "#D5D9E5",
           backgroundColor: "#FCFCFCB0",
-          backgroundImage: `url(${image})`,
+          backgroundImage: `url(${baseImage})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}

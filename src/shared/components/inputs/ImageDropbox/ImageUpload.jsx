@@ -29,17 +29,15 @@ function ImageUpload({ lable, uploadImage }) {
           }}
         />
         <Box
-          sx={{
-            direction: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 4,
-          }}
+          textAlign="center"
+          justifyContent="center"
+          alignItems="center"
+          pt={4}
         >
           <SvgIcon fontSize="small">
             <path d={mdiImagePlus} color="#ADB5D1" />
           </SvgIcon>
-          <Typography color="text.primary" variant="subtitle2" mt={4}>
+          <Typography color="text.primary" variant="subtitle2" mt={1}>
             {lable}
           </Typography>
         </Box>
