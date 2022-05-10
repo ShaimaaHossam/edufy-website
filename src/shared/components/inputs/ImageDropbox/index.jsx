@@ -1,6 +1,5 @@
 import ImagePreview from "./ImagePreview";
 import ImageUpload from "./ImageUpload";
-import { Box, FormHelperText } from "@mui/material";
 
 import useBase64 from "../../../hooks/useBase64";
 
@@ -11,26 +10,23 @@ function ImageInput({ lable, initialValue, onChange, helperText }) {
   );
   if (baseImage === "" || baseImage === undefined) {
     return (
-      <Box>
-        <ImageUpload lable={lable} uploadImage={uploadImage} />
-        <FormHelperText sx={{ color: "error.main" }}>
-          {error && helperText}
-        </FormHelperText>
-      </Box>
+      <ImageUpload
+        lable={lable}
+        uploadImage={uploadImage}
+        error={error}
+        helperText={helperText}
+      />
     );
   } else {
     return (
-      <Box>
-        <ImagePreview
-          lable={lable}
-          baseImage={baseImage}
-          uploadImage={uploadImage}
-          setBaseImage={setBaseImage}
-        />
-        <FormHelperText sx={{ color: "error.main" }}>
-          {error && helperText}
-        </FormHelperText>
-      </Box>
+      <ImagePreview
+        lable={lable}
+        baseImage={baseImage}
+        uploadImage={uploadImage}
+        setBaseImage={setBaseImage}
+        error={error}
+        helperText={helperText}
+      />
     );
   }
 }

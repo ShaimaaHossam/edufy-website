@@ -26,7 +26,6 @@ import FormContainer from "../components/FormContainer";
 import TextInput from "../../../shared/components/inputs/TextInput";
 import PasswordInput from "../../../shared/components/inputs/PasswordInput";
 import Link from "../../../shared/components/Link";
-import ImageInput from "../../../shared/components/inputs/ImageDropbox";
 
 function EmailLogin() {
   const dispatch = useDispatch();

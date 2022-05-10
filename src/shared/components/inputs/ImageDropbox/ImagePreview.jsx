@@ -1,9 +1,16 @@
 import { useRef } from "react";
-import { SvgIcon, IconButton } from "@mui/material";
+import { SvgIcon, IconButton, FormHelperText } from "@mui/material";
 
 import { mdiPencil, mdiDelete } from "@mdi/js";
 
-function ImagePreview({ lable, baseImage, uploadImage, setBaseImage }) {
+function ImagePreview({
+  lable,
+  baseImage,
+  uploadImage,
+  setBaseImage,
+  error,
+  helperText,
+}) {
   const fileInputRef = useRef();
   return (
     <>
@@ -16,7 +23,7 @@ function ImagePreview({ lable, baseImage, uploadImage, setBaseImage }) {
           display: "inline-block",
           width: 123,
           height: 123,
-          borderColor: "#D5D9E5",
+          borderColor: error ? "#FC2424" : "#D5D9E5",
           backgroundColor: "#FCFCFCB0",
           backgroundImage: `url(${baseImage})`,
           backgroundPosition: "center",
@@ -83,6 +90,9 @@ function ImagePreview({ lable, baseImage, uploadImage, setBaseImage }) {
           </SvgIcon>
         </IconButton>
       </label>
+      <FormHelperText sx={{ color: "error.main" }}>
+        {error && helperText}
+      </FormHelperText>
     </>
   );
 }

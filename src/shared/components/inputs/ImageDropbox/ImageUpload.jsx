@@ -1,7 +1,7 @@
-import { SvgIcon, Box, Typography } from "@mui/material";
+import { SvgIcon, Box, Typography, FormHelperText } from "@mui/material";
 import { mdiImagePlus } from "@mdi/js";
 
-function ImageUpload({ lable, uploadImage }) {
+function ImageUpload({ lable, uploadImage, error, helperText }) {
   return (
     <>
       <label
@@ -13,7 +13,7 @@ function ImageUpload({ lable, uploadImage }) {
           display: "inline-block",
           width: 123,
           height: 120,
-          borderColor: "#D5D9E5",
+          borderColor: error ? "#FC2424" : "#D5D9E5",
           backgroundColor: "#FCFCFCB0",
           cursor: "pointer",
         }}
@@ -42,6 +42,9 @@ function ImageUpload({ lable, uploadImage }) {
           </Typography>
         </Box>
       </label>
+      <FormHelperText sx={{ color: "error.main" }}>
+        {error && helperText}
+      </FormHelperText>
     </>
   );
 }
