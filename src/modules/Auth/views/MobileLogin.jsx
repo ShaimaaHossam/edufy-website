@@ -54,12 +54,7 @@ function MobileLogin() {
   };
   const handleContinue = () => {
     if (phoneFormik.values.phone.length === 11) {
-      try {
-        dispatch(requestOtp(phoneFormik.values.phone));
-        setOtp(true);
-      } catch (error) {
-        console.log(error);
-      }
+      dispatch(requestOtp(phoneFormik.values.phone));
     }
   };
   useEffect(() => {
@@ -68,6 +63,9 @@ function MobileLogin() {
     }
 
     if (isSuccess) {
+      setOtp(true);
+    }
+    if (isSuccess && phoneFormik.values.phone === 11) {
       dispatch(clearState());
       navigate("/dashboard");
     }
