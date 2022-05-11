@@ -38,23 +38,23 @@ function MobileLogin() {
       otp: "",
     },
     onSubmit: (values) => {
-      dispatch(loginWithPhone(values));
+      dispatch(loginWithPhone({...values,phone:`+966${values.phone}`}));
     },
     validationSchema: Yup.object({
       phone: Yup.string().required(t("inputsErrorMessage")),
       otp: Yup.string().required(t("inputsErrorMessage")),
     }),
   });
-
+  console.log(`+966${phoneFormik.values.phone}`)
   const resendOtp = () => {
     if (seconds === 0) {
       setSeconds(40);
-      dispatch(requestOtp(phoneFormik.values.phone));
+      dispatch(requestOtp(`+966${phoneFormik.values.phone}`));
     }
   };
   const handleContinue = () => {
-    if (phoneFormik.values.phone.length === 11) {
-      dispatch(requestOtp(phoneFormik.values.phone));
+    if (phoneFormik.values.phone.length === 10) {
+      dispatch(requestOtp(`+966${phoneFormik.values.phone}`));
     }
   };
   useEffect(() => {
@@ -65,7 +65,7 @@ function MobileLogin() {
     if (isSuccess) {
       setOtp(true);
     }
-    if (isSuccess && phoneFormik.values.phone === 11) {
+    if (isSuccess && phoneFormik.values.phone === 10) {
       dispatch(clearState());
       navigate("/dashboard");
     }
