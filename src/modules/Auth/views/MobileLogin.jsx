@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   loginWithPhone,
+  requestOtp,
   userSelector,
   clearState,
 } from "../../../redux/userSlice";
@@ -22,8 +23,7 @@ import FormContainer from "../components/FormContainer";
 
 function MobileLogin() {
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError, errorMessage } =
-    useSelector(userSelector);
+  const { isFetching, isSuccess, isError } = useSelector(userSelector);
   const navigate = useNavigate();
 
   const [otp, setOtp] = useState(false);
@@ -49,9 +49,19 @@ function MobileLogin() {
   const resendOtp = () => {
     if (seconds === 0) {
       setSeconds(40);
+      dispatch(requestOtp(phoneFormik.values.phone));
     }
   };
-
+  const handleContinue = () => {
+    if (phoneFormik.values.phone.length === 11) {
+      try {
+        dispatch(requestOtp(phoneFormik.values.phone));
+        setOtp(true);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   useEffect(() => {
     if (isError) {
       dispatch(clearState());
@@ -163,9 +173,7 @@ function MobileLogin() {
               <Button
                 type="submit"
                 onClick={() => {
-                  if (phoneFormik.values.phone.length === 11) {
-                    setOtp(true);
-                  }
+                  handleContinue();
                 }}
                 fullWidth
               >
@@ -174,7 +182,7 @@ function MobileLogin() {
             </Grid>
           </Grid>
         )}
-        
+
         <Grid item xs={11}>
           <Divider>
             <Typography>or</Typography>

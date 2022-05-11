@@ -2,10 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const loginWithEmail = createAsyncThunk(
   "users/loginWithEmail",
-  async ({ email, password}, thunkAPI) => {
+  async ({ email, password, remember }, thunkAPI) => {
     try {
       const response = await fetch(
-        "https://63443c69-6908-47a9-b1d2-5437f06aa1f6.mock.pstmn.io/auth/login",
+        "http://api.stage.marafeq.munjz.com/api/v1/auth/login",
         {
           method: "POST",
           headers: {
@@ -13,8 +13,39 @@ export const loginWithEmail = createAsyncThunk(
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            username:email,
+            email,
             password,
+            remember,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (response.status === 200) {
+        localStorage.setItem("token", data.token);
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (e) {
+      thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
+export const requestOtp = createAsyncThunk(
+  "users/requestOtp",
+  async ({ phone }, thunkAPI) => {
+    try {
+      const response = await fetch(
+        "http://api.stage.marafeq.munjz.com/api/v1/auth/phone-login",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            phone,
           }),
         }
       );
@@ -32,10 +63,10 @@ export const loginWithEmail = createAsyncThunk(
 );
 export const loginWithPhone = createAsyncThunk(
   "users/loginWithPhone",
-  async ({ phone, otp}, thunkAPI) => {
+  async ({ phone, token }, thunkAPI) => {
     try {
       const response = await fetch(
-        "https://63443c69-6908-47a9-b1d2-5437f06aa1f6.mock.pstmn.io/auth/verify",
+        "http://api.stage.marafeq.munjz.com/api/v1/auth/otp-verify",
         {
           method: "POST",
           headers: {
@@ -44,11 +75,12 @@ export const loginWithPhone = createAsyncThunk(
           },
           body: JSON.stringify({
             phone,
-            otp,
+            token,
           }),
         }
       );
       let data = await response.json();
+      console.log("data", data);
       if (response.status === 200) {
         localStorage.setItem("token", data.token);
         return data;
@@ -63,17 +95,17 @@ export const loginWithPhone = createAsyncThunk(
 
 export const forgetPassword = createAsyncThunk(
   "users/forgetPassword",
-  async ({ email}, thunkAPI) => {
+  async ({ email }, thunkAPI) => {
     try {
       const response = await fetch(
-        "https://63443c69-6908-47a9-b1d2-5437f06aa1f6.mock.pstmn.io/auth/forogt",
+        "http://api.stage.marafeq.munjz.com/api/v1/auth/forgot",
         {
           method: "POST",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({email}),
+          body: JSON.stringify({ email }),
         }
       );
       let data = await response.json();
@@ -87,15 +119,14 @@ export const forgetPassword = createAsyncThunk(
       thunkAPI.rejectWithValue(e.response.data);
     }
   }
-
 );
 
 export const updatePassword = createAsyncThunk(
   "users/updatePassword",
-  async ({ email, password}, thunkAPI) => {
+  async ({ email, password, token }, thunkAPI) => {
     try {
       const response = await fetch(
-        "https://63443c69-6908-47a9-b1d2-5437f06aa1f6.mock.pstmn.io/auth/updatepassword",
+        "http://api.stage.marafeq.munjz.com/api/v1/auth/reset",
         {
           method: "POST",
           headers: {
@@ -105,6 +136,7 @@ export const updatePassword = createAsyncThunk(
           body: JSON.stringify({
             email,
             password,
+            token,
           }),
         }
       );
@@ -126,12 +158,12 @@ export const userSlice = createSlice({
   initialState: {
     email: "",
     password: "",
-    phone:"",
-    otp:"",
+    phone: "",
+    token: "",
     isFetching: false,
     isSuccess: false,
     isError: false,
-    errorMessage: "",
+    errors: {},
   },
   reducers: {
     clearState: (state) => {
@@ -144,6 +176,7 @@ export const userSlice = createSlice({
   },
   extraReducers: {
     [loginWithEmail.fulfilled]: (state, { payload }) => {
+      console.log("payload", payload);
       state.email = payload.email;
       state.password = payload.password;
       state.isFetching = false;
@@ -151,24 +184,40 @@ export const userSlice = createSlice({
       return state;
     },
     [loginWithEmail.rejected]: (state, { payload }) => {
+      console.log("payload", payload);
       state.isFetching = false;
       state.isError = true;
-      state.errorMessage = payload.message;
+      state.errors = payload.errors.generic;
     },
     [loginWithEmail.pending]: (state) => {
       state.isFetching = true;
     },
+    [requestOtp.fulfilled]: (state, { payload }) => {
+      state.phone = payload.phone;
+      state.isFetching = false;
+      state.isSuccess = true;
+      return state;
+    },
+    [requestOtp.rejected]: (state, { payload }) => {
+      state.isFetching = false;
+      state.isError = true;
+      state.errors = payload.errors.generic;
+    },
+    [requestOtp.pending]: (state) => {
+      state.isFetching = true;
+    },
     [loginWithPhone.fulfilled]: (state, { payload }) => {
       state.phone = payload.phone;
-      state.otp = payload.otp;
+      state.token = payload.token;
       state.isFetching = false;
       state.isSuccess = true;
       return state;
     },
     [loginWithPhone.rejected]: (state, { payload }) => {
+      console.log("payload", payload);
       state.isFetching = false;
       state.isError = true;
-      state.errorMessage = payload.message;
+      state.errors = payload.errors.generic;
     },
     [loginWithPhone.pending]: (state) => {
       state.isFetching = true;
@@ -182,7 +231,7 @@ export const userSlice = createSlice({
     [forgetPassword.rejected]: (state, { payload }) => {
       state.isFetching = false;
       state.isError = true;
-      state.errorMessage = payload.message;
+      state.errors = payload.errors.generi;
     },
     [forgetPassword.pending]: (state) => {
       state.isFetching = true;
@@ -190,6 +239,7 @@ export const userSlice = createSlice({
     [updatePassword.fulfilled]: (state, { payload }) => {
       state.email = payload.email;
       state.password = payload.password;
+      state.token = payload.token;
       state.isFetching = false;
       state.isSuccess = true;
       return state;
@@ -197,7 +247,7 @@ export const userSlice = createSlice({
     [updatePassword.rejected]: (state, { payload }) => {
       state.isFetching = false;
       state.isError = true;
-      state.errorMessage = payload.message;
+      state.errors = payload.errors.generi;
     },
     [updatePassword.pending]: (state) => {
       state.isFetching = true;
