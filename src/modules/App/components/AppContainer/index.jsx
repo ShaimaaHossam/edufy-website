@@ -35,7 +35,7 @@ const Drawer = styled(MuiDrawer, {
         duration: theme.transitions.duration.enteringScreen,
       }),
       border: "none",
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(3),
     },
   }),
   ...(!open && {
@@ -51,7 +51,7 @@ const Drawer = styled(MuiDrawer, {
         duration: theme.transitions.duration.leavingScreen,
       }),
       border: "none",
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(3),
       [theme.breakpoints.up("sm")]: {},
     },
   }),
@@ -62,7 +62,7 @@ const Main = styled("main", {
 })(({ theme, open }) => ({
   position: "relative",
   flexGrow: 1,
-  margin: theme.spacing(2, 2, 2, 0),
+  margin: theme.spacing(3, 0, 3, 0),
   ...(open && {
     marginLeft: OPENED_DRAWER_WIDTH,
     transition: theme.transitions.create("margin", {
@@ -77,6 +77,14 @@ const Main = styled("main", {
       duration: theme.transitions.duration.leavingScreen,
     }),
   }),
+}));
+
+const Container = styled("div")(({ theme }) => ({
+  position: "absolute",
+  top: 0,
+  bottom: 0,
+  width: "100%",
+  padding: theme.spacing(0, 4),
 }));
 
 function AppContainer({ children }) {
@@ -105,9 +113,7 @@ function AppContainer({ children }) {
       </Drawer>
 
       <Main open={isDrawerOpen}>
-        <Box sx={{ position: "absolute", width: "100%", top: 0, bottom: 0 }}>
-          {children}
-        </Box>
+        <Container>{children}</Container>
       </Main>
     </Box>
   );
