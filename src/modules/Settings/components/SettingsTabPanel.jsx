@@ -1,24 +1,26 @@
-import {useState} from "react"
-import PropTypes from 'prop-types';
-import{Tabs, Tab, Typography,  Box} from "@mui/material";
+import { useState } from "react";
+import PropTypes from "prop-types";
+import { Tabs, Tab, Box } from "@mui/material";
 
+import Notifications from "./Notifications";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <Box
       role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
+      sx={{
+        paddingTop: 3,
+        margin: "auto",
+        width: "60%",
+      }}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
+      {value === index && <Box>{children}</Box>}
+    </Box>
   );
 }
 
@@ -31,7 +33,11 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+    sx: {
+      marginRight: 6,
+      textTransform: "capitalize",
+    },
   };
 }
 
@@ -43,11 +49,15 @@ function BasicTabs() {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Personal" {...a11yProps(0)} sx={{marginRight:6}}/>
-          <Tab label="Notifications" {...a11yProps(1)} sx={{marginRight:6}}/>
+    <Box sx={{ width: "100%", px: 5, py: 2 }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          <Tab label="Personal" {...a11yProps(0)} />
+          <Tab label="Notifications" {...a11yProps(1)} />
           <Tab label="Roles and permissions" {...a11yProps(2)} />
         </Tabs>
       </Box>
@@ -55,7 +65,7 @@ function BasicTabs() {
         Item One
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <Notifications/>
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
