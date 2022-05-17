@@ -23,7 +23,8 @@ import FormContainer from "../components/FormContainer";
 
 function MobileLogin() {
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError, errors } = useSelector(userSelector);
+  const { isFetching, isSuccess, isError, errors, userData } =
+    useSelector(userSelector);
   const navigate = useNavigate();
 
   const [otp, setOtp] = useState(false);
@@ -39,7 +40,6 @@ function MobileLogin() {
     },
     onSubmit: (values) => {
       dispatch(loginWithPhone({ token: otp, phone: `+966${values.phone}` }));
-      navigate("/");
     },
     validationSchema: Yup.object({
       phone: Yup.string().required(t("inputsErrorMessage")),
@@ -64,11 +64,13 @@ function MobileLogin() {
       phoneFormik.setErrors(errors);
       dispatch(clearState());
     }
-
     if (isSuccess) {
       setOtp(true);
     }
-  }, [isError, isSuccess]);
+    if (isSuccess === true && Boolean(userData) === true) {
+      navigate("/", { replace: true });
+    }
+  }, [isError, isSuccess, userData]);
 
   useEffect(() => {
     if (otpRef.current) {

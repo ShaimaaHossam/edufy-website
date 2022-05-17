@@ -24,8 +24,13 @@ export const loginWithEmail = createAsyncThunk(
       if (response.status === 200) {
         if (remember === true) {
           localStorage.setItem("token", result.data.token);
+          localStorage.setItem("isLoggedIn", true);
+          return result;
+        } else {
+          sessionStorage.setItem("token", result.data.token);
+          sessionStorage.setItem("isLoggedIn", true);
+          return result;
         }
-        return result;
       } else {
         return thunkAPI.rejectWithValue(result);
       }
@@ -87,6 +92,7 @@ export const loginWithPhone = createAsyncThunk(
       let result = await response.json();
       if (response.status === 200) {
         localStorage.setItem("token", result.data.token);
+        localStorage.setItem("isLoggedIn", true);
         return result;
       } else {
         return thunkAPI.rejectWithValue(result);
@@ -170,13 +176,12 @@ export const rememberMe = createAsyncThunk(
             Accept: "application/json",
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-            token: window.localStorage.getItem("token"),
+            Authorization: "Bearer " + window.localStorage.getItem("token"),
           },
         }
       );
       let result = await response.json();
       if (response.status === 200) {
-        localStorage.setItem("remember", result.data.token);
         return result;
       } else {
         return thunkAPI.rejectWithValue(result);
@@ -191,7 +196,6 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     userData: "",
-    me: false,
     token: "",
     errors: "",
     isFetching: false,
@@ -204,10 +208,6 @@ export const userSlice = createSlice({
       state.isSuccess = false;
       state.isFetching = false;
 
-      return state;
-    },
-    updateRemember: (state, val) => {
-      state.me = val;
       return state;
     },
   },
@@ -285,10 +285,9 @@ export const userSlice = createSlice({
       state.isSuccess = true;
       return state;
     },
-    [rememberMe.rejected]: (state, { payload }) => {
+    [rememberMe.rejected]: (state, obj) => {
       state.isFetching = false;
       state.isError = true;
-      state.errors = payload.errors.generic;
     },
     [rememberMe.pending]: (state) => {
       state.isFetching = true;
@@ -296,6 +295,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { clearState, updateRemember } = userSlice.actions;
+export const { clearState } = userSlice.actions;
 
 export const userSelector = (state) => state.user;

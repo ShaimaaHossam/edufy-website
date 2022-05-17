@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 import { Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { userSelector, rememberMe } from "../../redux/userSlice";
+import { userSelector, rememberMe, clearState } from "../../redux/userSlice";
 
 import Theme from "./components/Theme";
 import AppContainer from "./components/AppContainer";
@@ -26,16 +26,40 @@ const Greeting = ({ text }) => {
 };
 
 function App() {
-  const [isLoggedIn, seIsLoggedIn] = useState(false);
-  const { userData } = useSelector(userSelector);
+  const dispatch = useDispatch();
+
+  const [isLoggedIn, seIsLoggedIn] = useState(
+    window.sessionStorage.getItem("isLoggedIn") ||
+      window.localStorage.getItem("isLoggedIn")
+  );
+  const { userData, isSuccess, isError } = useSelector(userSelector);
 
   useEffect(() => {
-    if (userData !== "") {
+    if (window.sessionStorage.getItem("token")) {
       seIsLoggedIn(true);
     } else if (window.localStorage.getItem("token")) {
       seIsLoggedIn(true);
     }
   }, [userData]);
+
+  useEffect(() => {
+    let token = window.localStorage.getItem("token");
+    if (token) {
+      dispatch(rememberMe(token));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isSuccess) {
+      seIsLoggedIn(true);
+      dispatch(clearState());
+    }
+
+    if (isError) {
+      seIsLoggedIn(false);
+      dispatch(clearState());
+    }
+  }, [isSuccess, isError]);
   return (
     <Theme>
       <Router>
@@ -43,7 +67,7 @@ function App() {
           <AppContainer>
             <Routes>
               {/* LIST APP ROUTES HERE */}
-              <Route index path="/" element={<Greeting text="greeting" />} />
+              <Route index path="/" element={<Greeting />}></Route>
             </Routes>
           </AppContainer>
         ) : (
