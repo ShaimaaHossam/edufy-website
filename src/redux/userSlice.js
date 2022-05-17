@@ -5,12 +5,13 @@ export const loginWithEmail = createAsyncThunk(
   async ({ email, password, remember }, thunkAPI) => {
     try {
       const response = await fetch(
-        "http://api.stage.marafeq.munjz.com/api/v1/auth/login",
+        "https://api.stage.marafeq.munjz.com/v1/auth/login",
         {
           method: "POST",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
           },
           body: JSON.stringify({
             email,
@@ -19,12 +20,14 @@ export const loginWithEmail = createAsyncThunk(
           }),
         }
       );
-      let data = await response.json();
+      let result = await response.json();
       if (response.status === 200) {
-        localStorage.setItem("token", data.token);
-        return data;
+        if (remember === true) {
+          localStorage.setItem("token", result.data.token);
+        }
+        return result;
       } else {
-        return thunkAPI.rejectWithValue(data);
+        return thunkAPI.rejectWithValue(result);
       }
     } catch (e) {
       thunkAPI.rejectWithValue(e.response.data);
@@ -34,44 +37,46 @@ export const loginWithEmail = createAsyncThunk(
 
 export const requestOtp = createAsyncThunk(
   "users/requestOtp",
-  async ({ phone }, thunkAPI) => {
+  async (phone, thunkAPI) => {
     try {
       const response = await fetch(
-        "http://api.stage.marafeq.munjz.com/api/v1/auth/phone-login",
+        "https://api.stage.marafeq.munjz.com/v1/auth/phone-login",
         {
           method: "POST",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
           },
           body: JSON.stringify({
             phone,
           }),
         }
       );
-      let data = await response.json();
+      let result = await response.json();
       if (response.status === 200) {
-        localStorage.setItem("token", data.token);
-        return data;
+        return result;
       } else {
-        return thunkAPI.rejectWithValue(data);
+        return thunkAPI.rejectWithValue(result);
       }
     } catch (e) {
       thunkAPI.rejectWithValue(e.response.data);
     }
   }
 );
+
 export const loginWithPhone = createAsyncThunk(
   "users/loginWithPhone",
   async ({ phone, token }, thunkAPI) => {
     try {
       const response = await fetch(
-        "http://api.stage.marafeq.munjz.com/api/v1/auth/otp-verify",
+        "https://api.stage.marafeq.munjz.com/v1/auth/otp-verify",
         {
           method: "POST",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
           },
           body: JSON.stringify({
             phone,
@@ -79,13 +84,12 @@ export const loginWithPhone = createAsyncThunk(
           }),
         }
       );
-      let data = await response.json();
-      console.log("data", data);
+      let result = await response.json();
       if (response.status === 200) {
-        localStorage.setItem("token", data.token);
-        return data;
+        localStorage.setItem("token", result.data.token);
+        return result;
       } else {
-        return thunkAPI.rejectWithValue(data);
+        return thunkAPI.rejectWithValue(result);
       }
     } catch (e) {
       thunkAPI.rejectWithValue(e.response.data);
@@ -98,22 +102,22 @@ export const forgetPassword = createAsyncThunk(
   async ({ email }, thunkAPI) => {
     try {
       const response = await fetch(
-        "http://api.stage.marafeq.munjz.com/api/v1/auth/forgot",
+        "https://api.stage.marafeq.munjz.com/v1/auth/forgot",
         {
           method: "POST",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
           },
           body: JSON.stringify({ email }),
         }
       );
-      let data = await response.json();
+      let result = await response.json();
       if (response.status === 200) {
-        localStorage.setItem("token", data.token);
-        return data;
+        return result;
       } else {
-        return thunkAPI.rejectWithValue(data);
+        return thunkAPI.rejectWithValue(result);
       }
     } catch (e) {
       thunkAPI.rejectWithValue(e.response.data);
@@ -123,29 +127,59 @@ export const forgetPassword = createAsyncThunk(
 
 export const updatePassword = createAsyncThunk(
   "users/updatePassword",
-  async ({ email, password, token }, thunkAPI) => {
+  async ({ email, token, password, password_confirmation }, thunkAPI) => {
     try {
       const response = await fetch(
-        "http://api.stage.marafeq.munjz.com/api/v1/auth/reset",
+        "https://api.stage.marafeq.munjz.com/v1/auth/reset",
         {
           method: "POST",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
           },
           body: JSON.stringify({
             email,
             password,
             token,
+            password_confirmation,
           }),
         }
       );
-      let data = await response.json();
+      let result = await response.json();
       if (response.status === 200) {
-        localStorage.setItem("token", data.token);
-        return data;
+        return result;
       } else {
-        return thunkAPI.rejectWithValue(data);
+        return thunkAPI.rejectWithValue(result);
+      }
+    } catch (e) {
+      thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
+export const rememberMe = createAsyncThunk(
+  "users/rememberMe",
+  async (thunkAPI) => {
+    try {
+      const response = await fetch(
+        "https://api.stage.marafeq.munjz.com/v1/auth/me",
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            token: window.localStorage.getItem("token"),
+          },
+        }
+      );
+      let result = await response.json();
+      if (response.status === 200) {
+        localStorage.setItem("remember", result.data.token);
+        return result;
+      } else {
+        return thunkAPI.rejectWithValue(result);
       }
     } catch (e) {
       thunkAPI.rejectWithValue(e.response.data);
@@ -156,14 +190,13 @@ export const updatePassword = createAsyncThunk(
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    email: "",
-    password: "",
-    phone: "",
+    userData: "",
+    me: false,
     token: "",
+    errors: "",
     isFetching: false,
     isSuccess: false,
     isError: false,
-    errors: {},
   },
   reducers: {
     clearState: (state) => {
@@ -173,18 +206,19 @@ export const userSlice = createSlice({
 
       return state;
     },
+    updateRemember: (state, val) => {
+      state.me = val;
+      return state;
+    },
   },
   extraReducers: {
     [loginWithEmail.fulfilled]: (state, { payload }) => {
-      console.log("payload", payload);
-      state.email = payload.email;
-      state.password = payload.password;
+      state.userData = payload.data;
       state.isFetching = false;
       state.isSuccess = true;
       return state;
     },
     [loginWithEmail.rejected]: (state, { payload }) => {
-      console.log("payload", payload);
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors.generic;
@@ -193,7 +227,6 @@ export const userSlice = createSlice({
       state.isFetching = true;
     },
     [requestOtp.fulfilled]: (state, { payload }) => {
-      state.phone = payload.phone;
       state.isFetching = false;
       state.isSuccess = true;
       return state;
@@ -207,14 +240,12 @@ export const userSlice = createSlice({
       state.isFetching = true;
     },
     [loginWithPhone.fulfilled]: (state, { payload }) => {
-      state.phone = payload.phone;
-      state.token = payload.token;
+      state.userData = payload.data;
       state.isFetching = false;
       state.isSuccess = true;
       return state;
     },
     [loginWithPhone.rejected]: (state, { payload }) => {
-      console.log("payload", payload);
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors.generic;
@@ -223,7 +254,6 @@ export const userSlice = createSlice({
       state.isFetching = true;
     },
     [forgetPassword.fulfilled]: (state, { payload }) => {
-      state.email = payload.email;
       state.isFetching = false;
       state.isSuccess = true;
       return state;
@@ -231,15 +261,12 @@ export const userSlice = createSlice({
     [forgetPassword.rejected]: (state, { payload }) => {
       state.isFetching = false;
       state.isError = true;
-      state.errors = payload.errors.generi;
+      state.errors = payload.errors.generic;
     },
     [forgetPassword.pending]: (state) => {
       state.isFetching = true;
     },
     [updatePassword.fulfilled]: (state, { payload }) => {
-      state.email = payload.email;
-      state.password = payload.password;
-      state.token = payload.token;
       state.isFetching = false;
       state.isSuccess = true;
       return state;
@@ -247,14 +274,28 @@ export const userSlice = createSlice({
     [updatePassword.rejected]: (state, { payload }) => {
       state.isFetching = false;
       state.isError = true;
-      state.errors = payload.errors.generi;
+      state.errors = payload.errors.generic;
     },
     [updatePassword.pending]: (state) => {
+      state.isFetching = true;
+    },
+    [rememberMe.fulfilled]: (state, { payload }) => {
+      state.remember = payload.data.token;
+      state.isFetching = false;
+      state.isSuccess = true;
+      return state;
+    },
+    [rememberMe.rejected]: (state, { payload }) => {
+      state.isFetching = false;
+      state.isError = true;
+      state.errors = payload.errors.generic;
+    },
+    [rememberMe.pending]: (state) => {
       state.isFetching = true;
     },
   },
 });
 
-export const { clearState } = userSlice.actions;
+export const { clearState, updateRemember } = userSlice.actions;
 
 export const userSelector = (state) => state.user;

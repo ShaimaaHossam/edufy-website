@@ -16,6 +16,7 @@ const en = {
   rememberMe: "Remember me",
   emailPlaceholder: "email@websit.com",
   passwordPlaceholder: "Password",
+  passwordConfirmation: "Confirm Password",
   emailLabel: "Email",
   passwordLabel: "Password",
   phonePlaceholder: "Phone Number",

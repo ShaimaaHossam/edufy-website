@@ -7,6 +7,7 @@ import {
   loginWithEmail,
   userSelector,
   clearState,
+  updateRemember,
 } from "../../../redux/userSlice";
 
 import { useTranslation } from "react-i18next";
@@ -30,18 +31,20 @@ import Link from "../../../shared/components/Link";
 function EmailLogin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isFetching, isSuccess, isError, errorMessage } =
-    useSelector(userSelector);
-  const { t } = useTranslation("auth");
 
+  const { isFetching, isSuccess, isError, errors, me, userData } =
+    useSelector(userSelector);
+
+  const { t } = useTranslation("auth");
   const emailFormik = useFormik({
     initialValues: {
       email: "",
       password: "",
-      remember: false,
+      remember: me,
     },
     onSubmit: (values) => {
       dispatch(loginWithEmail(values));
+      dispatch(updateRemember(values.remember));
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -53,12 +56,13 @@ function EmailLogin() {
 
   useEffect(() => {
     if (isError) {
+      emailFormik.setErrors(errors);
       dispatch(clearState());
     }
 
     if (isSuccess) {
+      navigate("/");
       dispatch(clearState());
-      navigate("/dashboard");
     }
   }, [isError, isSuccess]);
 

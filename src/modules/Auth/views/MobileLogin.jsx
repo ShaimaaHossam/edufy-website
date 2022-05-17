@@ -23,7 +23,7 @@ import FormContainer from "../components/FormContainer";
 
 function MobileLogin() {
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError } = useSelector(userSelector);
+  const { isFetching, isSuccess, isError, errors } = useSelector(userSelector);
   const navigate = useNavigate();
 
   const [otp, setOtp] = useState(false);
@@ -38,14 +38,14 @@ function MobileLogin() {
       otp: "",
     },
     onSubmit: (values) => {
-      dispatch(loginWithPhone({...values,phone:`+966${values.phone}`}));
+      dispatch(loginWithPhone({ token: otp, phone: `+966${values.phone}` }));
+      navigate("/");
     },
     validationSchema: Yup.object({
       phone: Yup.string().required(t("inputsErrorMessage")),
       otp: Yup.string().required(t("inputsErrorMessage")),
     }),
   });
-  console.log(`+966${phoneFormik.values.phone}`)
   const resendOtp = () => {
     if (seconds === 0) {
       setSeconds(40);
@@ -54,20 +54,19 @@ function MobileLogin() {
   };
   const handleContinue = () => {
     if (phoneFormik.values.phone.length === 10) {
-      dispatch(requestOtp(`+966${phoneFormik.values.phone}`));
+      let phone = `+966${phoneFormik.values.phone}`;
+      dispatch(requestOtp(phone));
     }
   };
+
   useEffect(() => {
     if (isError) {
+      phoneFormik.setErrors(errors);
       dispatch(clearState());
     }
 
     if (isSuccess) {
       setOtp(true);
-    }
-    if (isSuccess && phoneFormik.values.phone === 10) {
-      dispatch(clearState());
-      navigate("/dashboard");
     }
   }, [isError, isSuccess]);
 

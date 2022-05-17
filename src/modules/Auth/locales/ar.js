@@ -1,7 +1,7 @@
 const ar = {
   login: "تسجيل الدخول",
   backToLogin: "الذهاب الي تسجيل الدخول",
-  backToPhone:"تسجيل الدخول برقم الجوال",
+  backToPhone: "تسجيل الدخول برقم الجوال",
   forgotPassword: "نسيت كلمة المرور",
   forgotMessage:
     "تم ارسال رساله الي بريدك الالكتروني  برجاء تفقده لاعادة ادخال رقمك السري",
@@ -16,6 +16,7 @@ const ar = {
   rememberMe: "تذكرني",
   emailPlaceholder: "email@websit.com",
   passwordPlaceholder: "Password",
+  passwordConfirmation: "Confirm Password",
   emailLabel: "البريد الالكتروني",
   passwordLabel: "الرقم السري ",
 
@@ -25,11 +26,12 @@ const ar = {
   inputsErrorMessage: "هذا الحقل مطلوب",
   passwordError:
     "الرقم السري غير صحيح برجاء ادخل الرقم الصحيح او اذهب الي نسيت كلمة المرور",
-  emailError:"هذا البريد غير صحيح ، برجاء ادخال البريد بشكل صحيح ", 
-  phoneError:"هذا الرقم غير موجود، برجاء ادخال الرقم بشكل صحيح",
-  otpError:"هذا الكود غير صحيح ، يمكنك طلب كود اخر ",
-  resetEmailError:"هذا البريد غير موجود ، برجاء اداخل البريد بشكل صحيح او سجل الدخول بواسطة",
-  resetPasswordError:"يجب ان لا يقل الرقم السري عن 8 حروف",
+  emailError: "هذا البريد غير صحيح ، برجاء ادخال البريد بشكل صحيح ",
+  phoneError: "هذا الرقم غير موجود، برجاء ادخال الرقم بشكل صحيح",
+  otpError: "هذا الكود غير صحيح ، يمكنك طلب كود اخر ",
+  resetEmailError:
+    "هذا البريد غير موجود ، برجاء اداخل البريد بشكل صحيح او سجل الدخول بواسطة",
+  resetPasswordError: "يجب ان لا يقل الرقم السري عن 8 حروف",
 
   verificationCode: "0000",
   verificationLabel: "كود التفعيل",

@@ -1,13 +1,15 @@
+import { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
-
 import { useTranslation } from "react-i18next";
 
 import { Typography } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { userSelector, rememberMe } from "../../redux/userSlice";
 
 import Theme from "./components/Theme";
 import AppContainer from "./components/AppContainer";
@@ -24,8 +26,16 @@ const Greeting = ({ text }) => {
 };
 
 function App() {
-  const isLoggedIn = false; // try to change this to false
+  const [isLoggedIn, seIsLoggedIn] = useState(false);
+  const { userData } = useSelector(userSelector);
 
+  useEffect(() => {
+    if (userData !== "") {
+      seIsLoggedIn(true);
+    } else if (window.localStorage.getItem("token")) {
+      seIsLoggedIn(true);
+    }
+  }, [userData]);
   return (
     <Theme>
       <Router>
@@ -33,7 +43,7 @@ function App() {
           <AppContainer>
             <Routes>
               {/* LIST APP ROUTES HERE */}
-              <Route index element={<Greeting text="greeting" />} />
+              <Route index path="/" element={<Greeting text="greeting" />} />
             </Routes>
           </AppContainer>
         ) : (

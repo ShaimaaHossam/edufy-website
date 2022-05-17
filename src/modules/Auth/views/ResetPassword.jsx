@@ -23,16 +23,15 @@ import FormContainer from "../components/FormContainer";
 
 function ResetPasword() {
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError, errorMessage } =
-    useSelector(userSelector);
+  const { isFetching, isSuccess, isError, errors } = useSelector(userSelector);
 
   const { t } = useTranslation("auth");
-
-
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
+      password_confirmation: "",
+      token: "",
     },
     onSubmit: (values) => {
       dispatch(updatePassword(values));
@@ -41,17 +40,22 @@ function ResetPasword() {
       email: Yup.string()
         .email("Invalid email formait")
         .required(`${t("inputsErrorMessage")} `),
-      password: Yup.string().required(t("inputsErrorMessage"))
-      .min(8,t("resetPasswordError"))
-
+      password: Yup.string()
+        .required(t("inputsErrorMessage"))
+        .min(8, t("resetPasswordError")),
+      password_confirmation: Yup.string().required(t("inputsErrorMessage")),
+      token: Yup.string()
+        .required(t("inputsErrorMessage"))
+        .min(4, t("otpError")),
     }),
   });
 
   useEffect(() => {
     if (isError) {
+      formik.setErrors(errors);
       dispatch(clearState());
     }
-  }, [isError, isSuccess]);
+  }, [isError]);
 
   return (
     <FormContainer title="Reset Password">
@@ -130,7 +134,7 @@ function ResetPasword() {
                   position: "relative",
                 }}
               >
-                {formik.touched.email && !!formik.errors.email ? (
+                {isError ? (
                   <Link
                     to="/auth/mobile-login"
                     sx={{
@@ -153,6 +157,33 @@ function ResetPasword() {
                 {...formik.getFieldProps("password")}
                 error={formik.touched.password && !!formik.errors.password}
                 helperText={formik.touched.password && formik.errors.password}
+              />
+            </Grid>
+            <Grid item xs={11}>
+              <PasswordInput
+                name="passwordConfirmation"
+                label={t("passwordConfirmation")}
+                placeholder={t("passwordConfirmation")}
+                {...formik.getFieldProps("password_confirmation")}
+                error={
+                  formik.touched.password_confirmation &&
+                  !!formik.errors.password_confirmation
+                }
+                helperText={
+                  formik.touched.password_confirmation &&
+                  formik.errors.password_confirmation
+                }
+              />
+            </Grid>
+            <Grid item xs={11}>
+              <TextInput
+                type="text"
+                name="token"
+                label={t("verificationLabel")}
+                placeholder={t("verificationLabel")}
+                {...formik.getFieldProps("token")}
+                error={formik.touched.token && !!formik.errors.token}
+                helperText={formik.touched.token && formik.errors.token}
               />
             </Grid>
           </Grid>

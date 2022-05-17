@@ -20,8 +20,7 @@ import Link from "../../../shared/components/Link";
 
 function ForgotPassword() {
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError, errorMessage } =
-    useSelector(userSelector);
+  const { isFetching, isSuccess, isError, errors } = useSelector(userSelector);
 
   const { t } = useTranslation("auth");
 
@@ -40,6 +39,7 @@ function ForgotPassword() {
   });
   useEffect(() => {
     if (isError) {
+      formik.setErrors(errors);
       dispatch(clearState());
     }
   }, [isError, isSuccess]);
@@ -74,7 +74,7 @@ function ForgotPassword() {
                 position: "relative",
               }}
             >
-              {formik.touched.email && !!formik.errors.email ? (
+              {isError ? (
                 <Link
                   to="/auth/mobile-login"
                   sx={{
