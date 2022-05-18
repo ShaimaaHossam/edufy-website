@@ -27,6 +27,7 @@ function ForgotPassword() {
   const formik = useFormik({
     initialValues: {
       email: "",
+      token: "",
     },
     onSubmit: (values) => {
       dispatch(forgetPassword(values));
@@ -43,6 +44,7 @@ function ForgotPassword() {
       dispatch(clearState());
     }
   }, [isError, isSuccess]);
+  console.log("isSuccess", isSuccess);
 
   return (
     <FormContainer title="Forgot Password">
@@ -61,8 +63,14 @@ function ForgotPassword() {
               label={t("emailLabel")}
               {...formik.getFieldProps("email")}
               placeholder={t("emailPlaceholder")}
-              error={formik.touched.email && !!formik.errors.email}
-              helperText={formik.touched.email && formik.errors.email}
+              error={
+                formik.touched.email &&
+                !!(formik.errors.email || formik.errors.token)
+              }
+              helperText={
+                formik.touched.email &&
+                (formik.errors.email || formik.errors.token)
+              }
             />
             {isSuccess ? (
               <Typography mt={2} color="success.main">

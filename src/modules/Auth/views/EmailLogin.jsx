@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 
-import { useNavigate } from "react-router-dom";
-
 import { useSelector, useDispatch } from "react-redux";
 import {
   loginWithEmail,
@@ -29,9 +27,8 @@ import Link from "../../../shared/components/Link";
 
 function EmailLogin() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const { isFetching, isSuccess, isError, errors } = useSelector(userSelector);
+  const { isSuccess, isError, errors } = useSelector(userSelector);
 
   const { t } = useTranslation("auth");
   const emailFormik = useFormik({
@@ -58,7 +55,6 @@ function EmailLogin() {
     }
 
     if (isSuccess) {
-      navigate("/", { replace: true });
       dispatch(clearState());
     }
   }, [isError, isSuccess]);

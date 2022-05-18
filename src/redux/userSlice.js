@@ -1,5 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+
+const resrvedToken = window.sessionStorage.getItem("token") ||
+  window.localStorage.getItem("token") ||
+  "";
+
+
 export const loginWithEmail = createAsyncThunk(
   "users/loginWithEmail",
   async ({ email, password, remember }, thunkAPI) => {
@@ -24,11 +30,9 @@ export const loginWithEmail = createAsyncThunk(
       if (response.status === 200) {
         if (remember === true) {
           localStorage.setItem("token", result.data.token);
-          localStorage.setItem("isLoggedIn", true);
           return result;
         } else {
           sessionStorage.setItem("token", result.data.token);
-          sessionStorage.setItem("isLoggedIn", true);
           return result;
         }
       } else {
@@ -92,7 +96,6 @@ export const loginWithPhone = createAsyncThunk(
       let result = await response.json();
       if (response.status === 200) {
         localStorage.setItem("token", result.data.token);
-        localStorage.setItem("isLoggedIn", true);
         return result;
       } else {
         return thunkAPI.rejectWithValue(result);
@@ -176,7 +179,8 @@ export const rememberMe = createAsyncThunk(
             Accept: "application/json",
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-            Authorization: "Bearer " + window.localStorage.getItem("token"),
+            Authorization:
+              "Bearer " + resrvedToken
           },
         }
       );
@@ -195,8 +199,8 @@ export const rememberMe = createAsyncThunk(
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    userData: "",
-    token: "",
+    userData: null,
+    token: resrvedToken,
     errors: "",
     isFetching: false,
     isSuccess: false,
@@ -214,6 +218,7 @@ export const userSlice = createSlice({
   extraReducers: {
     [loginWithEmail.fulfilled]: (state, { payload }) => {
       state.userData = payload.data;
+      state.token = payload.data.token;
       state.isFetching = false;
       state.isSuccess = true;
       return state;
@@ -241,6 +246,7 @@ export const userSlice = createSlice({
     },
     [loginWithPhone.fulfilled]: (state, { payload }) => {
       state.userData = payload.data;
+      state.token = payload.data.token;
       state.isFetching = false;
       state.isSuccess = true;
       return state;
@@ -280,12 +286,14 @@ export const userSlice = createSlice({
       state.isFetching = true;
     },
     [rememberMe.fulfilled]: (state, { payload }) => {
-      state.remember = payload.data.token;
+      state.userData = payload.data;
       state.isFetching = false;
       state.isSuccess = true;
       return state;
     },
     [rememberMe.rejected]: (state, obj) => {
+      state.userData = null;
+      state.token = "";
       state.isFetching = false;
       state.isError = true;
     },

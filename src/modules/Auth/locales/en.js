@@ -23,14 +23,7 @@ const en = {
   continue: "Continue",
 
   inputsErrorMessage: "Required",
-  passwordError:
-    "Incorrect password, please enter a valid password or try Forgot Password.",
-  emailError: "This email doesn't exist. Please enter a valid email address.",
-  phoneError:
-    "This phone number doesn't exist, please enter a valid phone number.",
-  otpError: "Invalid Verification Code, try requesting a new code",
-  resetEmailError: "This email doesn't exist, please try again or login with",
-  resetPasswordError: "Password is too short - should be 8 chars minimum.",
+  phoneError: " please enter a valid phone number.",
 
   verificationCode: "0000",
   verificationLabel: "Verification Code",

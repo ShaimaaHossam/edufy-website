@@ -1,7 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 
-import { useNavigate } from "react-router-dom";
-
 import { useSelector, useDispatch } from "react-redux";
 import {
   loginWithPhone,
@@ -23,16 +21,15 @@ import FormContainer from "../components/FormContainer";
 
 function MobileLogin() {
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError, errors, userData } =
-    useSelector(userSelector);
-  const navigate = useNavigate();
+  const { isSuccess, isError, errors } = useSelector(userSelector);
 
+  const otpRef = useRef(false);
   const [otp, setOtp] = useState(false);
+
   const [seconds, setSeconds] = useState(40);
   const [minutes, setMinutes] = useState(0);
-  const otpRef = useRef(false);
-  const { t } = useTranslation("auth");
 
+  const { t } = useTranslation("auth");
   const phoneFormik = useFormik({
     initialValues: {
       phone: "",
@@ -46,16 +43,22 @@ function MobileLogin() {
       otp: Yup.string().required(t("inputsErrorMessage")),
     }),
   });
+
   const resendOtp = () => {
     if (seconds === 0) {
       setSeconds(40);
       dispatch(requestOtp(`+966${phoneFormik.values.phone}`));
     }
   };
+
   const handleContinue = () => {
     if (phoneFormik.values.phone.length === 10) {
       let phone = `+966${phoneFormik.values.phone}`;
       dispatch(requestOtp(phone));
+    } else {
+      phoneFormik.setErrors({
+        phone: t("phoneError"),
+      });
     }
   };
 
@@ -67,10 +70,7 @@ function MobileLogin() {
     if (isSuccess) {
       setOtp(true);
     }
-    if (isSuccess === true && Boolean(userData) === true) {
-      navigate("/", { replace: true });
-    }
-  }, [isError, isSuccess, userData]);
+  }, [isError, isSuccess]);
 
   useEffect(() => {
     if (otpRef.current) {

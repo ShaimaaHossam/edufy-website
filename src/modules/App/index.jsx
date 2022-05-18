@@ -1,73 +1,39 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
-import { Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { userSelector, rememberMe, clearState } from "../../redux/userSlice";
+import { userSelector, rememberMe } from "../../redux/userSlice";
 
 import Theme from "./components/Theme";
 import AppContainer from "./components/AppContainer";
+import Spinner from "./components/Spinner";
 import Auth from "../Auth";
-
-const Greeting = ({ text }) => {
-  const { t } = useTranslation();
-
-  return (
-    <Typography component="h1" variant="h3" align="center" color="primary">
-      {t(text)}
-    </Typography>
-  );
-};
 
 function App() {
   const dispatch = useDispatch();
-
-  const [isLoggedIn, seIsLoggedIn] = useState(
-    window.sessionStorage.getItem("isLoggedIn") ||
-      window.localStorage.getItem("isLoggedIn")
-  );
-  const { userData, isSuccess, isError } = useSelector(userSelector);
+  const { userData, token } = useSelector(userSelector);
 
   useEffect(() => {
-    if (window.sessionStorage.getItem("token")) {
-      seIsLoggedIn(true);
-    } else if (window.localStorage.getItem("token")) {
-      seIsLoggedIn(true);
-    }
-  }, [userData]);
-
-  useEffect(() => {
-    let token = window.localStorage.getItem("token");
-    if (token) {
+    if (token && !userData) {
       dispatch(rememberMe(token));
     }
-  }, []);
+  }, [token, userData]);
 
-  useEffect(() => {
-    if (isSuccess) {
-      seIsLoggedIn(true);
-      dispatch(clearState());
-    }
+  if (token && !userData) return <Spinner />;
 
-    if (isError) {
-      seIsLoggedIn(false);
-      dispatch(clearState());
-    }
-  }, [isSuccess, isError]);
   return (
     <Theme>
       <Router>
-        {isLoggedIn ? (
+        {token && userData ? (
           <AppContainer>
             <Routes>
               {/* LIST APP ROUTES HERE */}
-              <Route index path="/" element={<Greeting />}></Route>
+              <Route index path="/auth/*" element={<Navigate to="/" />} />
             </Routes>
           </AppContainer>
         ) : (
