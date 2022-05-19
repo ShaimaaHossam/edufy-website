@@ -56,7 +56,7 @@ function SearchInput({
       });
     },
     500,
-    true,
+    false,
     [values, validateForm, setErrors]
   );
 
