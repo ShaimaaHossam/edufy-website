@@ -103,7 +103,11 @@ function AppContainer({ children }) {
       {/* Header's Toolbar height offset */}
       <Toolbar />
 
-      <Drawer variant="permanent" open={isDrawerOpen}>
+      <Drawer
+        variant="permanent"
+        open={isDrawerOpen}
+        PaperProps={{ sx: { backgroundColor: "transparent" } }}
+      >
         <Toolbar />
 
         <Navigation
