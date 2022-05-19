@@ -24,7 +24,7 @@ function SearchInput({
 
   ...restProps
 }) {
-  const { t } = useTranslation("validations");
+  const { t } = useTranslation();
 
   const formik = useFormik({
     validateOnMount: false,

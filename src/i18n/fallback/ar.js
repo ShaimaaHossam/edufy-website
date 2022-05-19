@@ -1,6 +1,7 @@
 const ar = {
   location: "الموقع",
   search_locations: "ابحث عن الموقع",
+  long_keyword: "كلمة البحث طويلة جدًا، الحد الأقصى ١٠٠ حرف.",
 
   access_denied: "غير مسموح",
   access_denied_message: "لا تمتلك الصلاحيات لرؤية هذه الصفحة.",

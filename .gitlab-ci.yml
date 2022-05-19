@@ -1,18 +1,18 @@
 stages:
-  - build
-  - deploy_stage
+  - build_stag
+  - build_prod
+  - deploy_stag
   - deploy_prod
 
-build_app:
+build_stag:
   image: node:alpine
-  stage: build
+  stage: build_stag
   only:
-    - main
     - stage
   script:
     - export NODE_OPTIONS=--openssl-legacy-provider
-    - npm install
-    - npm run build
+    - npm install --force
+    - npm run build:stag
   cache:
     paths:
       - node_modules/
@@ -21,9 +21,26 @@ build_app:
       - build/
     expire_in: 1 hour
 
-stage:
+build_prod:
+  image: node:alpine
+  stage: build_prod
+  only:
+    - main
+  script:
+    - export NODE_OPTIONS=--openssl-legacy-provider
+    - npm install --force
+    - npm run build:prod
+  cache:
+    paths:
+      - node_modules/
+  artifacts:
+    paths:
+      - build/
+    expire_in: 1 hour
+
+deploy_stag:
   image: python:alpine
-  stage: deploy_stage
+  stage: deploy_stag
   only:
     - stage
   script:
@@ -31,7 +48,7 @@ stage:
     - aws s3 sync ./build s3://marafeqreact --region me-south-1
   when: manual
 
-production:
+deploy_prod:
   image: python:alpine
   stage: deploy_prod
   only:
