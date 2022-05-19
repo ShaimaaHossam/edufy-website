@@ -12,6 +12,7 @@ build_stag:
   script:
     - export NODE_OPTIONS=--openssl-legacy-provider
     - npm install --force
+    - CI=false
     - npm run build:stag
   cache:
     paths:
@@ -29,6 +30,7 @@ build_prod:
   script:
     - export NODE_OPTIONS=--openssl-legacy-provider
     - npm install --force
+    - CI=false
     - npm run build:prod
   cache:
     paths:
