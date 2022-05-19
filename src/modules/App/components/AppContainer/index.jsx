@@ -79,14 +79,6 @@ const Main = styled("main", {
   }),
 }));
 
-const Container = styled("div")(({ theme }) => ({
-  position: "absolute",
-  top: 0,
-  bottom: 0,
-  width: "100%",
-  padding: theme.spacing(0, 4),
-}));
-
 function AppContainer({ children }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
 
@@ -117,7 +109,7 @@ function AppContainer({ children }) {
       </Drawer>
 
       <Main open={isDrawerOpen}>
-        <Container>{children}</Container>
+        <Box px={4}>{children}</Box>
       </Main>
     </Box>
   );
