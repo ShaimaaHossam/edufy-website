@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   updatePassword,
-  userSelector,
-  clearState,
-} from "../../../redux/userSlice";
+  authSelector,
+  clearAuth,
+} from "../../../redux/slices/auth";
 
 import { useTranslation } from "react-i18next";
 
@@ -23,7 +23,7 @@ import FormContainer from "../components/FormContainer";
 
 function ResetPasword() {
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError, errors } = useSelector(userSelector);
+  const { isSuccess, isError, errors } = useSelector(authSelector);
 
   const { t } = useTranslation("auth");
   const formik = useFormik({
@@ -50,12 +50,13 @@ function ResetPasword() {
     }),
   });
 
+  const { setErrors } = formik;
   useEffect(() => {
     if (isError) {
-      formik.setErrors(errors);
-      dispatch(clearState());
+      setErrors(errors);
+      dispatch(clearAuth());
     }
-  }, [isError]);
+  }, [dispatch, setErrors, isError, errors]);
 
   return (
     <FormContainer title="Reset Password">

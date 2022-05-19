@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   forgetPassword,
-  userSelector,
-  clearState,
-} from "../../../redux/userSlice";
+  authSelector,
+  clearAuth,
+} from "../../../redux/slices/auth";
 
 import { useTranslation } from "react-i18next";
 
@@ -20,7 +20,7 @@ import Link from "../../../shared/components/Link";
 
 function ForgotPassword() {
   const dispatch = useDispatch();
-  const { isFetching, isSuccess, isError, errors } = useSelector(userSelector);
+  const { isSuccess, isError, errors } = useSelector(authSelector);
 
   const { t } = useTranslation("auth");
 
@@ -38,13 +38,14 @@ function ForgotPassword() {
         .required(t("inputsErrorMessage")),
     }),
   });
+
+  const { setErrors } = formik;
   useEffect(() => {
     if (isError) {
-      formik.setErrors(errors);
-      dispatch(clearState());
+      setErrors(errors);
+      dispatch(clearAuth());
     }
-  }, [isError, isSuccess]);
-  console.log("isSuccess", isSuccess);
+  }, [dispatch, setErrors, isError, errors, isSuccess]);
 
   return (
     <FormContainer title="Forgot Password">

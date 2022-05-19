@@ -8,7 +8,9 @@ import {
 } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { userSelector, rememberMe } from "../../redux/userSlice";
+import { authSelector, rememberMe } from "../../redux/slices/auth";
+
+import NotFound from "../../shared/views/NotFound";
 
 import Theme from "./components/Theme";
 import AppContainer from "./components/AppContainer";
@@ -28,7 +30,7 @@ const Help = lazy(() => import("../Help"));
 
 function App() {
   const dispatch = useDispatch();
-  const { userData, token } = useSelector(userSelector);
+  const { userData, token } = useSelector(authSelector);
 
   useEffect(() => {
     if (token && !userData) {
@@ -59,6 +61,8 @@ function App() {
                   <Route path="help/*" element={<Help />} />
 
                   <Route path="/" element={<Navigate to="/dashboard" />} />
+
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
             </AppContainer>
