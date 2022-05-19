@@ -13,6 +13,11 @@ const ar = {
 
   confirm: "تأكيد",
   go_back: "رجوع",
+
+  stepper_pending_status: "قيد الانتظار",
+  stepper_active_status: "نشط الان",
+  stepper_success_status: "تم بنجاح",
+  stepper_error_status: "حدث خطأ ما",
 };
 
 export default ar;

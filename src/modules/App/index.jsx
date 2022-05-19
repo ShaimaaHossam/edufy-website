@@ -1,39 +1,46 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
-import { useTranslation } from "react-i18next";
-
-import { Typography } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { userSelector, rememberMe } from "../../redux/userSlice";
 
 import Theme from "./components/Theme";
 import AppContainer from "./components/AppContainer";
-
-const Greeting = ({ text }) => {
-  const { t } = useTranslation();
-
-  return (
-    <Typography component="h1" variant="h3" align="center" color="primary">
-      {t(text)}
-    </Typography>
-  );
-};
+import Spinner from "./components/Spinner";
+import Auth from "../Auth";
 
 function App() {
-  const isLoggedIn = true; // try to change this to false
+  const dispatch = useDispatch();
+  const { userData, token } = useSelector(userSelector);
+
+  useEffect(() => {
+    if (token && !userData) {
+      dispatch(rememberMe(token));
+    }
+  }, [token, userData]);
+
+  if (token && !userData) return <Spinner />;
 
   return (
     <Theme>
       <Router>
-        {isLoggedIn ? (
+        {token && userData ? (
           <AppContainer>
             <Routes>
               {/* LIST APP ROUTES HERE */}
-              <Route index element={<Greeting text="greeting" />} />
+              <Route index path="/auth/*" element={<Navigate to="/" />} />
             </Routes>
           </AppContainer>
         ) : (
           <Routes>
             {/* LIST PUBLIC ROUTES HERE */}
-            <Route index element={<Greeting text="login" />} />
+            <Route index path="/auth/*" element={<Auth />} />
+            <Route path="*" element={<Navigate to="/auth" />} />
           </Routes>
         )}
       </Router>
