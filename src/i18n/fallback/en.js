@@ -1,6 +1,7 @@
 const en = {
   location: "Location",
   search_locations: "Search Locations",
+  long_keyword: "Too long keyword, maximum 100 characters.",
 
   access_denied: "Access Denied",
   access_denied_message: "You don't have permissions to view this page.",
