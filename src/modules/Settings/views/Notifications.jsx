@@ -86,6 +86,16 @@ function Notifications() {
           );
         })}
       </Box>
+      <Box textAlign="right" mt={4}>
+        <Button
+          sx={{
+            backgroundColor: "success.main",
+            "&:hover": { backgroundColor: "success.main" },
+          }}
+        >
+          Save Changes
+        </Button>
+      </Box>
     </>
   );
 }
