@@ -10,7 +10,7 @@ import {
 
 import { useTranslation } from "react-i18next";
 
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 
 import Notification from "../components/Notification";
 
@@ -21,6 +21,7 @@ function Notifications() {
   const {
     isSuccess,
     isError,
+    data,
     errors,
     appSettings,
     emailSettings,
@@ -28,10 +29,9 @@ function Notifications() {
     secondarySettings,
   } = useSelector(settingsSelector);
 
-
   useEffect(() => {
     dispatch(getNotifications());
-  }, [dispatch,getNotifications]);
+  }, [dispatch, getNotifications]);
 
   return (
     <>
@@ -44,8 +44,7 @@ function Notifications() {
             <Notification
               title={t(`email.${obj.key}`)}
               key={obj.key}
-              checked={obj.value}
-              onChange
+              obj={obj}
             />
           );
         })}
@@ -57,11 +56,7 @@ function Notifications() {
         </Typography>
         {smsSettings.map((obj) => {
           return (
-            <Notification
-              title={t(`sms.${obj.key}`)}
-              key={obj.key}
-              checked={obj.value}
-            />
+            <Notification title={t(`sms.${obj.key}`)} key={obj.key} obj={obj} />
           );
         })}
       </Box>
@@ -72,11 +67,7 @@ function Notifications() {
         </Typography>
         {appSettings.map((obj) => {
           return (
-            <Notification
-              title={t(`app.${obj.key}`)}
-              key={obj.key}
-              checked={obj.value}
-            />
+            <Notification title={t(`app.${obj.key}`)} key={obj.key} obj={obj} />
           );
         })}
       </Box>
@@ -90,7 +81,7 @@ function Notifications() {
             <Notification
               title={t(`secondary.${obj.key}`)}
               key={obj.key}
-              checked={obj.value}
+              obj={obj}
             />
           );
         })}

@@ -30,14 +30,47 @@ export const getNotifications = createAsyncThunk(
   }
 );
 
+export const updateSingleNotification = createAsyncThunk(
+  "settings/updateSingleNotification",
+  async (obj, thunkAPI) => {
+    try {
+      const response = await fetch(
+        "https://api.stage.marafeq.munjz.com/v1/settings/update-one",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: "Bearer " + resrvedToken,
+          },
+          body: JSON.stringify({
+            key: obj.key,
+            value: obj.value,
+            settings: obj.settings,
+          }),
+        }
+      );
+      let result = await response.json();
+      if (response.status === 200) {
+        return result;
+      } else {
+        return thunkAPI.rejectWithValue(result);
+      }
+    } catch (e) {
+      thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
 export const settingsSlice = createSlice({
   name: "settings",
   initialState: {
     data: {},
-    appSettings:[],
-    emailSettings:[],
-    smsSettings:[],
-    secondarySettings:[],
+    appSettings: [],
+    emailSettings: [],
+    smsSettings: [],
+    secondarySettings: [],
     errors: "",
     isFetching: false,
     isSuccess: false,
@@ -56,7 +89,7 @@ export const settingsSlice = createSlice({
     [getNotifications.fulfilled]: (state, { payload }) => {
       console.log("fulfilled", payload);
       state.data = payload.data;
-      
+
       state.appSettings = payload.data.app;
       state.emailSettings = payload.data.email;
       state.smsSettings = payload.data.sms;
@@ -72,6 +105,29 @@ export const settingsSlice = createSlice({
       state.errors = payload.errors;
     },
     [getNotifications.pending]: (state) => {
+      state.isFetching = true;
+    },
+
+    [updateSingleNotification.fulfilled]: (state, { payload }) => {
+      console.log("fulfilled", payload);
+      state.data = payload.data;
+
+      state.appSettings = payload.data.app;
+      state.emailSettings = payload.data.email;
+      state.smsSettings = payload.data.sms;
+      state.secondarySettings = payload.data.secondary;
+
+      state.isFetching = false;
+      state.isSuccess = true;
+      return state;
+    },
+    [updateSingleNotification.rejected]: (state, { payload }) => {
+      console.log("rejected", payload);
+      state.isFetching = false;
+      state.isError = true;
+      state.errors = payload.errors;
+    },
+    [updateSingleNotification.pending]: (state) => {
       state.isFetching = true;
     },
   },
