@@ -36,15 +36,6 @@ function DraggableMarker({ position, onPositionChange }) {
       const newLatLng = map.getCenter();
       onPositionChange(newLatLng);
     },
-    zoom: (e) => {
-      if (!position) return;
-
-      const marker = markerRef.current;
-      const newLatLng = marker.getLatLng();
-
-      map.setView(newLatLng);
-      onPositionChange(newLatLng);
-    },
   });
 
   const markerHandlers = {
