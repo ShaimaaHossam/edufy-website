@@ -28,11 +28,10 @@ function Notifications() {
     secondarySettings,
   } = useSelector(settingsSelector);
 
-  console.log("emailSettings", emailSettings);
 
   useEffect(() => {
     dispatch(getNotifications());
-  }, []);
+  }, [dispatch,getNotifications]);
 
   return (
     <>
@@ -46,12 +45,13 @@ function Notifications() {
               title={t(`email.${obj.key}`)}
               key={obj.key}
               checked={obj.value}
+              onChange
             />
           );
         })}
       </Box>
 
-      <Box mb={3}>
+      <Box>
         <Typography variant="h5" fontWeight="bold" mb={3}>
           SMS Notifiction
         </Typography>
@@ -66,7 +66,7 @@ function Notifications() {
         })}
       </Box>
 
-      <Box mb={3}>
+      <Box>
         <Typography variant="h5" fontWeight="bold" mb={3}>
           Application Notification
         </Typography>
@@ -74,6 +74,21 @@ function Notifications() {
           return (
             <Notification
               title={t(`app.${obj.key}`)}
+              key={obj.key}
+              checked={obj.value}
+            />
+          );
+        })}
+      </Box>
+
+      <Box>
+        <Typography variant="h5" fontWeight="bold" mb={3}>
+          Secondary Contact Notification
+        </Typography>
+        {secondarySettings.map((obj) => {
+          return (
+            <Notification
+              title={t(`secondary.${obj.key}`)}
               key={obj.key}
               checked={obj.value}
             />

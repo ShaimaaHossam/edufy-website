@@ -20,6 +20,16 @@ const en = {
     app_notification_me_property_added:
       "Send me App Notifications when property is added by team.",
   },
+  secondary: {
+    secondary_contacts_to_receive_email_notifications:
+      "Allow Secondary contacts to receive my email notifications.",
+    secondary_contacts_to_receive_sms_notifications:
+      "Allow Secondary contacts to receive my SMS notifications.",
+    secondary_contacts_to_receive_app_notifications:
+      "Allow Secondary contacts to receive my email notifications.",
+    secondary_mute_notifications_to_me_allow_notifications_to_secondary_contacts:
+      "mute all incoming notifications to me and allow secondary contacts to receive notifications.",
+  },
 };
 
 export default en;
