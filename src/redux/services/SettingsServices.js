@@ -33,7 +33,11 @@ export const getNotifications = createAsyncThunk(
 export const settingsSlice = createSlice({
   name: "settings",
   initialState: {
-    data: null,
+    data: {},
+    appSettings:[],
+    emailSettings:[],
+    smsSettings:[],
+    secondarySettings:[],
     errors: "",
     isFetching: false,
     isSuccess: false,
@@ -52,12 +56,17 @@ export const settingsSlice = createSlice({
     [getNotifications.fulfilled]: (state, { payload }) => {
       console.log("fulfilled", payload);
       state.data = payload.data;
+      
+      state.appSettings = payload.data.app;
+      state.emailSettings = payload.data.email;
+      state.smsSettings = payload.data.sms;
+      state.secondarySettings = payload.data.secondary;
+
       state.isFetching = false;
       state.isSuccess = true;
       return state;
     },
     [getNotifications.rejected]: (state, payload) => {
-      console.log("rejected", payload);
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors;

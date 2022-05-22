@@ -3,15 +3,15 @@ import { Typography, Box } from "@mui/material";
 
 import Switch from "../../../shared/components/inputs/Switch";
 
-function Notification({ title }) {
+function Notification({ title, checked, onChange }) {
   const [check, setCheck] = useState(true);
 
   return (
-    <Box sx={{ flexDirection: 'row' }}>
+    <Box flexDirection="row" mb={3}>
       <Switch
-        checked={check}
+        checked={checked}
         onChange={() => {
-          setCheck(!check);
+          
         }}
       />
       <Typography variant="p" ml={2}>{title}</Typography>

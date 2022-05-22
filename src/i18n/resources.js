@@ -12,6 +12,7 @@ import orders from "../modules/Orders/locales";
 import accounting from "../modules/Accounting/locales";
 import communication from "../modules/Communication/locales";
 import services from "../modules/Services/locales";
+import settings from "../modules/Settings/locales";
 import help from "../modules/Help/locales";
 
 const resources = {
@@ -30,6 +31,7 @@ const resources = {
     accounting: accounting.ar,
     communication: communication.ar,
     services: services.ar,
+    settings: settings.ar,
     help: help.ar,
   },
   en: {
@@ -47,6 +49,7 @@ const resources = {
     accounting: accounting.en,
     communication: communication.en,
     services: services.en,
+    settings: settings.en,
     help: help.en,
   },
 };
