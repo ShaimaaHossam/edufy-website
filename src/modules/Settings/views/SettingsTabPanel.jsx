@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Tabs, Tab, Box } from "@mui/material";
 
 import Notifications from "./Notifications";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 

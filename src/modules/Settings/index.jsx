@@ -1,5 +1,5 @@
 import { Typography, Box } from "@mui/material";
-import BasicTabs from "./components/SettingsTabPanel";
+import BasicTabs from "./views/SettingsTabPanel";
 function Settings() {
   return (
     <Box>
