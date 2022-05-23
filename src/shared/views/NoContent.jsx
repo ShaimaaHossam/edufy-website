@@ -4,7 +4,7 @@ import { Box, Grid, Typography } from "@mui/material";
 
 import emptySvg from "../../assets/errors/empty.svg";
 
-function NoContent() {
+function NoContent({ children }) {
   const { t } = useTranslation();
 
   return (
@@ -29,6 +29,8 @@ function NoContent() {
           {t("no_content_message")}
         </Typography>
       </Grid>
+
+      {!!children && <Grid item>{children}</Grid>}
     </Grid>
   );
 }
