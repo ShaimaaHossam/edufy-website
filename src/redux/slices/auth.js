@@ -244,9 +244,10 @@ export const authSlice = createSlice({
       state.isSuccess = true;
     },
     [loginWithEmail.rejected]: (state, { payload }) => {
+      console.log("rejected", payload)
       state.isFetching = false;
       state.isError = true;
-      state.errors = payload.errors.generic;
+      state.errors = payload.errors;
     },
     [loginWithEmail.pending]: (state) => {
       state.isFetching = true;
@@ -258,7 +259,7 @@ export const authSlice = createSlice({
     [requestOtp.rejected]: (state, { payload }) => {
       state.isFetching = false;
       state.isError = true;
-      state.errors = payload.errors.generic;
+      state.errors = payload.errors;
     },
     [requestOtp.pending]: (state) => {
       state.isFetching = true;
@@ -272,9 +273,10 @@ export const authSlice = createSlice({
       state.isSuccess = true;
     },
     [loginWithPhone.rejected]: (state, { payload }) => {
+      console.log("rejected", payload)
       state.isFetching = false;
       state.isError = true;
-      state.errors = payload.errors.generic;
+      state.errors = payload.errors;
     },
     [loginWithPhone.pending]: (state) => {
       state.isFetching = true;
@@ -286,7 +288,7 @@ export const authSlice = createSlice({
     [forgetPassword.rejected]: (state, { payload }) => {
       state.isFetching = false;
       state.isError = true;
-      state.errors = payload.errors.generic;
+      state.errors = payload.errors;
     },
     [forgetPassword.pending]: (state) => {
       state.isFetching = true;
@@ -298,7 +300,7 @@ export const authSlice = createSlice({
     [updatePassword.rejected]: (state, { payload }) => {
       state.isFetching = false;
       state.isError = true;
-      state.errors = payload.errors.generic;
+      state.errors = payload.errors;
     },
     [updatePassword.pending]: (state) => {
       state.isFetching = true;

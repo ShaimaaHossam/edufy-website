@@ -100,6 +100,8 @@ export const settingsSlice = createSlice({
       return state;
     },
     [getNotifications.rejected]: (state, payload) => {
+      console.log("rejected", payload);
+
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors;

@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { Box, Typography, Button } from "@mui/material";
 
 import Notification from "../components/Notification";
+import SaveChanges from "../components/SaveChanges";
 
 function Notifications() {
   const { t } = useTranslation("settings");
@@ -87,7 +88,7 @@ function Notifications() {
         })}
       </Box>
       <Box textAlign="right" mt={4}>
-        <Button sx={{ backgroundColor: "success.main" }}>Save Changes</Button>
+        <SaveChanges/>
       </Box>
     </>
   );
