@@ -11,7 +11,7 @@ import {
 
 import Switch from "../../../shared/components/inputs/Switch";
 
-function Notification({ title, obj }) {
+function Notification({ title, obj,  }) {
   const [check, setCheck] = useState(obj?.value || false);
   const { data } = useSelector(settingsSelector);
 
@@ -29,17 +29,19 @@ function Notification({ title, obj }) {
   }, [check, updateSingleNotification]);
 
   return (
-    <Box flexDirection="row" mb={3}>
-      <Switch
-        checked={check}
-        onChange={() => {
-          setCheck(!check);
-        }}
-      />
-      <Typography variant="p" ml={2}>
-        {title}
-      </Typography>
-    </Box>
+    <>
+      <Box flexDirection="row" mb={3}>
+        <Switch
+          checked={check}
+          onChange={() => {
+            setCheck(!check);
+          }}
+        />
+        <Typography variant="p" ml={2}>
+          {title}
+        </Typography>
+      </Box>
+    </>
   );
 }
 
