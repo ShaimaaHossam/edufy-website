@@ -14,6 +14,7 @@ import { Box, Typography, Button } from "@mui/material";
 
 import Notification from "../components/Notification";
 import SaveChanges from "../components/SaveChanges";
+import CheckboxMenu from "../../../shared/components/inputs/CheckboxMenu";
 
 function Notifications() {
   const { t } = useTranslation("settings");
@@ -74,6 +75,7 @@ function Notifications() {
       </Box>
 
       <Box>
+        {/* <CheckboxMenu title="Secondary contact" /> */}
         <Typography variant="h5" fontWeight="bold" mb={3}>
           Secondary Contact Notification
         </Typography>
@@ -88,7 +90,7 @@ function Notifications() {
         })}
       </Box>
       <Box textAlign="right" mt={4}>
-        <SaveChanges/>
+        <SaveChanges />
       </Box>
     </>
   );
