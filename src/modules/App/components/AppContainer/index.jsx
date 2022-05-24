@@ -62,6 +62,8 @@ const Main = styled("main", {
 })(({ theme, open }) => ({
   position: "relative",
   flexGrow: 1,
+  display: "flex",
+  flexFlow: "column",
   margin: theme.spacing(3, 0, 3, 0),
   ...(open && {
     marginLeft: OPENED_DRAWER_WIDTH,
@@ -109,7 +111,9 @@ function AppContainer({ children }) {
       </Drawer>
 
       <Main open={isDrawerOpen}>
-        <Box px={4}>{children}</Box>
+        <Box px={4} flexGrow={1} display="flex" flexDirection="column">
+          {children}
+        </Box>
       </Main>
     </Box>
   );

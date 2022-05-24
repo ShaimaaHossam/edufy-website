@@ -15,10 +15,10 @@ function AccessDenied() {
     <Grid
       container
       spacing={2}
-      flexDirection="column"
+      flexGrow={1}
+      direction="column"
       alignItems="center"
       justifyContent="center"
-      sx={{ height: "100%" }}
     >
       <Grid item>
         <Box

@@ -11,10 +11,11 @@ function NoContent({ children }) {
     <Grid
       container
       spacing={2}
+      flexGrow={1}
       direction="column"
       alignItems="center"
       justifyContent="center"
-      sx={{ height: "100%" }}
+      wrap="nowrap"
     >
       <Grid item>
         <Box component="img" alt="no content" src={emptySvg} width={200} />
