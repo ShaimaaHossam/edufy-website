@@ -3,28 +3,40 @@ import { useEffect, useRef } from "react";
 /**
  * Custom hook to debounce running of given effect
  * @param {Function} effect - imperative and possibly effectful function
- * @param {number} timeout - delaying time in ms
- * @param {boolean} runFirst - boolean flag to run first time without delay
  * @param {Array} deps - the effect deps array literal, keep order
+ * @param {number} timeout - delaying time in ms
+ * @param {boolean} skipFirstRun - boolean flag to skip run on mount
+ * @param {boolean} skipFirstDelay - boolean flag to skip first delay on mount
  */
-function useDebouncedEffect(effect, timeout, runFirst, deps) {
+function useDebouncedEffect(
+  effect,
+  deps,
+  timeout,
+  skipFirstRun,
+  skipFirstDelay
+) {
   const effectRef = useRef(effect);
   const timeoutRef = useRef(timeout);
-  const runFirstRef = useRef(runFirst);
 
-  // when effect changes, update the effect ref
+  const skipFirstRunRef = useRef(skipFirstRun);
+  const skipFirstDelayRef = useRef(skipFirstDelay);
+
   useEffect(() => {
     effectRef.current = effect;
   }, [effect]);
 
   useEffect(() => {
-    // if effect needs first run without delay
-    if (runFirstRef.current) {
-      // run immidiately
-      effectRef.current();
-      // set runFirstRef flag to false
-      runFirstRef.current = false;
+    // if effect needs to skip first run
+    if (skipFirstRunRef.current) {
+      skipFirstRunRef.current = false;
+      return;
+    }
 
+    // if effect needs first run without delay
+    if (skipFirstDelayRef.current) {
+      effectRef.current();
+
+      skipFirstDelay.current = false;
       return;
     }
 

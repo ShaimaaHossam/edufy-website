@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import PropTypes from "prop-types";
 
 import { useTranslation } from "react-i18next";
@@ -37,27 +36,21 @@ function SearchInput({
   });
 
   const { values, validateForm, setErrors } = formik;
-  const isMountedRef = useRef();
-  const onChangeRef = useRef(onChange);
   useDebouncedEffect(
     () => {
-      if (!isMountedRef.current) {
-        isMountedRef.current = true;
-        return;
-      }
-
       // validate the keyword form manually
       validateForm().then((errors) => {
         if (!!Object.keys(errors).length) {
           setErrors(errors);
         } else {
-          onChangeRef.current(values.keyword);
+          onChange(values.keyword);
         }
       });
     },
+    [values, validateForm, setErrors],
     500,
-    false,
-    [values, validateForm, setErrors]
+    true,
+    false
   );
 
   return (
