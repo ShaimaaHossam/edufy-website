@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
 import {
   getNotifications,
+  getSecondaryContcat,
   settingsSelector,
   clearState,
 } from "../../../redux/services/SettingsServices";
@@ -29,11 +30,29 @@ function Notifications() {
     emailSettings,
     smsSettings,
     secondarySettings,
+    secondaryContcat,
   } = useSelector(settingsSelector);
+
+  const [userList, setUserList] = useState([]);
+  const userRef = useRef(false);
+
+  console.log("userList", userList)
 
   useEffect(() => {
     dispatch(getNotifications());
-  }, [dispatch, getNotifications]);
+
+    if (userRef.current) {
+      let users = secondaryContcat.map((user) => {
+        return { id: user.id, label: user.name, value: false };
+      });
+      setUserList(users);
+    }
+
+    if (!userRef.current) {
+      userRef.current = true;
+      dispatch(getSecondaryContcat());
+    }
+  }, [dispatch, getNotifications, secondaryContcat]);
 
   return (
     <>
@@ -75,10 +94,14 @@ function Notifications() {
       </Box>
 
       <Box>
-        {/* <CheckboxMenu title="Secondary contact" /> */}
         <Typography variant="h5" fontWeight="bold" mb={3}>
           Secondary Contact Notification
         </Typography>
+        <CheckboxMenu
+          title="Secondary contact"
+          values={userList}
+          onChange={(userList) => setUserList(userList)}
+        />
         {secondarySettings.map((obj) => {
           return (
             <Notification

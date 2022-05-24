@@ -100,7 +100,7 @@ export const getSecondaryContcat = createAsyncThunk(
   async (thunkAPI) => {
     try {
       const response = await fetch(
-        "https://api.stage.marafeq.munjz.com/v1/secondary-contacts/my",
+        "https://api.stage.marafeq.munjz.com/v1/users/",
         {
           method: "GET",
           headers: {
