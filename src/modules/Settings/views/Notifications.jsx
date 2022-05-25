@@ -6,37 +6,36 @@ import {
   getNotifications,
   getSecondaryContcat,
   settingsSelector,
-  clearState,
 } from "../../../redux/services/SettingsServices";
 
-import { useTranslation } from "react-i18next";
+import { Box } from "@mui/material";
 
-import { Box, Typography, Button } from "@mui/material";
-
-import Notification from "../components/Notification";
+import NotificationList from "../components/NotificationList";
 import SaveChanges from "../components/SaveChanges";
 import CheckboxMenu from "../../../shared/components/inputs/CheckboxMenu";
 
 function Notifications() {
-  const { t } = useTranslation("settings");
 
   const dispatch = useDispatch();
-  const {
-    isSuccess,
-    isError,
-    data,
-    errors,
-    appSettings,
-    emailSettings,
-    smsSettings,
-    secondarySettings,
-    secondaryContcat,
-  } = useSelector(settingsSelector);
+  const { data, secondaryContcat } = useSelector(settingsSelector);
 
+  const [emailList, setEmailList] = useState([]);
+  const [smsList, setSmsList] = useState([]);
+  const [appList, setAPPList] = useState([]);
   const [userList, setUserList] = useState([]);
+  const [secondaryList, setٍٍSecondaryist] = useState([]);
+
   const userRef = useRef(false);
 
-  console.log("userList", userList)
+  
+  useEffect(() => {
+    if (data) {
+      setEmailList(data.email);
+      setAPPList(data.app);
+      setSmsList(data.sms);
+      setٍٍSecondaryist(data.secondary)
+    }
+  }, [data]);
 
   useEffect(() => {
     dispatch(getNotifications());
@@ -56,62 +55,40 @@ function Notifications() {
 
   return (
     <>
-      <Box>
-        <Typography variant="h5" fontWeight="bold" mb={3}>
-          Email Notification
-        </Typography>
-        {emailSettings.map((obj) => {
-          return (
-            <Notification
-              title={t(`email.${obj.key}`)}
-              key={obj.key}
-              obj={obj}
-            />
-          );
-        })}
-      </Box>
+      <NotificationList
+        title="Email Notification"
+        values={emailList}
+        category="email"
+        onChange={(emailList) => setEmailList(emailList)}
+      />
 
-      <Box>
-        <Typography variant="h5" fontWeight="bold" mb={3}>
-          SMS Notifiction
-        </Typography>
-        {smsSettings.map((obj) => {
-          return (
-            <Notification title={t(`sms.${obj.key}`)} key={obj.key} obj={obj} />
-          );
-        })}
-      </Box>
+      <NotificationList
+        title="SMS Notifiction"
+        values={smsList}
+        category="sms"
+        onChange={(smsList) => setSmsList(smsList)}
+      />
 
-      <Box>
-        <Typography variant="h5" fontWeight="bold" mb={3}>
-          Application Notification
-        </Typography>
-        {appSettings.map((obj) => {
-          return (
-            <Notification title={t(`app.${obj.key}`)} key={obj.key} obj={obj} />
-          );
-        })}
-      </Box>
+      <NotificationList
+        title="Application Notification"
+        values={appList}
+        category="app"
+        onChange={(appList) => setAPPList(appList)}
+      />
 
-      <Box>
-        <Typography variant="h5" fontWeight="bold" mb={3}>
-          Secondary Contact Notification
-        </Typography>
-        <CheckboxMenu
-          title="Secondary contact"
-          values={userList}
-          onChange={(userList) => setUserList(userList)}
-        />
-        {secondarySettings.map((obj) => {
-          return (
-            <Notification
-              title={t(`secondary.${obj.key}`)}
-              key={obj.key}
-              obj={obj}
-            />
-          );
-        })}
-      </Box>
+      <CheckboxMenu
+        title="Secondary contact"
+        values={userList}
+        onChange={(userList) => setUserList(userList)}
+      />
+
+      <NotificationList
+        title="Secondary Contact Notification"
+        values={secondaryList}
+        category="secondary"
+        onChange={(secondaryList) => setٍٍSecondaryist(secondaryList)}
+      />
+
       <Box textAlign="right" mt={4}>
         <SaveChanges />
       </Box>

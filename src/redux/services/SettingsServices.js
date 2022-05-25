@@ -34,39 +34,6 @@ export const updateNotification = createAsyncThunk(
   }
 );
 
-export const updateSingleNotification = createAsyncThunk(
-  "settings/updateSingleNotification",
-  async (obj, thunkAPI) => {
-    try {
-      const response = await fetch(
-        "https://api.stage.marafeq.munjz.com/v1/settings/update-one",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            Authorization: "Bearer " + resrvedToken,
-          },
-          body: JSON.stringify({
-            key: obj.key,
-            value: obj.value,
-            settings: obj.settings,
-          }),
-        }
-      );
-      let result = await response.json();
-      if (response.status === 200) {
-        return result;
-      } else {
-        return thunkAPI.rejectWithValue(result);
-      }
-    } catch (e) {
-      thunkAPI.rejectWithValue(e.response.data);
-    }
-  }
-);
-
 export const getNotifications = createAsyncThunk(
   "settings/getNotifications",
   async (thunkAPI) => {
@@ -126,13 +93,14 @@ export const getSecondaryContcat = createAsyncThunk(
 export const settingsSlice = createSlice({
   name: "settings",
   initialState: {
-    data: {},
+    data: null,
     appSettings: [],
     emailSettings: [],
     smsSettings: [],
     secondarySettings: [],
     secondaryContcat: [],
     errors: "",
+    number:1,
     isFetching: false,
     isSuccess: false,
     isError: false,
@@ -145,10 +113,11 @@ export const settingsSlice = createSlice({
 
       return state;
     },
+   
+  
   },
   extraReducers: {
     [getNotifications.fulfilled]: (state, { payload }) => {
-      console.log("fulfilled", payload);
       state.data = payload.data;
 
       state.appSettings = payload.data.app;
@@ -161,8 +130,6 @@ export const settingsSlice = createSlice({
       return state;
     },
     [getNotifications.rejected]: (state, payload) => {
-      console.log("rejected", payload);
-
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors;
@@ -172,7 +139,6 @@ export const settingsSlice = createSlice({
     },
 
     [updateNotification.fulfilled]: (state, { payload }) => {
-      console.log("fulfilled", payload);
       state.data = payload.data;
 
       state.appSettings = payload.data.app;
@@ -185,7 +151,6 @@ export const settingsSlice = createSlice({
       return state;
     },
     [updateNotification.rejected]: (state, { payload }) => {
-      console.log("rejected", payload);
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors;
@@ -194,38 +159,13 @@ export const settingsSlice = createSlice({
       state.isFetching = true;
     },
 
-    [updateSingleNotification.fulfilled]: (state, { payload }) => {
-      console.log("fulfilled", payload);
-      state.data = payload.data;
-
-      state.appSettings = payload.data.app;
-      state.emailSettings = payload.data.email;
-      state.smsSettings = payload.data.sms;
-      state.secondarySettings = payload.data.secondary;
-
-      state.isFetching = false;
-      state.isSuccess = true;
-      return state;
-    },
-    [updateSingleNotification.rejected]: (state, { payload }) => {
-      console.log("rejected", payload);
-      state.isFetching = false;
-      state.isError = true;
-      state.errors = payload.errors;
-    },
-    [updateSingleNotification.pending]: (state) => {
-      state.isFetching = true;
-    },
-
     [getSecondaryContcat.fulfilled]: (state, { payload }) => {
-      console.log("fulfilled", payload);
       state.secondaryContcat = payload.data;
       state.isFetching = false;
       state.isSuccess = true;
       return state;
     },
     [getSecondaryContcat.rejected]: (state, { payload }) => {
-      console.log("rejected", payload);
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors;
@@ -236,6 +176,6 @@ export const settingsSlice = createSlice({
   },
 });
 
-export const { clearState } = settingsSlice.actions;
+export const { clearState, hello } = settingsSlice.actions;
 
 export const settingsSelector = (state) => state.settings;
