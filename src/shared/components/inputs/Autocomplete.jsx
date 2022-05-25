@@ -158,7 +158,6 @@ function Autocomplete({
       clearOnBlur
       includeInputInList
       handleHomeEndKeys
-      disableCloseOnSelect
       options={options}
       noOptionsText={noOptionsText}
       multiple={isMulti || isSolo}
