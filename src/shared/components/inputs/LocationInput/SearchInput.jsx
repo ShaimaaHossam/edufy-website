@@ -50,9 +50,10 @@ function SearchInput({ onPositionChange }) {
 
       setIsFetching(false);
     },
-    1000,
+    [keyword],
+    700,
     false,
-    [keyword]
+    false
   );
 
   // disable autocomplete click events bubbling
