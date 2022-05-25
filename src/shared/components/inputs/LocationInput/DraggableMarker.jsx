@@ -12,7 +12,9 @@ function DraggableMarker({ position, onPositionChange }) {
   useEffect(() => {
     if (!position) return;
 
-    map.flyTo(position);
+    const currentZoom = map.getZoom();
+
+    map.flyTo(position, currentZoom < 14 ? 14 : currentZoom);
   }, [map, position]);
 
   useMapEvents({
