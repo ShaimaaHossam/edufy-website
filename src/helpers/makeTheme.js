@@ -46,6 +46,7 @@ function makeTheme({ lang }) {
 
         success: {
           main: "#29BF56",
+          contrastText: "#FFF",
         },
         successBg: "#F0FBF3",
 
