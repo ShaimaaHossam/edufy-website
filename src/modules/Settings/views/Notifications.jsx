@@ -15,7 +15,6 @@ import SaveChanges from "../components/SaveChanges";
 import CheckboxMenu from "../../../shared/components/inputs/CheckboxMenu";
 
 function Notifications() {
-
   const dispatch = useDispatch();
   const { data, secondaryContcat } = useSelector(settingsSelector);
 
@@ -24,18 +23,36 @@ function Notifications() {
   const [appList, setAPPList] = useState([]);
   const [userList, setUserList] = useState([]);
   const [secondaryList, setٍٍSecondaryist] = useState([]);
+  const [secondaryIdsList, setSecondaryIdsList] = useState([]);
 
   const userRef = useRef(false);
 
-  
+  const finalData = {
+    settings: {
+      app: appList,
+      email: emailList,
+      sms: smsList,
+      secondary: secondaryList,
+    },
+    secondary_contacts: secondaryIdsList,
+  };
+
   useEffect(() => {
     if (data) {
       setEmailList(data.email);
       setAPPList(data.app);
       setSmsList(data.sms);
-      setٍٍSecondaryist(data.secondary)
+      setٍٍSecondaryist(data.secondary);
+      let ids = [];
+      userList.filter((obj) => {
+        if (obj.value) {
+          let id = obj.id;
+          ids.push(id);
+        }
+      });
+      setSecondaryIdsList(ids);
     }
-  }, [data]);
+  }, [data, userList]);
 
   useEffect(() => {
     dispatch(getNotifications());
@@ -90,7 +107,7 @@ function Notifications() {
       />
 
       <Box textAlign="right" mt={4}>
-        <SaveChanges />
+        <SaveChanges data={finalData} />
       </Box>
     </>
   );

@@ -1,5 +1,11 @@
 import { useState } from "react";
 
+import { useSelector, useDispatch } from "react-redux";
+
+import {
+  updateNotification
+} from "../../../redux/services/SettingsServices";
+
 import {
   Button,
   Dialog,
@@ -9,8 +15,9 @@ import {
   DialogTitle,
 } from "@mui/material";
 
-function SaveChanges() {
+function SaveChanges({data}) {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -19,6 +26,11 @@ function SaveChanges() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handelSave = ()=>{
+    dispatch(updateNotification((data)))
+    handleClose()
+  }
 
   return (
     <div>
@@ -69,7 +81,7 @@ function SaveChanges() {
             Back
           </Button>
           <Button
-            onClick={handleClose}
+            onClick={handelSave}
             autoFocus
             sx={{
               backgroundColor: "success.main",
