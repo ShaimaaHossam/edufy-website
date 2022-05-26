@@ -5,12 +5,12 @@ import { resrvedToken } from "../userSlice";
 export const updateNotification = createAsyncThunk(
   "settings/updateNotification",
   async (obj, thunkAPI) => {
-    console.log("obj", obj)
+    console.log("obj", obj);
     try {
       const response = await fetch(
         "https://api.stage.marafeq.munjz.com/v1/settings/update",
         {
-          method: "PUT",
+          method: "PATCH",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -126,16 +126,16 @@ export const settingsSlice = createSlice({
     },
 
     [updateNotification.fulfilled]: (state, { payload }) => {
-      console.log("fulfilled",payload)
-      console.log("res",payload.data)
+      console.log("fulfilled", payload);
+      console.log("res", payload.data);
       state.data = payload.data;
 
       state.isFetching = false;
       state.isSuccess = true;
       return state;
     },
-    [updateNotification.rejected]: (state,  payload ) => {
-      console.log("rejected",payload)
+    [updateNotification.rejected]: (state, payload) => {
+      console.log("rejected", payload);
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors;

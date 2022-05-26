@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   getNotifications,
   getSecondaryContcat,
+  updateNotification,
   settingsSelector,
 } from "../../../redux/services/SettingsServices";
 
@@ -17,6 +18,8 @@ import CheckboxMenu from "../../../shared/components/inputs/CheckboxMenu";
 function Notifications() {
   const dispatch = useDispatch();
   const { data, secondaryContcat } = useSelector(settingsSelector);
+  
+  const [open, setOpen] = useState(false);
 
   const [emailList, setEmailList] = useState([]);
   const [smsList, setSmsList] = useState([]);
@@ -36,6 +39,11 @@ function Notifications() {
     },
     secondary_contacts: secondaryIdsList,
   };
+
+
+  const handelSave = ()=>{
+    dispatch(updateNotification((finalData)))
+  }
 
   useEffect(() => {
     if (data) {
@@ -107,7 +115,7 @@ function Notifications() {
       />
 
       <Box textAlign="right" mt={4}>
-        <SaveChanges data={finalData} />
+        <SaveChanges  handelSave={handelSave} />
       </Box>
     </>
   );
