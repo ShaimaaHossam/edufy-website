@@ -19,8 +19,6 @@ function Notifications() {
   const dispatch = useDispatch();
   const { data, secondaryContcat } = useSelector(settingsSelector);
   
-  const [open, setOpen] = useState(false);
-
   const [emailList, setEmailList] = useState([]);
   const [smsList, setSmsList] = useState([]);
   const [appList, setAPPList] = useState([]);

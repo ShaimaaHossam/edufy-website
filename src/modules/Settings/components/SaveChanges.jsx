@@ -9,9 +9,9 @@ import {
   DialogTitle,
 } from "@mui/material";
 
-function SaveChanges({handelSave}) {
+function SaveChanges({ handelSave }) {
   const [open, setOpen] = useState(false);
-  
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -23,6 +23,7 @@ function SaveChanges({handelSave}) {
   return (
     <div>
       <Button
+        type="submit"
         sx={{
           backgroundColor: "success.main",
           color: "white",
@@ -53,7 +54,7 @@ function SaveChanges({handelSave}) {
             marginBottom: 3,
             display: "flex",
             justifyContent: "space-between",
-            padding:5
+            padding: 5,
           }}
         >
           <Button
@@ -63,22 +64,22 @@ function SaveChanges({handelSave}) {
               backgroundColor: "white",
               color: "text.primary",
               "&:hover": { backgroundColor: "white" },
-              width: "140px"
+              width: "140px",
             }}
           >
             Back
           </Button>
           <Button
-            onClick={()=>{
-              handelSave()
-              handleClose()
+            onClick={() => {
+              handelSave();
+              handleClose();
             }}
             autoFocus
             sx={{
               backgroundColor: "success.main",
               color: "white",
               "&:hover": { backgroundColor: "success.main" },
-              width: "140px"
+              width: "140px",
             }}
           >
             Save
