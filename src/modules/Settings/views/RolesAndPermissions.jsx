@@ -116,7 +116,6 @@ function RolesAndPermissions() {
       </Box>
 
       <Box textAlign="right" mt={6} mb={4}>
-        {/* <SaveChanges handelSave={handelSave} /> */}
         <Dialog
           title="Are you sure you want to Save changes ?"
           open={open}
