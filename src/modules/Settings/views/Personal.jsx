@@ -79,7 +79,6 @@ function Personal() {
   const handleOpen = () => {
     setOpen(true);
   };
-  console.log("isError", isError);
 
   useEffect(() => {
     if (isError) {

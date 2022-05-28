@@ -4,6 +4,7 @@ import { Tabs, Tab, Box } from "@mui/material";
 
 import Notifications from "./Notifications";
 import Personal from "./Personal"
+import RolesAndPermissions from "./RolesAndPermissions"
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -70,7 +71,7 @@ function BasicTabs() {
         <Notifications/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <RolesAndPermissions/>
       </TabPanel>
     </Box>
   );
