@@ -62,7 +62,6 @@ function Notifications() {
 
   useEffect(() => {
     dispatch(getNotifications());
-
     if (userRef.current) {
       let users = secondaryContcat.map((user) => {
         return { id: user.id, label: user.name, value: false };
@@ -73,6 +72,7 @@ function Notifications() {
     if (!userRef.current) {
       userRef.current = true;
       dispatch(getSecondaryContcat());
+
     }
   }, [dispatch, getNotifications, secondaryContcat]);
 

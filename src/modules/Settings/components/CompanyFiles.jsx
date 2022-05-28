@@ -1,7 +1,6 @@
 import { Box, IconButton, SvgIcon, Typography } from "@mui/material";
 
-import { mdiPencil, mdiFilePdfBox } from "@mdi/js";
-//mdiFilePdfBox mdiFilePdf mdiFilePdfOutline
+import { mdiFilePdfBox } from "@mdi/js";
 function CompanyFiles({ fileName, category }) {
   return (
     <Box>

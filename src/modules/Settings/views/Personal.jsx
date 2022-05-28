@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import ImageDropbox from "../../../shared/components/inputs/ImageDropbox";
 import { useTranslation } from "react-i18next";
@@ -6,27 +6,37 @@ import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 
 import { useSelector, useDispatch } from "react-redux";
-import { userSelector, rememberMe } from "../../../redux/userSlice";
+import { userSelector } from "../../../redux/userSlice";
+import {
+  clearState,
+  settingsSelector,
+} from "../../../redux/services/SettingsServices";
+import { updatePersonalInfo } from "../../../redux/services/SettingsServices";
 
 import { useFormik } from "formik";
 
-import { Grid, Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import TextInput from "../../../shared/components/inputs/TextInput";
 import PasswordInput from "../../../shared/components/inputs/PasswordInput";
-import SaveChanges from "../components/SaveChanges";
+import Dialog from "../../../shared/components/Dialog";
 import CompanyFiles from "../components/CompanyFiles";
 
 function Personal() {
   const { userData } = useSelector(userSelector);
+  const {  isSuccess, isError, errors } =
+    useSelector(settingsSelector);
+  const [open, setOpen] = useState(false);
+  const [img, setImg] = useState(userData.user.image);
 
+  const dispatch = useDispatch();
   const personalInfo = useFormik({
     initialValues: {
       id: userData.user.id || "",
       name: userData.user.name || "",
       email: userData.user.email || "",
       job_title: userData.user.job_title || "",
-      phone: userData.user.phone || "",
-      image: userData.user.image || "",
+      phone: userData.user.phone.slice(4, userData.user.phone.length) || "",
+      image: img || "",
       password: {
         current: "",
         new: "",
@@ -43,14 +53,55 @@ function Personal() {
       console.log("values", values);
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email formait").required(),
-      password: Yup.string().required(),
+      phone: Yup.string(),
+      name: Yup.string(),
+      email: Yup.string().email("Invalid email formait"),
+      job_title: Yup.string(),
+      image: Yup.string(),
     }),
   });
 
-  console.log("id",personalInfo.values.email)
+  const handelSave = () => {
+    dispatch(
+      updatePersonalInfo({
+        ...personalInfo.values,
+        image: img,
+        phone: `+966${personalInfo.values.phone}`,
+      })
+    );
+    handleClose();
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  console.log("isError", isError);
+
+  useEffect(() => {
+    if (isError) {
+      personalInfo.setErrors(errors);
+      console.log("error", errors);
+    }
+
+    if (isSuccess) {
+      dispatch(clearState());
+    }
+  }, [isError, isSuccess]);
+
   return (
     <>
+      <ImageDropbox
+        lable="Image"
+        initialValue={personalInfo.values.image}
+        onChange={(img) => {
+          setImg(img);
+        }}
+        helperText="err"
+      />
       <Typography variant="h5" fontWeight="bold" mb={3}>
         Personal Information
       </Typography>
@@ -149,6 +200,8 @@ function Personal() {
           name="phone"
           label="Phone Number"
           placeholder="Phone Number"
+          error={personalInfo.errors.phone}
+          helperText={personalInfo.errors.phone}
           {...personalInfo.getFieldProps("phone")}
           sx={{
             marginRight: 3,
@@ -162,12 +215,29 @@ function Personal() {
           {...personalInfo.getFieldProps("email")}
         />
       </Box>
+
       <Box textAlign="right" mt={6} mb={4}>
-        <SaveChanges />
+        {/* <SaveChanges handelSave={handelSave} /> */}
+        <Dialog
+          title="Are you sure you want to Save changes ?"
+          open={open}
+          onClose={handleClose}
+          onConfirm={handelSave}
+        />
+        <Button
+          type="submit"
+          sx={{
+            backgroundColor: "success.main",
+            color: "white",
+            "&:hover": { backgroundColor: "success.main" },
+          }}
+          onClick={handleOpen}
+        >
+          Save Changes
+        </Button>
       </Box>
     </>
   );
 }
 
 export default Personal;
-

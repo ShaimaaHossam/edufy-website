@@ -186,6 +186,7 @@ export const settingsSlice = createSlice({
       console.log("rejected", payload);
       state.isFetching = false;
       state.isError = true;
+      console.log("state.isError", state.isError)
       state.errors = payload.errors;
     },
     [updatePersonalInfo.pending]: (state) => {
