@@ -18,6 +18,7 @@ import { useFormik } from "formik";
 import { Box, Typography, Button } from "@mui/material";
 import TextInput from "../../../shared/components/inputs/TextInput";
 import PasswordInput from "../../../shared/components/inputs/PasswordInput";
+import useBase64 from "../../../shared/hooks/useBase64";
 import Dialog from "../../../shared/components/Dialog";
 import CompanyFiles from "../components/CompanyFiles";
 
@@ -26,9 +27,10 @@ function Personal() {
   const {  isSuccess, isError, errors } =
     useSelector(settingsSelector);
   const [open, setOpen] = useState(false);
+  // const[baseImage] = useBase64(userData.user.image);
   const [img, setImg] = useState(userData.user.image);
   const [crFile, setCrFile] = useState(userData.company.cr_file);
-
+  // console.log("baseImage", baseImage)
   const dispatch = useDispatch();
   const personalInfo = useFormik({
     initialValues: {
@@ -91,6 +93,7 @@ function Personal() {
       dispatch(clearState());
     }
   }, [isError, isSuccess]);
+  console.log("image", personalInfo.values.image)
 
   return (
     <>
@@ -98,6 +101,8 @@ function Personal() {
         lable="Image"
         initialValue={personalInfo.values.image}
         onChange={(img) => {
+          personalInfo.setFieldValue("image", img)
+          console.log("img", img)
           setImg(img);
         }}
         helperText="err"

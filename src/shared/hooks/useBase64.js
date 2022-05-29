@@ -22,7 +22,7 @@ function useBase64(initialValue, onChange) {
     const vaildImage = ["jepg", "png", "jpg"];
     const extIndex = file.name.lastIndexOf(".");
     const ext = file.name.substring(extIndex).split(".")[1].toLowerCase();
-
+    console.log("hh")
     if (vaildImage.find((val) => ext === val)) {
       setError(false);
       const base64 = await convertBase64(file);
@@ -34,7 +34,7 @@ function useBase64(initialValue, onChange) {
 
   useEffect(() => {
     onChange(baseImage);
-  }, [baseImage, onChange]);
+  }, [baseImage]);
 
   return [baseImage, uploadImage, setBaseImage, error];
 }
