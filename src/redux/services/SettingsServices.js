@@ -35,9 +35,10 @@ export const updatePersonalInfo = createAsyncThunk(
   "settings/updatePersonalInfo",
   async (obj, thunkAPI) => {
     console.log("obj", obj);
+    
     try {
       const response = await fetch(
-        "https://api.stage.marafeq.munjz.com/v1/users/update",
+        `https://api.stage.marafeq.munjz.com/v1/users/update/${obj.id}`,
         {
           method: "PATCH",
           headers: {

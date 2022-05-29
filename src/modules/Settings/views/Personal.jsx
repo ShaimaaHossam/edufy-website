@@ -27,6 +27,7 @@ function Personal() {
     useSelector(settingsSelector);
   const [open, setOpen] = useState(false);
   const [img, setImg] = useState(userData.user.image);
+  const [crFile, setCrFile] = useState(userData.company.cr_file);
 
   const dispatch = useDispatch();
   const personalInfo = useFormik({

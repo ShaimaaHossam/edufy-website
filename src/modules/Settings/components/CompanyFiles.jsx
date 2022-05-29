@@ -1,7 +1,18 @@
+import { useState, useEffect } from "react";
+
 import { Box, IconButton, SvgIcon, Typography } from "@mui/material";
 
 import { mdiFilePdfBox } from "@mdi/js";
 function CompanyFiles({ fileName, category }) {
+  const [crFile, setCrFile] = useState("");
+
+  
+  const uploadFile = async (e) => {
+    const file = e.target.files[0];
+    console.log("file", file)
+
+   
+  };
   return (
     <Box>
       <Typography variant="p">{category}</Typography>
@@ -33,7 +44,7 @@ function CompanyFiles({ fileName, category }) {
           <input
             id={`${fileName}-file`}
             type="file"
-            onChange={(e) => {}}
+            onChange={(e) => {uploadFile(e)}}
             style={{
               display: "none",
             }}
