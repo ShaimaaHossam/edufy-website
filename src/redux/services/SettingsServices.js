@@ -5,7 +5,7 @@ import { resrvedToken } from "../userSlice";
 export const updateNotification = createAsyncThunk(
   "settings/updateNotification",
   async (obj, thunkAPI) => {
-    console.log("obj", obj);
+    console.log("obj", JSON.stringify(obj));
     try {
       const response = await fetch(
         "https://api.stage.marafeq.munjz.com/v1/settings/update",

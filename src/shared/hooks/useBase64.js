@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { uploadFileSelector, uploadFile } from "../../redux/uploadFileSlice";
+
 function useBase64(initialValue, onChange) {
   const [baseImage, setBaseImage] = useState(initialValue);
+
   const [error, setError] = useState(false);
+  const dispatch = useDispatch();
+
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -22,10 +28,10 @@ function useBase64(initialValue, onChange) {
     const vaildImage = ["jepg", "png", "jpg"];
     const extIndex = file.name.lastIndexOf(".");
     const ext = file.name.substring(extIndex).split(".")[1].toLowerCase();
-    console.log("hh")
     if (vaildImage.find((val) => ext === val)) {
       setError(false);
       const base64 = await convertBase64(file);
+      dispatch(uploadFile({ file: base64 }));
       setBaseImage(base64);
     } else {
       setError(true);
@@ -35,6 +41,8 @@ function useBase64(initialValue, onChange) {
   useEffect(() => {
     onChange(baseImage);
   }, [baseImage]);
+
+
 
   return [baseImage, uploadImage, setBaseImage, error];
 }

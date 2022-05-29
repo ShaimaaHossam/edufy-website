@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 import { Box, IconButton, SvgIcon, Typography } from "@mui/material";
-
 import { mdiFilePdfBox } from "@mdi/js";
 function CompanyFiles({ fileName, category }) {
   const [crFile, setCrFile] = useState("");
