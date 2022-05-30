@@ -66,6 +66,8 @@ const en = {
   tooLongAddess: "Too long address, max. 255 letters",
   walletOutOfRange:
     "Max. spendings should be more than 10000 and less than 500000",
+  nameShouldChange: "Property name should be changed",
+  locationShouldChange: "Property location should be changed",
 };
 
 export default en;

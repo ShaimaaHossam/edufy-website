@@ -29,7 +29,7 @@ const ar = {
   walletType: "نوع المحفظة",
   managers: "المديرون",
   address: "العنوان",
-  pickLocation: "من فضلك التقط مكان العقار على الخريطة.",
+  pickLocation: "من فضلك التقط موقع العقار على الخريطة.",
   propertyType: "نوع العقار",
   propertySubtype: "النوع الفرعي للعقار",
   propertyManagerPhone: "هاتف مدير العقار",
@@ -59,13 +59,15 @@ const ar = {
   orders_coun_onet: "1 طلب",
 
   requiredField: "هذا الحقل مطلوب",
-  locationRequired: "مكان العقار مطلوب",
+  locationRequired: "موقع العقار مطلوب",
   tooShortName: "الإسم قصير جدًا، على الأقل ٣ حروف",
   tooLongName: "الإسم طويل جدًا، على الأكثر ٦٠ حرف",
   tooShortAddess: "العنوان قصير جدًا، على الأقل ١٠ حروف",
   tooLongAddess: "العنوان طويل جدًا، على الأكثر ٢٥٥ حرف",
   walletOutOfRange:
     "الحد الأقصى للنفقات الشهرية يجب أن يكون أكثر من ١٠٠٠٠ وأقل من ٥٠٠٠٠٠",
+  nameShouldChange: "يجب تغيير إسم العقار",
+  locationShouldChange: "يجب تغيير موقع العقار",
 };
 
 export default ar;
