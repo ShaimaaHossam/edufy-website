@@ -7,6 +7,8 @@ import { generalAPI } from "./services/general";
 
 import { authSlice } from "./slices/auth";
 
+import { propertiesSlice } from "../modules/Properties/state";
+
 export const store = configureStore({
   reducer: {
     [propertiesAPI.reducerPath]: propertiesAPI.reducer,
@@ -14,6 +16,8 @@ export const store = configureStore({
     [generalAPI.reducerPath]: generalAPI.reducer,
 
     auth: authSlice.reducer,
+
+    [propertiesSlice.name]: propertiesSlice.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
