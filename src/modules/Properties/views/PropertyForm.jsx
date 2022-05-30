@@ -120,13 +120,13 @@ function PropertyForm({ formType }) {
         updateProperty(formData)
           .unwrap()
           .then((data) => navigate(`/properties/${data.id}`))
-          .catch(({ errors }) => setErrors(errors));
+          .catch(({ data: { errors } }) => setErrors(errors));
       } else {
         Object.assign(formData, { property_type_id, property_subtype_id });
         addProperty(formData)
           .unwrap()
           .then((data) => navigate(`/properties/${data.id}`))
-          .catch(({ errors }) => setErrors(errors));
+          .catch(({ data: { errors } }) => setErrors(errors));
       }
     },
   });
