@@ -17,47 +17,31 @@ const CustomIconButton = styled(MuiIconButton, {
     height: 40,
   },
   ...(variant === "outlined" && {
-    position: "relative",
     outline: "1px solid",
     outlineOffset: -1,
-    "&::before": {
-      content: "''",
-      position: "absolute",
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0,
-      borderRadius: "50%",
-    },
   }),
   ...(variant === "contained" && {
     position: "relative",
     "&::before": {
-      content: "''",
+      content: '""',
       position: "absolute",
       top: 0,
       right: 0,
       bottom: 0,
       left: 0,
       opacity: 0.1,
-      borderRadius: "50%",
+      borderRadius: "inherit",
       backgroundColor: "currentColor",
     },
   }),
   ...(shape === "square" && {
     borderRadius: 0,
-    "&::before": {
-      borderRadius: 0,
-    },
     "& .MuiTouchRipple-child": {
       borderRadius: "0px !important",
     },
   }),
   ...(shape === "rounded" && {
     borderRadius: 4,
-    "&::before": {
-      borderRadius: 4,
-    },
     "& .MuiTouchRipple-child": {
       borderRadius: "4px !important",
     },
@@ -88,6 +72,7 @@ IconButton.propTypes = {
     "success",
     "primary",
     "secondary",
+    "default",
   ]),
 };
 

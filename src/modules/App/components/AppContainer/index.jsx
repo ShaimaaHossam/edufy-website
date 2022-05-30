@@ -62,6 +62,8 @@ const Main = styled("main", {
 })(({ theme, open }) => ({
   position: "relative",
   flexGrow: 1,
+  display: "flex",
+  flexFlow: "column",
   margin: theme.spacing(3, 0, 3, 0),
   ...(open && {
     marginLeft: OPENED_DRAWER_WIDTH,
@@ -77,14 +79,6 @@ const Main = styled("main", {
       duration: theme.transitions.duration.leavingScreen,
     }),
   }),
-}));
-
-const Container = styled("div")(({ theme }) => ({
-  position: "absolute",
-  top: 0,
-  bottom: 0,
-  width: "100%",
-  padding: theme.spacing(0, 4),
 }));
 
 function AppContainer({ children }) {
@@ -103,7 +97,11 @@ function AppContainer({ children }) {
       {/* Header's Toolbar height offset */}
       <Toolbar />
 
-      <Drawer variant="permanent" open={isDrawerOpen}>
+      <Drawer
+        variant="permanent"
+        open={isDrawerOpen}
+        PaperProps={{ sx: { backgroundColor: "transparent" } }}
+      >
         <Toolbar />
 
         <Navigation
@@ -113,7 +111,9 @@ function AppContainer({ children }) {
       </Drawer>
 
       <Main open={isDrawerOpen}>
-        <Container>{children}</Container>
+        <Box px={4} flexGrow={1} display="flex" flexDirection="column">
+          {children}
+        </Box>
       </Main>
     </Box>
   );

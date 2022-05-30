@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   loginWithPhone,
   requestOtp,
-  userSelector,
-  clearState,
-} from "../../../redux/userSlice";
+  authSelector,
+  clearAuth,
+} from "../../../redux/slices/auth";
 
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
@@ -21,7 +21,7 @@ import FormContainer from "../components/FormContainer";
 
 function MobileLogin() {
   const dispatch = useDispatch();
-  const { isSuccess, isError, errors } = useSelector(userSelector);
+  const { isSuccess, isError, errors } = useSelector(authSelector);
 
   const otpRef = useRef(false);
   const [otp, setOtp] = useState(false);
@@ -30,7 +30,7 @@ function MobileLogin() {
   const [minutes, setMinutes] = useState(0);
 
   const { t } = useTranslation("auth");
-  const phoneFormik = useFormik({
+  const formik = useFormik({
     initialValues: {
       phone: "",
       otp: "",
@@ -44,33 +44,34 @@ function MobileLogin() {
     }),
   });
 
-  const resendOtp = () => {
-    if (seconds === 0) {
-      setSeconds(40);
-      dispatch(requestOtp(`+966${phoneFormik.values.phone}`));
-    }
-  };
-
-  const handleContinue = () => {
-    if (phoneFormik.values.phone.length === 10) {
-      let phone = `+966${phoneFormik.values.phone}`;
-      dispatch(requestOtp(phone));
-    } else {
-      phoneFormik.setErrors({
-        phone: t("phoneError"),
-      });
-    }
-  };
-
+  const { setErrors } = formik;
   useEffect(() => {
     if (isError) {
-      phoneFormik.setErrors(errors);
-      dispatch(clearState());
+      setErrors(errors);
+      dispatch(clearAuth());
     }
     if (isSuccess) {
       setOtp(true);
     }
-  }, [isError, isSuccess]);
+  }, [dispatch, setErrors, isError, errors, isSuccess]);
+
+  const resendOtp = () => {
+    if (seconds === 0) {
+      setSeconds(40);
+      dispatch(requestOtp(`+966${formik.values.phone}`));
+    }
+  };
+
+  const handleContinue = () => {
+    if (formik.values.phone.length === 10) {
+      let phone = `+966${formik.values.phone}`;
+      dispatch(requestOtp(phone));
+    } else {
+      formik.setErrors({
+        phone: t("phoneError"),
+      });
+    }
+  };
 
   useEffect(() => {
     if (otpRef.current) {
@@ -101,7 +102,7 @@ function MobileLogin() {
         {otp ? (
           <Grid
             component="form"
-            onSubmit={phoneFormik.handleSubmit}
+            onSubmit={formik.handleSubmit}
             item
             container
             spacing={3}
@@ -109,9 +110,7 @@ function MobileLogin() {
             <Grid item xs={11}>
               <Typography mb={2}>
                 {t("verificationMessage")}
-                <span style={{ color: "#1E7AF0" }}>
-                  {phoneFormik.values.phone}
-                </span>
+                <span style={{ color: "#1E7AF0" }}>{formik.values.phone}</span>
               </Typography>
 
               <Typography mb={2}>
@@ -125,9 +124,9 @@ function MobileLogin() {
                 name="otp"
                 label={t("verificationLabel")}
                 placeholder={t("verificationCode")}
-                {...phoneFormik.getFieldProps("otp")}
-                error={phoneFormik.touched.otp && !!phoneFormik.errors.otp}
-                helperText={phoneFormik.touched.otp && phoneFormik.errors.otp}
+                {...formik.getFieldProps("otp")}
+                error={formik.touched.otp && !!formik.errors.otp}
+                helperText={formik.touched.otp && formik.errors.otp}
               />
 
               <Typography mt={2}>
@@ -160,11 +159,9 @@ function MobileLogin() {
                 name="phone"
                 placeholder={t("phonePlaceholder")}
                 label={t("phonePlaceholder")}
-                {...phoneFormik.getFieldProps("phone")}
-                error={phoneFormik.touched.phone && !!phoneFormik.errors.phone}
-                helperText={
-                  phoneFormik.touched.phone && phoneFormik.errors.phone
-                }
+                {...formik.getFieldProps("phone")}
+                error={formik.touched.phone && !!formik.errors.phone}
+                helperText={formik.touched.phone && formik.errors.phone}
               />
             </Grid>
 

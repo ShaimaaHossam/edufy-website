@@ -1,10 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-
-const resrvedToken = window.sessionStorage.getItem("token") ||
+const resrvedToken =
+  window.sessionStorage.getItem("token") ||
   window.localStorage.getItem("token") ||
   "";
-
 
 export const loginWithEmail = createAsyncThunk(
   "users/loginWithEmail",
@@ -179,8 +178,7 @@ export const rememberMe = createAsyncThunk(
             Accept: "application/json",
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-            Authorization:
-              "Bearer " + resrvedToken
+            Authorization: "Bearer " + resrvedToken,
           },
         }
       );
@@ -196,23 +194,29 @@ export const rememberMe = createAsyncThunk(
   }
 );
 
-export const userSlice = createSlice({
+export const authSlice = createSlice({
   name: "user",
   initialState: {
     userData: null,
     token: resrvedToken,
-    errors: "",
+    errors: {},
     isFetching: false,
     isSuccess: false,
     isError: false,
   },
   reducers: {
-    clearState: (state) => {
+    clearAuth: (state) => {
       state.isError = false;
       state.isSuccess = false;
       state.isFetching = false;
-
-      return state;
+    },
+    loggedout: (state) => {
+      state.userData = null;
+      state.token = "";
+      state.errors = {};
+      state.isFetching = false;
+      state.isSuccess = false;
+      state.isError = false;
     },
   },
   extraReducers: {
@@ -221,7 +225,6 @@ export const userSlice = createSlice({
       state.token = payload.data.token;
       state.isFetching = false;
       state.isSuccess = true;
-      return state;
     },
     [loginWithEmail.rejected]: (state, { payload }) => {
       state.isFetching = false;
@@ -234,7 +237,6 @@ export const userSlice = createSlice({
     [requestOtp.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
       state.isSuccess = true;
-      return state;
     },
     [requestOtp.rejected]: (state, { payload }) => {
       state.isFetching = false;
@@ -249,7 +251,6 @@ export const userSlice = createSlice({
       state.token = payload.data.token;
       state.isFetching = false;
       state.isSuccess = true;
-      return state;
     },
     [loginWithPhone.rejected]: (state, { payload }) => {
       state.isFetching = false;
@@ -262,7 +263,6 @@ export const userSlice = createSlice({
     [forgetPassword.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
       state.isSuccess = true;
-      return state;
     },
     [forgetPassword.rejected]: (state, { payload }) => {
       state.isFetching = false;
@@ -275,7 +275,6 @@ export const userSlice = createSlice({
     [updatePassword.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
       state.isSuccess = true;
-      return state;
     },
     [updatePassword.rejected]: (state, { payload }) => {
       state.isFetching = false;
@@ -289,7 +288,6 @@ export const userSlice = createSlice({
       state.userData = payload.data;
       state.isFetching = false;
       state.isSuccess = true;
-      return state;
     },
     [rememberMe.rejected]: (state, obj) => {
       state.userData = null;
@@ -303,6 +301,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { clearState } = userSlice.actions;
+export const { clearAuth, loggedout } = authSlice.actions;
 
-export const userSelector = (state) => state.user;
+export const authSelector = (state) => state.auth;

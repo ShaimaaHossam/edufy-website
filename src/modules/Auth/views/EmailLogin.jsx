@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   loginWithEmail,
-  userSelector,
-  clearState,
-} from "../../../redux/userSlice";
+  authSelector,
+  clearAuth,
+} from "../../../redux/slices/auth";
 
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
@@ -27,11 +27,10 @@ import Link from "../../../shared/components/Link";
 
 function EmailLogin() {
   const dispatch = useDispatch();
-
-  const { isSuccess, isError, errors } = useSelector(userSelector);
+  const { isSuccess, isError, errors } = useSelector(authSelector);
 
   const { t } = useTranslation("auth");
-  const emailFormik = useFormik({
+  const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
@@ -48,16 +47,17 @@ function EmailLogin() {
     }),
   });
 
+  const { setErrors } = formik;
   useEffect(() => {
     if (isError) {
-      emailFormik.setErrors(errors);
-      dispatch(clearState());
+      setErrors(errors);
+      dispatch(clearAuth());
     }
 
     if (isSuccess) {
-      dispatch(clearState());
+      dispatch(clearAuth());
     }
-  }, [isError, isSuccess]);
+  }, [dispatch, setErrors, isError, errors, isSuccess]);
 
   return (
     <FormContainer title="Login">
@@ -67,7 +67,7 @@ function EmailLogin() {
           container
           spacing={3}
           component="form"
-          onSubmit={emailFormik.handleSubmit}
+          onSubmit={formik.handleSubmit}
         >
           <Grid item xs={11}>
             <TextInput
@@ -75,9 +75,9 @@ function EmailLogin() {
               name="email"
               label={t("emailLabel")}
               placeholder={t("emailPlaceholder")}
-              {...emailFormik.getFieldProps("email")}
-              error={emailFormik.touched.email && !!emailFormik.errors.email}
-              helperText={emailFormik.touched.email && emailFormik.errors.email}
+              {...formik.getFieldProps("email")}
+              error={formik.touched.email && !!formik.errors.email}
+              helperText={formik.touched.email && formik.errors.email}
             />
           </Grid>
 
@@ -86,20 +86,16 @@ function EmailLogin() {
               name="password"
               label={t("passwordLabel")}
               placeholder={t("passwordPlaceholder")}
-              {...emailFormik.getFieldProps("password")}
-              error={
-                emailFormik.touched.password && !!emailFormik.errors.password
-              }
-              helperText={
-                emailFormik.touched.password && emailFormik.errors.password
-              }
+              {...formik.getFieldProps("password")}
+              error={formik.touched.password && !!formik.errors.password}
+              helperText={formik.touched.password && formik.errors.password}
             />
 
             <FormControlLabel
               control={<Checkbox />}
               label={t("rememberMe")}
               name="remember"
-              {...emailFormik.getFieldProps("remember")}
+              {...formik.getFieldProps("remember")}
             />
 
             <Link

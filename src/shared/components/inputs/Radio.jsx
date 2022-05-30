@@ -56,7 +56,6 @@ function Radio({
     <MuiRadio
       disabled={disabled}
       checked={checked}
-      onChange={(_, checked) => onChange(checked)}
       disableFocusRipple
       color={color}
       icon={<Icon color={color} />}
@@ -68,8 +67,7 @@ function Radio({
 
 Radio.propTypes = {
   disabled: PropTypes.bool,
-  checked: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
+  checked: PropTypes.bool,
   color: PropTypes.oneOf([
     "info",
     "error",

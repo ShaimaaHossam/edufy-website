@@ -14,6 +14,12 @@ function makeTheme({ lang }) {
       direction: LANGS_DIRS[lang],
       typography: {
         fontFamily: `${LANGS_FONTS[lang]}, Helvetica, Arial, sans-serif`,
+        h5: {
+          fontWeight: 500,
+        },
+        subtitle1: {
+          fontWeight: 500,
+        },
       },
       palette: {
         primary: {
@@ -40,6 +46,7 @@ function makeTheme({ lang }) {
 
         success: {
           main: "#29BF56",
+          contrastText: "#FFF",
         },
         successBg: "#F0FBF3",
 
@@ -85,6 +92,18 @@ function makeTheme({ lang }) {
 
       // MUI components overrides
       components: {
+        MuiCssBaseline: {
+          styleOverrides: `
+            body {
+              background-color: #FAFBFF;
+            }
+          `,
+        },
+        MuiPaper: {
+          defaultProps: {
+            elevation: 0,
+          },
+        },
         MuiButton: {
           defaultProps: {
             size: "large",

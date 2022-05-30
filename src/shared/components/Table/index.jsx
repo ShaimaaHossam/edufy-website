@@ -28,7 +28,7 @@ const TableRow = styled(MuiTableRow, {
     ["selected", "active", "clickable"].indexOf(prop) === -1,
 })(({ theme, selected, active, clickable }) => ({
   ...(clickable && { cursor: "pointer" }),
-  ...(!active && { opacity: 0.4 }),
+  ...(!active && { opacity: 0.7 }),
   ...(selected && {
     outline: `1px dashed ${theme.palette.primary.main}`,
     outlineOffset: -1,
@@ -159,7 +159,7 @@ function Table({
                 page={metadata.currentPage - 1}
                 count={metadata.total}
                 rowsPerPage={metadata.perPage}
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={[20, 50, 100]}
                 onPageChange={(e, nextPage) =>
                   onPageChange(nextPage + 1, metadata.perPage)
                 }

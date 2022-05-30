@@ -4,17 +4,18 @@ import { Box, Grid, Typography } from "@mui/material";
 
 import emptySvg from "../../assets/errors/empty.svg";
 
-function NoContent() {
+function NoContent({ children }) {
   const { t } = useTranslation();
 
   return (
     <Grid
       container
       spacing={2}
+      flexGrow={1}
       direction="column"
       alignItems="center"
       justifyContent="center"
-      sx={{ height: "100%" }}
+      wrap="nowrap"
     >
       <Grid item>
         <Box component="img" alt="no content" src={emptySvg} width={200} />
@@ -29,6 +30,8 @@ function NoContent() {
           {t("no_content_message")}
         </Typography>
       </Grid>
+
+      {!!children && <Grid item>{children}</Grid>}
     </Grid>
   );
 }
