@@ -80,13 +80,26 @@ function PropertyForm({ formType }) {
       title: Yup.string()
         .min(3, t("tooShortName"))
         .max(60, t("tooLongName"))
-        .required(t("requiredField")),
+        .required(t("requiredField"))
+        .test("cloneTest", t("nameShouldChange"), (title) => {
+          if (formType !== "clone") return true;
+          return title !== property?.title;
+        }),
       city_id: Yup.string().required(t("requiredField")),
       address: Yup.string()
         .min(10, t("tooShortAddress"))
         .max(255, t("tooLongAddress"))
         .required(t("requiredField")),
-      location: Yup.object().nullable().required(t("locationRequired")),
+      location: Yup.object()
+        .nullable()
+        .required(t("locationRequired"))
+        .test("cloneTest", t("locationShouldChange"), (location) => {
+          if (formType !== "clone") return true;
+          return (
+            location?.lat !== property?.location.lat ||
+            location?.lng !== property?.location.lng
+          );
+        }),
       property_type_id: Yup.string().required(t("requiredField")),
       property_subtype_id: Yup.string().test(
         "opt required",
