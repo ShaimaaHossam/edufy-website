@@ -149,6 +149,34 @@ export const getPermesion = createAsyncThunk(
   }
 );
 
+export const getSelectedPermesion = createAsyncThunk(
+  "settings/getSelectedPermesion",
+  async ({id},thunkAPI) => {
+    try {
+      const response = await fetch(
+        `https://api.stage.marafeq.munjz.com/v1/roles/${id}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: "Bearer " + resrvedToken,
+          },
+        }
+      );
+      let result = await response.json();
+      if (response.status === 200) {
+        return result;
+      } else {
+        return thunkAPI.rejectWithValue(result);
+      }
+    } catch (e) {
+      thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
 export const getNotifications = createAsyncThunk(
   "settings/getNotifications",
   async (thunkAPI) => {
@@ -213,6 +241,7 @@ export const settingsSlice = createSlice({
     errors: "",
     roles:[],
     permesions:{},
+    selectedPermesion:[],
     isFetching: false,
     isSuccess: false,
     isError: false,
@@ -274,6 +303,23 @@ export const settingsSlice = createSlice({
       state.errors = payload.errors;
     },
     [getPermesion.pending]: (state) => {
+      state.isFetching = true;
+    },
+
+    [getSelectedPermesion.fulfilled]: (state, { payload }) => {
+      console.log("fulfilled getPermesion", payload.data)
+      state.selectedPermesion = payload.data;
+
+      state.isFetching = false;
+      state.isSuccess = true;
+      return state;
+    },
+    [getSelectedPermesion.rejected]: (state, payload) => {
+      state.isFetching = false;
+      state.isError = true;
+      state.errors = payload.errors;
+    },
+    [getSelectedPermesion.pending]: (state) => {
       state.isFetching = true;
     },
 
