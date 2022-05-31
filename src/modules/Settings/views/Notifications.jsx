@@ -43,12 +43,10 @@ function Notifications() {
     dispatch(updateNotification((finalData)))
   }
 
-  let arr = [{j:"ff"}]
   useEffect(()=>{
     emailList.forEach((opt,index)=>{
       if(!opt.value){
         let obj = {...opt, value:true};
-        console.log("emailList", emailList)
         // let arr = emailList
         // arr.splice(0, 0, obj)
         
@@ -57,6 +55,7 @@ function Notifications() {
       }
   })
   },[emailList])
+
   useEffect(() => {
     if (data) {
       setEmailList(data.email);

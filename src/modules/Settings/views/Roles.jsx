@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 
-import { getRoles, updatePermesion,  settingsSelector } from "../../../redux/services/SettingsServices";
+import {
+  getRoles,
+  updatePermesion,
+  settingsSelector,
+} from "../../../redux/services/SettingsServices";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
-  Box,
   Typography,
   Button,
   InputLabel,
   MenuItem,
   FormControl,
   Select,
+  Grid,
 } from "@mui/material";
 import CheckboxMenu from "../../../shared/components/inputs/CheckboxMenu";
 import Dialog from "../../../shared/components/Dialog";
@@ -19,13 +23,20 @@ function Roles() {
   const [open, setOpen] = useState(false);
   const { isSuccess, isError, errors, roles } = useSelector(settingsSelector);
   const [role, setRole] = useState("");
+  const [dashboardPermesion, setDashboardPermesion] = useState([]);
+  const [ordersPermesion, setOrdersPermesion] = useState([]);
+
   const dispatch = useDispatch();
 
   const [dashboardlist, setDashboardList] = useState([
-    { id: "1", label: "ali", value: false },
+    { id: "1", label: "View Dashboard Content", value: false },
+    { id: "2", label: "View  Content", value: false },
+    { id: "3", label: "View Dashboard ", value: false },
   ]);
   const [ordersList, setOrders] = useState([
-    { id: "1", label: "ali", value: false },
+    { id: "1", label: "View Orders Content", value: false },
+    { id: "2", label: "View  Content", value: false },
+    { id: "3", label: "View Orders ", value: false },
   ]);
   const [propertiesList, setPropertiesList] = useState([
     { id: "1", label: "ali", value: false },
@@ -44,18 +55,20 @@ function Roles() {
     dispatch(getRoles());
   }, []);
 
-
- 
   const handelSave = () => {
-    let result = roles.filter((obj)=> obj.name === role)
-    console.log("result", result)
+    let result = roles.filter((obj) => obj.name === role);
+    console.log("result", result);
+    let permesion = [...dashboardPermesion, ...ordersPermesion];
+    console.log("All permesion", permesion);
+
     let data = {
       id: result[0].id,
       data: {
-        company_id: result[0].company_id, 
-        name: result[0].name
-      }
-    }
+        company_id: result[0].company_id,
+        name: result[0].name,
+      },
+    };
+
     dispatch(updatePermesion(data));
 
     handleClose();
@@ -73,107 +86,99 @@ function Roles() {
     setRole(event.target.value);
   };
 
-  console.log("role", role);
-
+  const selectPerm = (permissionslist, callBack) => {
+    let list = permissionslist.filter((obj) => obj.value === true);
+    let perm = list.map((obj) => obj.label);
+    callBack(perm);
+    console.log("perm", perm);
+  };
 
   return (
-    <>
-      <Typography variant="h5" fontWeight="bold" mb={3}>
-        User Role
-      </Typography>
+    <Grid container spacing={5} margin="auto">
+      <Grid item xs={12}>
+        <Typography variant="h5" fontWeight="bold" mb={3}>
+          User Role
+        </Typography>
+      </Grid>
 
-      <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Roles</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={role}
-          label="Role"
-          onChange={handleSelect}
-        >
-          {roles.map((role)=>{
-            return <MenuItem value={role.name}>{role.name}</MenuItem>
+      <Grid item xs={11} mt={-5}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Roles</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={role}
+            label="Role"
+            onChange={handleSelect}
+          >
+            {roles.map((role) => {
+              return <MenuItem value={role.name}>{role.name}</MenuItem>;
+            })}
+          </Select>
+        </FormControl>
+      </Grid>
 
-          })}
-        </Select>
-      </FormControl>
-    </Box>
+      <Grid item xs={11}>
+        <Typography variant="h5" fontWeight="bold" mb={3}>
+          Role Permissions
+        </Typography>
+      </Grid>
 
-
-      <Typography variant="h5" fontWeight="bold" mb={3}>
-        Role Permissions
-      </Typography>
-
-      <Box
-        sx={{
-          marginBottom: 3,
-        }}
-      >
+      <Grid item xs={11} mt={-5}>
         <CheckboxMenu
           title="Dashboard"
           values={dashboardlist}
-          onChange={(dashboardlist) => setDashboardList(dashboardlist)}
+          onChange={(dashboardlist) => {
+            setDashboardList(dashboardlist);
+            selectPerm(dashboardlist, setDashboardPermesion);
+          }}
         />
-      </Box>
+      </Grid>
 
-      <Box
-        sx={{
-          marginBottom: 3,
-        }}
-      >
+      <Grid item xs={11}>
         <CheckboxMenu
           title="Orders"
           values={ordersList}
-          onChange={(ordersList) => setOrders(ordersList)}
+          onChange={(ordersList) => {
+            setOrders(ordersList);
+            selectPerm(ordersList, setOrdersPermesion);
+          }}
         />
-      </Box>
+      </Grid>
 
-      <Box
-        sx={{
-          marginBottom: 3,
-        }}
-      >
+      <Grid item xs={11}>
         <CheckboxMenu
           title="Properties"
           values={propertiesList}
           onChange={(propertiesList) => setPropertiesList(propertiesList)}
         />
-      </Box>
+      </Grid>
 
-      <Box
-        sx={{
-          marginBottom: 3,
-        }}
-      >
+      <Grid item xs={11}>
         <CheckboxMenu
           title="Accounting"
           values={accountingList}
           onChange={(accountingList) => setAccountingList(accountingList)}
         />
-      </Box>
+      </Grid>
 
-      <Box
-        sx={{
-          marginBottom: 3,
-        }}
-      >
+      <Grid item xs={11}>
         <CheckboxMenu
           title="Services"
           values={servicesList}
           onChange={(servicesList) => setServicesList(servicesList)}
         />
-      </Box>
+      </Grid>
 
-      <Box>
+      <Grid item xs={11}>
         <CheckboxMenu
           title="People"
           values={peopleList}
           onChange={(peopleList) => setPeopleList(peopleList)}
         />
-      </Box>
+      </Grid>
 
-      <Box textAlign="right" mt={6} mb={4}>
+      <Grid item xs={11} textAlign="right" mt={6} mb={4}>
         <Dialog
           title="Are you sure you want to Save changes ?"
           open={open}
@@ -191,8 +196,8 @@ function Roles() {
         >
           Save Changes
         </Button>
-      </Box>
-    </>
+      </Grid>
+    </Grid>
   );
 }
 
