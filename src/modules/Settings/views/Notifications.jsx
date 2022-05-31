@@ -18,7 +18,7 @@ import CheckboxMenu from "../../../shared/components/inputs/CheckboxMenu";
 function Notifications() {
   const dispatch = useDispatch();
   const { data, secondaryContcat } = useSelector(settingsSelector);
-  
+
   const [emailList, setEmailList] = useState([]);
   const [smsList, setSmsList] = useState([]);
   const [appList, setAPPList] = useState([]);
@@ -38,11 +38,9 @@ function Notifications() {
     secondary_contacts: secondaryIdsList,
   };
 
-  const handelSave = ()=>{
-    dispatch(updateNotification((finalData)))
-  }
-
-
+  const handelSave = () => {
+    dispatch(updateNotification(finalData));
+  };
 
   useEffect(() => {
     if (data) {
@@ -73,7 +71,6 @@ function Notifications() {
     if (!userRef.current) {
       userRef.current = true;
       dispatch(getSecondaryContcat());
-
     }
   }, [dispatch, getNotifications, secondaryContcat]);
 
@@ -114,7 +111,7 @@ function Notifications() {
       />
 
       <Box textAlign="right" mt={4}>
-        <SaveChanges  handelSave={handelSave} />
+        <SaveChanges handelSave={handelSave} />
       </Box>
     </>
   );

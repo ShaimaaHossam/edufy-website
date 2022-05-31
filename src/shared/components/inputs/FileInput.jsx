@@ -15,7 +15,7 @@ function FileInput({ initialValue, placeholder = "", category }) {
 
   const uploadPdfFile = async (e) => {
     const targetFile = e.target.files[0];
-    dispatch(uploadFile({file: targetFile}));
+    dispatch(uploadFile({ file: targetFile }));
     setFile(targetFile.name);
   };
 

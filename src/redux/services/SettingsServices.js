@@ -121,6 +121,34 @@ export const getRoles = createAsyncThunk(
   }
 );
 
+export const getPermesion = createAsyncThunk(
+  "settings/getPermesion",
+  async (thunkAPI) => {
+    try {
+      const response = await fetch(
+        "https://api.stage.marafeq.munjz.com/v1/permissions/?listing=1&group=1",
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: "Bearer " + resrvedToken,
+          },
+        }
+      );
+      let result = await response.json();
+      if (response.status === 200) {
+        return result;
+      } else {
+        return thunkAPI.rejectWithValue(result);
+      }
+    } catch (e) {
+      thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
 export const getNotifications = createAsyncThunk(
   "settings/getNotifications",
   async (thunkAPI) => {
@@ -184,6 +212,7 @@ export const settingsSlice = createSlice({
     secondaryContcat: [],
     errors: "",
     roles:[],
+    permesions:{},
     isFetching: false,
     isSuccess: false,
     isError: false,
@@ -228,6 +257,23 @@ export const settingsSlice = createSlice({
       state.errors = payload.errors;
     },
     [getRoles.pending]: (state) => {
+      state.isFetching = true;
+    },
+
+    [getPermesion.fulfilled]: (state, { payload }) => {
+      console.log("fulfilled getPermesion", payload.data)
+      state.permesions = payload.data;
+
+      state.isFetching = false;
+      state.isSuccess = true;
+      return state;
+    },
+    [getPermesion.rejected]: (state, payload) => {
+      state.isFetching = false;
+      state.isError = true;
+      state.errors = payload.errors;
+    },
+    [getPermesion.pending]: (state) => {
       state.isFetching = true;
     },
 
@@ -303,6 +349,6 @@ export const settingsSlice = createSlice({
   },
 });
 
-export const { clearState, hello } = settingsSlice.actions;
+export const { clearState } = settingsSlice.actions;
 
 export const settingsSelector = (state) => state.settings;

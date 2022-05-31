@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { respons } from "./Permesion";
+import { useEffect, useState, useRef } from "react";
 
 import {
   getRoles,
+  getPermesion,
   updatePermesion,
   settingsSelector,
 } from "../../../redux/services/SettingsServices";
@@ -22,99 +22,118 @@ import Dialog from "../../../shared/components/Dialog";
 
 function Roles() {
   const [open, setOpen] = useState(false);
-  const { isSuccess, isError, errors, roles } = useSelector(settingsSelector);
-  
+  const {  roles, permesions } =useSelector(settingsSelector);
+
   const [role, setRole] = useState("");
+  const permesionRef = useRef(false);
 
-  const [dashboardPermesion, setDashboardPermesion] = useState([]);
-  const [ordersPermesion, setOrdersPermesion] = useState([]);
+  const [cityPermesion, setCityPermesion] = useState([]);
+  const [unitPermesion, setUnitPermesion] = useState([]);
+  const [companyPermesion, setCompanyPermesion] = useState([]);
+  const [roomPermesion, setRoomPermesion] = useState([]);
+  const [roomTypePermesion, setRoomTypePermesion] = useState([]);
+  const [unitTypePermesion, setunitTypePermesion] = useState([]);
 
-  const [dashboardlist, setDashboardList] = useState([]);
-  const [ordersList, setOrders] = useState([]);
-  const [propertiesList, setPropertiesList] = useState([]);
-  const [accountingList, setAccountingList] = useState([]);
-  const [servicesList, setServicesList] = useState([]);
-  const [peopleList, setPeopleList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [unitList, setUnitList] = useState([]);
+  const [companyList, setCompanyList] = useState([]);
+  const [roomList, setRoomList] = useState([]);
+  const [roomTypeList, setRoomTypeList] = useState([]);
+  const [unitTypeList, setUnitTypeList] = useState([]);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getRoles());
+    dispatch(getPermesion());
   }, []);
 
   useEffect(() => {
-    if (respons) {
-      let permissions = respons.data[0].permissions;
+    if (!permesionRef.current) {
+      permesionRef.current = true;
+    } else {
+      setCityList(
+        permesions.City.map((obj) => {
+          return {
+            id: obj.id,
+            label: obj.name,
+            value: false,
+          };
+        })
+      );
+      setUnitList(
+        permesions.Unit.map((obj) => {
+          return {
+            id: obj.id,
+            label: obj.name,
+            value: false,
+          };
+        })
+      );
+      setCompanyList(
+        permesions.Company.map((obj) => {
+          return {
+            id: obj.id,
+            label: obj.name,
+            value: false,
+          };
+        })
+      );
+      setRoomList(
+        permesions.Room.map((obj) => {
+          return {
+            id: obj.id,
+            label: obj.name,
+            value: false,
+          };
+        })
+      );
+      setRoomTypeList(
+        permesions.RoomType.map((obj) => {
+          return {
+            id: obj.id,
+            label: obj.name,
+            value: false,
+          };
+        })
+      );
 
-      setDashboardList(
-        permissions.Unit.map((obj, index) => {
+      setUnitTypeList(
+        permesions.UnitType.map((obj) => {
           return {
-            id: index,
-            label: obj.key,
-            value: obj.value,
-          };
-        })
-      );
-      setOrders(
-        permissions.Order.map((obj, index) => {
-          return {
-            id: index,
-            label: obj.key,
-            value: obj.value,
-          };
-        })
-      );
-      setPropertiesList(
-        permissions.Service.map((obj, index) => {
-          return {
-            id: index,
-            label: obj.key,
-            value: obj.value,
-          };
-        })
-      );
-      setAccountingList(
-        permissions.Type.map((obj, index) => {
-          return {
-            id: index,
-            label: obj.key,
-            value: obj.value,
-          };
-        })
-      );
-      setServicesList(
-        permissions.Unit.map((obj, index) => {
-          return {
-            id: index,
-            label: obj.key,
-            value: obj.value,
-          };
-        })
-      );
-      setPeopleList(
-        permissions.Order.map((obj, index) => {
-          return {
-            id: index,
-            label: obj.key,
-            value: obj.value,
+            id: obj.id,
+            label: obj.name,
+            value: false,
           };
         })
       );
     }
-  }, [respons]);
+  }, [permesions]);
+
+  
+  const selectPerm = (permissionslist, callBack) => {
+    let list = permissionslist.filter((obj) => obj.value === true);
+    let perm = list.map((obj) => obj.id);
+    callBack(perm);
+  };
 
   const handelSave = () => {
     let result = roles.filter((obj) => obj.name === role);
-    console.log("result", result);
-    let permesion = [...dashboardPermesion, ...ordersPermesion];
-    console.log("All permesion", permesion);
-
+    let permesions = [
+      ...cityPermesion,
+      ...unitPermesion,
+      ...companyPermesion,
+      ...roomPermesion,
+      ...roomTypePermesion,
+      ...unitTypePermesion
+    ];
     let data = {
       id: result[0].id,
       data: {
         company_id: result[0].company_id,
         name: result[0].name,
       },
+      permesion: permesions
     };
 
     dispatch(updatePermesion(data));
@@ -132,13 +151,6 @@ function Roles() {
 
   const handleSelect = (event) => {
     setRole(event.target.value);
-  };
-
-  const selectPerm = (permissionslist, callBack) => {
-    let list = permissionslist.filter((obj) => obj.value === true);
-    let perm = list.map((obj) => obj.label);
-    callBack(perm);
-    console.log("perm", perm);
   };
 
   return (
@@ -174,55 +186,67 @@ function Roles() {
 
       <Grid item xs={11} mt={-5}>
         <CheckboxMenu
-          title="Dashboard"
-          values={dashboardlist}
-          onChange={(dashboardlist) => {
-            setDashboardList(dashboardlist);
-            selectPerm(dashboardlist, setDashboardPermesion);
+          title="City"
+          values={cityList}
+          onChange={(cityList) => {
+            setCityList(cityList);
+            selectPerm(cityList, setCityPermesion);
           }}
         />
       </Grid>
 
       <Grid item xs={11}>
         <CheckboxMenu
-          title="Orders"
-          values={ordersList}
-          onChange={(ordersList) => {
-            setOrders(ordersList);
-            selectPerm(ordersList, setOrdersPermesion);
+          title="Unit"
+          values={unitList}
+          onChange={(unitList) => {
+            setUnitList(unitList);
+            selectPerm(unitList, setUnitPermesion);
           }}
         />
       </Grid>
 
       <Grid item xs={11}>
         <CheckboxMenu
-          title="Properties"
-          values={propertiesList}
-          onChange={(propertiesList) => setPropertiesList(propertiesList)}
+          title="Company"
+          values={companyList}
+          onChange={(companyList) => {
+            setCompanyList(companyList);
+            selectPerm(companyList, setCompanyPermesion);
+          }}
         />
       </Grid>
 
       <Grid item xs={11}>
         <CheckboxMenu
-          title="Accounting"
-          values={accountingList}
-          onChange={(accountingList) => setAccountingList(accountingList)}
+          title="Room"
+          values={roomList}
+          onChange={(roomList) => {
+            setRoomList(roomList);
+            selectPerm(roomList, setRoomPermesion);
+          }}
         />
       </Grid>
 
       <Grid item xs={11}>
         <CheckboxMenu
-          title="Services"
-          values={servicesList}
-          onChange={(servicesList) => setServicesList(servicesList)}
+          title="Room Type"
+          values={roomTypeList}
+          onChange={(roomTypeList) => {
+            setRoomTypeList(roomTypeList);
+            selectPerm(roomTypeList, setRoomTypePermesion);
+          }}
         />
       </Grid>
 
       <Grid item xs={11}>
         <CheckboxMenu
-          title="People"
-          values={peopleList}
-          onChange={(peopleList) => setPeopleList(peopleList)}
+          title="Unit Type"
+          values={unitTypeList}
+          onChange={(unitTypeList) => {
+            setUnitTypeList(unitTypeList);
+            selectPerm(unitTypeList, setunitTypePermesion);
+          }}
         />
       </Grid>
 
