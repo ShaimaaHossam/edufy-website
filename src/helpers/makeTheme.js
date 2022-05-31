@@ -144,6 +144,35 @@ function makeTheme({ lang }) {
             },
           },
         },
+        MuiTabs: {
+          styleOverrides: {
+            root: {
+              position: "relative",
+              zIndex: 1,
+              "&::after": {
+                content: '""',
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 1,
+                backgroundColor: "#DBEAFD",
+                zIndex: -1,
+              },
+            },
+          },
+        },
+        MuiTab: {
+          styleOverrides: {
+            root: {
+              minWidth: 100,
+              textTransform: "none",
+              "@media (max-width: 600px)": {
+                minWidth: 80,
+              },
+            },
+          },
+        },
       },
     },
     localesMap[lang]
