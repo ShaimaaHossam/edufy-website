@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { getRoles, settingsSelector } from "../../../redux/services/SettingsServices";
+import { getRoles, updatePermesion,  settingsSelector } from "../../../redux/services/SettingsServices";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -49,7 +49,15 @@ function Roles() {
   const handelSave = () => {
     let result = roles.filter((obj)=> obj.name === role)
     console.log("result", result)
-    
+    let data = {
+      id: result[0].id,
+      data: {
+        company_id: result[0].company_id, 
+        name: result[0].name
+      }
+    }
+    dispatch(updatePermesion(data));
+
     handleClose();
   };
 
