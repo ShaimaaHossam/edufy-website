@@ -62,6 +62,37 @@ export const updateCompanyInfo = createAsyncThunk(
   }
 );
 
+export const updatePermesion = createAsyncThunk(
+  "settings/updatePermesion",
+  async ({id, data}, thunkAPI) => {
+    console.log("data", data);
+    
+    try {
+      const response = await fetch(
+        `https://api.stage.marafeq.munjz.com/v1/roles/update/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: "Bearer " + resrvedToken,
+          },
+          body: JSON.stringify(data),
+        }
+      );
+      let result = await response.json();
+      if (response.status === 200) {
+        return result;
+      } else {
+        return thunkAPI.rejectWithValue(result);
+      }
+    } catch (e) {
+      thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
 export const getRoles = createAsyncThunk(
   "settings/getRoles",
   async (thunkAPI) => {
@@ -216,6 +247,22 @@ export const settingsSlice = createSlice({
       state.errors = payload.errors;
     },
     [updateNotification.pending]: (state) => {
+      state.isFetching = true;
+    },
+
+    [updatePermesion.fulfilled]: (state, { payload }) => {
+      console.log("fulfilled update", payload);
+      state.isFetching = false;
+      state.isSuccess = true;
+      return state;
+    },
+    [updatePermesion.rejected]: (state, payload) => {
+      console.log("rejected", payload);
+      state.isFetching = false;
+      state.isError = true;
+      state.errors = payload.errors;
+    },
+    [updatePermesion.pending]: (state) => {
       state.isFetching = true;
     },
 
