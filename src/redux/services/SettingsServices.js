@@ -62,6 +62,34 @@ export const updateCompanyInfo = createAsyncThunk(
   }
 );
 
+export const getRoles = createAsyncThunk(
+  "settings/getRoles",
+  async (thunkAPI) => {
+    try {
+      const response = await fetch(
+        "https://api.stage.marafeq.munjz.com/v1/roles/?listing=1",
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: "Bearer " + resrvedToken,
+          },
+        }
+      );
+      let result = await response.json();
+      if (response.status === 200) {
+        return result;
+      } else {
+        return thunkAPI.rejectWithValue(result);
+      }
+    } catch (e) {
+      thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
 export const getNotifications = createAsyncThunk(
   "settings/getNotifications",
   async (thunkAPI) => {
@@ -124,7 +152,7 @@ export const settingsSlice = createSlice({
     data: null,
     secondaryContcat: [],
     errors: "",
-    number: 1,
+    roles:[],
     isFetching: false,
     isSuccess: false,
     isError: false,
@@ -152,6 +180,23 @@ export const settingsSlice = createSlice({
       state.errors = payload.errors;
     },
     [getNotifications.pending]: (state) => {
+      state.isFetching = true;
+    },
+
+    [getRoles.fulfilled]: (state, { payload }) => {
+      console.log("fulfilled", payload)
+      state.roles = payload.data;
+
+      state.isFetching = false;
+      state.isSuccess = true;
+      return state;
+    },
+    [getRoles.rejected]: (state, payload) => {
+      state.isFetching = false;
+      state.isError = true;
+      state.errors = payload.errors;
+    },
+    [getRoles.pending]: (state) => {
       state.isFetching = true;
     },
 
