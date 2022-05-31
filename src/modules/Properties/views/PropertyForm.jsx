@@ -28,6 +28,8 @@ import {
   RadioGroup,
 } from "@mui/material";
 
+import NotFound from "../../../shared/views/NotFound";
+
 import Breadcrumbs from "../../../shared/components/Breadcrumbs";
 import Link from "../../../shared/components/Link";
 import TextInput from "../../../shared/components/inputs/TextInput";
@@ -46,9 +48,11 @@ function PropertyForm({ formType }) {
   const { propertyID } = useParams();
   const navigate = useNavigate();
 
-  const { isFetching, data: property } = useGetPropertyQuery(propertyID, {
-    skip: !propertyID,
-  });
+  const {
+    isFetching,
+    error,
+    data: property,
+  } = useGetPropertyQuery(propertyID, { skip: !propertyID });
   const [addProperty] = useAddPropertyMutation();
   const [updateProperty] = useUpdatePropertyMutation();
 
@@ -191,6 +195,8 @@ function PropertyForm({ formType }) {
       wallet_amount: property.wallet_amount || null,
     });
   }, [formType, isFetching, property, setValues]);
+
+  if (error?.status === 404) return <NotFound />;
 
   return (
     <Grid container spacing={2} direction="column">
