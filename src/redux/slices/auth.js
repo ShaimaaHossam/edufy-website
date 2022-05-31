@@ -244,7 +244,6 @@ export const authSlice = createSlice({
       state.isSuccess = true;
     },
     [loginWithEmail.rejected]: (state, { payload }) => {
-      console.log("rejected", payload)
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors;
@@ -273,7 +272,6 @@ export const authSlice = createSlice({
       state.isSuccess = true;
     },
     [loginWithPhone.rejected]: (state, { payload }) => {
-      console.log("rejected", payload)
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors;

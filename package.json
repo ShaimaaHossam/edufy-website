@@ -28,6 +28,7 @@
     "react-leaflet": "^3.2.5",
     "react-leaflet-draw": "^0.19.8",
     "react-number-format": "^4.9.1",
+    "react-pdf": "^5.7.2",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",

@@ -17,7 +17,7 @@ export const uploadFile = createAsyncThunk(
             "Access-Control-Allow-Origin": "*",
             Authorization: "Bearer " + resrvedToken,
           },
-          body: JSON.stringify(obj),
+          body: new FormData(obj),
         }
       );
       let result = await response.json();
@@ -52,7 +52,7 @@ export const uploadFileSlice = createSlice({
   },
   extraReducers: {
     [uploadFile.fulfilled]: (state, { payload }) => {
-        console.log("data", payload.data)        
+      console.log("data", payload.data)        
       state.path = payload.data.path;
       state.token = payload.data.token;
       state.isFetching = false;

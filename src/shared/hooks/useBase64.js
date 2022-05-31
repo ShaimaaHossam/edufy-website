@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { uploadFileSelector, uploadFile } from "../../redux/uploadFileSlice";
+import { useDispatch } from "react-redux";
+import { uploadFile } from "../../redux/uploadFileSlice";
 
 function useBase64(initialValue, onChange) {
   const [baseImage, setBaseImage] = useState(initialValue);

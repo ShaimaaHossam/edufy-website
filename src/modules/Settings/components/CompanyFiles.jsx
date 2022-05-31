@@ -1,16 +1,36 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-import { Box, IconButton, SvgIcon, Typography } from "@mui/material";
+import { Box, SvgIcon, Typography } from "@mui/material";
+import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
+
 import { mdiFilePdfBox } from "@mdi/js";
 function CompanyFiles({ fileName, category }) {
-  const [crFile, setCrFile] = useState("");
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [file, setFile] = useState("");
 
-  
   const uploadFile = async (e) => {
     const file = e.target.files[0];
-    console.log("file", file)
+    setFile(file);
+    console.log("file", file);
+  };
 
-   
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+    setPageNumber(1);
+  }
+
+  const Comp = () => {
+    return (
+      <header className="App-header">
+        <Document file={file} onLoadSuccess={onDocumentLoadSuccess}>
+          <Page height="123" width="123" pageNumber={pageNumber} />
+          <Typography color="text.primary" variant="subtitle2" mt={1}>
+            {file.name}
+          </Typography>
+        </Document>
+      </header>
+    );
   };
   return (
     <Box>
@@ -43,15 +63,19 @@ function CompanyFiles({ fileName, category }) {
           <input
             id={`${fileName}-file`}
             type="file"
-            onChange={(e) => {uploadFile(e)}}
+            onChange={(e) => {
+              uploadFile(e);
+            }}
             style={{
               display: "none",
             }}
+            accept="application/pdf,application/vnd.ms-excel"
           />
           <Typography sx={{ textDecoration: "underline" }}>
             Upload File
           </Typography>
         </label>
+        <Comp />
       </>
     </Box>
   );

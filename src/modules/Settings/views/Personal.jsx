@@ -13,223 +13,157 @@ import {
   clearState,
   settingsSelector,
 } from "../../../redux/services/SettingsServices";
-import { updatePersonalInfo } from "../../../redux/services/SettingsServices";
+import { updateCompanyInfo } from "../../../redux/services/SettingsServices";
 
 import { useFormik } from "formik";
 
 import { Box, Typography, Button } from "@mui/material";
 import TextInput from "../../../shared/components/inputs/TextInput";
-import PasswordInput from "../../../shared/components/inputs/PasswordInput";
+import FileInput from "../../../shared/components/inputs/FileInput";
 import Dialog from "../../../shared/components/Dialog";
-import CompanyFiles from "../components/CompanyFiles";
 
 function Personal() {
+  const { isSuccess, isError, errors } = useSelector(settingsSelector);
+  const [open, setOpen] = useState(false);
+
   const { userData } = useSelector(userSelector);
   const { path } = useSelector(uploadFileSelector);
 
-  const {  isSuccess, isError, errors } =
-    useSelector(settingsSelector);
-  const [open, setOpen] = useState(false);
-  const [img, setImg] = useState(userData.user.image);
-  const [crFile, setCrFile] = useState(userData.company.cr_file);
+  const [img, setImg] = useState();
+  const [id] = useState(userData.company.id);
+
   const dispatch = useDispatch();
-  const personalInfo = useFormik({
+  const companylInfo = useFormik({
     initialValues: {
-      id: userData.user.id || "",
-      name: userData.user.name || "",
-      email: userData.user.email || "",
-      job_title: userData.user.job_title || "",
-      company_id: userData.user.company_id,
-      phone: userData.user.phone.slice(4, userData.user.phone.length) || "",
-      image: img || "",
-      password: {
-        current: "",
-        new: "",
-      },
-      combany: {
-        name: "",
-        legal_name: "",
-        vat_number: userData.company.vat_number,
-        cr_file: userData.company.cr_file,
-        vat_certificate_file: userData.company.vat_certificate_file,
-      },
+      name: userData.company.name || "",
+      address: userData.company.address || "",
+      vat_number: userData.company.vat_number || "",
+      logo_file: userData.company.logo_file || "",
+      cr_file: userData.company.cr_file || "",
+      cr_number: userData.company.cr_number || "",
+      vat_certificate_file: userData.company.vat_certificate_file || "",
     },
-    onSubmit: (values) => {
-      console.log("values", values);
-    },
+
     validationSchema: Yup.object({
-      phone: Yup.string(),
-      name: Yup.string(),
-      email: Yup.string().email("Invalid email formait"),
-      job_title: Yup.string(),
-      image: Yup.string(),
+      name: Yup.string().required("Required"),
+      address: Yup.string().required("Required"),
+      vat_number: Yup.string().required("Required"),
+      cr_number: Yup.string().required("Required"),
     }),
   });
 
   const handelSave = () => {
     dispatch(
-      updatePersonalInfo({
-        ...personalInfo.values,
-        image: path,
-        phone: `+966${personalInfo.values.phone}`,
+      updateCompanyInfo({
+        id: id,
+        data: { ...companylInfo.values, logo_file: path },
       })
     );
-    handleClose();
-  };
-
-  const handleClose = () => {
     setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
   };
 
   useEffect(() => {
     if (isError) {
-      personalInfo.setErrors(errors);
-      console.log("error", errors);
+      companylInfo.setErrors(errors);
     }
 
     if (isSuccess) {
       dispatch(clearState());
     }
-  }, [isError, isSuccess]);
-
-
+  }, [isError, isSuccess, errors]);
 
   return (
     <>
       <ImageDropbox
-        lable="Image"
-        initialValue={personalInfo.values.image}
+        lable="Logo"
+        initialValue={companylInfo.values.logo_file}
         onChange={(img) => {
-          personalInfo.setFieldValue("image", img)
           setImg(img);
         }}
-        helperText="err"
+        helperText="Please upload only image"
       />
-      <Typography variant="h5" fontWeight="bold" mb={3}>
-        Personal Information
-      </Typography>
-      <TextInput
-        type="text"
-        name="name"
-        label="name"
-        placeholder="name"
-        {...personalInfo.getFieldProps("name")}
-        sx={{
-          marginBottom: 3,
-        }}
-      />
-      <Box display="flex">
-        <TextInput
-          type="text"
-          name="job_title"
-          label="Job Title"
-          placeholder="Job Title Here"
-          {...personalInfo.getFieldProps("job_title")}
-          sx={{
-            marginRight: 3,
-          }}
-        />
-        <TextInput
-          type="text"
-          name="name"
-          label="Company Name"
-          placeholder="Company name here"
-          {...personalInfo.getFieldProps("combany.name")}
-        />
-      </Box>
 
-      <Typography variant="h5" fontWeight="bold" mb={3} mt={3}>
-        Change Password
-      </Typography>
-      <Box display="flex">
-        <PasswordInput
-          name="current"
-          label="Current Password"
-          placeholder="Current Password"
-          {...personalInfo.getFieldProps("password.current")}
-          sx={{
-            marginRight: 3,
-          }}
-        />
-        <PasswordInput
-          name="new"
-          label="New Password"
-          placeholder="New Password"
-          {...personalInfo.getFieldProps("password.new")}
-        />
-      </Box>
-
-      <Typography variant="h5" fontWeight="bold" mb={3} mt={3}>
+      <Typography variant="h5" fontWeight="bold" mb={3} mt={5}>
         Legal information
       </Typography>
+
       <TextInput
         type="text"
-        name="legal_name"
+        name="name"
         label="Legal Company Name"
         placeholder="Legal Company Name"
-        {...personalInfo.getFieldProps("combany.legal_name")}
+        {...companylInfo.getFieldProps("name")}
+        sx={{
+          marginBottom: 5,
+        }}
+        error={companylInfo.touched.name && !!companylInfo.errors.name}
+        helperText={companylInfo.touched.name && companylInfo.errors.name}
+      />
+      <TextInput
+        type="text"
+        name="address"
+        label="Address"
+        placeholder="Address"
+        {...companylInfo.getFieldProps("address")}
+        error={companylInfo.touched.address && !!companylInfo.errors.address}
+        helperText={companylInfo.touched.address && companylInfo.errors.address}
+      />
+
+      <Typography variant="h5" fontWeight="bold" mb={3} mt={8}>
+        Company Documents
+      </Typography>
+
+      <Box mb={3}>
+        <FileInput
+          initialValue={companylInfo.values.cr_file}
+          placeholder="CR document"
+        />
+      </Box>
+      <TextInput
+        type="text"
+        name="cr_number"
+        label="CR Number"
+        placeholder="CR Number"
+        {...companylInfo.getFieldProps("cr_number")}
+        error={
+          companylInfo.touched.cr_number && !!companylInfo.errors.cr_number
+        }
+        helperText={
+          companylInfo.touched.cr_number && companylInfo.errors.cr_number
+        }
         sx={{
           marginBottom: 3,
         }}
       />
+
+      <Box mb={3}>
+        <FileInput
+          initialValue={companylInfo.values.vat_certificate_file}
+          placeholder="Vat document"
+          category="vat"
+        />
+      </Box>
       <TextInput
         type="text"
-        name="name"
+        name="vat_number"
         label="VAT Number"
         placeholder="VAT Number"
-        {...personalInfo.getFieldProps("combany.vat_number")}
+        {...companylInfo.getFieldProps("vat_number")}
+        error={
+          companylInfo.touched.vat_number && !!companylInfo.errors.vat_number
+        }
+        helperText={
+          companylInfo.touched.vat_number && companylInfo.errors.vat_number
+        }
       />
 
-      <Typography variant="h5" fontWeight="bold" mb={3} mt={3}>
-        Company Documents
-      </Typography>
-      <Box display="flex" justifyContent="space-between" width="50%">
-        <CompanyFiles
-          fileName={personalInfo.values.combany.cr_file}
-          category="CR:"
-        />
-        <CompanyFiles
-          fileName={personalInfo.values.combany.cr_file}
-          category="CR:"
-        />
-       
-      </Box>
-
-      <Typography variant="h5" fontWeight="bold" mb={3} mt={3}>
-        Contact Information
-      </Typography>
-      <Box display="flex">
-        <TextInput
-          type="text"
-          name="phone"
-          label="Phone Number"
-          placeholder="Phone Number"
-          error={personalInfo.errors.phone}
-          helperText={personalInfo.errors.phone}
-          {...personalInfo.getFieldProps("phone")}
-          sx={{
-            marginRight: 3,
-          }}
-        />
-        <TextInput
-          type="text"
-          name="email"
-          label="Email"
-          placeholder="Email"
-          {...personalInfo.getFieldProps("email")}
-        />
-      </Box>
-
       <Box textAlign="right" mt={6} mb={4}>
-        {/* <SaveChanges handelSave={handelSave} /> */}
         <Dialog
           title="Are you sure you want to Save changes ?"
           open={open}
-          onClose={handleClose}
+          onClose={() => {
+            setOpen(false);
+          }}
           onConfirm={handelSave}
         />
         <Button
@@ -239,7 +173,9 @@ function Personal() {
             color: "white",
             "&:hover": { backgroundColor: "success.main" },
           }}
-          onClick={handleOpen}
+          onClick={() => {
+            setOpen(true);
+          }}
         >
           Save Changes
         </Button>

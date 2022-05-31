@@ -19,7 +19,6 @@ import Spinner from "./components/Spinner";
 const Auth = lazy(() => import("../Auth"));
 const Profiles = lazy(() => import("../Profiles"));
 
-
 const Dashboard = lazy(() => import("../Dashboard"));
 const Properties = lazy(() => import("../Properties"));
 const People = lazy(() => import("../People"));
@@ -27,11 +26,10 @@ const Orders = lazy(() => import("../Orders"));
 const Accounting = lazy(() => import("../Accounting"));
 const Communication = lazy(() => import("../Communication"));
 const Services = lazy(() => import("../Services"));
-const Settings = lazy(()=> import("../Settings"))
+const Settings = lazy(() => import("../Settings"));
 const Help = lazy(() => import("../Help"));
 
 function App() {
-  
   const dispatch = useDispatch();
   const { user, token } = useSelector(authSelector);
 
@@ -75,7 +73,7 @@ function App() {
               {/* LIST PUBLIC ROUTES HERE */}
               <Route index path="/auth/*" element={<Auth />} />
 
-              <Route path="*" element={<Navigate to="/auth" />} />  
+              <Route path="*" element={<Navigate to="/auth" />} />
             </Routes>
           )}
         </Suspense>

@@ -31,14 +31,14 @@ export const updateNotification = createAsyncThunk(
     }
   }
 );
-export const updatePersonalInfo = createAsyncThunk(
-  "settings/updatePersonalInfo",
-  async (obj, thunkAPI) => {
-    console.log("obj", obj);
+export const updateCompanyInfo = createAsyncThunk(
+  "settings/updateCompanyInfo",
+  async ({id, data}, thunkAPI) => {
+    console.log("data", data);
     
     try {
       const response = await fetch(
-        `https://api.stage.marafeq.munjz.com/v1/users/update/${obj.id}`,
+        `https://api.stage.marafeq.munjz.com/v1/companies/update/${id}`,
         {
           method: "PATCH",
           headers: {
@@ -47,7 +47,7 @@ export const updatePersonalInfo = createAsyncThunk(
             "Access-Control-Allow-Origin": "*",
             Authorization: "Bearer " + resrvedToken,
           },
-          body: JSON.stringify(obj),
+          body: JSON.stringify(data),
         }
       );
       let result = await response.json();
@@ -174,7 +174,7 @@ export const settingsSlice = createSlice({
       state.isFetching = true;
     },
 
-    [updatePersonalInfo.fulfilled]: (state, { payload }) => {
+    [updateCompanyInfo.fulfilled]: (state, { payload }) => {
       console.log("fulfilled", payload);
       console.log("res", payload.data);
       state.data = payload.data;
@@ -183,14 +183,14 @@ export const settingsSlice = createSlice({
       state.isSuccess = true;
       return state;
     },
-    [updatePersonalInfo.rejected]: (state, {payload}) => {
+    [updateCompanyInfo.rejected]: (state, {payload}) => {
       console.log("rejected", payload);
       state.isFetching = false;
       state.isError = true;
       console.log("state.isError", state.isError)
       state.errors = payload.errors;
     },
-    [updatePersonalInfo.pending]: (state) => {
+    [updateCompanyInfo.pending]: (state) => {
       state.isFetching = true;
     },
 
