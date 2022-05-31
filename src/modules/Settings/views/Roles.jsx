@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { respons } from "./Permesion";
 
 import {
   getRoles,
@@ -22,38 +23,85 @@ import Dialog from "../../../shared/components/Dialog";
 function Roles() {
   const [open, setOpen] = useState(false);
   const { isSuccess, isError, errors, roles } = useSelector(settingsSelector);
+  
   const [role, setRole] = useState("");
+
   const [dashboardPermesion, setDashboardPermesion] = useState([]);
   const [ordersPermesion, setOrdersPermesion] = useState([]);
 
-  const dispatch = useDispatch();
+  const [dashboardlist, setDashboardList] = useState([]);
+  const [ordersList, setOrders] = useState([]);
+  const [propertiesList, setPropertiesList] = useState([]);
+  const [accountingList, setAccountingList] = useState([]);
+  const [servicesList, setServicesList] = useState([]);
+  const [peopleList, setPeopleList] = useState([]);
 
-  const [dashboardlist, setDashboardList] = useState([
-    { id: "1", label: "View Dashboard Content", value: false },
-    { id: "2", label: "View  Content", value: false },
-    { id: "3", label: "View Dashboard ", value: false },
-  ]);
-  const [ordersList, setOrders] = useState([
-    { id: "1", label: "View Orders Content", value: false },
-    { id: "2", label: "View  Content", value: false },
-    { id: "3", label: "View Orders ", value: false },
-  ]);
-  const [propertiesList, setPropertiesList] = useState([
-    { id: "1", label: "ali", value: false },
-  ]);
-  const [accountingList, setAccountingList] = useState([
-    { id: "1", label: "ali", value: false },
-  ]);
-  const [servicesList, setServicesList] = useState([
-    { id: "1", label: "ali", value: false },
-  ]);
-  const [peopleList, setPeopleList] = useState([
-    { id: "1", label: "ali", value: false },
-  ]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getRoles());
   }, []);
+
+  useEffect(() => {
+    if (respons) {
+      let permissions = respons.data[0].permissions;
+
+      setDashboardList(
+        permissions.Unit.map((obj, index) => {
+          return {
+            id: index,
+            label: obj.key,
+            value: obj.value,
+          };
+        })
+      );
+      setOrders(
+        permissions.Order.map((obj, index) => {
+          return {
+            id: index,
+            label: obj.key,
+            value: obj.value,
+          };
+        })
+      );
+      setPropertiesList(
+        permissions.Service.map((obj, index) => {
+          return {
+            id: index,
+            label: obj.key,
+            value: obj.value,
+          };
+        })
+      );
+      setAccountingList(
+        permissions.Type.map((obj, index) => {
+          return {
+            id: index,
+            label: obj.key,
+            value: obj.value,
+          };
+        })
+      );
+      setServicesList(
+        permissions.Unit.map((obj, index) => {
+          return {
+            id: index,
+            label: obj.key,
+            value: obj.value,
+          };
+        })
+      );
+      setPeopleList(
+        permissions.Order.map((obj, index) => {
+          return {
+            id: index,
+            label: obj.key,
+            value: obj.value,
+          };
+        })
+      );
+    }
+  }, [respons]);
 
   const handelSave = () => {
     let result = roles.filter((obj) => obj.name === role);

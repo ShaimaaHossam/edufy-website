@@ -38,23 +38,11 @@ function Notifications() {
     secondary_contacts: secondaryIdsList,
   };
 
-  console.log("emailList",emailList)
   const handelSave = ()=>{
     dispatch(updateNotification((finalData)))
   }
 
-  useEffect(()=>{
-    emailList.forEach((opt,index)=>{
-      if(!opt.value){
-        let obj = {...opt, value:true};
-        // let arr = emailList
-        // arr.splice(0, 0, obj)
-        
-        // setEmailList()
-        // console.log("arr", arr)
-      }
-  })
-  },[emailList])
+
 
   useEffect(() => {
     if (data) {
