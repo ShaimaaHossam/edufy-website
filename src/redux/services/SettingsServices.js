@@ -184,7 +184,7 @@ export const settingsSlice = createSlice({
     },
 
     [getRoles.fulfilled]: (state, { payload }) => {
-      console.log("fulfilled", payload)
+      console.log("fulfilled", payload.data)
       state.roles = payload.data;
 
       state.isFetching = false;

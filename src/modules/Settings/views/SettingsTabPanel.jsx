@@ -4,7 +4,7 @@ import { Tabs, Tab, Box } from "@mui/material";
 
 import Notifications from "./Notifications";
 import Personal from "./Personal"
-import RolesAndPermissions from "./RolesAndPermissions"
+import Roles from "./Roles"
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -59,9 +59,9 @@ function BasicTabs() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Personal" {...a11yProps(0)} />
+          <Tab label="Company Information" {...a11yProps(0)} />
           <Tab label="Notifications" {...a11yProps(1)} />
-          <Tab label="Roles and permissions" {...a11yProps(2)} />
+          <Tab label="Roles" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -71,7 +71,7 @@ function BasicTabs() {
         <Notifications/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <RolesAndPermissions/>
+        <Roles/>
       </TabPanel>
     </Box>
   );

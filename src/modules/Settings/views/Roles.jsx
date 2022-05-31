@@ -1,11 +1,25 @@
 import { useEffect, useState } from "react";
 
-import { Box, Typography, Button } from "@mui/material";
+import { getRoles, settingsSelector } from "../../../redux/services/SettingsServices";
+import { useSelector, useDispatch } from "react-redux";
+
+import {
+  Box,
+  Typography,
+  Button,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+} from "@mui/material";
 import CheckboxMenu from "../../../shared/components/inputs/CheckboxMenu";
 import Dialog from "../../../shared/components/Dialog";
 
-function RolesAndPermissions() {
+function Roles() {
   const [open, setOpen] = useState(false);
+  const { isSuccess, isError, errors, roles } = useSelector(settingsSelector);
+  const [role, setRole] = useState("");
+  const dispatch = useDispatch();
 
   const [dashboardlist, setDashboardList] = useState([
     { id: "1", label: "ali", value: false },
@@ -26,7 +40,16 @@ function RolesAndPermissions() {
     { id: "1", label: "ali", value: false },
   ]);
 
+  useEffect(() => {
+    dispatch(getRoles());
+  }, []);
+
+
+ 
   const handelSave = () => {
+    let result = roles.filter((obj)=> obj.name === role)
+    console.log("result", result)
+    
     handleClose();
   };
 
@@ -38,11 +61,38 @@ function RolesAndPermissions() {
     setOpen(true);
   };
 
+  const handleSelect = (event) => {
+    setRole(event.target.value);
+  };
+
+  console.log("role", role);
+
+
   return (
     <>
       <Typography variant="h5" fontWeight="bold" mb={3}>
         User Role
       </Typography>
+
+      <Box sx={{ minWidth: 120 }}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Roles</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={role}
+          label="Role"
+          onChange={handleSelect}
+        >
+          {roles.map((role)=>{
+            return <MenuItem value={role.name}>{role.name}</MenuItem>
+
+          })}
+        </Select>
+      </FormControl>
+    </Box>
+
+
       <Typography variant="h5" fontWeight="bold" mb={3}>
         Role Permissions
       </Typography>
@@ -138,4 +188,4 @@ function RolesAndPermissions() {
   );
 }
 
-export default RolesAndPermissions;
+export default Roles;
