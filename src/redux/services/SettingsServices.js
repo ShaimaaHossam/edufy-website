@@ -238,6 +238,7 @@ export const settingsSlice = createSlice({
   name: "settings",
   initialState: {
     data: null,
+    companyInfo:null,
     secondaryContcat: [],
     errors: "",
     roles:[],
@@ -252,6 +253,7 @@ export const settingsSlice = createSlice({
       state.isError = false;
       state.isSuccess = false;
       state.isFetching = false;
+      state.errors = "";
 
       return state;
     },
@@ -363,8 +365,7 @@ export const settingsSlice = createSlice({
 
     [updateCompanyInfo.fulfilled]: (state, { payload }) => {
       console.log("fulfilled", payload);
-      console.log("res", payload.data);
-      state.data = payload.data;
+      state.companyInfo = payload.data;
 
       state.isFetching = false;
       state.isSuccess = true;
@@ -372,6 +373,8 @@ export const settingsSlice = createSlice({
     },
     [updateCompanyInfo.rejected]: (state, {payload}) => {
       console.log("rejected", payload);
+      state.companyInfo = null;
+
       state.isFetching = false;
       state.isError = true;
       console.log("state.isError", state.isError)

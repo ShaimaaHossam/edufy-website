@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 
-import ImageDropbox from "../../../shared/components/inputs/ImageDropbox";
 import { useTranslation } from "react-i18next";
 
 import * as Yup from "yup";
@@ -18,18 +17,19 @@ import { useFormik } from "formik";
 
 import { Box, Typography, Button } from "@mui/material";
 import TextInput from "../../../shared/components/inputs/TextInput";
+import ImageDropbox from "../../../shared/components/inputs/ImageDropbox";
 import FileInput from "../../../shared/components/inputs/FileInput";
 import Dialog from "../../../shared/components/Dialog";
+import Alert from "../components/AlertMessage";
 
 function Personal() {
-  const { isSuccess, isError, errors } = useSelector(settingsSelector);
+  const { isSuccess, isError, errors, companyInfo } = useSelector(settingsSelector);
   const [open, setOpen] = useState(false);
   const imageRef = useRef(false);
 
   const { userData } = useSelector(userSelector);
 
   const [imagePath, setImagePath] = useState(userData.company.logo_file);
-
   const [crFilePath, setCrFilePath] = useState(userData.company.cr_file);
   const [id] = useState(userData.company.id);
 
@@ -56,49 +56,45 @@ function Personal() {
   });
 
   const handelSave = () => {
- 
-
-      dispatch(
-        updateCompanyInfo({
-          id: id,
-          data: {
-            ...companylInfo.values,
-            cr_file: crFilePath ,
-            logo_file: imagePath,
-          },
-        })
-      );
-    
+    dispatch(
+      updateCompanyInfo({
+        id: id,
+        data: {
+          ...companylInfo.values,
+          cr_file: crFilePath,
+          logo_file: imagePath,
+        },
+      })
+    );
 
     setOpen(false);
   };
 
   useEffect(() => {
-    imageRef.current = true; 
+    imageRef.current = true;
     if (isError) {
       companylInfo.setErrors(errors);
-      console.log("errors",errors)
     }
-
-    if (isSuccess) {
+    if(isSuccess){
       dispatch(clearState());
     }
-  }, [isError, isSuccess, errors]);
-  console.log("imagePath",imagePath)
+  }, [isError, isSuccess,errors]);
+
   return (
     <>
+      <Alert isSuccess={companyInfo} isError={errors} />
       <ImageDropbox
         lable="Logo"
         imagePath={imagePath}
         setImagePath={setImagePath}
         initialValue={companylInfo.values.logo_file}
         onChange={(path) => {
-          if(imageRef.current){
+          if (imageRef.current) {
             setImagePath(path);
           }
         }}
         error={!!companylInfo.errors.logo_file}
-        helperText={companylInfo.errors.logo_file || "Please upload only image" }
+        helperText={companylInfo.errors.logo_file || "Please upload only image"}
       />
 
       <Typography variant="h5" fontWeight="bold" mb={3} mt={5}>
@@ -137,8 +133,9 @@ function Personal() {
           placeholder="CR document"
           setFilePath={setCrFilePath}
           error={!!companylInfo.errors.cr_file}
-          helperText={companylInfo.errors.logo_file || "Please upload CR document" }
-
+          helperText={
+            companylInfo.errors.cr_file || "Please upload CR document"
+          }
         />
       </Box>
 

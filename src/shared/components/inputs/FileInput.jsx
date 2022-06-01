@@ -1,5 +1,12 @@
-import { useRef, useState } from "react";
-import { Box, Typography, Button, SvgIcon, IconButton, FormHelperText } from "@mui/material";
+import { useRef, useState, useEffect } from "react";
+import {
+  Box,
+  Typography,
+  Button,
+  SvgIcon,
+  IconButton,
+  FormHelperText,
+} from "@mui/material";
 import Dialog from "../Dialog";
 
 import { useSelector } from "react-redux";
@@ -7,7 +14,14 @@ import { userSelector } from "../../../redux/userSlice";
 
 import { mdiDelete } from "@mdi/js";
 
-function FileInput({ initialValue, placeholder = "", category, setFilePath, error, helperText }) {
+function FileInput({
+  initialValue,
+  placeholder = "",
+  category,
+  setFilePath,
+  error,
+  helperText,
+}) {
   const fileInputRef = useRef();
   const [file, setFile] = useState(initialValue);
   const [err, setErr] = useState(error);
@@ -51,6 +65,7 @@ function FileInput({ initialValue, placeholder = "", category, setFilePath, erro
     );
   }
 
+
   return (
     <Box
       sx={{
@@ -60,7 +75,7 @@ function FileInput({ initialValue, placeholder = "", category, setFilePath, erro
         display: "inline-block",
         width: "100%",
         padding: 1,
-        borderColor: error ? "#FC2424" : "#D5D9E5",
+        borderColor: err ? "#FC2424" : "#D5D9E5",
         position: "relative",
       }}
     >
@@ -76,6 +91,7 @@ function FileInput({ initialValue, placeholder = "", category, setFilePath, erro
             }}
             onChange={(e) => {
               uploadPdfFile(e);
+              setErr(false)
             }}
             ref={fileInputRef}
           />
@@ -115,14 +131,13 @@ function FileInput({ initialValue, placeholder = "", category, setFilePath, erro
         {file ? (
           <IconButton
             position="relative"
-
             onClick={() => {
               if (category === "vat") {
                 setOpen(true);
               } else {
                 setFile("");
-                setFilePath(null)
-                setErr(true)
+                setFilePath(null);
+                setErr(true);
               }
             }}
           >
