@@ -10,15 +10,32 @@ function DraggableMarker({ position, onPositionChange }) {
   const markerRef = useRef(null);
 
   useEffect(() => {
-    map.flyTo(position);
+    if (!position) return;
+
+    const currentZoom = map.getZoom();
+
+    map.flyTo(position, currentZoom < 14 ? 14 : currentZoom);
   }, [map, position]);
 
   useMapEvents({
+    click: (e) => {
+      if (!!position) return;
+
+      const newLatLng = e.latlng;
+      onPositionChange(newLatLng);
+    },
     drag: (e) => {
+      if (!position) return;
+
       const marker = markerRef.current;
       const newLatLng = map.getCenter();
 
       marker.setLatLng(newLatLng);
+    },
+    dragend: (e) => {
+      if (!position) return;
+
+      const newLatLng = map.getCenter();
       onPositionChange(newLatLng);
     },
   });
@@ -32,6 +49,8 @@ function DraggableMarker({ position, onPositionChange }) {
       onPositionChange(newLatLng);
     },
   };
+
+  if (!position) return null;
 
   return (
     <MapMarker
@@ -47,7 +66,7 @@ DraggableMarker.propTypes = {
   position: PropTypes.shape({
     lat: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     lng: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  }).isRequired,
+  }),
   onPositionChange: PropTypes.func.isRequired,
 };
 

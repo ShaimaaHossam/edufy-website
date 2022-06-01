@@ -15,10 +15,10 @@ function ServerError() {
     <Grid
       container
       spacing={2}
+      flexGrow={1}
       direction="column"
       alignItems="center"
       justifyContent="center"
-      sx={{ height: "100%" }}
     >
       <Grid item>
         <Box

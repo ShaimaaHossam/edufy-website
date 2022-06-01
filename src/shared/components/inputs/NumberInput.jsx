@@ -100,7 +100,7 @@ function NumberInput({
         label={label}
         placeholder={placeholder || ""}
         disabled={disabled || fixedValue}
-        value={value}
+        value={value || ""}
         onChange={onChange}
         onBlur={(e) => {
           setIsFocused(false);
