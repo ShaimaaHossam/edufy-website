@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { uploadFile } from "../../redux/uploadFileSlice";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../redux/userSlice";
 
-function useBase64(initialValue, onChange) {
+function useBase64(initialValue, onChange, setImagePath, imagePath, error) {
   const [baseImage, setBaseImage] = useState(initialValue);
-
-  const [error, setError] = useState(false);
-  const dispatch = useDispatch();
+  const { token } = useSelector(userSelector);
+  const [err, setError] = useState(error);
 
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -31,7 +30,21 @@ function useBase64(initialValue, onChange) {
     if (vaildImage.find((val) => ext === val)) {
       setError(false);
       const base64 = await convertBase64(file);
-      dispatch(uploadFile({ file: base64 }));
+      let formData = new FormData();
+      formData.append("file", file);
+      let response = await fetch(
+        "https://api.stage.marafeq.munjz.com/v1/actions/upload",
+        {
+          method: "POST",
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            Authorization: "Bearer " + token,
+          },
+          body: formData,
+        }
+      );
+      let result = await response.json();
+      setImagePath(result.data.path);
       setBaseImage(base64);
     } else {
       setError(true);
@@ -39,12 +52,11 @@ function useBase64(initialValue, onChange) {
   };
 
   useEffect(() => {
-    onChange(baseImage);
-  }, [baseImage]);
+    onChange(imagePath);
+    
+  }, [imagePath]);
 
-
-
-  return [baseImage, uploadImage, setBaseImage, error];
+  return [baseImage, uploadImage, setBaseImage, err, setError];
 }
 
 export default useBase64;

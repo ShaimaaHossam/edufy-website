@@ -1,21 +1,37 @@
 import { useRef, useState } from "react";
-import { Box, Typography, Button, SvgIcon, IconButton } from "@mui/material";
+import { Box, Typography, Button, SvgIcon, IconButton, FormHelperText } from "@mui/material";
 import Dialog from "../Dialog";
 
-import { useDispatch } from "react-redux";
-import { uploadFile } from "../../../redux/uploadFileSlice";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../../redux/userSlice";
 
 import { mdiDelete } from "@mdi/js";
 
-function FileInput({ initialValue, placeholder = "", category }) {
+function FileInput({ initialValue, placeholder = "", category, setFilePath, error, helperText }) {
   const fileInputRef = useRef();
   const [file, setFile] = useState(initialValue);
-  const dispatch = useDispatch();
+  const [err, setErr] = useState(error);
+
+  const { token } = useSelector(userSelector);
   const [open, setOpen] = useState(false);
 
   const uploadPdfFile = async (e) => {
     const targetFile = e.target.files[0];
-    dispatch(uploadFile({ file: targetFile }));
+    let formData = new FormData();
+    formData.append("file", targetFile);
+    let response = await fetch(
+      "https://api.stage.marafeq.munjz.com/v1/actions/upload",
+      {
+        method: "POST",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          Authorization: "Bearer " + token,
+        },
+        body: formData,
+      }
+    );
+    let result = await response.json();
+    setFilePath(result.data.path);
     setFile(targetFile.name);
   };
 
@@ -44,7 +60,7 @@ function FileInput({ initialValue, placeholder = "", category }) {
         display: "inline-block",
         width: "100%",
         padding: 1,
-        borderColor: "#D5D9E5",
+        borderColor: error ? "#FC2424" : "#D5D9E5",
         position: "relative",
       }}
     >
@@ -99,11 +115,14 @@ function FileInput({ initialValue, placeholder = "", category }) {
         {file ? (
           <IconButton
             position="relative"
+
             onClick={() => {
               if (category === "vat") {
                 setOpen(true);
               } else {
                 setFile("");
+                setFilePath(null)
+                setErr(true)
               }
             }}
           >
@@ -124,6 +143,9 @@ function FileInput({ initialValue, placeholder = "", category }) {
           </IconButton>
         ) : null}
       </Box>
+      <FormHelperText sx={{ color: "error.main" }}>
+        {err && helperText}
+      </FormHelperText>
     </Box>
   );
 }

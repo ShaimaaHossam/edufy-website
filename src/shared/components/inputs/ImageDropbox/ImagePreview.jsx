@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { SvgIcon, IconButton, FormHelperText } from "@mui/material";
 
 import { mdiPencil, mdiDelete } from "@mdi/js";
@@ -7,9 +7,12 @@ function ImagePreview({
   lable,
   baseImage,
   uploadImage,
-  setBaseImage,
   error,
   helperText,
+  setImagePath,
+  setBaseImage,
+  setError
+  
 }) {
   const fileInputRef = useRef();
   return (
@@ -68,7 +71,9 @@ function ImagePreview({
         <IconButton
           position="relative"
           onClick={() => {
+            setImagePath(null)
             setBaseImage("");
+            setError(true)
           }}
           sx={{
             borderRadius: "100%",

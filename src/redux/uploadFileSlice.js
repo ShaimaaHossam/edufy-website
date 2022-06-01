@@ -4,20 +4,16 @@ import { resrvedToken } from "./userSlice";
 export const uploadFile = createAsyncThunk(
   "settings/uploadFile",
   async (obj, thunkAPI) => {
-    console.log("obj", obj);
-
     try {
       const response = await fetch(
         "https://api.stage.marafeq.munjz.com/v1/actions/upload",
         {
           method: "POST",
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
             Authorization: "Bearer " + resrvedToken,
           },
-          body: new FormData(obj),
+          body: obj,
         }
       );
       let result = await response.json();

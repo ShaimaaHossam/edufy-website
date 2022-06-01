@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import ImageDropbox from "../../../shared/components/inputs/ImageDropbox";
 import { useTranslation } from "react-i18next";
@@ -7,7 +7,6 @@ import * as Yup from "yup";
 
 import { useSelector, useDispatch } from "react-redux";
 import { userSelector } from "../../../redux/userSlice";
-import { uploadFileSelector } from "../../../redux/uploadFileSlice";
 
 import {
   clearState,
@@ -25,14 +24,17 @@ import Dialog from "../../../shared/components/Dialog";
 function Personal() {
   const { isSuccess, isError, errors } = useSelector(settingsSelector);
   const [open, setOpen] = useState(false);
+  const imageRef = useRef(false);
 
   const { userData } = useSelector(userSelector);
-  const { path } = useSelector(uploadFileSelector);
 
-  const [img, setImg] = useState();
+  const [imagePath, setImagePath] = useState(userData.company.logo_file);
+
+  const [crFilePath, setCrFilePath] = useState(userData.company.cr_file);
   const [id] = useState(userData.company.id);
 
   const dispatch = useDispatch();
+
   const companylInfo = useFormik({
     initialValues: {
       name: userData.company.name || "",
@@ -49,38 +51,54 @@ function Personal() {
       address: Yup.string().required("Required"),
       vat_number: Yup.string().required("Required"),
       cr_number: Yup.string().required("Required"),
+      cr_file: Yup.string().required("Required"),
     }),
   });
 
   const handelSave = () => {
-    dispatch(
-      updateCompanyInfo({
-        id: id,
-        data: { ...companylInfo.values, logo_file: path },
-      })
-    );
+ 
+
+      dispatch(
+        updateCompanyInfo({
+          id: id,
+          data: {
+            ...companylInfo.values,
+            cr_file: crFilePath ,
+            logo_file: imagePath,
+          },
+        })
+      );
+    
+
     setOpen(false);
   };
 
   useEffect(() => {
+    imageRef.current = true; 
     if (isError) {
       companylInfo.setErrors(errors);
+      console.log("errors",errors)
     }
 
     if (isSuccess) {
       dispatch(clearState());
     }
   }, [isError, isSuccess, errors]);
-
+  console.log("imagePath",imagePath)
   return (
     <>
       <ImageDropbox
         lable="Logo"
+        imagePath={imagePath}
+        setImagePath={setImagePath}
         initialValue={companylInfo.values.logo_file}
-        onChange={(img) => {
-          setImg(img);
+        onChange={(path) => {
+          if(imageRef.current){
+            setImagePath(path);
+          }
         }}
-        helperText="Please upload only image"
+        error={!!companylInfo.errors.logo_file}
+        helperText={companylInfo.errors.logo_file || "Please upload only image" }
       />
 
       <Typography variant="h5" fontWeight="bold" mb={3} mt={5}>
@@ -117,8 +135,13 @@ function Personal() {
         <FileInput
           initialValue={companylInfo.values.cr_file}
           placeholder="CR document"
+          setFilePath={setCrFilePath}
+          error={!!companylInfo.errors.cr_file}
+          helperText={companylInfo.errors.logo_file || "Please upload CR document" }
+
         />
       </Box>
+
       <TextInput
         type="text"
         name="cr_number"
