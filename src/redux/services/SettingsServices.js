@@ -151,7 +151,8 @@ export const getPermesion = createAsyncThunk(
 
 export const getSelectedPermesion = createAsyncThunk(
   "settings/getSelectedPermesion",
-  async ({id},thunkAPI) => {
+  async (id,thunkAPI) => {
+    console.log("idd", id)
     try {
       const response = await fetch(
         `https://api.stage.marafeq.munjz.com/v1/roles/${id}`,
@@ -315,6 +316,8 @@ export const settingsSlice = createSlice({
       return state;
     },
     [getSelectedPermesion.rejected]: (state, payload) => {
+      console.log("rejected getPermesion", payload)
+
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors;

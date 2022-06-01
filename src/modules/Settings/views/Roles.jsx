@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import {
   getRoles,
   getPermesion,
+  getSelectedPermesion,
   updatePermesion,
   settingsSelector,
 } from "../../../redux/services/SettingsServices";
@@ -22,7 +23,7 @@ import Dialog from "../../../shared/components/Dialog";
 
 function Roles() {
   const [open, setOpen] = useState(false);
-  const {  roles, permesions } =useSelector(settingsSelector);
+  const {  roles, permesions, selectedPermesion } =useSelector(settingsSelector);
 
   const [role, setRole] = useState("");
   const permesionRef = useRef(false);
@@ -47,6 +48,15 @@ function Roles() {
     dispatch(getRoles());
     dispatch(getPermesion());
   }, []);
+
+  useEffect(() => {
+    let roleObj = roles.filter((obj)=> obj.name === role)
+    console.log("id", roleObj[0]?.id)
+
+   dispatch(getSelectedPermesion(roleObj[0]?.id));
+  }, [role]);
+
+  console.log("selectedPermesion", selectedPermesion)
 
   useEffect(() => {
     if (!permesionRef.current) {
