@@ -1,9 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+import { LANGS } from "../../constants/global";
+
 const resrvedToken =
   window.sessionStorage.getItem("token") ||
   window.localStorage.getItem("token") ||
   "";
+
+const resrvedLanguage = window.localStorage.getItem("lang") || LANGS.en;
 
 export const loginWithEmail = createAsyncThunk(
   "users/loginWithEmail",
@@ -27,6 +31,8 @@ export const loginWithEmail = createAsyncThunk(
       );
       let result = await response.json();
       if (response.status === 200) {
+        localStorage.setItem("lang", result.data.user.language);
+
         if (remember === true) {
           localStorage.setItem("token", result.data.token);
           return result;
@@ -94,6 +100,7 @@ export const loginWithPhone = createAsyncThunk(
       );
       let result = await response.json();
       if (response.status === 200) {
+        localStorage.setItem("lang", result.data.user.language);
         localStorage.setItem("token", result.data.token);
         return result;
       } else {
@@ -199,6 +206,7 @@ export const authSlice = createSlice({
   initialState: {
     user: null,
     company: null,
+    language: resrvedLanguage,
     token: resrvedToken,
     errors: {},
     isFetching: false,
@@ -220,11 +228,17 @@ export const authSlice = createSlice({
       state.isSuccess = false;
       state.isError = false;
     },
+    setLanguage: (state, { payload }) => {
+      state.language = payload.language;
+
+      localStorage.setItem("lang", payload.language);
+    },
   },
   extraReducers: {
     [loginWithEmail.fulfilled]: (state, { payload }) => {
       state.user = payload.data.user;
       state.company = payload.data.company;
+      state.language = payload.data.user.language;
       state.token = payload.data.token;
       state.isFetching = false;
       state.isSuccess = true;
@@ -252,6 +266,7 @@ export const authSlice = createSlice({
     [loginWithPhone.fulfilled]: (state, { payload }) => {
       state.user = payload.data.user;
       state.company = payload.data.company;
+      state.language = payload.data.user.language;
       state.token = payload.data.token;
       state.isFetching = false;
       state.isSuccess = true;
@@ -291,6 +306,7 @@ export const authSlice = createSlice({
     [rememberMe.fulfilled]: (state, { payload }) => {
       state.user = payload.data.user;
       state.company = payload.data.company;
+      state.language = payload.data.user.language;
       state.isFetching = false;
       state.isSuccess = true;
     },
@@ -307,6 +323,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { clearAuth, loggedout } = authSlice.actions;
+export const { clearAuth, setLanguage, loggedout } = authSlice.actions;
 
 export const authSelector = (state) => state.auth;
