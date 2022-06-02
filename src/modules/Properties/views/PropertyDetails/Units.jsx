@@ -11,7 +11,7 @@ import {
   Grid,
   Button,
   Collapse,
-  ListItemButton,
+  MenuItem,
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
@@ -79,6 +79,7 @@ function Units() {
 
       <Grid item>
         <Menu
+          label="units options"
           AnchorComponent={IconButton}
           AnchorComponentProps={{
             size: "large",
@@ -88,21 +89,21 @@ function Units() {
           }}
           AnchorComponentOpenProps={{ color: "primary" }}
         >
-          <ListItemButton onClick={() => {}}>
-            <ListItemIcon sx={{ minWidth: "auto", mr: 1 }}>
+          <MenuItem onClick={() => {}}>
+            <ListItemIcon>
               <Icon icon={mdiMicrosoftExcel} size="small" />
             </ListItemIcon>
 
             <ListItemText>{t("downloadUnitsForm")}</ListItemText>
-          </ListItemButton>
+          </MenuItem>
 
-          <ListItemButton onClick={() => {}}>
-            <ListItemIcon sx={{ minWidth: "auto", mr: 1 }}>
+          <MenuItem onClick={() => {}}>
+            <ListItemIcon>
               <Icon icon={mdiMicrosoftExcel} size="small" />
             </ListItemIcon>
 
             <ListItemText>{t("uploadUnitsForm")}</ListItemText>
-          </ListItemButton>
+          </MenuItem>
         </Menu>
       </Grid>
 
