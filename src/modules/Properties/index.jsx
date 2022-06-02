@@ -6,6 +6,8 @@ import Properties from "./views/Properties";
 import PropertyDetails from "./views/PropertyDetails";
 import PropertyForm from "./views/PropertyForm";
 
+import UnitForm from "./views/UnitForm";
+
 import { isUUIDValid } from "../../helpers/routing";
 
 const PropertyIDValidator = ({ children }) => {
@@ -42,6 +44,24 @@ function PropertiesRoot() {
         element={
           <PropertyIDValidator>
             <PropertyForm formType="edit" />
+          </PropertyIDValidator>
+        }
+      />
+
+      <Route path="units/add" element={<UnitForm formType="add" />} />
+      <Route
+        path="units/clone/:unitID"
+        element={
+          <PropertyIDValidator>
+            <UnitForm formType="clone" />
+          </PropertyIDValidator>
+        }
+      />
+      <Route
+        path="units/edit/:unitID"
+        element={
+          <PropertyIDValidator>
+            <UnitForm formType="edit" />
           </PropertyIDValidator>
         }
       />
