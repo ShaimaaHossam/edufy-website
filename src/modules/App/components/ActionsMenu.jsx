@@ -10,6 +10,7 @@ import {
   Button as MuiButton,
   Menu,
   MenuItem,
+  ListItemText,
   Typography,
 } from "@mui/material";
 
@@ -103,15 +104,15 @@ function ActionsMenu() {
         MenuListProps={{ dense: true }}
       >
         <MenuItem onClick={() => navigate("/people/add")}>
-          <Typography variant="body2">{t("add_user")}</Typography>
+          <ListItemText>{t("add_user")}</ListItemText>
         </MenuItem>
 
         <MenuItem onClick={() => navigate("/orders/add")}>
-          <Typography variant="body2">{t("add_order")}</Typography>
+          <ListItemText>{t("add_order")}</ListItemText>
         </MenuItem>
 
         <MenuItem onClick={() => navigate("/properties/add")}>
-          <Typography variant="body2">{t("add_property")}</Typography>
+          <ListItemText>{t("add_property")}</ListItemText>
         </MenuItem>
       </Menu>
     </>

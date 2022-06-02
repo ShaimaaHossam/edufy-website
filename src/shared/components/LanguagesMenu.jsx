@@ -5,7 +5,7 @@ import { useUpdateUserMutation } from "../../redux/services/people";
 
 import { useTranslation } from "react-i18next";
 
-import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { MenuItem, ListItemIcon, ListItemText } from "@mui/material";
 
 import { mdiTranslate, mdiCheck } from "@mdi/js";
 
@@ -55,16 +55,15 @@ function NotificationMenu() {
         },
       }}
     >
-      <ListItemButton
+      <MenuItem
         selected={language === LANGS.en}
         color={language === LANGS.en ? "primary" : "default"}
         onClick={() => handleLangChange(LANGS.en)}
       >
-        <ListItemIcon sx={{ minWidth: 20, mr: 1 }}>
+        <ListItemIcon>
           {language === LANGS.en && (
             <Icon
               icon={mdiCheck}
-              size="small"
               color={language === LANGS.en ? "primary" : "default"}
             />
           )}
@@ -72,23 +71,22 @@ function NotificationMenu() {
 
         <ListItemText
           primaryTypographyProps={{
-            color: language === LANGS.en ? "primary.main" : "text.secondary",
+            color: language === LANGS.en ? "primary.main" : "text.primary",
           }}
         >
           {t("english")}
         </ListItemText>
-      </ListItemButton>
+      </MenuItem>
 
-      <ListItemButton
+      <MenuItem
         selected={language === LANGS.ar}
         color={language === LANGS.ar ? "primary" : "default"}
         onClick={() => handleLangChange(LANGS.ar)}
       >
-        <ListItemIcon sx={{ minWidth: 20, mr: 1 }}>
+        <ListItemIcon>
           {language === LANGS.ar && (
             <Icon
               icon={mdiCheck}
-              size="small"
               color={language === LANGS.ar ? "primary" : "default"}
             />
           )}
@@ -96,12 +94,12 @@ function NotificationMenu() {
 
         <ListItemText
           primaryTypographyProps={{
-            color: language === LANGS.ar ? "primary.main" : "text.secondary",
+            color: language === LANGS.ar ? "primary.main" : "text.primary",
           }}
         >
           {t("arabic")}
         </ListItemText>
-      </ListItemButton>
+      </MenuItem>
     </Menu>
   );
 }
