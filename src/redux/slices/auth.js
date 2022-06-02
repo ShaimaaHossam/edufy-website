@@ -197,7 +197,8 @@ export const rememberMe = createAsyncThunk(
 export const authSlice = createSlice({
   name: "user",
   initialState: {
-    userData: null,
+    user: null,
+    company: null,
     token: resrvedToken,
     errors: {},
     isFetching: false,
@@ -211,7 +212,8 @@ export const authSlice = createSlice({
       state.isFetching = false;
     },
     loggedout: (state) => {
-      state.userData = null;
+      state.user = null;
+      state.company = null;
       state.token = "";
       state.errors = {};
       state.isFetching = false;
@@ -221,7 +223,8 @@ export const authSlice = createSlice({
   },
   extraReducers: {
     [loginWithEmail.fulfilled]: (state, { payload }) => {
-      state.userData = payload.data;
+      state.user = payload.data.user;
+      state.company = payload.data.company;
       state.token = payload.data.token;
       state.isFetching = false;
       state.isSuccess = true;
@@ -247,7 +250,8 @@ export const authSlice = createSlice({
       state.isFetching = true;
     },
     [loginWithPhone.fulfilled]: (state, { payload }) => {
-      state.userData = payload.data;
+      state.user = payload.data.user;
+      state.company = payload.data.company;
       state.token = payload.data.token;
       state.isFetching = false;
       state.isSuccess = true;
@@ -285,12 +289,14 @@ export const authSlice = createSlice({
       state.isFetching = true;
     },
     [rememberMe.fulfilled]: (state, { payload }) => {
-      state.userData = payload.data;
+      state.user = payload.data.user;
+      state.company = payload.data.company;
       state.isFetching = false;
       state.isSuccess = true;
     },
     [rememberMe.rejected]: (state, obj) => {
-      state.userData = null;
+      state.user = null;
+      state.company = null;
       state.token = "";
       state.isFetching = false;
       state.isError = true;
