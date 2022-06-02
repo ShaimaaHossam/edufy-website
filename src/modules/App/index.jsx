@@ -61,9 +61,8 @@ function App() {
                   <Route path="services/*" element={<Services />} />
                   <Route path="settings/*" element={<Settings />} />
                   <Route path="help/*" element={<Help />} />
-
                   <Route path="/" element={<Navigate to="/dashboard" />} />
-
+                  <Route path="/auth/*" element={<Navigate to="/dashboard" />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>

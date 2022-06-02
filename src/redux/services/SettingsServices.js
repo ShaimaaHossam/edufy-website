@@ -237,7 +237,7 @@ export const getSecondaryContcat = createAsyncThunk(
 export const settingsSlice = createSlice({
   name: "settings",
   initialState: {
-    data: null,
+    NotificationsData: null,
     companyInfo:null,
     secondaryContcat: [],
     errors: "",
@@ -260,7 +260,7 @@ export const settingsSlice = createSlice({
   },
   extraReducers: {
     [getNotifications.fulfilled]: (state, { payload }) => {
-      state.data = payload.data;
+      state.NotificationsData = payload.data;
 
       state.isFetching = false;
       state.isSuccess = true;
@@ -330,8 +330,7 @@ export const settingsSlice = createSlice({
 
     [updateNotification.fulfilled]: (state, { payload }) => {
       console.log("fulfilled", payload);
-      console.log("res", payload.data);
-      state.data = payload.data;
+      state.NotificationsData = payload.data;
 
       state.isFetching = false;
       state.isSuccess = true;
@@ -364,7 +363,6 @@ export const settingsSlice = createSlice({
     },
 
     [updateCompanyInfo.fulfilled]: (state, { payload }) => {
-      console.log("fulfilled", payload);
       state.companyInfo = payload.data;
 
       state.isFetching = false;
@@ -372,12 +370,10 @@ export const settingsSlice = createSlice({
       return state;
     },
     [updateCompanyInfo.rejected]: (state, {payload}) => {
-      console.log("rejected", payload);
       state.companyInfo = null;
 
       state.isFetching = false;
       state.isError = true;
-      console.log("state.isError", state.isError)
       state.errors = payload.errors;
     },
     [updateCompanyInfo.pending]: (state) => {

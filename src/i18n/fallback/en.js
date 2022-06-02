@@ -22,6 +22,8 @@ const en = {
   stepper_active_status: "active",
   stepper_success_status: "success",
   stepper_error_status: "error",
+
+  required:"Required"
 };
 
 export default en;

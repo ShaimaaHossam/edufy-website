@@ -21,6 +21,8 @@ const ar = {
   stepper_active_status: "نشط الان",
   stepper_success_status: "تم بنجاح",
   stepper_error_status: "حدث خطأ ما",
+
+  required:"هذا الحقل مطلوب"
 };
 
 export default ar;

@@ -22,10 +22,12 @@ import FileInput from "../../../shared/components/inputs/FileInput";
 import Dialog from "../../../shared/components/Dialog";
 import Alert from "../components/AlertMessage";
 
-function Personal() {
+function CompanyInformation() {
   const { isSuccess, isError, errors, companyInfo } = useSelector(settingsSelector);
   const [open, setOpen] = useState(false);
   const imageRef = useRef(false);
+
+  const { t } = useTranslation();
 
   const { userData } = useSelector(userSelector);
 
@@ -47,11 +49,11 @@ function Personal() {
     },
 
     validationSchema: Yup.object({
-      name: Yup.string().required("Required"),
-      address: Yup.string().required("Required"),
-      vat_number: Yup.string().required("Required"),
-      cr_number: Yup.string().required("Required"),
-      cr_file: Yup.string().required("Required"),
+      name: Yup.string().required(t("required")),
+      address: Yup.string().required(t("required")),
+      vat_number: Yup.string().required(t("required")),
+      cr_number: Yup.string().required(t("required")),
+      cr_file: Yup.string().required(t("required")),
     }),
   });
 
@@ -124,7 +126,7 @@ function Personal() {
       />
 
       <Typography variant="h5" fontWeight="bold" mb={3} mt={8}>
-        Company Documents
+        Company documents
       </Typography>
 
       <Box mb={3}>
@@ -204,4 +206,4 @@ function Personal() {
   );
 }
 
-export default Personal;
+export default CompanyInformation;

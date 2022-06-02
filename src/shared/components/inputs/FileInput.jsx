@@ -65,103 +65,104 @@ function FileInput({
     );
   }
 
-
   return (
-    <Box
-      sx={{
-        borderWidth: 2,
-        borderRadius: 1,
-        borderStyle: "solid",
-        display: "inline-block",
-        width: "100%",
-        padding: 1,
-        borderColor: err ? "#FC2424" : "#D5D9E5",
-        position: "relative",
-      }}
-    >
-      <form id={`${file}-formElem`}>
-        <label htmlFor={`${file}-file`}>
-          <input
-            id={`${file}-file`}
-            type="file"
-            name="file"
-            accept="application/pdf,application/vnd.ms-excel"
-            style={{
-              display: "none",
-            }}
-            onChange={(e) => {
-              uploadPdfFile(e);
-              setErr(false)
-            }}
-            ref={fileInputRef}
-          />
-        </label>
-      </form>
-
+    <>
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          position: "realtive",
+          borderWidth: 2,
+          borderRadius: 1,
+          borderStyle: "solid",
+          display: "inline-block",
+          width: "100%",
+          padding: 1,
+          borderColor: err ? "#FC2424" : "#D5D9E5",
+          position: "relative",
         }}
       >
-        <Button
-          onClick={() => {
-            if (category === "vat") {
-              setOpen(true);
-            } else {
-              fileInputRef.current.click();
-            }
-          }}
-        >
-          {file ? `Change ${placeholder}` : `Upload ${placeholder}`}
-        </Button>
+        <form id={`${file}-formElem`}>
+          <label htmlFor={`${file}-file`}>
+            <input
+              id={`${file}-file`}
+              type="file"
+              name="file"
+              accept="application/pdf,application/vnd.ms-excel"
+              style={{
+                display: "none",
+              }}
+              onChange={(e) => {
+                uploadPdfFile(e);
+                setErr(false);
+              }}
+              ref={fileInputRef}
+            />
+          </label>
+        </form>
 
-        <Typography
-          variant="p"
-          ml={3}
+        <Box
           sx={{
-            position: "absolute",
-            transform: "translate(175px, 8px)",
+            display: "flex",
+            justifyContent: "space-between",
+            position: "realtive",
           }}
         >
-          {file ? file : "There are No Document Uploaded"}
-        </Typography>
-
-        {file ? (
-          <IconButton
-            position="relative"
+          <Button
             onClick={() => {
               if (category === "vat") {
                 setOpen(true);
               } else {
-                setFile("");
-                setFilePath(null);
-                setErr(true);
+                fileInputRef.current.click();
               }
             }}
           >
-            <SvgIcon fontSize="small">
-              <path d={mdiDelete} />
-            </SvgIcon>
+            {file ? `Change ${placeholder}` : `Upload ${placeholder}`}
+          </Button>
 
-            <Dialog
-              title="Are you sure you want to change Vat document ?"
-              open={open}
-              onConfirm={() => {
-                setOpen(false);
+          <Typography
+            variant="p"
+            ml={3}
+            sx={{
+              position: "absolute",
+              transform: "translate(175px, 8px)",
+            }}
+          >
+            {file ? file : "There are No Document Uploaded"}
+          </Typography>
+
+          {file ? (
+            <IconButton
+              position="relative"
+              onClick={() => {
+                if (category === "vat") {
+                  setOpen(true);
+                } else {
+                  setFile("");
+                  setFilePath(null);
+                  setErr(true);
+                }
               }}
-              onClose={() => {
-                setOpen(false);
-              }}
-            />
-          </IconButton>
-        ) : null}
+            >
+              <SvgIcon fontSize="small">
+                <path d={mdiDelete} />
+              </SvgIcon>
+
+              <Dialog
+                title="Are you sure you want to change Vat document ?"
+                open={open}
+                onConfirm={() => {
+                  setOpen(false);
+                }}
+                onClose={() => {
+                  setOpen(false);
+                }}
+              />
+            </IconButton>
+          ) : null}
+        </Box>
       </Box>
       <FormHelperText sx={{ color: "error.main" }}>
         {err && helperText}
       </FormHelperText>
-    </Box>
+    </>
   );
 }
 
