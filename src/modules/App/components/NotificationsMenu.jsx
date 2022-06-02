@@ -17,6 +17,9 @@ function NotificationMenu() {
         icon: mdiBellRingOutline,
         size: "large",
         color: "primary",
+        variant: "contained",
+      }}
+      AnchorComponentOpenProps={{
         variant: "outlined",
         sx: {
           backgroundImage:

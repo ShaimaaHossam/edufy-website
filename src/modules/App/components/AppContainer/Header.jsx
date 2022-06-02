@@ -4,7 +4,7 @@ import Link from "../../../../shared/components/Link";
 
 import UserMenu from "../UserMenu";
 import ActionsMenu from "../ActionsMenu";
-import NotificationMenu from "../NotificationMenu";
+import NotificationsMenu from "../NotificationsMenu";
 
 import brandLogoEn from "../../../../assets/logos/brand_logo_en.svg";
 
@@ -28,7 +28,7 @@ function Header() {
       </Grid>
 
       <Grid item>
-        <NotificationMenu />
+        <NotificationsMenu />
       </Grid>
 
       <Grid item>
