@@ -1,6 +1,7 @@
 import { Box, Grid } from "@mui/material";
 
 import Link from "../../../../shared/components/Link";
+import LanguagesMenu from "../../../../shared/components/LanguagesMenu";
 
 import UserMenu from "../UserMenu";
 import ActionsMenu from "../ActionsMenu";
@@ -33,6 +34,10 @@ function Header() {
 
       <Grid item>
         <UserMenu />
+      </Grid>
+
+      <Grid item>
+        <LanguagesMenu />
       </Grid>
     </Grid>
   );
