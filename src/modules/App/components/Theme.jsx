@@ -1,4 +1,8 @@
 import { useEffect, useMemo } from "react";
+
+import { useSelector } from "react-redux";
+import { authSelector } from "../../../redux/slices/auth";
+
 import { useTranslation } from "react-i18next";
 
 import { CacheProvider } from "@emotion/react";
@@ -15,7 +19,8 @@ import { LANGS, LANGS_DIRS, I18N_MAP } from "../../../constants/global";
 function Theme({ children }) {
   const { i18n } = useTranslation();
 
-  const lang = "en"; // try to change this to "ar" and check ui/dom
+  const { language: lang } = useSelector(authSelector);
+
   useEffect(() => {
     i18n.changeLanguage(I18N_MAP[lang]);
   }, [lang, i18n]);
