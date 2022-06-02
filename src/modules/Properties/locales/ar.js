@@ -38,6 +38,12 @@ const ar = {
   areaManagerEmail: "البريد الإلكتروني لمدير المنطقة",
   didntFoundManager: "لم تجد المدير الذي تبحث عنه؟",
   createNewManager: "إضافة مدير جديد",
+  units: "الوحدات",
+  searchUnits: "ابحث في الوحدات",
+  unitName: "إسم الوحدة",
+  downloadUnitsForm: "تحميل إستمارة الوحدات",
+  uploadUnitsForm: "رفع إستمارة الوحدات",
+  openOrders: "الطلبات المفتوحة",
 
   byType: "بالنوع",
   byCity: "بالمدينة",
@@ -52,11 +58,14 @@ const ar = {
   addProperty: "إضافة عقار",
   saveProperty: "حفظ العقار",
   clear: "إلغاء",
+  addUnit: "إضافة وحدة",
 
   units_count: "{{count}} وحدة",
   units_count_one: "1 وحدة",
   orders_count: "{{count}} طلب",
   orders_coun_onet: "1 طلب",
+  rooms_count: "{{count}} غرفة",
+  rooms_count_one: "1 غرفة",
 
   requiredField: "هذا الحقل مطلوب",
   locationRequired: "موقع العقار مطلوب",
