@@ -23,7 +23,8 @@ import Dialog from "../../../shared/components/Dialog";
 import Alert from "../components/AlertMessage";
 
 function CompanyInformation() {
-  const { isSuccess, isError, errors, companyInfo } = useSelector(settingsSelector);
+  const { isSuccess, isError, errors, companyInfo } =
+    useSelector(settingsSelector);
   const [open, setOpen] = useState(false);
   const imageRef = useRef(false);
 
@@ -77,10 +78,10 @@ function CompanyInformation() {
     if (isError) {
       companylInfo.setErrors(errors);
     }
-    if(isSuccess){
+    if (isSuccess) {
       dispatch(clearState());
     }
-  }, [isError, isSuccess,errors]);
+  }, [isError, isSuccess, errors]);
 
   return (
     <>
@@ -95,8 +96,10 @@ function CompanyInformation() {
             setImagePath(path);
           }
         }}
-        error={!!companylInfo.errors.logo_file}
-        helperText={companylInfo.errors.logo_file || "Please upload only image"}
+        error={!!companylInfo?.errors.logo_file}
+        helperText={
+          companylInfo?.errors.logo_file || "Please upload only image"
+        }
       />
 
       <Typography variant="h5" fontWeight="bold" mb={3} mt={5}>

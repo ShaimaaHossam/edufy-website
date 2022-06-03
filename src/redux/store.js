@@ -23,7 +23,6 @@ export const store = configureStore({
 
     [propertiesSlice.name]: propertiesSlice.reducer,
   },
-
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
       propertiesAPI.middleware,
@@ -33,5 +32,3 @@ export const store = configureStore({
 });
 
 setupListeners(store.dispatch);
-   
-

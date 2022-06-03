@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { Tabs, Tab, Box } from "@mui/material";
 
 import Notifications from "./Notifications";
-import CompanyInformation from "./CompanyInformation"
-import Roles from "./Roles"
+import CompanyInformation from "./CompanyInformation";
+import Roles from "./Roles";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -65,13 +65,14 @@ function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <CompanyInformation/>
+        <CompanyInformation />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Notifications/>
+        <Notifications />
       </TabPanel>
+
       <TabPanel value={value} index={2}>
-        <Roles/>
+        <Roles />
       </TabPanel>
     </Box>
   );

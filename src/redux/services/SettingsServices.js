@@ -5,7 +5,6 @@ import { resrvedToken } from "../userSlice";
 export const updateNotification = createAsyncThunk(
   "settings/updateNotification",
   async (obj, thunkAPI) => {
-    console.log("obj", JSON.stringify(obj));
     try {
       const response = await fetch(
         "https://api.stage.marafeq.munjz.com/v1/settings/update",
@@ -33,9 +32,7 @@ export const updateNotification = createAsyncThunk(
 );
 export const updateCompanyInfo = createAsyncThunk(
   "settings/updateCompanyInfo",
-  async ({id, data}, thunkAPI) => {
-    console.log("data", data);
-    
+  async ({ id, data }, thunkAPI) => {
     try {
       const response = await fetch(
         `https://api.stage.marafeq.munjz.com/v1/companies/update/${id}`,
@@ -64,9 +61,7 @@ export const updateCompanyInfo = createAsyncThunk(
 
 export const updatePermesion = createAsyncThunk(
   "settings/updatePermesion",
-  async ({id, data}, thunkAPI) => {
-    console.log("data", data);
-    
+  async ({ id, data }, thunkAPI) => {
     try {
       const response = await fetch(
         `https://api.stage.marafeq.munjz.com/v1/roles/update/${id}`,
@@ -151,8 +146,7 @@ export const getPermesion = createAsyncThunk(
 
 export const getSelectedPermesion = createAsyncThunk(
   "settings/getSelectedPermesion",
-  async (id,thunkAPI) => {
-    console.log("idd", id)
+  async (id, thunkAPI) => {
     try {
       const response = await fetch(
         `https://api.stage.marafeq.munjz.com/v1/roles/${id}`,
@@ -238,12 +232,12 @@ export const settingsSlice = createSlice({
   name: "settings",
   initialState: {
     NotificationsData: null,
-    companyInfo:null,
+    companyInfo: null,
     secondaryContcat: [],
     errors: "",
-    roles:[],
-    permesions:{},
-    selectedPermesion:[],
+    roles: [],
+    permesions: {},
+    selectedPermesion: [],
     isFetching: false,
     isSuccess: false,
     isError: false,
@@ -276,7 +270,6 @@ export const settingsSlice = createSlice({
     },
 
     [getRoles.fulfilled]: (state, { payload }) => {
-      console.log("fulfilled getRoles", payload.data)
       state.roles = payload.data;
 
       state.isFetching = false;
@@ -293,7 +286,6 @@ export const settingsSlice = createSlice({
     },
 
     [getPermesion.fulfilled]: (state, { payload }) => {
-      console.log("fulfilled getPermesion", payload.data)
       state.permesions = payload.data;
 
       state.isFetching = false;
@@ -310,7 +302,6 @@ export const settingsSlice = createSlice({
     },
 
     [getSelectedPermesion.fulfilled]: (state, { payload }) => {
-      console.log("fulfilled getPermesion", payload.data)
       state.selectedPermesion = payload.data;
 
       state.isFetching = false;
@@ -318,8 +309,6 @@ export const settingsSlice = createSlice({
       return state;
     },
     [getSelectedPermesion.rejected]: (state, payload) => {
-      console.log("rejected getPermesion", payload)
-
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors;
@@ -329,7 +318,6 @@ export const settingsSlice = createSlice({
     },
 
     [updateNotification.fulfilled]: (state, { payload }) => {
-      console.log("fulfilled", payload);
       state.NotificationsData = payload.data;
 
       state.isFetching = false;
@@ -337,7 +325,6 @@ export const settingsSlice = createSlice({
       return state;
     },
     [updateNotification.rejected]: (state, payload) => {
-      console.log("rejected", payload);
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors;
@@ -347,13 +334,11 @@ export const settingsSlice = createSlice({
     },
 
     [updatePermesion.fulfilled]: (state, { payload }) => {
-      console.log("fulfilled update", payload);
       state.isFetching = false;
       state.isSuccess = true;
       return state;
     },
     [updatePermesion.rejected]: (state, payload) => {
-      console.log("rejected", payload);
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors;
@@ -369,7 +354,7 @@ export const settingsSlice = createSlice({
       state.isSuccess = true;
       return state;
     },
-    [updateCompanyInfo.rejected]: (state, {payload}) => {
+    [updateCompanyInfo.rejected]: (state, { payload }) => {
       state.companyInfo = null;
 
       state.isFetching = false;
