@@ -9,7 +9,7 @@ export default function LeftMenu({ menu, active,  updateMenu,  }) {
 }
   return (
     <div className="w-44 h-screen  fixed  flex flex-col  content-center    bg-gray-900  py-12   text-white">
-        <Link href="/">
+        <Link href="/" passHref>
           <svg
             className="mx-auto  my-6 mb-20 hover:cursor-pointer"
             width="100"

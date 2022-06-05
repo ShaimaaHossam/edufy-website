@@ -12,7 +12,7 @@ export default function Dropdown({closeMenu}) {
     <>
       <div className="absolute right-0 z-10 bg-white shadow-md px-8 py-4 mr-20">
         <div className="mb-4 ">
-        <Link href="/dashboard">
+        <Link href="/dashboard" passHref>
             <div className="flex hover:cursor-pointer">
           <svg
             className="mr-2 h-5 w-5 mt-1"

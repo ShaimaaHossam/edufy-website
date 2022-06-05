@@ -1,7 +1,7 @@
 import BasicModal from "./modal";
 import React, { useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
-import {db, auth} from "../../firebase/firebase-config";
+import { db, auth } from "../../firebase/firebase-config";
 import { useRouter } from "next/router";
 export default function PastMeetings() {
   const [open, setOpen] = React.useState(false);
@@ -10,35 +10,37 @@ export default function PastMeetings() {
   const user = auth.currentUser;
   const router = useRouter();
   const handleOpen = (meeting) => {
-      setMeeting(meeting);
-      setOpen(true)
-  } 
-  const handleClose = () => setOpen(false); 
-  
-  useEffect(async()=>{
-    try{
-    const docRef = doc(db, "instructors", user.uid);
-    const docSnap = await getDoc(docRef);
-    setMeetings(docSnap.data().meetings);
+    setMeeting(meeting);
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
 
-    } catch(error){
-      router.replace("/")
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const docRef = doc(db, "instructors", user.uid);
+        const docSnap = await getDoc(docRef);
+        setMeetings(docSnap.data().meetings);
+      } catch (error) {
+        router.replace("/");
+      }
     }
+    fetchData();
+  }, [user.uid, router]);
 
-
-  })
-
- 
   return (
     <div className="mt-4 mx-20">
-        
       <span className=" bg-blue-200 text-blue-800 font-bold px-6  py-1 rounded-full text-lg">
         Past Meetings
       </span>
 
       <ul className="mt-12 ">
         {meetings.map((meeting, key) => (
-          <li key={key} onClick={()=>handleOpen(meeting)} className="flex shadow-md py-8 mt-4 px-8 cursor-pointer">
+          <li
+            key={key}
+            onClick={() => handleOpen(meeting)}
+            className="flex shadow-md py-8 mt-4 px-8 cursor-pointer"
+          >
             <div className="mr-12">
               <svg
                 fill="#9d9da0"
@@ -59,12 +61,9 @@ export default function PastMeetings() {
               <p>Room ID: {meeting.meetingRoomId}</p>
             </div>
           </li>
-          
         ))}
       </ul>
-      <BasicModal handleClose={handleClose}  open={open} meeting={meeting}/>
-
-
+      <BasicModal handleClose={handleClose} open={open} meeting={meeting} />
     </div>
   );
 }

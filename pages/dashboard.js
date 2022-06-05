@@ -3,8 +3,6 @@ import ActiveMeetings from "../components/dashboard/active_meetings";
 import PastMeetings from "../components/dashboard/past_meetings";
 import Reports from "../components/dashboard/reports";
 import Classes from "../components/dashboard/classes";
-import Settings from "../components/dashboard/settings";
-import EditProfile from "../components/dashboard/edit_profile";
 import React, { useEffect } from "react";
 import { auth } from "../firebase/firebase-config";
 import { useRouter } from "next/router";

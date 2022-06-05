@@ -8,7 +8,8 @@ export default function ActiveMeetings({active}) {
   const [data, setData] = useState([]);
   const [meeting, setMeeting] = useState({})
   const user = auth.currentUser;
-  useEffect(async () => {
+  useEffect(() => {
+    async function fetchData(){
     try{
       const docRef = doc(db, "instructors", user.uid);
       const docSnap = await getDoc(docRef);
@@ -19,7 +20,9 @@ export default function ActiveMeetings({active}) {
       } catch(error){
         console.log(error);
       }
-  });
+    }
+    fetchData();
+  }, [user.uid]);
   
   
   return (

@@ -174,7 +174,7 @@ function Login() {
                   </span>
 
                   <span className="ml-2">
-                    Don't have an account? register now!
+                    Don&apos;t have an account? register now!
                   </span>
                 </a>
               </Link>
