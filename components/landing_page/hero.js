@@ -27,7 +27,7 @@ export default function Hero() {
           </div>
         </div>
         <div className="lg:w-2/5 lg:p-12 lg:block mt-12 lg:mt-0 px-8 lg:px-0">
-          <Image alt="heroimg" className="w-full h-auto shadow-2xl rounded-lg" src="/img1.jpg" />
+          <Image alt="heroimg" className="w-full h-auto shadow-2xl rounded-lg" src="/img1.jpg" width="500" height="400" />
         </div>
       </div>
     </>
