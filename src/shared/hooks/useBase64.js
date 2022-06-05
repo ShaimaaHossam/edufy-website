@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { userSelector } from "../../redux/userSlice";
+import { authSelector } from "../../redux/slices/auth";
 
 function useBase64(initialValue, onChange, setImagePath, imagePath, error) {
   const [baseImage, setBaseImage] = useState(initialValue);
-  const { token } = useSelector(userSelector);
+  const { token } = useSelector(authSelector);
   const [err, setError] = useState(error);
 
   const convertBase64 = (file) => {

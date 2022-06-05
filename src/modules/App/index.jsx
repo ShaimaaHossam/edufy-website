@@ -7,11 +7,9 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch,  useSelector} from "react-redux";
 import { authSelector, rememberMe } from "../../redux/slices/auth";
-
 import NotFound from "../../shared/views/NotFound";
-
 import Theme from "./components/Theme";
 import AppContainer from "./components/AppContainer";
 import Spinner from "./components/Spinner";

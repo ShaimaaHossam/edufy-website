@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 
 import { useSelector, useDispatch } from "react-redux";
-import { userSelector } from "../../../redux/userSlice";
+import { authSelector } from "../../../redux/slices/auth";
 
 import {
   clearState,
@@ -30,7 +30,7 @@ function CompanyInformation() {
 
   const { t } = useTranslation();
 
-  const { userData } = useSelector(userSelector);
+  const { userData } = useSelector(authSelector);
 
   const [imagePath, setImagePath] = useState(userData.company.logo_file);
   const [crFilePath, setCrFilePath] = useState(userData.company.cr_file);

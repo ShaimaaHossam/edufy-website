@@ -10,7 +10,6 @@ import { authSlice } from "./slices/auth";
 import { settingsSlice } from "./services/SettingsServices";
 
 import { propertiesSlice } from "../modules/Properties/state";
-
 export const store = configureStore({
   reducer: {
     [propertiesAPI.reducerPath]: propertiesAPI.reducer,
@@ -19,7 +18,10 @@ export const store = configureStore({
 
     [authSlice.name]: authSlice.reducer,
     [settingsSlice.name]: settingsSlice.reducer,
+<<<<<<< HEAD
 
+=======
+>>>>>>> 62ff548 (fix: fix applaction srore and fix some conflicts)
 
     [propertiesSlice.name]: propertiesSlice.reducer,
   },

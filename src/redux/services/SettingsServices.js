@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {resrvedToken} from "../slices/auth"
 
-import { resrvedToken } from "../userSlice";
+let token = resrvedToken;
+
 
 export const updateNotification = createAsyncThunk(
   "settings/updateNotification",
@@ -14,7 +16,7 @@ export const updateNotification = createAsyncThunk(
             Accept: "application/json",
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-            Authorization: "Bearer " + resrvedToken,
+            Authorization: "Bearer " + token,
           },
           body: JSON.stringify(obj),
         }
@@ -42,7 +44,7 @@ export const updateCompanyInfo = createAsyncThunk(
             Accept: "application/json",
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-            Authorization: "Bearer " + resrvedToken,
+            Authorization: "Bearer " + token,
           },
           body: JSON.stringify(data),
         }
@@ -71,7 +73,7 @@ export const updatePermesion = createAsyncThunk(
             Accept: "application/json",
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-            Authorization: "Bearer " + resrvedToken,
+            Authorization: "Bearer " + token,
           },
           body: JSON.stringify(data),
         }
@@ -100,7 +102,7 @@ export const getRoles = createAsyncThunk(
             Accept: "application/json",
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-            Authorization: "Bearer " + resrvedToken,
+            Authorization: "Bearer " + token,
           },
         }
       );
@@ -128,7 +130,7 @@ export const getPermesion = createAsyncThunk(
             Accept: "application/json",
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-            Authorization: "Bearer " + resrvedToken,
+            Authorization: "Bearer " + token,
           },
         }
       );
@@ -156,7 +158,7 @@ export const getSelectedPermesion = createAsyncThunk(
             Accept: "application/json",
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-            Authorization: "Bearer " + resrvedToken,
+            Authorization: "Bearer " + token,
           },
         }
       );
@@ -184,7 +186,7 @@ export const getNotifications = createAsyncThunk(
             Accept: "application/json",
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-            Authorization: "Bearer " + resrvedToken,
+            Authorization: "Bearer " + token,
           },
         }
       );
@@ -212,7 +214,7 @@ export const getSecondaryContcat = createAsyncThunk(
             Accept: "application/json",
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-            Authorization: "Bearer " + resrvedToken,
+            Authorization: "Bearer " + token,
           },
         }
       );

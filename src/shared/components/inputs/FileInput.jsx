@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import {
   Box,
   Typography,
@@ -10,7 +10,7 @@ import {
 import Dialog from "../Dialog";
 
 import { useSelector } from "react-redux";
-import { userSelector } from "../../../redux/userSlice";
+import { authSelector } from "../../../redux/slices/auth";
 
 import { mdiDelete } from "@mdi/js";
 
@@ -26,7 +26,7 @@ function FileInput({
   const [file, setFile] = useState(initialValue);
   const [err, setErr] = useState(error);
 
-  const { token } = useSelector(userSelector);
+  const { token } = useSelector(authSelector);
   const [open, setOpen] = useState(false);
 
   const uploadPdfFile = async (e) => {

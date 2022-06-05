@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { LANGS } from "../../constants/global";
 
-const resrvedToken =
+export const resrvedToken =
   window.sessionStorage.getItem("token") ||
   window.localStorage.getItem("token") ||
   "";
@@ -314,6 +314,8 @@ export const authSlice = createSlice({
       state.user = null;
       state.company = null;
       state.token = "";
+      localStorage.clear("token");
+      sessionStorage.clear("token");
       state.isFetching = false;
       state.isError = true;
     },
