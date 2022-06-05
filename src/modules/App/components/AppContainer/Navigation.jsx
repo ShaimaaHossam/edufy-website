@@ -116,7 +116,7 @@ function Navigation({ open, toggleDrawer }) {
                         icon={item.icon}
                         sx={{ width: 20, height: 20, mr: 2 }}
                       />
-
+                      
                       <Typography component="span">
                         {t(item.navName)}
                       </Typography>
