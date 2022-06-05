@@ -2,24 +2,26 @@ import PieChart from "./pie_chart";
 import React, { useState, useEffect } from "react";
 import Analysis from "./tables/analysis";
 import Students from "./tables/students";
-import { db } from "../../firebase/firebase-config";
-import { collection, getDocs } from "firebase/firestore";
-
+import { db , auth} from "../../firebase/firebase-config";
+import { getDoc, doc } from "firebase/firestore";
 export default function ActiveMeetings({active}) {
-  const [data, setData] = useState([12, 6, 2, 10]);
-  const [students, setUsers] = useState([]);
-  const studentsCollectionRef = collection(db, "students");
-
-  useEffect(() => {
-    const getStudents = async () => {
-      const data = await getDocs(studentsCollectionRef);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getStudents();
-  }, []);
-  function updateData(data) {
-    setData(data);
-  }
+  const [data, setData] = useState([]);
+  const [meeting, setMeeting] = useState({})
+  const user = auth.currentUser;
+  useEffect(async () => {
+    try{
+      const docRef = doc(db, "instructors", user.uid);
+      const docSnap = await getDoc(docRef);
+      const curr = docSnap.data().meetings.filter(meeting => meeting.meetingEnded == false);
+      const temp = initializeDataArray();
+      setMeeting(curr);
+      console.log(temp)
+      } catch(error){
+        console.log(error);
+      }
+  });
+  
+  
   return (
     <div className="mt-4">
      {active == 1 ?

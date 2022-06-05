@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "../firebase/firebase-config";
-import { withPublic } from "../hooks/route";
 function Login() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -31,7 +30,7 @@ function Login() {
         loginPassword
       );
       console.log(user);
-      router.replace("/");
+      router.replace("/dashboard");
     } catch (error) {
       setError(error.message);
     }

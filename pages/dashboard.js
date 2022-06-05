@@ -24,7 +24,7 @@ export default function Dashboard() {
   return (
     <div className=" h-full pb-2 relative ">
       <LeftMenu menu={menu} active={active} updateMenu={updateMenu} />
-      <div className="ml-4 w-5/6 absolute right-0 bg-white rounded-md  pt-20">
+      <div className="ml-4 w-10/12 absolute right-0 bg-white rounded-md  pt-20">
         <h1 className="text-4xl pl-20 font-medium  text-gray-900">Dashboard</h1>
         {menu == 1 ? (
           <Reports />

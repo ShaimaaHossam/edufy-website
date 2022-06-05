@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
   Tooltip,
-  Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
@@ -18,16 +17,18 @@ ChartJS.register(
 );
 export const options = {
     responsive: true,
+    animation: false,
     plugins: {
       title: {
         display: true,
-        text: 'Chart.js Bar Chart',
       },
     },
   };
  
 
 export default function PieChart({ classData}) {
+
+  
   const data = {
     labels: ['Attentive', 'Inattentive', 'Sleepy', 'Confused'],
     datasets: [

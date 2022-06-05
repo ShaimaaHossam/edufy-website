@@ -8,11 +8,10 @@ export default function LeftMenu({ menu, active,  updateMenu,  }) {
     router.push('/')
 }
   return (
-    <div className="w-1/6 h-screen  fixed  flex flex-col justify-center content-center    bg-gray-900  py-12   text-white">
-      <div>
+    <div className="w-44 h-screen  fixed  flex flex-col  content-center    bg-gray-900  py-12   text-white">
         <Link href="/">
           <svg
-            className="mx-auto  my-6 mb-6 hover:cursor-pointer"
+            className="mx-auto  my-6 mb-20 hover:cursor-pointer"
             width="100"
             height="36"
             viewBox="0 0 158 36"
@@ -108,7 +107,7 @@ export default function LeftMenu({ menu, active,  updateMenu,  }) {
         
         <li
           onClick={logout}
-          className={menu == 7 ? "my-4 bg-gray-600 text-center hover:cursor-pointer mx-auto py-4  rounded-sm" : "my-4 text-center hover:cursor-pointer hover:bg-gray-600 mx-auto py-4  rounded-sm"}>
+          className={menu == 7 ? "my-4  text-center hover:cursor-pointer mx-auto py-4  rounded-sm" : "my-4 text-center hover:cursor-pointer  mx-auto py-4  rounded-sm"}>
         
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +134,6 @@ export default function LeftMenu({ menu, active,  updateMenu,  }) {
        
         
         
-      </div>
     
     </div>
   );

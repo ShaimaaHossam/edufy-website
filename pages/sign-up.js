@@ -3,15 +3,15 @@ import {useRouter} from "next/router";
 import Logo from "../components/logo";
 import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase/firebase-config";
-import { withPublic } from "../hooks/route";
+import { auth, db } from "../firebase/firebase-config";
+import {collection, setDoc, doc } from "firebase/firestore"; 
  function SignUp() {
   const router = useRouter();
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [error, setError] = useState("");
   const [user, setUser] = useState({});
-
+  const instructorsCollectionRef = collection(db, "instructors");
   useEffect(() => {
     if(auth.currentUser != null){
       router.push("/");
@@ -22,6 +22,7 @@ import { withPublic } from "../hooks/route";
     setUser(currentUser);
   })
   const register = async () => {
+    //AUTHENTICATE USER
     try {
       const user = await createUserWithEmailAndPassword(
         auth,
@@ -32,7 +33,13 @@ import { withPublic } from "../hooks/route";
     } catch (error) {
       setError(error.message);
     }
+    createUser();
   };
+
+  const createUser = async () => {
+    const user = auth.currentUser;
+    await setDoc(doc(db, "instructors", user.uid), {meetings:[]});
+  }
   return (
     <>
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-100">
@@ -175,4 +182,4 @@ import { withPublic } from "../hooks/route";
     </>
   );
 }
-export default withPublic(SignUp);
+export default SignUp;

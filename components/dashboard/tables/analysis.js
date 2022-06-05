@@ -13,7 +13,7 @@ export default function Analysis({ data }) {
                         scope="col"
                         className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase "
                       >
-                        Class
+                        Status
                       </th>
                       <th
                         scope="col"

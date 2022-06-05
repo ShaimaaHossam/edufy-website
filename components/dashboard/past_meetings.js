@@ -1,100 +1,34 @@
 import BasicModal from "./modal";
-import React from "react";
+import React, { useEffect } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import {db, auth} from "../../firebase/firebase-config";
+import { useRouter } from "next/router";
 export default function PastMeetings() {
   const [open, setOpen] = React.useState(false);
   const [meeting, setMeeting] = React.useState([]);
-
+  const [meetings, setMeetings] = React.useState([]);
+  const user = auth.currentUser;
+  const router = useRouter();
   const handleOpen = (meeting) => {
       setMeeting(meeting);
       setOpen(true)
   } 
   const handleClose = () => setOpen(false); 
- const meetings = [
-    {
-      class: "Data Mining",
-      date: "27/09/2021",
-      data: [20, 14, 9, 6],
-      attendance: [
-        {
-          name: "Shaimaa Hossam",
-          reg: "17101571",
-          class: "Attentive",
-        },
-        {
-          name: "Shaimaa Hossam",
-          reg: "17101571",
-          class: "Attentive",
-        },
-        {
-          name: "Shaimaa Hossam",
-          reg: "17101571",
-          class: "Attentive",
-        },
-        {
-          name: "Shaimaa Hossam",
-          reg: "17101571",
-          class: "Attentive",
-        },
-        {
-          name: "Shaimaa Hossam",
-          reg: "17101571",
-          class: "Attentive",
-        },
-        {
-          name: "Shaimaa Hossam",
-          reg: "17101571",
-          class: "Attentive",
-        },
-        {
-          name: "Shaimaa Hossam",
-          reg: "17101571",
-          class: "Attentive",
-        },
-        {
-          name: "Shaimaa Hossam",
-          reg: "17101571",
-          class: "Inattentive",
-        },
-        {
-          name: "Shaimaa Hossam",
-          reg: "17101571",
-          class: "Confused",
-        },
-        {
-          name: "Shaimaa Hossam",
-          reg: "17101571",
-          class: "Sleepy",
-        },
-      ],
-    },
-    {
-      class: "Cloud Computing",
-      date: "19/05/2021",
-      data: [15, 24, 9, 6],
-      attendance: [
-        {
-          name: "Shaimaa Hossam",
-          reg: "17101571",
-          class: "Attentive",
-        },
-        {
-          name: "Shaimaa Hossam",
-          reg: "17101571",
-          class: "Inattentive",
-        },
-        {
-          name: "Shaimaa Hossam",
-          reg: "17101571",
-          class: "Confused",
-        },
-        {
-          name: "Shaimaa Hossam",
-          reg: "17101571",
-          class: "Sleepy",
-        },
-      ],
-    },
-  ];
+  
+  useEffect(async()=>{
+    try{
+    const docRef = doc(db, "instructors", user.uid);
+    const docSnap = await getDoc(docRef);
+    setMeetings(docSnap.data().meetings);
+
+    } catch(error){
+      router.replace("/")
+    }
+
+
+  })
+
+ 
   return (
     <div className="mt-4 mx-20">
         
@@ -120,15 +54,15 @@ export default function PastMeetings() {
             </div>
             <div>
               <h1 className="font-bold text-gray-600 text-lg">
-                {meeting.class}
+                {meeting.meetingTitle}
               </h1>
-              <p>{meeting.date}</p>
+              <p>Room ID: {meeting.meetingRoomId}</p>
             </div>
           </li>
           
         ))}
       </ul>
-      <BasicModal handleClose={handleClose}  open={open} meeting={meeting} />
+      <BasicModal handleClose={handleClose}  open={open} meeting={meeting}/>
 
 
     </div>

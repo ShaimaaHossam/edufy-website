@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import PieChart from "./pie_chart";
 import Analysis from "./tables/analysis";
 import Students from "./tables/students";
+
 const style = {
   overflowY: "scroll",
   overflowX: "scroll",
@@ -22,6 +23,22 @@ const style = {
 };
 
 export default function BasicModal({ handleClose, open, meeting }) {
+  const initializeDataArray = () => {
+    let dataArray = [0, 0, 0, 0];
+    if(meeting.students){
+    meeting.students.map((student) => {
+      if (student.studentStatus === 'Attentive') {
+        dataArray[0] += 1;
+      } else if (student.studentStatus === 'Inattentive') {
+        dataArray[1] += 1;
+      } else if (student.studentStatus === 'Sleepy') {
+        dataArray[2] += 1;
+      } else {
+        dataArray[3] += 1;
+      }
+    })};
+    return dataArray;
+  }
   return (
     <div>
       <Modal
@@ -37,7 +54,7 @@ export default function BasicModal({ handleClose, open, meeting }) {
             variant="h5"
             component="h2"
           >
-            {meeting.class}
+            {meeting.meetingTitle}
           </Typography>
           <Typography
             id="modal-modal-title"
@@ -45,15 +62,16 @@ export default function BasicModal({ handleClose, open, meeting }) {
             variant="h7"
             component="h2"
           >
-            {meeting.date}
+            {meeting.meetingRoomId}
           </Typography>
-          <div className="mt-12 flex ">
-            <div className="mr-12 ">
-              <PieChart classData={meeting.data} />
-              <Analysis data={meeting.data} />
+          <div className="mt-12 flex flex-col">
+            <div className="mr-12 w-1/2 flex mb-12">
+              <PieChart classData={initializeDataArray()} />
+              <Analysis data={initializeDataArray()} />
             </div>
             <div className="w-1/2 mt-0">
-            <Students  students={meeting.attendance}/>
+              <h1 className="mb-4">Class Attendance:</h1>
+            <Students  students={meeting.students}/>
             </div>
             
           </div>

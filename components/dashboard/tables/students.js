@@ -19,7 +19,7 @@ export default function Students({ students }) {
             scope="col"
             className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase "
           >
-            Class
+            Status
           </th>
         </tr>
       </thead>
@@ -27,13 +27,13 @@ export default function Students({ students }) {
         {students.map((student, key) => (
           <tr key={key} className="hover:bg-gray-100 ">
             <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
-              {student.name}
+              {student.studentName}
             </td>
             <td className="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap ">
-              {student.reg}
+              {student.studentId}
             </td>
             <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
-              {student.class}
+              {student.studentStatus}
             </td>
           </tr>
         ))}
