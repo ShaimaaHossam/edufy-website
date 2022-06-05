@@ -1,12 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+import { LANGS } from "../../constants/global";
+
 const resrvedToken =
   window.sessionStorage.getItem("token") ||
   window.localStorage.getItem("token") ||
   "";
 
+const resrvedLanguage = window.localStorage.getItem("lang") || LANGS.en;
+
 export const loginWithEmail = createAsyncThunk(
-  "users/loginWithEmail",
+  "auth/loginWithEmail",
   async ({ email, password, remember }, thunkAPI) => {
     try {
       const response = await fetch(
@@ -27,6 +31,8 @@ export const loginWithEmail = createAsyncThunk(
       );
       let result = await response.json();
       if (response.status === 200) {
+        localStorage.setItem("lang", result.data.user.language);
+
         if (remember === true) {
           localStorage.setItem("token", result.data.token);
           return result;
@@ -44,7 +50,7 @@ export const loginWithEmail = createAsyncThunk(
 );
 
 export const requestOtp = createAsyncThunk(
-  "users/requestOtp",
+  "auth/requestOtp",
   async (phone, thunkAPI) => {
     try {
       const response = await fetch(
@@ -74,7 +80,7 @@ export const requestOtp = createAsyncThunk(
 );
 
 export const loginWithPhone = createAsyncThunk(
-  "users/loginWithPhone",
+  "auth/loginWithPhone",
   async ({ phone, token }, thunkAPI) => {
     try {
       const response = await fetch(
@@ -94,6 +100,7 @@ export const loginWithPhone = createAsyncThunk(
       );
       let result = await response.json();
       if (response.status === 200) {
+        localStorage.setItem("lang", result.data.user.language);
         localStorage.setItem("token", result.data.token);
         return result;
       } else {
@@ -106,7 +113,7 @@ export const loginWithPhone = createAsyncThunk(
 );
 
 export const forgetPassword = createAsyncThunk(
-  "users/forgetPassword",
+  "auth/forgetPassword",
   async ({ email }, thunkAPI) => {
     try {
       const response = await fetch(
@@ -134,7 +141,7 @@ export const forgetPassword = createAsyncThunk(
 );
 
 export const updatePassword = createAsyncThunk(
-  "users/updatePassword",
+  "auth/updatePassword",
   async ({ email, token, password, password_confirmation }, thunkAPI) => {
     try {
       const response = await fetch(
@@ -167,7 +174,7 @@ export const updatePassword = createAsyncThunk(
 );
 
 export const rememberMe = createAsyncThunk(
-  "users/rememberMe",
+  "auth/rememberMe",
   async (thunkAPI) => {
     try {
       const response = await fetch(
@@ -195,9 +202,11 @@ export const rememberMe = createAsyncThunk(
 );
 
 export const authSlice = createSlice({
-  name: "user",
+  name: "auth",
   initialState: {
-    userData: null,
+    user: null,
+    company: null,
+    language: resrvedLanguage,
     token: resrvedToken,
     errors: {},
     isFetching: false,
@@ -211,17 +220,25 @@ export const authSlice = createSlice({
       state.isFetching = false;
     },
     loggedout: (state) => {
-      state.userData = null;
+      state.user = null;
+      state.company = null;
       state.token = "";
       state.errors = {};
       state.isFetching = false;
       state.isSuccess = false;
       state.isError = false;
     },
+    setLanguage: (state, { payload }) => {
+      state.language = payload.language;
+
+      localStorage.setItem("lang", payload.language);
+    },
   },
   extraReducers: {
     [loginWithEmail.fulfilled]: (state, { payload }) => {
-      state.userData = payload.data;
+      state.user = payload.data.user;
+      state.company = payload.data.company;
+      state.language = payload.data.user.language;
       state.token = payload.data.token;
       state.isFetching = false;
       state.isSuccess = true;
@@ -247,7 +264,9 @@ export const authSlice = createSlice({
       state.isFetching = true;
     },
     [loginWithPhone.fulfilled]: (state, { payload }) => {
-      state.userData = payload.data;
+      state.user = payload.data.user;
+      state.company = payload.data.company;
+      state.language = payload.data.user.language;
       state.token = payload.data.token;
       state.isFetching = false;
       state.isSuccess = true;
@@ -285,12 +304,15 @@ export const authSlice = createSlice({
       state.isFetching = true;
     },
     [rememberMe.fulfilled]: (state, { payload }) => {
-      state.userData = payload.data;
+      state.user = payload.data.user;
+      state.company = payload.data.company;
+      state.language = payload.data.user.language;
       state.isFetching = false;
       state.isSuccess = true;
     },
     [rememberMe.rejected]: (state, obj) => {
-      state.userData = null;
+      state.user = null;
+      state.company = null;
       state.token = "";
       state.isFetching = false;
       state.isError = true;
@@ -301,6 +323,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { clearAuth, loggedout } = authSlice.actions;
+export const { clearAuth, setLanguage, loggedout } = authSlice.actions;
 
 export const authSelector = (state) => state.auth;

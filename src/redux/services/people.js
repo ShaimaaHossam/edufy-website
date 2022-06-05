@@ -8,6 +8,15 @@ export const peopleAPI = createApi({
   tagTypes: ["People"],
   baseQuery: customBaseQuery,
   endpoints: (build) => ({
+    updateUser: build.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/users/update/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      transformResponse: (res) => res.data,
+    }),
+
     getAllUsersByRole: build.query({
       query: (role) => ({
         url: "/users",
@@ -18,4 +27,4 @@ export const peopleAPI = createApi({
   }),
 });
 
-export const { useGetAllUsersByRoleQuery } = peopleAPI;
+export const { useUpdateUserMutation, useGetAllUsersByRoleQuery } = peopleAPI;
