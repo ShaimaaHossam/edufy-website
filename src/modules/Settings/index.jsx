@@ -1,5 +1,5 @@
-import { Typography, Box } from "@mui/material";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Typography, Box, Paper} from "@mui/material";
+import { Routes, Route } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
@@ -22,6 +22,7 @@ function Settings() {
       >
         {t("settings")}
       </Typography>
+      <Paper sx={{ py: 4, px: 3 }}>
       <Routes>
         <Route index element={<BasicTabs />} />
         <Route path="company-information" element={<CompanyInformation />} />
@@ -29,6 +30,8 @@ function Settings() {
         <Route path="roles" element={<Roles />} />
         <Route path="permissions" element={<Permissions />} />
       </Routes>
+      </Paper>
+    
     </Box>
   );
 }

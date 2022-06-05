@@ -3,7 +3,7 @@ const en = {
 
   notifications: "Notifications",
   companyInformation: "Company Information",
-  rolesAndPermissions: "Roles And Permissions",
+  rolesAndPermissions: "Roles and permissions",
 
   logo: "Logo",
   legalInformation: "Legal information",

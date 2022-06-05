@@ -34,7 +34,6 @@ function FileInput({
   const [open, setOpen] = useState(false);
 
   const { t } = useTranslation();
-  console.log("t", useTranslation())
 
   const uploadPdfFile = async (e) => {
     const targetFile = e.target.files[0];

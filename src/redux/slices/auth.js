@@ -114,7 +114,6 @@ export const loginWithPhone = createAsyncThunk(
 export const forgetPassword = createAsyncThunk(
   "auth/forgetPassword",
   async ({ email }, thunkAPI) => {
-    console.log("email", email)
     try {
       const response = await fetch(
         "https://api.stage.marafeq.munjz.com/v1/auth/forgot",
@@ -284,7 +283,6 @@ export const authSlice = createSlice({
       state.isSuccess = true;
     },
     [forgetPassword.rejected]: (state, { payload }) => {
-      console.log("rejected", payload)
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors;
