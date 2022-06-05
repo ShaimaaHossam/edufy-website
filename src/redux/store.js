@@ -18,10 +18,6 @@ export const store = configureStore({
 
     [authSlice.name]: authSlice.reducer,
     [settingsSlice.name]: settingsSlice.reducer,
-<<<<<<< HEAD
-
-=======
->>>>>>> 62ff548 (fix: fix applaction srore and fix some conflicts)
 
     [propertiesSlice.name]: propertiesSlice.reducer,
   },

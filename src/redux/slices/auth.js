@@ -2,8 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { LANGS } from "../../constants/global";
 
-export const resrvedToken =
-  window.sessionStorage.getItem("token") ||
+export const resrvedToken = window.sessionStorage.getItem("token") ||
   window.localStorage.getItem("token") ||
   "";
 
@@ -115,6 +114,7 @@ export const loginWithPhone = createAsyncThunk(
 export const forgetPassword = createAsyncThunk(
   "auth/forgetPassword",
   async ({ email }, thunkAPI) => {
+    console.log("email", email)
     try {
       const response = await fetch(
         "https://api.stage.marafeq.munjz.com/v1/auth/forgot",
@@ -284,6 +284,7 @@ export const authSlice = createSlice({
       state.isSuccess = true;
     },
     [forgetPassword.rejected]: (state, { payload }) => {
+      console.log("rejected", payload)
       state.isFetching = false;
       state.isError = true;
       state.errors = payload.errors;
@@ -314,8 +315,8 @@ export const authSlice = createSlice({
       state.user = null;
       state.company = null;
       state.token = "";
-      localStorage.clear("token");
-      sessionStorage.clear("token");
+      localStorage.clear("token"); 
+      sessionStorage.clear("token"); 
       state.isFetching = false;
       state.isError = true;
     },

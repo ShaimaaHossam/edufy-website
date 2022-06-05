@@ -30,23 +30,23 @@ function CompanyInformation() {
 
   const { t } = useTranslation();
 
-  const { userData } = useSelector(authSelector);
+  const { company } = useSelector(authSelector);
 
-  const [imagePath, setImagePath] = useState(userData.company.logo_file);
-  const [crFilePath, setCrFilePath] = useState(userData.company.cr_file);
-  const [id] = useState(userData.company.id);
+  const [imagePath, setImagePath] = useState(company.logo_file);
+  const [crFilePath, setCrFilePath] = useState(company.cr_file);
+  const [id] = useState(company.id);
 
   const dispatch = useDispatch();
 
   const companylInfo = useFormik({
     initialValues: {
-      name: userData.company.name || "",
-      address: userData.company.address || "",
-      vat_number: userData.company.vat_number || "",
-      logo_file: userData.company.logo_file || "",
-      cr_file: userData.company.cr_file || "",
-      cr_number: userData.company.cr_number || "",
-      vat_certificate_file: userData.company.vat_certificate_file || "",
+      name: company.name || "",
+      address: company.address || "",
+      vat_number: company.vat_number || "",
+      logo_file: company.logo_file || "",
+      cr_file: company.cr_file || "",
+      cr_number: company.cr_number || "",
+      vat_certificate_file: company.vat_certificate_file || "",
     },
 
     validationSchema: Yup.object({
