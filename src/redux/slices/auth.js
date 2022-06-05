@@ -10,7 +10,7 @@ const resrvedToken =
 const resrvedLanguage = window.localStorage.getItem("lang") || LANGS.en;
 
 export const loginWithEmail = createAsyncThunk(
-  "users/loginWithEmail",
+  "auth/loginWithEmail",
   async ({ email, password, remember }, thunkAPI) => {
     try {
       const response = await fetch(
@@ -50,7 +50,7 @@ export const loginWithEmail = createAsyncThunk(
 );
 
 export const requestOtp = createAsyncThunk(
-  "users/requestOtp",
+  "auth/requestOtp",
   async (phone, thunkAPI) => {
     try {
       const response = await fetch(
@@ -80,7 +80,7 @@ export const requestOtp = createAsyncThunk(
 );
 
 export const loginWithPhone = createAsyncThunk(
-  "users/loginWithPhone",
+  "auth/loginWithPhone",
   async ({ phone, token }, thunkAPI) => {
     try {
       const response = await fetch(
@@ -113,7 +113,7 @@ export const loginWithPhone = createAsyncThunk(
 );
 
 export const forgetPassword = createAsyncThunk(
-  "users/forgetPassword",
+  "auth/forgetPassword",
   async ({ email }, thunkAPI) => {
     try {
       const response = await fetch(
@@ -141,7 +141,7 @@ export const forgetPassword = createAsyncThunk(
 );
 
 export const updatePassword = createAsyncThunk(
-  "users/updatePassword",
+  "auth/updatePassword",
   async ({ email, token, password, password_confirmation }, thunkAPI) => {
     try {
       const response = await fetch(
@@ -174,7 +174,7 @@ export const updatePassword = createAsyncThunk(
 );
 
 export const rememberMe = createAsyncThunk(
-  "users/rememberMe",
+  "auth/rememberMe",
   async (thunkAPI) => {
     try {
       const response = await fetch(
@@ -202,7 +202,7 @@ export const rememberMe = createAsyncThunk(
 );
 
 export const authSlice = createSlice({
-  name: "user",
+  name: "auth",
   initialState: {
     user: null,
     company: null,
