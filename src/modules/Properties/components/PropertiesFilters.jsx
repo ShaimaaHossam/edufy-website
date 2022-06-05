@@ -24,9 +24,7 @@ function PropertiesFilters() {
   const { propertiesFilters } = useSelector(propertiesSelector);
 
   const {
-    userData: {
-      company: { id: companyID },
-    },
+    company: { id: companyID },
   } = useSelector(authSelector);
 
   const { data: allPropertyTypes = [] } = useGetAllPropertyTypesQuery();

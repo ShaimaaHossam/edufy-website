@@ -14,6 +14,8 @@ const ar = {
 
   confirm: "تأكيد",
   go_back: "رجوع",
+  english: "English",
+  arabic: "العربية",
 
   stepper_pending_status: "قيد الانتظار",
   stepper_active_status: "نشط الان",

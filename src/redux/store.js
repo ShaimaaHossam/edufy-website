@@ -15,7 +15,7 @@ export const store = configureStore({
     [peopleAPI.reducerPath]: peopleAPI.reducer,
     [generalAPI.reducerPath]: generalAPI.reducer,
 
-    auth: authSlice.reducer,
+    [authSlice.name]: authSlice.reducer,
 
     [propertiesSlice.name]: propertiesSlice.reducer,
   },

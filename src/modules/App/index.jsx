@@ -30,21 +30,21 @@ const Help = lazy(() => import("../Help"));
 
 function App() {
   const dispatch = useDispatch();
-  const { userData, token } = useSelector(authSelector);
+  const { user, token } = useSelector(authSelector);
 
   useEffect(() => {
-    if (token && !userData) {
+    if (token && !user) {
       dispatch(rememberMe(token));
     }
-  }, [token, userData, dispatch]);
+  }, [token, user, dispatch]);
 
-  if (token && !userData) return <Spinner />;
+  if (token && !user) return <Spinner />;
 
   return (
     <Theme>
       <Router>
         <Suspense fallback={<></>}>
-          {token && userData ? (
+          {token && user ? (
             <AppContainer>
               <Suspense fallback={<></>}>
                 <Routes>

@@ -8,6 +8,7 @@ function Menu({
 
   AnchorComponent,
   AnchorComponentProps,
+  AnchorComponentOpenProps,
 
   badgeContent,
   badgeColor,
@@ -23,6 +24,7 @@ function Menu({
   const renderAnchorElement = () => (
     <AnchorComponent
       {...AnchorComponentProps}
+      {...(!!anchorEl && AnchorComponentOpenProps)}
       onClick={(e) => {
         e.stopPropagation();
         setAnchorEl(e.currentTarget);
@@ -90,6 +92,7 @@ Menu.propTypes = {
   AnchorComponent: PropTypes.oneOfType([PropTypes.elementType, PropTypes.func])
     .isRequired,
   AnchorComponentProps: PropTypes.object,
+  AnchorComponentOpenProps: PropTypes.object,
 
   badgeContent: PropTypes.node,
   badgeColor: PropTypes.oneOf([
