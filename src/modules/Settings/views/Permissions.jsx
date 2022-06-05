@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 
+import { useTranslation } from "react-i18next";
+
+
 import {
   getPermesion,
   getSelectedPermesion,
@@ -20,6 +23,8 @@ function Permissions() {
   const role = location.state;
   const permesionRef = useRef(false);
 
+  const { t } = useTranslation("settings");
+  
   const [cityPermesion, setCityPermesion] = useState([]);
   const [unitPermesion, setUnitPermesion] = useState([]);
   const [companyPermesion, setCompanyPermesion] = useState([]);
@@ -144,7 +149,7 @@ function Permissions() {
     <Grid container spacing={5} margin="auto">
       <Grid item xs={10}>
         <Typography variant="h5" fontWeight="bold" mb={3}>
-          {role.name}
+          {t(`roles.${role.name}`)}
         </Typography>
       </Grid>
 
@@ -216,7 +221,7 @@ function Permissions() {
 
       <Grid item xs={10} textAlign="right" mt={6} mb={4}>
         <Dialog
-          title="Are you sure you want to Save changes ?"
+          title={t("saveMesage")}
           open={open}
           onClose={handleClose}
           onConfirm={handelSave}
@@ -230,7 +235,7 @@ function Permissions() {
           }}
           onClick={handleOpen}
         >
-          Save Changes
+          {t("saveChanges")}
         </Button>
       </Grid>
     </Grid>

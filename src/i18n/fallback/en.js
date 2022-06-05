@@ -18,6 +18,11 @@ const en = {
   english: "English",
   arabic: "العربية",
 
+  change:"change",
+  upload:"upload",
+  fileUploaded:"لم يتم تحميل أي مستند",
+
+  
   stepper_pending_status: "pending",
   stepper_active_status: "active",
   stepper_success_status: "success",

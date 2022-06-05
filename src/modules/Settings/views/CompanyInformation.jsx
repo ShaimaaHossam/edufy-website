@@ -28,7 +28,7 @@ function CompanyInformation() {
   const [open, setOpen] = useState(false);
   const imageRef = useRef(false);
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("settings");
 
   const { company } = useSelector(authSelector);
 
@@ -87,7 +87,7 @@ function CompanyInformation() {
     <>
       <Alert isSuccess={companyInfo} isError={errors} />
       <ImageDropbox
-        lable="Logo"
+        lable={t("logo")}
         imagePath={imagePath}
         setImagePath={setImagePath}
         initialValue={companylInfo.values.logo_file}
@@ -103,14 +103,14 @@ function CompanyInformation() {
       />
 
       <Typography variant="h5" fontWeight="bold" mb={3} mt={5}>
-        Legal information
+        {t("legalInformation")}
       </Typography>
 
       <TextInput
         type="text"
         name="name"
-        label="Legal Company Name"
-        placeholder="Legal Company Name"
+        label={t("legalCompanyName")}
+        placeholder={t("legalCompanyName")}
         {...companylInfo.getFieldProps("name")}
         sx={{
           marginBottom: 5,
@@ -121,21 +121,21 @@ function CompanyInformation() {
       <TextInput
         type="text"
         name="address"
-        label="Address"
-        placeholder="Address"
+        label={t("adress")}
+        placeholder={t("adress")}
         {...companylInfo.getFieldProps("address")}
         error={companylInfo.touched.address && !!companylInfo.errors.address}
         helperText={companylInfo.touched.address && companylInfo.errors.address}
       />
 
       <Typography variant="h5" fontWeight="bold" mb={3} mt={8}>
-        Company documents
+        {t("companyDocuments")}
       </Typography>
 
       <Box mb={3}>
         <FileInput
           initialValue={companylInfo.values.cr_file}
-          placeholder="CR document"
+          placeholder={t("crDocument")}
           setFilePath={setCrFilePath}
           error={!!companylInfo.errors.cr_file}
           helperText={
@@ -147,8 +147,8 @@ function CompanyInformation() {
       <TextInput
         type="text"
         name="cr_number"
-        label="CR Number"
-        placeholder="CR Number"
+        label={t("crNumber")}
+        placeholder={t("crNumber")}
         {...companylInfo.getFieldProps("cr_number")}
         error={
           companylInfo.touched.cr_number && !!companylInfo.errors.cr_number
@@ -164,15 +164,15 @@ function CompanyInformation() {
       <Box mb={3}>
         <FileInput
           initialValue={companylInfo.values.vat_certificate_file}
-          placeholder="Vat document"
+          placeholder={t("vatDocument")}
           category="vat"
         />
       </Box>
       <TextInput
         type="text"
         name="vat_number"
-        label="VAT Number"
-        placeholder="VAT Number"
+        label={t("vatNumber")}
+        placeholder={t("vatNumber")}
         {...companylInfo.getFieldProps("vat_number")}
         error={
           companylInfo.touched.vat_number && !!companylInfo.errors.vat_number
@@ -184,7 +184,7 @@ function CompanyInformation() {
 
       <Box textAlign="right" mt={6} mb={4}>
         <Dialog
-          title="Are you sure you want to Save changes ?"
+          title={t("saveMesage")}
           open={open}
           onClose={() => {
             setOpen(false);
@@ -202,7 +202,7 @@ function CompanyInformation() {
             setOpen(true);
           }}
         >
-          Save Changes
+          {t("saveChanges")}
         </Button>
       </Box>
     </>

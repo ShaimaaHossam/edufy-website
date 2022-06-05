@@ -1,6 +1,7 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 import { Tabs, Tab, Box } from "@mui/material";
+
+import { useTranslation } from "react-i18next";
 
 import Notifications from "./Notifications";
 import CompanyInformation from "./CompanyInformation";
@@ -27,12 +28,6 @@ function TabPanel(props) {
   );
 }
 
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -46,6 +41,7 @@ function a11yProps(index) {
 
 function BasicTabs() {
   const [value, setValue] = useState(0);
+  const { t } = useTranslation("settings");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -59,14 +55,16 @@ function BasicTabs() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Company Information" {...a11yProps(0)} />
-          <Tab label="Notifications" {...a11yProps(1)} />
-          <Tab label="Roles" {...a11yProps(2)} />
+          <Tab label={t("companyInformation")} {...a11yProps(0)} />
+          <Tab label={t("notifications")} {...a11yProps(1)} />
+          <Tab label={t("rolesAndPermissions")} {...a11yProps(2)} />
         </Tabs>
       </Box>
+
       <TabPanel value={value} index={0}>
         <CompanyInformation />
       </TabPanel>
+
       <TabPanel value={value} index={1}>
         <Notifications />
       </TabPanel>

@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import {
   clearState,
@@ -16,24 +17,12 @@ import NotificationList from "../components/NotificationList";
 import Select from "../components/SecondaryContactSelect";
 import Dialog from "../../../shared/components/Dialog";
 
-let notificationsMessages = [
-  {
-    id: 1,
-    message: "Send me a notification when approvals need to be taken.",
-  },
-  {
-    id: 2,
-    message: "Send me a notification when property is added by a team member",
-  },
-  {
-    id: 3,
-    message: "Send me a notification to remind me about upcoming payments.",
-  },
-];
 
 function Notifications() {
   const dispatch = useDispatch();
-  const { NotificationsData, secondaryContcat, errors, isSuccess } =
+  const { t } = useTranslation("settings");
+
+  const { NotificationsData, secondaryContcat, isSuccess } =
     useSelector(settingsSelector);
 
   const [open, setOpen] = useState(false);
@@ -46,6 +35,21 @@ function Notifications() {
   const [secondaryList, setٍٍSecondaryist] = useState({ value: [] });
   const [secondaryIdsList, setSecondaryIdsList] = useState([]);
 
+  let notificationsMessages = [
+    {
+      id: 1,
+      message: t("approvalsNeed"),
+    },
+    {
+      id: 2,
+      message: t("upcomingPayments"),
+    },
+    {
+      id: 3,
+      message: t("addedTeamMember"),
+    },
+  ];
+  
   const userRef = useRef(false);
   const finalData = {
     settings: {
@@ -101,17 +105,16 @@ function Notifications() {
   return (
     <>
       <Typography variant="h6" fontWeight="bold" mb={1}>
-        Notifications
+        {t("notifications")}
       </Typography>
 
       <Typography variant="p" color="text.secondary">
-        You can customize Notifications received below. each listed notification
-        must have at least Email, SMS or Application notifications checked
+        {t("summaryLabel")}
       </Typography>
 
       <Grid container spacing={1} margin="auto" mt={5} mb={5}>
         <Grid item container xs={7}>
-          <Typography>Notification Summary</Typography>
+          <Typography>{t("summary")}</Typography>
           {notificationsMessages.map((obj) => {
             return (
               <Grid item xs={12} key={obj.id}>
@@ -122,7 +125,7 @@ function Notifications() {
         </Grid>
         <Grid item xs={1}>
           <NotificationList
-            title="Email"
+            title={t("email")}
             values={emailList}
             onChange={(emailList) => setEmailList(emailList)}
           />
@@ -130,7 +133,7 @@ function Notifications() {
 
         <Grid item xs={1}>
           <NotificationList
-            title="Sms"
+            title={t("sms")}
             values={smsList}
             onChange={(smsList) => setSmsList(smsList)}
           />
@@ -138,7 +141,7 @@ function Notifications() {
 
         <Grid item xs={1}>
           <NotificationList
-            title="App"
+            title={t("app")}
             values={appList}
             onChange={(appList) => setAPPList(appList)}
           />
@@ -146,13 +149,11 @@ function Notifications() {
       </Grid>
 
       <Typography variant="h6" fontWeight="bold" mb={1}>
-        Contact Notification
+        {t("contactNotification")}
       </Typography>
 
       <Typography variant="p" color="text.secondary">
-        Selecting secondary contacts will enable your notifications to reach the
-        contacts you select. if you wish disable this feature,simply leave the
-        secondary contact field empty.
+          {t("contactNotificationLabel")}
       </Typography>
 
       <Select
@@ -163,7 +164,7 @@ function Notifications() {
 
       <Box textAlign="right" mt={6} mb={4}>
         <Dialog
-          title="Are you sure you want to Save changes ?"
+          title={t("saveMesage")}
           open={open}
           onClose={() => {
             setOpen(false);
@@ -181,7 +182,7 @@ function Notifications() {
             setOpen(true);
           }}
         >
-          Save Changes
+          {t("saveChanges")}
         </Button>
       </Box>
     </>

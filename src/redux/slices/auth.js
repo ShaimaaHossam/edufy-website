@@ -315,8 +315,6 @@ export const authSlice = createSlice({
       state.user = null;
       state.company = null;
       state.token = "";
-      localStorage.clear("token"); 
-      sessionStorage.clear("token"); 
       state.isFetching = false;
       state.isError = true;
     },

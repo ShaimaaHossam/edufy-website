@@ -1,4 +1,7 @@
 import { useRef, useState } from "react";
+
+import { useTranslation } from "react-i18next";
+
 import {
   Box,
   Typography,
@@ -21,6 +24,7 @@ function FileInput({
   setFilePath,
   error,
   helperText,
+  
 }) {
   const fileInputRef = useRef();
   const [file, setFile] = useState(initialValue);
@@ -28,6 +32,9 @@ function FileInput({
 
   const { token } = useSelector(authSelector);
   const [open, setOpen] = useState(false);
+
+  const { t } = useTranslation();
+  console.log("t", useTranslation())
 
   const uploadPdfFile = async (e) => {
     const targetFile = e.target.files[0];
@@ -114,7 +121,7 @@ function FileInput({
               }
             }}
           >
-            {file ? `Change ${placeholder}` : `Upload ${placeholder}`}
+            {file ? `${t("change")} ${placeholder}` : `${t("upload")} ${placeholder}`}
           </Button>
 
           <Typography
@@ -125,7 +132,7 @@ function FileInput({
               transform: "translate(175px, 8px)",
             }}
           >
-            {file ? file : "There are No Document Uploaded"}
+            {file ? file : t("fileUploaded")}
           </Typography>
 
           {file ? (

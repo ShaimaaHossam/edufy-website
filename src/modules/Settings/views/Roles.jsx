@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { SvgIcon } from "@mui/material";
 import { mdiPencil } from "@mdi/js";
 
+import { useTranslation } from "react-i18next";
+
 import Taple from "../../../shared/components/Table";
 import {
   getRoles,
@@ -13,6 +15,9 @@ import { useSelector, useDispatch } from "react-redux";
 function Roles() {
   const { roles } = useSelector(settingsSelector);
   const dispatch = useDispatch();
+
+  const { t } = useTranslation("settings");
+
   const Action = () => (
     <SvgIcon fontSize="small">
       <path d={mdiPencil} />
@@ -22,9 +27,9 @@ function Roles() {
     return {
       id: obj.id,
       active: true,
-      clickable: true,
+      clickable: false,
       rowCells: [
-        obj.name,
+        t(`roles.${obj.name}`),
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
         <Link to="/settings/permissions" state={obj}>
           <Action />
@@ -39,8 +44,8 @@ function Roles() {
 
   return (
     <Taple
-      tableLabel="hh"
-      headLabels={["Roles", "Summary", "Action"]}
+      tableLabel="Roles Taple"
+      headLabels={[t("roles.roles"), t("summary"), t("action")]}
       rowsData={rowsData}
     />
   );

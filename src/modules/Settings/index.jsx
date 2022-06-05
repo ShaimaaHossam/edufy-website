@@ -1,6 +1,9 @@
 import { Typography, Box } from "@mui/material";
 import { Routes, Route, Navigate } from "react-router-dom";
 
+import { useTranslation } from "react-i18next";
+
+
 import BasicTabs from "./views/SettingsTabPanel";
 import CompanyInformation from "./views/CompanyInformation";
 import Notifications from "./views/Notifications";
@@ -8,6 +11,8 @@ import Roles from "./views/Roles";
 import Permissions from "./views/Permissions";
 
 function Settings() {
+  const { t } = useTranslation("settings");
+
   return (
     <Box>
       <Typography
@@ -15,7 +20,7 @@ function Settings() {
         variant="h6"
         sx={{ fontWeight: "bold", paddingBottom: 2 }}
       >
-        Settings
+        {t("settings")}
       </Typography>
       <Routes>
         <Route index element={<BasicTabs />} />
