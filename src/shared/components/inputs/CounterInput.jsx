@@ -24,6 +24,7 @@ function CounterInput({
   size,
 
   step,
+  min = 0,
   max = Infinity,
   unit,
   icon,
@@ -41,8 +42,8 @@ function CounterInput({
   const [isFocused, setIsFocused] = useState(false);
 
   const handleChange = (value) => {
-    const validValue = value < 0 ? 0 : value > max ? max : value;
-    const fakeEvent = { target: { name, value: validValue } };
+    const newValue = value < min ? min : value > max ? max : value;
+    const fakeEvent = { target: { name, value: newValue } };
     onChange(fakeEvent);
   };
 
@@ -51,9 +52,8 @@ function CounterInput({
       fullWidth
       variant="outlined"
       error={error}
-      disabled={disabled}
+      required={required}
       size={size || "medium"}
-      focused={isFocused}
     >
       <InputLabel htmlFor={name}>{label}</InputLabel>
 
@@ -150,6 +150,7 @@ CounterInput.propTypes = {
   size: PropTypes.oneOf(["medium", "small"]),
 
   step: PropTypes.number.isRequired,
+  min: PropTypes.number,
   max: PropTypes.number,
   icon: PropTypes.string,
   unit: PropTypes.string,
