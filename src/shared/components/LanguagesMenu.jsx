@@ -27,11 +27,9 @@ function NotificationMenu() {
     if (newLang === language) return;
 
     if (!!user) {
-      dispatch(
-        updateUser({ id: user.id, language: newLang })
-          .unwrap()
-          .then((data) => dispatch(setLanguage({ language: data.language })))
-      );
+      updateUser({ id: user.id, language: newLang })
+        .unwrap()
+        .then((data) => dispatch(setLanguage({ language: data.language })));
     } else {
       dispatch(setLanguage({ language: newLang }));
     }
