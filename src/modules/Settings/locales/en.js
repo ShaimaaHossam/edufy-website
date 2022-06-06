@@ -33,7 +33,7 @@ const en = {
   roles: {
     roles: "Roles",
     action: "Action",
-    
+
     Admin: "Admin",
     Accountant: "Accountant",
     "Area Manager": "Area Manager",

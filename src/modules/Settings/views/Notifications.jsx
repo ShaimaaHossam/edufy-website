@@ -17,7 +17,6 @@ import NotificationList from "../components/NotificationList";
 import Select from "../components/SecondaryContactSelect";
 import Dialog from "../../../shared/components/Dialog";
 
-
 function Notifications() {
   const dispatch = useDispatch();
   const { t } = useTranslation("settings");
@@ -49,7 +48,7 @@ function Notifications() {
       message: t("addedTeamMember"),
     },
   ];
-  
+
   const userRef = useRef(false);
   const finalData = {
     settings: {
@@ -153,7 +152,7 @@ function Notifications() {
       </Typography>
 
       <Typography variant="p" color="text.secondary">
-          {t("contactNotificationLabel")}
+        {t("contactNotificationLabel")}
       </Typography>
 
       <Select

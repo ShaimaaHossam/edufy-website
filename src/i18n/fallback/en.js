@@ -18,17 +18,16 @@ const en = {
   english: "English",
   arabic: "العربية",
 
-  change:"change",
-  upload:"upload",
-  fileUploaded:"لم يتم تحميل أي مستند",
+  change: "change",
+  upload: "upload",
+  fileUploaded: "لم يتم تحميل أي مستند",
 
-  
   stepper_pending_status: "pending",
   stepper_active_status: "active",
   stepper_success_status: "success",
   stepper_error_status: "error",
 
-  required:"Required"
+  required: "Required",
 };
 
 export default en;

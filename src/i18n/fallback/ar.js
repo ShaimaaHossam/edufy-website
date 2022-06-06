@@ -17,17 +17,16 @@ const ar = {
   english: "English",
   arabic: "العربية",
 
-  change:"عدل",
-  upload:"حمل",
-  fileUploaded:"لم يتم تحميل أي مستند",
-
+  change: "عدل",
+  upload: "حمل",
+  fileUploaded: "لم يتم تحميل أي مستند",
 
   stepper_pending_status: "قيد الانتظار",
   stepper_active_status: "نشط الان",
   stepper_success_status: "تم بنجاح",
   stepper_error_status: "حدث خطأ ما",
 
-  required:"هذا الحقل مطلوب"
+  required: "هذا الحقل مطلوب",
 };
 
 export default ar;

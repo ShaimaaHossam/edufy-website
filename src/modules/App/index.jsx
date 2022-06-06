@@ -7,7 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import { useDispatch,  useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authSelector, rememberMe } from "../../redux/slices/auth";
 import NotFound from "../../shared/views/NotFound";
 import Theme from "./components/Theme";
@@ -60,7 +60,10 @@ function App() {
                   <Route path="settings/*" element={<Settings />} />
                   <Route path="help/*" element={<Help />} />
                   <Route path="/" element={<Navigate to="/dashboard" />} />
-                  <Route path="/auth/*" element={<Navigate to="/dashboard" />} />
+                  <Route
+                    path="/auth/*"
+                    element={<Navigate to="/dashboard" />}
+                  />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>

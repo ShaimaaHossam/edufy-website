@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { LANGS } from "../../constants/global";
 
-export const resrvedToken = window.sessionStorage.getItem("token") ||
+export const resrvedToken =
+  window.sessionStorage.getItem("token") ||
   window.localStorage.getItem("token") ||
   "";
 

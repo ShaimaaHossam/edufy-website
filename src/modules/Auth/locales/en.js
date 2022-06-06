@@ -24,8 +24,8 @@ const en = {
 
   inputsErrorMessage: "Required",
   phoneError: " please enter a valid phone number.",
-  otpError:"pleas inter vailed number",
-  
+  otpError: "pleas inter vailed number",
+
   verificationCode: "0000",
   verificationLabel: "Verification Code",
   verificationTime: "Verification code expires in ",

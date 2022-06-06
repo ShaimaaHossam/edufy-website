@@ -24,7 +24,6 @@ function FileInput({
   setFilePath,
   error,
   helperText,
-  
 }) {
   const fileInputRef = useRef();
   const [file, setFile] = useState(initialValue);
@@ -120,7 +119,9 @@ function FileInput({
               }
             }}
           >
-            {file ? `${t("change")} ${placeholder}` : `${t("upload")} ${placeholder}`}
+            {file
+              ? `${t("change")} ${placeholder}`
+              : `${t("upload")} ${placeholder}`}
           </Button>
 
           <Typography

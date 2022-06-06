@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
-
 import {
   getPermesion,
   getSelectedPermesion,
@@ -24,7 +23,7 @@ function Permissions() {
   const permesionRef = useRef(false);
 
   const { t } = useTranslation("settings");
-  
+
   const [cityPermesion, setCityPermesion] = useState([]);
   const [unitPermesion, setUnitPermesion] = useState([]);
   const [companyPermesion, setCompanyPermesion] = useState([]);

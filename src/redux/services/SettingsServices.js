@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {resrvedToken} from "../slices/auth"
+import { resrvedToken } from "../slices/auth";
 
 let token = resrvedToken;
-
 
 export const updateNotification = createAsyncThunk(
   "settings/updateNotification",

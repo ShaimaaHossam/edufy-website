@@ -53,7 +53,6 @@ function useBase64(initialValue, onChange, setImagePath, imagePath, error) {
 
   useEffect(() => {
     onChange(imagePath);
-    
   }, [imagePath]);
 
   return [baseImage, uploadImage, setBaseImage, err, setError];

@@ -11,8 +11,7 @@ function ImagePreview({
   helperText,
   setImagePath,
   setBaseImage,
-  setError
-  
+  setError,
 }) {
   const fileInputRef = useRef();
   return (
@@ -71,9 +70,9 @@ function ImagePreview({
         <IconButton
           position="relative"
           onClick={() => {
-            setImagePath(null)
+            setImagePath(null);
             setBaseImage("");
-            setError(true)
+            setError(true);
           }}
           sx={{
             borderRadius: "100%",
