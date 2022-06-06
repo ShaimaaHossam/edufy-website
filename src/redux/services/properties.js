@@ -53,6 +53,17 @@ export const propertiesAPI = createApi({
             ]
           : [],
     }),
+    getAllPropertyTypes: build.query({
+      query: () => ({ url: "/properties/types", params: { listing: "1" } }),
+      transformResponse: (res) => res.data,
+    }),
+    getAllPropertySubtypes: build.query({
+      query: (typeID) => ({
+        url: `/properties/types/${typeID}`,
+        params: { listing: "1" },
+      }),
+      transformResponse: (res) => res.data,
+    }),
 
     /** UNITS SECTION **/
     getUnits: build.query({
@@ -99,31 +110,25 @@ export const propertiesAPI = createApi({
             ]
           : [],
     }),
-
-    /** PROPERTY TYPES SECTION **/
-    getAllPropertyTypes: build.query({
-      query: () => ({ url: "/properties/types", params: { listing: "1" } }),
-      transformResponse: (res) => res.data,
-    }),
-    getAllPropertySubtypes: build.query({
-      query: (typeID) => ({
-        url: `/properties/types/${typeID}`,
-        params: { listing: "1" },
-      }),
-      transformResponse: (res) => res.data,
-    }),
-
-    /** UNIT TYPES SECTION **/
     getAllUnitTypes: build.query({
-      query: () => ({ url: "/units/types", params: { listing: "1" } }),
-      transformResponse: (res) => res.data,
-    }),
-    getAllUnitSubtypes: build.query({
-      query: (typeID) => ({
-        url: `/units/types/${typeID}`,
+      query: (propertyID) => ({
+        url: `/units/types/${propertyID}`,
         params: { listing: "1" },
       }),
       transformResponse: (res) => res.data,
+    }),
+    getAllRoomTypes: build.query({
+      query: () => ({
+        url: "/units/room-types",
+        params: { listing: "1" },
+      }),
+      transformResponse: (res) => res.data,
+    }),
+    deleteRoom: build.mutation({
+      query: (roomID) => ({
+        url: `/units/rooms/delete/${roomID}`,
+        method: "DELETE",
+      }),
     }),
   }),
 });
@@ -133,15 +138,14 @@ export const {
   useGetPropertyQuery,
   useAddPropertyMutation,
   useUpdatePropertyMutation,
+  useGetAllPropertyTypesQuery,
+  useGetAllPropertySubtypesQuery,
 
   useGetUnitsQuery,
   useGetUnitQuery,
   useAddUnitMutation,
   useUpdateUnitMutation,
-
-  useGetAllPropertyTypesQuery,
-  useGetAllPropertySubtypesQuery,
-
   useGetAllUnitTypesQuery,
-  useGetAllUnitSubtypesQuery,
+  useGetAllRoomTypesQuery,
+  useDeleteRoomMutation,
 } = propertiesAPI;
