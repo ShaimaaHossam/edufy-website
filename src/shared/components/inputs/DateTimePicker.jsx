@@ -26,6 +26,7 @@ function DateTimePicker({
 
   value,
   onChange,
+  onBlur,
 
   error,
   helperText,
@@ -59,6 +60,7 @@ function DateTimePicker({
             required={required}
             fullWidth
             size={size || "medium"}
+            onBlur={onBlur}
             error={error}
             helperText={helperText}
           />
@@ -78,6 +80,7 @@ DateTimePicker.propTypes = {
 
   value: PropTypes.instanceOf(Date),
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
 
   error: PropTypes.bool,
   helperText: PropTypes.string,
