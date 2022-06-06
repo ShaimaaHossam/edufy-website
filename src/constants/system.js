@@ -8,3 +8,5 @@ export const USER_TYPES = {
   unitOwner: "Unit Owner",
   unitTenant: "Unit Tenant",
 };
+
+export const UNIT_CUSTOMER_TYPES = { owner: 1, tenant: 2 };
