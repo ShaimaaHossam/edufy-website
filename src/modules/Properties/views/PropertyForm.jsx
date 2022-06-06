@@ -48,11 +48,9 @@ function PropertyForm({ formType }) {
   const { propertyID } = useParams();
   const navigate = useNavigate();
 
-  const {
-    isFetching,
-    error,
-    data: property,
-  } = useGetPropertyQuery(propertyID, { skip: !propertyID });
+  const { error, data: property } = useGetPropertyQuery(propertyID, {
+    skip: !propertyID,
+  });
   const [addProperty] = useAddPropertyMutation();
   const [updateProperty] = useUpdatePropertyMutation();
 
@@ -180,7 +178,7 @@ function PropertyForm({ formType }) {
   }, [propertyTypeID, setFieldValue]);
 
   useEffect(() => {
-    if (formType === "add" || isFetching || !property) return;
+    if (formType === "add" || !property) return;
 
     setValues({
       title: property.title,
@@ -194,7 +192,7 @@ function PropertyForm({ formType }) {
       wallet_type_id: property.wallet_type_id,
       wallet_amount: property.wallet_amount || null,
     });
-  }, [formType, isFetching, property, setValues]);
+  }, [formType, property, setValues]);
 
   if (error?.status === 404) return <NotFound />;
 
