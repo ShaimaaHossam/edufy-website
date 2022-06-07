@@ -28,20 +28,21 @@ const ar = {
   contactNotificationLabel:
     "سيؤدي تحديد جهات الاتصال الثانوية إلى تمكين الإخطارات الخاصة بك من الوصول إلى جهات الاتصال التي تحددها. إذا كنت ترغب في تعطيل هذه الميزة ، فما عليك سوى ترك حقل جهة الاتصال الثانوي فارغًا.",
 
-  roles: {
-    roles: "الأدوار",
-    action: "Action",
+  roles: "الأدوار",
+  action: "Action",
 
-    Admin: "مسؤل",
-    Accountant: "محاسب",
-    "Area Manager": "مدير المنطقة",
-    "Unit Owner": "مالك الوحدة",
-    "Unit Tenant": "مستأجر الوحدة",
-    "Property Manager": "مدير الملكية",
-  },
+  Admin: "مسؤل",
+  Accountant: "محاسب",
+  "Area Manager": "مدير المنطقة",
+  "Unit Owner": "مالك الوحدة",
+  "Unit Tenant": "مستأجر الوحدة",
+  "Property Manager": "مدير العقار",
 
   saveChanges: "حفظ التعديلات",
   saveMesage: "هل أنت متأكد أنك تريد حفظ التغييرات؟",
+
+  imageError:"برجاء تحميل صوره فقط",
+  crError:"بر جاء تحميل ملف وتيقه السجل التجاري "
 };
 
 export default ar;

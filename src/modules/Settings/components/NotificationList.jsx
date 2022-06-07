@@ -2,7 +2,7 @@ import { Box, Checkbox, Typography } from "@mui/material";
 
 function NotificationList({ values, onChange, title }) {
   return (
-    <Box flexDirection="row">
+    <>
       <Typography textAlign="center" mb={2}>
         {title}
       </Typography>
@@ -22,7 +22,7 @@ function NotificationList({ values, onChange, title }) {
           />
         </Box>
       ))}
-    </Box>
+    </>
   );
 }
 

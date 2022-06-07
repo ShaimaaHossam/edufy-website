@@ -27,6 +27,9 @@ const ar = {
   stepper_error_status: "حدث خطأ ما",
 
   required: "هذا الحقل مطلوب",
+
+  contactMunjz:"تواصل مع منجز",
+  munjzMessage:"تواصل مع منجز لتحميل مستند ضريبه القيمه المضافه"
 };
 
 export default ar;

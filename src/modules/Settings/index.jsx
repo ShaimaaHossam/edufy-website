@@ -17,7 +17,7 @@ function Settings() {
       <Typography
         color="text.primary"
         variant="h6"
-        sx={{ fontWeight: "bold", paddingBottom: 2 }}
+        pb={2}
       >
         {t("settings")}
       </Typography>

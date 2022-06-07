@@ -103,7 +103,7 @@ function Notifications() {
 
   return (
     <>
-      <Typography variant="h6" fontWeight="bold" mb={1}>
+      <Typography variant="h6"  mb={1}>
         {t("notifications")}
       </Typography>
 
@@ -147,7 +147,7 @@ function Notifications() {
         </Grid>
       </Grid>
 
-      <Typography variant="h6" fontWeight="bold" mb={1}>
+      <Typography variant="h6"  mb={1}>
         {t("contactNotification")}
       </Typography>
 
@@ -172,11 +172,7 @@ function Notifications() {
         />
         <Button
           type="submit"
-          sx={{
-            backgroundColor: "success.main",
-            color: "white",
-            "&:hover": { backgroundColor: "success.main" },
-          }}
+          color="success"
           onClick={() => {
             setOpen(true);
           }}

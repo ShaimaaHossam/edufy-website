@@ -57,12 +57,12 @@ function FileInput({
   if (open) {
     return (
       <Dialog
-        title="Please contact Munjiz to upload a new VAT"
+        title={t("munjzMessage")}
         open={open}
         onConfirm={() => {
           setOpen(false);
         }}
-        confirmLabel="Contact Munjz"
+        confirmLabel={t("contactMunjz")}
         onClose={() => {
           setOpen(false);
         }}

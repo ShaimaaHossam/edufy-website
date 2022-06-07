@@ -29,20 +29,21 @@ const en = {
   contactNotification: "Contact Notification",
   contactNotificationLabel:
     "Selecting secondary contacts will enable your notifications to reach the contacts you select. if you wish disable this feature,simply leave the secondary contact field empty.",
+  roles: "Roles",
+  action: "Action",
 
-  roles: {
-    roles: "Roles",
-    action: "Action",
+  Admin: "Admin",
+  Accountant: "Accountant",
+  "Area Manager": "Area Manager",
+  "Unit Owner": "Unit Owner",
+  "Unit Tenant": "Unit Tenant",
+  "Property Manager": "Property Manager",
 
-    Admin: "Admin",
-    Accountant: "Accountant",
-    "Area Manager": "Area Manager",
-    "Unit Owner": "Unit Owner",
-    "Unit Tenant": "Unit Tenant",
-    "Property Manager": "Property Manager",
-  },
   saveChanges: "Save Changes",
   saveMesage: "Are you sure you want to Save changes ?",
+
+  imageError:"Please upload only image",
+  crError:"Please upload CR document",
 };
 
 export default en;

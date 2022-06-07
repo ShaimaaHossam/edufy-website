@@ -147,8 +147,8 @@ function Permissions() {
   return (
     <Grid container spacing={5} margin="auto">
       <Grid item xs={10}>
-        <Typography variant="h5" fontWeight="bold" mb={3}>
-          {t(`roles.${role.name}`)}
+        <Typography variant="h5"  mb={3}>
+          {t(`${role.name}`)}
         </Typography>
       </Grid>
 
@@ -227,11 +227,7 @@ function Permissions() {
         />
         <Button
           type="submit"
-          sx={{
-            backgroundColor: "success.main",
-            color: "white",
-            "&:hover": { backgroundColor: "success.main" },
-          }}
+          color="success"
           onClick={handleOpen}
         >
           {t("saveChanges")}

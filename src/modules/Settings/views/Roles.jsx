@@ -29,7 +29,7 @@ function Roles() {
       active: true,
       clickable: false,
       rowCells: [
-        t(`roles.${obj.name}`),
+        t(`${obj.name}`),
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
         <Link to="/settings/permissions" state={obj}>
           <Action />
@@ -45,7 +45,7 @@ function Roles() {
   return (
     <Taple
       tableLabel="Roles Taple"
-      headLabels={[t("roles.roles"), t("summary"), t("action")]}
+      headLabels={[t("roles"), t("summary"), t("action")]}
       rowsData={rowsData}
     />
   );

@@ -34,7 +34,6 @@ function CompanyInformation() {
 
   const [imagePath, setImagePath] = useState(company.logo_file);
   const [crFilePath, setCrFilePath] = useState(company.cr_file);
-  const [id] = useState(company.id);
 
   const dispatch = useDispatch();
 
@@ -61,7 +60,7 @@ function CompanyInformation() {
   const handelSave = () => {
     dispatch(
       updateCompanyInfo({
-        id: id,
+        id: company.id,
         data: {
           ...companylInfo.values,
           cr_file: crFilePath,
@@ -98,11 +97,11 @@ function CompanyInformation() {
         }}
         error={!!companylInfo?.errors.logo_file}
         helperText={
-          companylInfo?.errors.logo_file || "Please upload only image"
+          companylInfo?.errors.logo_file || t("imageError")
         }
       />
 
-      <Typography variant="h5" fontWeight="bold" mb={3} mt={5}>
+      <Typography variant="h5"  mb={3} mt={5}>
         {t("legalInformation")}
       </Typography>
 
@@ -128,7 +127,7 @@ function CompanyInformation() {
         helperText={companylInfo.touched.address && companylInfo.errors.address}
       />
 
-      <Typography variant="h5" fontWeight="bold" mb={3} mt={8}>
+      <Typography variant="h5"  mb={3} mt={8}>
         {t("companyDocuments")}
       </Typography>
 
@@ -139,7 +138,7 @@ function CompanyInformation() {
           setFilePath={setCrFilePath}
           error={!!companylInfo.errors.cr_file}
           helperText={
-            companylInfo.errors.cr_file || "Please upload CR document"
+            companylInfo.errors.cr_file || t("crError")
           }
         />
       </Box>
@@ -193,11 +192,7 @@ function CompanyInformation() {
         />
         <Button
           type="submit"
-          sx={{
-            backgroundColor: "success.main",
-            color: "white",
-            "&:hover": { backgroundColor: "success.main" },
-          }}
+          color="success"
           onClick={() => {
             setOpen(true);
           }}
