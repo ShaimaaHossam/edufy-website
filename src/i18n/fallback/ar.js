@@ -11,6 +11,8 @@ const ar = {
   server_error_message: "حدث خطأ ما بالخادم! نعمل على إصلاحه الآن.",
   no_content: "لا يوجد محتوى",
   no_content_message: "لا يوجد محتوى للعرض في الوقت الحالي.",
+  error_occurred: "!حدث عطل ما",
+  error_occurred_message: "يبدو أنه حدث عطل ما، نحن نعمل على إصلاحه حاليًا.",
 
   confirm: "تأكيد",
   go_back: "رجوع",
