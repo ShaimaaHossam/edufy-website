@@ -57,7 +57,6 @@ function Notifications() {
     },
   ];
 
-
   const handelSave = () => {
     dispatch(
       updateNotification({

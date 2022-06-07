@@ -1,6 +1,6 @@
 import { useState, forwardRef, useEffect } from "react";
 
-import {Stack, Snackbar} from "@mui/material";
+import { Stack, Snackbar } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 
 const Alert = forwardRef(function Alert(props, ref) {

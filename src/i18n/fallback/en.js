@@ -29,9 +29,8 @@ const en = {
 
   required: "Required",
 
-  contactMunjz:"Contact Munjz", 
-  munjzMessage:"Please contact Munjiz to upload a new VAT"
-
+  contactMunjz: "Contact Munjz",
+  munjzMessage: "Please contact Munjiz to upload a new VAT",
 };
 
 export default en;

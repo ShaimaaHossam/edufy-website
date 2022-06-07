@@ -42,8 +42,8 @@ const en = {
   saveChanges: "Save Changes",
   saveMesage: "Are you sure you want to Save changes ?",
 
-  imageError:"Please upload only image",
-  crError:"Please upload CR document",
+  imageError: "Please upload only image",
+  crError: "Please upload CR document",
 };
 
 export default en;

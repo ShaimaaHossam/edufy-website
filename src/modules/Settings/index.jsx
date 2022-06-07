@@ -14,11 +14,7 @@ function Settings() {
 
   return (
     <Box>
-      <Typography
-        color="text.primary"
-        variant="h6"
-        pb={2}
-      >
+      <Typography color="text.primary" variant="h6" pb={2}>
         {t("settings")}
       </Typography>
       <Paper sx={{ py: 4, px: 3 }}>

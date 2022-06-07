@@ -208,7 +208,6 @@ function CompanyInformation() {
           {t("saveChanges")}
         </Button>
       </Grid>
-
     </Grid>
   );
 }

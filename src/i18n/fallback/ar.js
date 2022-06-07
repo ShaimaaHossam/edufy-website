@@ -28,8 +28,8 @@ const ar = {
 
   required: "هذا الحقل مطلوب",
 
-  contactMunjz:"تواصل مع منجز",
-  munjzMessage:"تواصل مع منجز لتحميل مستند ضريبه القيمه المضافه"
+  contactMunjz: "تواصل مع منجز",
+  munjzMessage: "تواصل مع منجز لتحميل مستند ضريبه القيمه المضافه",
 };
 
 export default ar;

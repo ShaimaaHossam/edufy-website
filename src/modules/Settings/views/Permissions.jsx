@@ -41,7 +41,7 @@ function Permissions() {
       company: [],
       room: [],
       roomType: [],
-      unitType: []
+      unitType: [],
     },
   });
   const { setValues, setFieldValue } = formik;
@@ -57,17 +57,29 @@ function Permissions() {
       permesionRef.current = true;
     } else {
       setValues({
-        city:  permesions.City.map((obj)=>{return{id:obj.id, label:obj.name, value: false}}),
-        unit:  permesions.Unit.map((obj)=>{return{id:obj.id, label:obj.name, value: false}}),
-        company:  permesions.Company.map((obj)=>{return{id:obj.id, label:obj.name, value: false}}),
-        room:  permesions.Room.map((obj)=>{return{id:obj.id, label:obj.name, value: false}}),
-        roomType:  permesions.RoomType.map((obj)=>{return{id:obj.id, label:obj.name, value: false}}),
-        unitType:  permesions.UnitType.map((obj)=>{return{id:obj.id, label:obj.name, value: false}}),
-      })
+        city: permesions.City.map((obj) => {
+          return { id: obj.id, label: obj.name, value: false };
+        }),
+        unit: permesions.Unit.map((obj) => {
+          return { id: obj.id, label: obj.name, value: false };
+        }),
+        company: permesions.Company.map((obj) => {
+          return { id: obj.id, label: obj.name, value: false };
+        }),
+        room: permesions.Room.map((obj) => {
+          return { id: obj.id, label: obj.name, value: false };
+        }),
+        roomType: permesions.RoomType.map((obj) => {
+          return { id: obj.id, label: obj.name, value: false };
+        }),
+        unitType: permesions.UnitType.map((obj) => {
+          return { id: obj.id, label: obj.name, value: false };
+        }),
+      });
     }
   }, [permesions]);
 
-  const selectPerm = (permissionslist, callBack ) => {
+  const selectPerm = (permissionslist, callBack) => {
     let list = permissionslist.filter((obj) => obj.value === true);
     let perm = list.map((obj) => obj.id);
     callBack(perm);
@@ -106,7 +118,7 @@ function Permissions() {
   return (
     <Grid container spacing={5} margin="auto">
       <Grid item xs={10}>
-        <Typography variant="h5"  mb={3}>
+        <Typography variant="h5" mb={3}>
           {t(`${role.name}`)}
         </Typography>
       </Grid>
@@ -116,7 +128,7 @@ function Permissions() {
           title="City"
           values={formik.values.city || []}
           onChange={(cityList) => {
-            setFieldValue("city", cityList)
+            setFieldValue("city", cityList);
             selectPerm(cityList, setCityPermesion);
           }}
         />
@@ -127,7 +139,7 @@ function Permissions() {
           title="Unit"
           values={formik.values.unit || []}
           onChange={(unitList) => {
-            setFieldValue("unit", unitList)
+            setFieldValue("unit", unitList);
             selectPerm(unitList, setUnitPermesion);
           }}
         />
@@ -138,7 +150,7 @@ function Permissions() {
           title="Company"
           values={formik.values.company || []}
           onChange={(companyList) => {
-            setFieldValue("company", companyList)
+            setFieldValue("company", companyList);
             selectPerm(companyList, setCompanyPermesion);
           }}
         />
@@ -149,7 +161,7 @@ function Permissions() {
           title="Room"
           values={formik.values.room || []}
           onChange={(roomList) => {
-            setFieldValue("room", roomList)
+            setFieldValue("room", roomList);
             selectPerm(roomList, setRoomPermesion);
           }}
         />
@@ -160,7 +172,7 @@ function Permissions() {
           title="Room Type"
           values={formik.values.roomType || []}
           onChange={(roomTypeList) => {
-            setFieldValue("roomType", roomTypeList)
+            setFieldValue("roomType", roomTypeList);
             selectPerm(roomTypeList, setRoomTypePermesion);
           }}
         />
@@ -171,7 +183,7 @@ function Permissions() {
           title="Unit Type"
           values={formik.values.unitType || []}
           onChange={(unitTypeList) => {
-            setFieldValue("uintType", unitTypeList)
+            setFieldValue("uintType", unitTypeList);
             selectPerm(unitTypeList, setunitTypePermesion);
           }}
         />
@@ -184,10 +196,7 @@ function Permissions() {
           onClose={handleClose}
           onConfirm={handelSave}
         />
-        <Button
-          color="success"
-          onClick={handleOpen}
-        >
+        <Button color="success" onClick={handleOpen}>
           {t("saveChanges")}
         </Button>
       </Grid>
