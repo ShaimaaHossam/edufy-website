@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useTranslation } from "react-i18next";
 
 import {
   clearState,
@@ -11,6 +10,10 @@ import {
   settingsSelector,
 } from "../../../redux/services/SettingsServices";
 
+import { useTranslation } from "react-i18next";
+
+import { useFormik } from "formik";
+
 import { Box, Grid, Typography, Button } from "@mui/material";
 
 import NotificationList from "../components/NotificationList";
@@ -18,21 +21,26 @@ import Select from "../components/SecondaryContactSelect";
 import Dialog from "../../../shared/components/Dialog";
 
 function Notifications() {
-  const dispatch = useDispatch();
-  const { t } = useTranslation("settings");
+  const [userList, setUserList] = useState([]);
+  const [secondaryList, setٍٍSecondaryist] = useState({ value: [] });
+  const [secondaryIdsList, setSecondaryIdsList] = useState([]);
+  const formik = useFormik({
+    initialValues: {
+      app: [],
+      email: [],
+      sms: [],
+    },
+  });
+  const { setValues, setFieldValue } = formik;
 
   const { NotificationsData, secondaryContcat, isSuccess } =
     useSelector(settingsSelector);
 
   const [open, setOpen] = useState(false);
+  const userRef = useRef(false);
 
-  const [emailList, setEmailList] = useState([]);
-  const [smsList, setSmsList] = useState([]);
-  const [appList, setAPPList] = useState([]);
-  const [userList, setUserList] = useState([]);
-
-  const [secondaryList, setٍٍSecondaryist] = useState({ value: [] });
-  const [secondaryIdsList, setSecondaryIdsList] = useState([]);
+  const dispatch = useDispatch();
+  const { t } = useTranslation("settings");
 
   let notificationsMessages = [
     {
@@ -49,26 +57,19 @@ function Notifications() {
     },
   ];
 
-  const userRef = useRef(false);
-  const finalData = {
-    settings: {
-      app: appList,
-      email: emailList,
-      sms: smsList,
-    },
-    secondary_contacts: secondaryIdsList,
-  };
 
   const handelSave = () => {
-    dispatch(updateNotification(finalData));
+    dispatch(
+      updateNotification({
+        settings: formik.values,
+        secondary_contacts: secondaryIdsList,
+      })
+    );
     setOpen(false);
   };
 
   useEffect(() => {
     if (NotificationsData) {
-      setEmailList(NotificationsData.email);
-      setAPPList(NotificationsData.app);
-      setSmsList(NotificationsData.sms);
       let ids = [];
       secondaryList?.value.filter((obj) => {
         if (obj.value) {
@@ -77,6 +78,11 @@ function Notifications() {
         }
       });
       setSecondaryIdsList(ids);
+      setValues({
+        app: NotificationsData.app,
+        email: NotificationsData.email,
+        sms: NotificationsData.sms,
+      });
     }
   }, [NotificationsData, secondaryList]);
 
@@ -103,7 +109,7 @@ function Notifications() {
 
   return (
     <>
-      <Typography variant="h6"  mb={1}>
+      <Typography variant="h6" mb={1}>
         {t("notifications")}
       </Typography>
 
@@ -125,29 +131,29 @@ function Notifications() {
         <Grid item xs={1}>
           <NotificationList
             title={t("email")}
-            values={emailList}
-            onChange={(emailList) => setEmailList(emailList)}
+            values={formik.values.email}
+            onChange={(emailList) => setFieldValue("email", emailList)}
           />
         </Grid>
 
         <Grid item xs={1}>
           <NotificationList
             title={t("sms")}
-            values={smsList}
-            onChange={(smsList) => setSmsList(smsList)}
+            values={formik.values.sms}
+            onChange={(smsList) => setFieldValue("sms", smsList)}
           />
         </Grid>
 
         <Grid item xs={1}>
           <NotificationList
             title={t("app")}
-            values={appList}
-            onChange={(appList) => setAPPList(appList)}
+            values={formik.values.app}
+            onChange={(appList) => setFieldValue("app", appList)}
           />
         </Grid>
       </Grid>
 
-      <Typography variant="h6"  mb={1}>
+      <Typography variant="h6" mb={1}>
         {t("contactNotification")}
       </Typography>
 
@@ -171,7 +177,6 @@ function Notifications() {
           onConfirm={handelSave}
         />
         <Button
-          type="submit"
           color="success"
           onClick={() => {
             setOpen(true);

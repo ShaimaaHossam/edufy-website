@@ -1,7 +1,10 @@
 import { useEffect, useState, useRef } from "react";
+
 import { useLocation } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
+
+import { useFormik } from "formik";
 
 import {
   getPermesion,
@@ -31,13 +34,17 @@ function Permissions() {
   const [roomTypePermesion, setRoomTypePermesion] = useState([]);
   const [unitTypePermesion, setunitTypePermesion] = useState([]);
 
-  const [cityList, setCityList] = useState([]);
-  const [unitList, setUnitList] = useState([]);
-  const [companyList, setCompanyList] = useState([]);
-  const [roomList, setRoomList] = useState([]);
-  const [roomTypeList, setRoomTypeList] = useState([]);
-  const [unitTypeList, setUnitTypeList] = useState([]);
-
+  const formik = useFormik({
+    initialValues: {
+      city: [],
+      unit: [],
+      company: [],
+      room: [],
+      roomType: [],
+      unitType: []
+    },
+  });
+  const { setValues, setFieldValue } = formik;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,65 +56,18 @@ function Permissions() {
     if (!permesionRef.current) {
       permesionRef.current = true;
     } else {
-      setCityList(
-        permesions.City.map((obj) => {
-          return {
-            id: obj.id,
-            label: obj.name,
-            value: false,
-          };
-        })
-      );
-      setUnitList(
-        permesions.Unit.map((obj) => {
-          return {
-            id: obj.id,
-            label: obj.name,
-            value: false,
-          };
-        })
-      );
-      setCompanyList(
-        permesions.Company.map((obj) => {
-          return {
-            id: obj.id,
-            label: obj.name,
-            value: false,
-          };
-        })
-      );
-      setRoomList(
-        permesions.Room.map((obj) => {
-          return {
-            id: obj.id,
-            label: obj.name,
-            value: false,
-          };
-        })
-      );
-      setRoomTypeList(
-        permesions.RoomType.map((obj) => {
-          return {
-            id: obj.id,
-            label: obj.name,
-            value: false,
-          };
-        })
-      );
-
-      setUnitTypeList(
-        permesions.UnitType.map((obj) => {
-          return {
-            id: obj.id,
-            label: obj.name,
-            value: false,
-          };
-        })
-      );
+      setValues({
+        city:  permesions.City.map((obj)=>{return{id:obj.id, label:obj.name, value: false}}),
+        unit:  permesions.Unit.map((obj)=>{return{id:obj.id, label:obj.name, value: false}}),
+        company:  permesions.Company.map((obj)=>{return{id:obj.id, label:obj.name, value: false}}),
+        room:  permesions.Room.map((obj)=>{return{id:obj.id, label:obj.name, value: false}}),
+        roomType:  permesions.RoomType.map((obj)=>{return{id:obj.id, label:obj.name, value: false}}),
+        unitType:  permesions.UnitType.map((obj)=>{return{id:obj.id, label:obj.name, value: false}}),
+      })
     }
   }, [permesions]);
 
-  const selectPerm = (permissionslist, callBack) => {
+  const selectPerm = (permissionslist, callBack ) => {
     let list = permissionslist.filter((obj) => obj.value === true);
     let perm = list.map((obj) => obj.id);
     callBack(perm);
@@ -122,6 +82,7 @@ function Permissions() {
       ...roomTypePermesion,
       ...unitTypePermesion,
     ];
+
     let data = {
       id: role.id,
       data: {
@@ -130,9 +91,7 @@ function Permissions() {
       },
       permesion: permesions,
     };
-
     dispatch(updatePermesion(data));
-
     handleClose();
   };
 
@@ -155,9 +114,9 @@ function Permissions() {
       <Grid item xs={10} mt={-5}>
         <CheckboxMenu
           title="City"
-          values={cityList}
+          values={formik.values.city || []}
           onChange={(cityList) => {
-            setCityList(cityList);
+            setFieldValue("city", cityList)
             selectPerm(cityList, setCityPermesion);
           }}
         />
@@ -166,9 +125,9 @@ function Permissions() {
       <Grid item xs={10}>
         <CheckboxMenu
           title="Unit"
-          values={unitList}
+          values={formik.values.unit || []}
           onChange={(unitList) => {
-            setUnitList(unitList);
+            setFieldValue("unit", unitList)
             selectPerm(unitList, setUnitPermesion);
           }}
         />
@@ -177,9 +136,9 @@ function Permissions() {
       <Grid item xs={10}>
         <CheckboxMenu
           title="Company"
-          values={companyList}
+          values={formik.values.company || []}
           onChange={(companyList) => {
-            setCompanyList(companyList);
+            setFieldValue("company", companyList)
             selectPerm(companyList, setCompanyPermesion);
           }}
         />
@@ -188,9 +147,9 @@ function Permissions() {
       <Grid item xs={10}>
         <CheckboxMenu
           title="Room"
-          values={roomList}
+          values={formik.values.room || []}
           onChange={(roomList) => {
-            setRoomList(roomList);
+            setFieldValue("room", roomList)
             selectPerm(roomList, setRoomPermesion);
           }}
         />
@@ -199,9 +158,9 @@ function Permissions() {
       <Grid item xs={10}>
         <CheckboxMenu
           title="Room Type"
-          values={roomTypeList}
+          values={formik.values.roomType || []}
           onChange={(roomTypeList) => {
-            setRoomTypeList(roomTypeList);
+            setFieldValue("roomType", roomTypeList)
             selectPerm(roomTypeList, setRoomTypePermesion);
           }}
         />
@@ -210,9 +169,9 @@ function Permissions() {
       <Grid item xs={10}>
         <CheckboxMenu
           title="Unit Type"
-          values={unitTypeList}
+          values={formik.values.unitType || []}
           onChange={(unitTypeList) => {
-            setUnitTypeList(unitTypeList);
+            setFieldValue("uintType", unitTypeList)
             selectPerm(unitTypeList, setunitTypePermesion);
           }}
         />
@@ -226,7 +185,6 @@ function Permissions() {
           onConfirm={handelSave}
         />
         <Button
-          type="submit"
           color="success"
           onClick={handleOpen}
         >
