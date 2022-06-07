@@ -11,14 +11,17 @@ import {
 import { useTranslation } from "react-i18next";
 
 import { Grid, Typography } from "@mui/material";
-import { mdiPencil, mdiContentCopy } from "@mdi/js";
+import { mdiPencil, mdiContentCopy, mdiMinus } from "@mdi/js";
 
 import Table from "../../../shared/components/Table";
+import Icon from "../../../shared/components/Icon";
 import IconButton from "../../../shared/components/IconButton";
 import Link from "../../../shared/components/Link";
 import Switch from "../../../shared/components/inputs/Switch";
 
 import NoContent from "../../../shared/views/NoContent";
+
+import { UNIT_CUSTOMER_TYPES } from "../../../constants/system";
 
 function UnitsTable() {
   const { t } = useTranslation("properties");
@@ -40,9 +43,9 @@ function UnitsTable() {
     t("name"),
     t("type"),
     t("roomsNo"),
+    t("customer"),
+    t("services"),
     t("totalSpent"),
-    t("completedOrders"),
-    t("openOrders"),
     t("actions"),
   ];
   const tableData = units?.data?.map((item) => ({
@@ -62,16 +65,25 @@ function UnitsTable() {
         {t("rooms_count", { count: item.number_of_rooms })}
       </Typography>,
 
+      item.customer ? (
+        <>
+          <Typography component="span" variant="caption" color="text.secondary">
+            {item.customer_type_id === UNIT_CUSTOMER_TYPES.owner
+              ? t("owner")
+              : t("tenant")}
+          </Typography>
+          <Typography display="block" component="span" variant="body2">
+            {item.customer.name}
+          </Typography>
+        </>
+      ) : (
+        <Icon icon={mdiMinus} color="action" />
+      ),
+
+      null,
+
       <Typography component="span" variant="body2">
         {item.total_spent} {t("sr")}
-      </Typography>,
-
-      <Typography component="span" variant="body2">
-        {t("orders_count", { count: item.number_of_completed_orders })}
-      </Typography>,
-
-      <Typography component="span" variant="body2">
-        {t("orders_count", { count: item.number_of_open_orders })}
       </Typography>,
 
       <Grid container onClick={(e) => e.stopPropagation()}>
