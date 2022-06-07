@@ -16,6 +16,12 @@ const PropertyIDValidator = ({ children }) => {
   return isUUIDValid(propertyID) ? children : <NotFound />;
 };
 
+const UnitIDValidator = ({ children }) => {
+  const { unitID } = useParams();
+
+  return isUUIDValid(unitID) ? children : <NotFound />;
+};
+
 function PropertiesRoot() {
   return (
     <Routes>
@@ -52,17 +58,17 @@ function PropertiesRoot() {
       <Route
         path="units/clone/:unitID"
         element={
-          <PropertyIDValidator>
+          <UnitIDValidator>
             <UnitForm formType="clone" />
-          </PropertyIDValidator>
+          </UnitIDValidator>
         }
       />
       <Route
         path="units/edit/:unitID"
         element={
-          <PropertyIDValidator>
+          <UnitIDValidator>
             <UnitForm formType="edit" />
-          </PropertyIDValidator>
+          </UnitIDValidator>
         }
       />
 

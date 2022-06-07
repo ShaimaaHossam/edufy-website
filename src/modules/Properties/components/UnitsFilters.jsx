@@ -39,16 +39,15 @@ function UnitsFilters() {
 
   useDebouncedEffect(
     () => {
-      const filters = {
-        ...unitsFilters,
-        page: "1",
-        "filter[unit_type_id]": values.unit_type_id,
-        "filter[service_id]": values.service_id,
-      };
-      values.status &&
-        Object.assign(filters, { "filter[status]": values.status });
-
-      dispatch(setUnitsFilters(filters));
+      dispatch(
+        setUnitsFilters({
+          ...unitsFilters,
+          page: "1",
+          "filter[unit_type_id]": values.unit_type_id,
+          "filter[service_id]": values.service_id,
+          "filter[status]": values.status,
+        })
+      );
     },
     [values],
     500,

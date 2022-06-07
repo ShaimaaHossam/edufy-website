@@ -46,12 +46,7 @@ export const propertiesAPI = createApi({
       }),
       transformResponse: (res) => res.data,
       invalidatesTags: (res, error, { id }) =>
-        res
-          ? [
-              { type: "PROPERTY", id },
-              { type: "PROPERTY", id: "PARTIAL-LIST" },
-            ]
-          : [],
+        res ? [{ type: "PROPERTY", id }] : [],
     }),
     getAllPropertyTypes: build.query({
       query: () => ({ url: "/properties/types", params: { listing: "1" } }),
@@ -97,18 +92,13 @@ export const propertiesAPI = createApi({
     }),
     updateUnit: build.mutation({
       query: ({ id, ...data }) => ({
-        url: `/unit/update/${id}`,
+        url: `/units/update/${id}`,
         method: "PATCH",
         body: data,
       }),
       transformResponse: (res) => res.data,
       invalidatesTags: (res, error, { id }) =>
-        res
-          ? [
-              { type: "PROPERTY", id },
-              { type: "PROPERTY", id: "PARTIAL-LIST" },
-            ]
-          : [],
+        res ? [{ type: "UNIT", id }] : [],
     }),
     getAllUnitTypes: build.query({
       query: (propertyID) => ({

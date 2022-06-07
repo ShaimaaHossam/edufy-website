@@ -59,6 +59,7 @@ const en = {
   roomName: "Room Name",
   roomType: "Room Type",
   quantity: "Quantity",
+  roomsNo: "No. of Rooms",
   customer: "Customer",
   owner: "Owner",
   tenant: "Tenant",

@@ -59,6 +59,7 @@ const ar = {
   roomName: "إسم الغرفة",
   roomType: "نوع الغرفة",
   quantity: "عدد الغُرَف",
+  roomsNo: "عدد الغُرَف",
   customer: "العميل",
   owner: "مالك",
   tenant: "مستأجر",

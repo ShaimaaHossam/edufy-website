@@ -128,16 +128,22 @@ function PropertyForm({ formType }) {
         }),
     }),
     onSubmit: async (values, { setErrors }) => {
-      const { property_type_id, property_subtype_id, ...formData } = values;
+      const { title, property_type_id, property_subtype_id, ...formData } =
+        values;
 
       if (formType === "edit") {
         Object.assign(formData, { id: propertyID });
+        title !== property.title && Object.assign(formData, { title });
         updateProperty(formData)
           .unwrap()
           .then((data) => navigate(`/properties/${data.id}`))
           .catch(({ data: { errors } }) => setErrors(errors));
       } else {
-        Object.assign(formData, { property_type_id, property_subtype_id });
+        Object.assign(formData, {
+          title,
+          property_type_id,
+          property_subtype_id,
+        });
         addProperty(formData)
           .unwrap()
           .then((data) => navigate(`/properties/${data.id}`))

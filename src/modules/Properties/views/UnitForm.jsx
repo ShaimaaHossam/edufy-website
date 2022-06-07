@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 
 import { useParams, useLocation, useNavigate } from "react-router-dom";
@@ -170,7 +170,8 @@ function UnitForm({ formType }) {
         }),
     }),
     onSubmit: async (values, { setErrors }) => {
-      const { unit_type_id, customer_id, expiry_date, ...formData } = values;
+      const { title, unit_type_id, customer_id, expiry_date, ...formData } =
+        values;
 
       !!values.customer_type_id &&
         Object.assign(formData, {
@@ -180,12 +181,18 @@ function UnitForm({ formType }) {
 
       if (formType === "edit") {
         Object.assign(formData, { id: unitID });
+        title !== unit.title && Object.assign(formData, { title });
         updateUnit(formData)
           .unwrap()
           .then(() => navigate(`/properties/${propertyID}`))
           .catch(({ data: { errors } }) => setErrors(errors));
       } else {
-        Object.assign(formData, { unit_type_id });
+        Object.assign(formData, { title, unit_type_id });
+        formType === "clone" &&
+          // remove ids of cloned unit
+          Object.assign(formData, {
+            rooms: values.rooms.map(({ id, ...room }) => room),
+          });
         addUnit(formData)
           .unwrap()
           .then(() => navigate(`/properties/${propertyID}`))
@@ -213,20 +220,25 @@ function UnitForm({ formType }) {
   }, [formType, property, setFieldValue]);
 
   useEffect(() => {
-    if (formType === "add" || !unit) return;
+    if (formType === "add" || !unit || !property) return;
 
     setValues({
+      property_id: property.id,
       title: unit.title,
       unit_type_id: unit.unit_type.id,
       floor: unit.floor,
       size: unit.size,
       rooms: unit.rooms,
-      wallet_type_id: property.wallet_type_id, // parent's type
+      wallet_type_id:
+        property.wallet_type_id === WALLET_TYPES.restricted &&
+        unit.wallet_type_id === WALLET_TYPES.unlimited
+          ? property.wallet_type_id
+          : unit.wallet_type_id,
       wallet_amount: unit.wallet_amount || null,
 
       customer_type_id: unit.customer_type_id,
-      customer_id: unit.customer.id,
-      expiry_date: new Date(unit.expiry_date),
+      customer_id: unit.customer?.id,
+      expiry_date: !!unit.expiry_date ? new Date(unit.expiry_date) : null,
     });
   }, [formType, unit, property, setValues]);
 
@@ -410,7 +422,7 @@ function UnitForm({ formType }) {
 
               {!!formik.values.rooms.length ? (
                 formik.values.rooms.map((room, idx) => (
-                  <>
+                  <Fragment key={idx}>
                     <Grid
                       item
                       xs={12}
@@ -540,7 +552,7 @@ function UnitForm({ formType }) {
                         {t("addRoom")}
                       </Button>
                     </Grid>
-                  </>
+                  </Fragment>
                 ))
               ) : (
                 <Grid item xs={12}>
