@@ -7,8 +7,11 @@ import { store } from "./redux/store";
 import * as serviceWorker from "./serviceWorker";
 
 import "./i18n";
+import { initSentry } from "./utils/sentry";
 
 import App from "./modules/App";
+
+initSentry();
 
 ReactDOM.render(
   <React.StrictMode>
