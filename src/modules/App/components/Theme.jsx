@@ -13,6 +13,8 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 
+import ErrorBoundary from "./ErrorBoundary";
+
 import makeTheme from "../../../helpers/makeTheme";
 import { LANGS, LANGS_DIRS, I18N_MAP } from "../../../constants/global";
 
@@ -33,24 +35,28 @@ function Theme({ children }) {
   }, [lang]);
 
   return (
-    <HelmetProvider>
-      <Helmet htmlAttributes={{ dir: LANGS_DIRS[lang], lang: I18N_MAP[lang] }}>
-        {lang === LANGS.ar && (
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Tajawal:300,400,500,700&display=swap"
-          />
-        )}
-      </Helmet>
+    <ErrorBoundary>
+      <HelmetProvider>
+        <Helmet
+          htmlAttributes={{ dir: LANGS_DIRS[lang], lang: I18N_MAP[lang] }}
+        >
+          {lang === LANGS.ar && (
+            <link
+              rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Tajawal:300,400,500,700&display=swap"
+            />
+          )}
+        </Helmet>
 
-      <CacheProvider value={cache}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
+        <CacheProvider value={cache}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
 
-          {children}
-        </ThemeProvider>
-      </CacheProvider>
-    </HelmetProvider>
+            {children}
+          </ThemeProvider>
+        </CacheProvider>
+      </HelmetProvider>
+    </ErrorBoundary>
   );
 }
 
