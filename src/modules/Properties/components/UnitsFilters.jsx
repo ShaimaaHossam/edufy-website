@@ -1,3 +1,5 @@
+import { useParams } from "react-router-dom";
+
 import { useSelector, useDispatch } from "react-redux";
 import { propertiesSelector, setUnitsFilters } from "../state";
 
@@ -15,10 +17,13 @@ import useDebouncedEffect from "../../../shared/hooks/useDebouncedEffect";
 function UnitsFilters() {
   const { t } = useTranslation("properties");
 
+  const { propertyID } = useParams();
+
   const dispatch = useDispatch();
   const { unitsFilters } = useSelector(propertiesSelector);
 
-  const { data: allUnitTypes = [] } = useGetAllUnitTypesQuery();
+  const { data: allUnitTypes = [] } = useGetAllUnitTypesQuery(propertyID);
+  const allServices = [];
 
   const formik = useFormik({
     validateOnMount: false,
@@ -26,19 +31,24 @@ function UnitsFilters() {
     validateOnChange: false,
     initialValues: {
       unit_type_id: [],
+      service_id: [],
+      status: "",
     },
   });
   const { values } = formik;
 
   useDebouncedEffect(
     () => {
-      dispatch(
-        setUnitsFilters({
-          ...unitsFilters,
-          page: "1",
-          "filter[unit_type_id]": values.unit_type_id,
-        })
-      );
+      const filters = {
+        ...unitsFilters,
+        page: "1",
+        "filter[unit_type_id]": values.unit_type_id,
+        "filter[service_id]": values.service_id,
+      };
+      values.status &&
+        Object.assign(filters, { "filter[status]": values.status });
+
+      dispatch(setUnitsFilters(filters));
     },
     [values],
     500,
@@ -61,6 +71,39 @@ function UnitsFilters() {
           }))}
           noOptionsText={t("noTypes")}
           value={formik.values.unit_type_id}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
+      </Grid>
+
+      <Grid item xs={3}>
+        <Autocomplete
+          size="small"
+          name="service_id"
+          label={t("byService")}
+          isMulti
+          limitTags={1}
+          options={allServices.map((service) => ({
+            value: service.id,
+            label: service.title,
+          }))}
+          noOptionsText={t("noServices")}
+          value={formik.values.service_id}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
+      </Grid>
+
+      <Grid item xs={3}>
+        <Autocomplete
+          size="small"
+          name="status"
+          label={t("byStatus")}
+          options={[
+            { value: "0", label: t("vacant") },
+            { value: "1", label: t("occupied") },
+          ]}
+          value={formik.values.status}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
