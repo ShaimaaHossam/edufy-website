@@ -7,20 +7,12 @@ import { propertiesSelector, setUnitsFilters } from "../../state";
 
 import { useTranslation } from "react-i18next";
 
-import {
-  Grid,
-  Button,
-  Collapse,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
-import { mdiTune, mdiPlus, mdiDotsVertical, mdiMicrosoftExcel } from "@mdi/js";
+import { Grid, Button, Collapse } from "@mui/material";
+import { mdiTune, mdiPlus } from "@mdi/js";
 
 import Icon from "../../../../shared/components/Icon";
 import IconButton from "../../../../shared/components/IconButton";
 import Link from "../../../../shared/components/Link";
-import Menu from "../../../../shared/components/Menu";
 import SearchInput from "../../../../shared/components/inputs/SearchInput";
 
 import UnitsTable from "../../components/UnitsTable";
@@ -77,7 +69,7 @@ function Units() {
         </Button>
       </Grid>
 
-      <Grid item>
+      {/* <Grid item>
         <Menu
           label="units options"
           AnchorComponent={IconButton}
@@ -105,7 +97,7 @@ function Units() {
             <ListItemText>{t("uploadUnitsForm")}</ListItemText>
           </MenuItem>
         </Menu>
-      </Grid>
+      </Grid> */}
 
       <Grid item xs={12}>
         <Collapse in={filtersShown}>
