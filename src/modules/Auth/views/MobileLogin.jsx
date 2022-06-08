@@ -40,7 +40,7 @@ function MobileLogin() {
     },
     validationSchema: Yup.object({
       phone: Yup.string().required(t("inputsErrorMessage")),
-      otp: Yup.string().required(t("inputsErrorMessage")),
+      otp: Yup.string().required(t("inputsErrorMessage")).min(4, t("otpError")),
     }),
   });
 

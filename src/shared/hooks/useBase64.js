@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
-function useBase64(initialValue, onChange) {
+import { useSelector } from "react-redux";
+import { authSelector } from "../../redux/slices/auth";
+
+function useBase64(initialValue, onChange, setImagePath, imagePath, error) {
   const [baseImage, setBaseImage] = useState(initialValue);
-  const [error, setError] = useState(false);
+  const { token } = useSelector(authSelector);
+  const [err, setError] = useState(error);
+
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -22,10 +27,24 @@ function useBase64(initialValue, onChange) {
     const vaildImage = ["jepg", "png", "jpg"];
     const extIndex = file.name.lastIndexOf(".");
     const ext = file.name.substring(extIndex).split(".")[1].toLowerCase();
-
     if (vaildImage.find((val) => ext === val)) {
       setError(false);
       const base64 = await convertBase64(file);
+      let formData = new FormData();
+      formData.append("file", file);
+      let response = await fetch(
+        "https://api.stage.marafeq.munjz.com/v1/actions/upload",
+        {
+          method: "POST",
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            Authorization: "Bearer " + token,
+          },
+          body: formData,
+        }
+      );
+      let result = await response.json();
+      setImagePath(result.data.path);
       setBaseImage(base64);
     } else {
       setError(true);
@@ -33,10 +52,10 @@ function useBase64(initialValue, onChange) {
   };
 
   useEffect(() => {
-    onChange(baseImage);
-  }, [baseImage, onChange]);
+    onChange(imagePath);
+  }, [imagePath]);
 
-  return [baseImage, uploadImage, setBaseImage, error];
+  return [baseImage, uploadImage, setBaseImage, err, setError];
 }
 
 export default useBase64;

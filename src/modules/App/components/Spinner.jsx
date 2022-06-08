@@ -8,10 +8,10 @@ function Spinner() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        heght:"100vh"
+        heght: "100vh",
       }}
     >
-      <CircularProgress/>
+      <CircularProgress />
     </Box>
   );
 }

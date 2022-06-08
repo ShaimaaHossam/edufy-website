@@ -7,11 +7,9 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authSelector, rememberMe } from "../../redux/slices/auth";
-
 import NotFound from "../../shared/views/NotFound";
-
 import Theme from "./components/Theme";
 import AppContainer from "./components/AppContainer";
 import Spinner from "./components/Spinner";
@@ -26,6 +24,7 @@ const Orders = lazy(() => import("../Orders"));
 const Accounting = lazy(() => import("../Accounting"));
 const Communication = lazy(() => import("../Communication"));
 const Services = lazy(() => import("../Services"));
+const Settings = lazy(() => import("../Settings"));
 const Help = lazy(() => import("../Help"));
 
 function App() {
@@ -58,10 +57,13 @@ function App() {
                   <Route path="accounting/*" element={<Accounting />} />
                   <Route path="communication/*" element={<Communication />} />
                   <Route path="services/*" element={<Services />} />
+                  <Route path="settings/*" element={<Settings />} />
                   <Route path="help/*" element={<Help />} />
-
                   <Route path="/" element={<Navigate to="/dashboard" />} />
-
+                  <Route
+                    path="/auth/*"
+                    element={<Navigate to="/dashboard" />}
+                  />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
