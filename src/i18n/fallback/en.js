@@ -20,7 +20,7 @@ const en = {
 
   change: "change",
   upload: "upload",
-  fileUploaded: "لم يتم تحميل أي مستند",
+  fileUploaded: "No CR Document Uploaded",
 
   stepper_pending_status: "pending",
   stepper_active_status: "active",

@@ -19,7 +19,6 @@ import TextInput from "../../../shared/components/inputs/TextInput";
 import ImageDropbox from "../../../shared/components/inputs/ImageDropbox";
 import FileInput from "../../../shared/components/inputs/FileInput";
 import Dialog from "../../../shared/components/Dialog";
-import Alert from "../components/AlertMessage";
 
 function CompanyInformation() {
   const { isSuccess, isError, errors, companyInfo } =
@@ -83,7 +82,6 @@ function CompanyInformation() {
 
   return (
     <Grid container spacing={3} margin="auto">
-      <Alert isSuccess={companyInfo} isError={errors} />
       <Grid item xs={12}>
         <ImageDropbox
           lable={t("logo")}
@@ -127,9 +125,7 @@ function CompanyInformation() {
           placeholder={t("adress")}
           {...formik.getFieldProps("address")}
           error={formik.touched.address && !!formik.errors.address}
-          helperText={
-            formik.touched.address && formik.errors.address
-          }
+          helperText={formik.touched.address && formik.errors.address}
         />
       </Grid>
 
@@ -154,12 +150,8 @@ function CompanyInformation() {
           label={t("crNumber")}
           placeholder={t("crNumber")}
           {...formik.getFieldProps("cr_number")}
-          error={
-            formik.touched.cr_number && !!formik.errors.cr_number
-          }
-          helperText={
-            formik.touched.cr_number && formik.errors.cr_number
-          }
+          error={formik.touched.cr_number && !!formik.errors.cr_number}
+          helperText={formik.touched.cr_number && formik.errors.cr_number}
           sx={{
             marginBottom: 3,
           }}
@@ -181,12 +173,8 @@ function CompanyInformation() {
           label={t("vatNumber")}
           placeholder={t("vatNumber")}
           {...formik.getFieldProps("vat_number")}
-          error={
-            formik.touched.vat_number && !!formik.errors.vat_number
-          }
-          helperText={
-            formik.touched.vat_number && formik.errors.vat_number
-          }
+          error={formik.touched.vat_number && !!formik.errors.vat_number}
+          helperText={formik.touched.vat_number && formik.errors.vat_number}
         />
       </Grid>
 
