@@ -36,7 +36,7 @@ function CompanyInformation() {
 
   const dispatch = useDispatch();
 
-  const companylInfo = useFormik({
+  const formik = useFormik({
     initialValues: {
       name: company.name || "",
       address: company.address || "",
@@ -61,7 +61,7 @@ function CompanyInformation() {
       updateCompanyInfo({
         id: company.id,
         data: {
-          ...companylInfo.values,
+          ...formik.values,
           cr_file: crFilePath,
           logo_file: imagePath,
         },
@@ -74,7 +74,7 @@ function CompanyInformation() {
   useEffect(() => {
     imageRef.current = true;
     if (isError) {
-      companylInfo.setErrors(errors);
+      formik.setErrors(errors);
     }
     if (isSuccess) {
       dispatch(clearState());
@@ -89,14 +89,14 @@ function CompanyInformation() {
           lable={t("logo")}
           imagePath={imagePath}
           setImagePath={setImagePath}
-          initialValue={companylInfo.values.logo_file}
+          initialValue={formik.values.logo_file}
           onChange={(path) => {
             if (imageRef.current) {
               setImagePath(path);
             }
           }}
-          error={!!companylInfo?.errors.logo_file}
-          helperText={companylInfo?.errors.logo_file || t("imageError")}
+          error={!!formik?.errors.logo_file}
+          helperText={formik?.errors.logo_file || t("imageError")}
         />
       </Grid>
 
@@ -110,12 +110,12 @@ function CompanyInformation() {
           name="name"
           label={t("legalCompanyName")}
           placeholder={t("legalCompanyName")}
-          {...companylInfo.getFieldProps("name")}
+          {...formik.getFieldProps("name")}
           sx={{
             marginBottom: 5,
           }}
-          error={companylInfo.touched.name && !!companylInfo.errors.name}
-          helperText={companylInfo.touched.name && companylInfo.errors.name}
+          error={formik.touched.name && !!formik.errors.name}
+          helperText={formik.touched.name && formik.errors.name}
         />
       </Grid>
 
@@ -125,10 +125,10 @@ function CompanyInformation() {
           name="address"
           label={t("adress")}
           placeholder={t("adress")}
-          {...companylInfo.getFieldProps("address")}
-          error={companylInfo.touched.address && !!companylInfo.errors.address}
+          {...formik.getFieldProps("address")}
+          error={formik.touched.address && !!formik.errors.address}
           helperText={
-            companylInfo.touched.address && companylInfo.errors.address
+            formik.touched.address && formik.errors.address
           }
         />
       </Grid>
@@ -139,11 +139,11 @@ function CompanyInformation() {
 
       <Grid item xs={12}>
         <FileInput
-          initialValue={companylInfo.values.cr_file}
+          initialValue={formik.values.cr_file}
           placeholder={t("crDocument")}
           setFilePath={setCrFilePath}
-          error={!!companylInfo.errors.cr_file}
-          helperText={companylInfo.errors.cr_file || t("crError")}
+          error={!!formik.errors.cr_file}
+          helperText={formik.errors.cr_file || t("crError")}
         />
       </Grid>
 
@@ -153,12 +153,12 @@ function CompanyInformation() {
           name="cr_number"
           label={t("crNumber")}
           placeholder={t("crNumber")}
-          {...companylInfo.getFieldProps("cr_number")}
+          {...formik.getFieldProps("cr_number")}
           error={
-            companylInfo.touched.cr_number && !!companylInfo.errors.cr_number
+            formik.touched.cr_number && !!formik.errors.cr_number
           }
           helperText={
-            companylInfo.touched.cr_number && companylInfo.errors.cr_number
+            formik.touched.cr_number && formik.errors.cr_number
           }
           sx={{
             marginBottom: 3,
@@ -168,7 +168,7 @@ function CompanyInformation() {
 
       <Grid item xs={12}>
         <FileInput
-          initialValue={companylInfo.values.vat_certificate_file}
+          initialValue={formik.values.vat_certificate_file}
           placeholder={t("vatDocument")}
           category="vat"
         />
@@ -180,12 +180,12 @@ function CompanyInformation() {
           name="vat_number"
           label={t("vatNumber")}
           placeholder={t("vatNumber")}
-          {...companylInfo.getFieldProps("vat_number")}
+          {...formik.getFieldProps("vat_number")}
           error={
-            companylInfo.touched.vat_number && !!companylInfo.errors.vat_number
+            formik.touched.vat_number && !!formik.errors.vat_number
           }
           helperText={
-            companylInfo.touched.vat_number && companylInfo.errors.vat_number
+            formik.touched.vat_number && formik.errors.vat_number
           }
         />
       </Grid>
