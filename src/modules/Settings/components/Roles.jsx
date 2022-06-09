@@ -7,10 +7,7 @@ import RolesTable from "../../../shared/components/Table";
 import Icon from "../../../shared/components/Icon";
 import Link from "../../../shared/components/Link";
 
-import {
-  getRoles,
-  settingsSelector,
-} from "../../../redux/services/SettingsServices";
+import { getRoles, settingsSelector } from "../../../redux/slices/settings";
 import { useSelector, useDispatch } from "react-redux";
 
 function Roles() {

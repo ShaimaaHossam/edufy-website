@@ -51,7 +51,7 @@ const en = {
   roomType: "Room Type",
   uintType: "Unit Type",
   unit: "Unit",
-  contact:"Contact"
+  contact: "Contact",
 };
 
 export default en;

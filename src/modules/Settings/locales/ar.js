@@ -50,8 +50,7 @@ const ar = {
   roomType: "نوع الحجره",
   uintType: "نوع الوحده",
   unit: "وحده",
-  contact:"فرد"
-
+  contact: "فرد",
 };
 
 export default ar;

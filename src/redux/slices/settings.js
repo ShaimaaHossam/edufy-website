@@ -1,11 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { resrvedToken } from "../slices/auth";
-
-let token = resrvedToken;
 
 export const updateNotification = createAsyncThunk(
   "settings/updateNotification",
-  async (obj, thunkAPI) => {
+  async (obj, { getState }, thunkAPI) => {
+    const token = getState().auth.token;
     try {
       const response = await fetch(
         "https://api.stage.marafeq.munjz.com/v1/settings/update",
@@ -33,7 +31,8 @@ export const updateNotification = createAsyncThunk(
 );
 export const updateCompanyInfo = createAsyncThunk(
   "settings/updateCompanyInfo",
-  async ({ id, data }, thunkAPI) => {
+  async ({ id, data }, { getState }, thunkAPI) => {
+    const token = getState().auth.token;
     try {
       const response = await fetch(
         `https://api.stage.marafeq.munjz.com/v1/companies/update/${id}`,
@@ -62,7 +61,8 @@ export const updateCompanyInfo = createAsyncThunk(
 
 export const updatePermesion = createAsyncThunk(
   "settings/updatePermesion",
-  async ({ id, data }, thunkAPI) => {
+  async ({ id, data }, { getState }, thunkAPI) => {
+    const token = getState().auth.token;
     try {
       const response = await fetch(
         `https://api.stage.marafeq.munjz.com/v1/roles/update/${id}`,
@@ -91,7 +91,8 @@ export const updatePermesion = createAsyncThunk(
 
 export const getRoles = createAsyncThunk(
   "settings/getRoles",
-  async (thunkAPI) => {
+  async (thunkAPI, { getState }) => {
+    const token = getState().auth.token;
     try {
       const response = await fetch(
         "https://api.stage.marafeq.munjz.com/v1/roles/?listing=1",
@@ -119,7 +120,8 @@ export const getRoles = createAsyncThunk(
 
 export const getPermesion = createAsyncThunk(
   "settings/getPermesion",
-  async (thunkAPI) => {
+  async (thunkAPI, { getState }) => {
+    const token = getState().auth.token;
     try {
       const response = await fetch(
         "https://api.stage.marafeq.munjz.com/v1/permissions/?listing=1&group=1",
@@ -147,7 +149,8 @@ export const getPermesion = createAsyncThunk(
 
 export const getSelectedPermesion = createAsyncThunk(
   "settings/getSelectedPermesion",
-  async (id, thunkAPI) => {
+  async (id, { getState }, thunkAPI) => {
+    const token = getState().auth.token;
     try {
       const response = await fetch(
         `https://api.stage.marafeq.munjz.com/v1/roles/${id}`,
@@ -175,7 +178,8 @@ export const getSelectedPermesion = createAsyncThunk(
 
 export const getNotifications = createAsyncThunk(
   "settings/getNotifications",
-  async (thunkAPI) => {
+  async (thunkAPI, { getState }) => {
+    const token = getState().auth.token;
     try {
       const response = await fetch(
         "https://api.stage.marafeq.munjz.com/v1/settings/",
@@ -203,7 +207,8 @@ export const getNotifications = createAsyncThunk(
 
 export const getSecondaryContcat = createAsyncThunk(
   "settings/getSecondaryContcat",
-  async (thunkAPI) => {
+  async (thunkAPI, { getState }) => {
+    const token = getState().auth.token;
     try {
       const response = await fetch(
         "https://api.stage.marafeq.munjz.com/v1/users/",

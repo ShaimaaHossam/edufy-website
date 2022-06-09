@@ -11,7 +11,7 @@ import {
   getSelectedPermesion,
   updatePermesion,
   settingsSelector,
-} from "../../../redux/services/SettingsServices";
+} from "../../../redux/slices/settings";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Typography, Button, Grid } from "@mui/material";
@@ -20,8 +20,7 @@ import Dialog from "../../../shared/components/Dialog";
 
 function Permissions() {
   const [open, setOpen] = useState(false);
-  const { permesions, selectedPermesion, isFetching } =
-    useSelector(settingsSelector);
+  const { permesions, selectedPermesion } = useSelector(settingsSelector);
   const location = useLocation();
   const role = location.state;
   const permesionRef = useRef(false);
