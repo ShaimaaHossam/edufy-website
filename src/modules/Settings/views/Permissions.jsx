@@ -41,7 +41,7 @@ function Permissions() {
       company: [],
       room: [],
       roomType: [],
-      unitType: [],
+      uintType: [],
     },
   });
   const { setValues, setFieldValue } = formik;
@@ -72,7 +72,7 @@ function Permissions() {
         roomType: permesions.RoomType.map((obj) => {
           return { id: obj.id, label: obj.name, value: false };
         }),
-        unitType: permesions.UnitType.map((obj) => {
+        uintType: permesions.UnitType.map((obj) => {
           return { id: obj.id, label: obj.name, value: false };
         }),
       });
@@ -116,9 +116,9 @@ function Permissions() {
   };
 
   return (
-    <Grid container spacing={5} margin="auto">
+    <Grid container spacing={5}>
       <Grid item xs={10}>
-        <Typography variant="h5" mb={3}>
+        <Typography component="h2" variant="h6" mb={3}>
           {t(`${role.name}`)}
         </Typography>
       </Grid>
@@ -181,7 +181,7 @@ function Permissions() {
       <Grid item xs={10}>
         <CheckboxMenu
           title="Unit Type"
-          values={formik.values.unitType || []}
+          values={formik.values.uintType || []}
           onChange={(unitTypeList) => {
             setFieldValue("uintType", unitTypeList);
             selectPerm(unitTypeList, setunitTypePermesion);

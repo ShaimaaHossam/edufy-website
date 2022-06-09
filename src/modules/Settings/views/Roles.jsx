@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { SvgIcon } from "@mui/material";
 import { mdiPencil } from "@mdi/js";
 
 import { useTranslation } from "react-i18next";
 
-import Taple from "../../../shared/components/Table";
+import RolesTable from "../../../shared/components/Table";
+import Icon from "../../../shared/components/Icon";
+import Link from "../../../shared/components/Link";
+
 import {
   getRoles,
   settingsSelector,
@@ -18,11 +19,8 @@ function Roles() {
 
   const { t } = useTranslation("settings");
 
-  const Action = () => (
-    <SvgIcon fontSize="small">
-      <path d={mdiPencil} />
-    </SvgIcon>
-  );
+  const Action = () => <Icon icon={mdiPencil} />;
+
   let rowsData = roles.map((obj) => {
     return {
       id: obj.id,
@@ -43,7 +41,7 @@ function Roles() {
   }, []);
 
   return (
-    <Taple
+    <RolesTable
       tableLabel="Roles Taple"
       headLabels={[t("roles"), t("summary"), t("action")]}
       rowsData={rowsData}

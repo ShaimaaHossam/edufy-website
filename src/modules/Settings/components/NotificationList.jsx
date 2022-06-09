@@ -3,7 +3,7 @@ import { Box, Checkbox, Typography } from "@mui/material";
 function NotificationList({ values, onChange, title }) {
   return (
     <>
-      <Typography textAlign="center" mb={2}>
+      <Typography textAlign="center" mb={2} component="h2" variant="h6">
         {title}
       </Typography>
       {values.map((option) => (

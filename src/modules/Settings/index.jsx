@@ -1,4 +1,4 @@
-import { Typography, Box, Paper } from "@mui/material";
+import { Typography, Grid, Paper } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
@@ -13,20 +13,28 @@ function Settings() {
   const { t } = useTranslation("settings");
 
   return (
-    <Box>
-      <Typography color="text.primary" variant="h6" pb={2}>
-        {t("settings")}
-      </Typography>
-      <Paper sx={{ py: 4, px: 3 }}>
-        <Routes>
-          <Route index element={<BasicTabs />} />
-          <Route path="company-information" element={<CompanyInformation />} />
-          <Route path="notifications" element={<Notifications />} />
-          <Route path="roles" element={<Roles />} />
-          <Route path="permissions" element={<Permissions />} />
-        </Routes>
-      </Paper>
-    </Box>
+    <Grid container spacing={2} direction="column">
+      <Grid item>
+        <Typography color="text.primary" component="h1" variant="h5">
+          {t("settings")}
+        </Typography>
+      </Grid>
+
+      <Grid item>
+        <Paper sx={{ p: 3 }}>
+          <Routes>
+            <Route index element={<BasicTabs />} />
+            <Route
+              path="company-information"
+              element={<CompanyInformation />}
+            />
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="roles" element={<Roles />} />
+            <Route path="permissions" element={<Permissions />} />
+          </Routes>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 }
 
