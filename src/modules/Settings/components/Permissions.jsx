@@ -20,7 +20,8 @@ import Dialog from "../../../shared/components/Dialog";
 
 function Permissions() {
   const [open, setOpen] = useState(false);
-  const { permesions, selectedPermesion } = useSelector(settingsSelector);
+  const { permesions, selectedPermesion, isFetching } =
+    useSelector(settingsSelector);
   const location = useLocation();
   const role = location.state;
   const permesionRef = useRef(false);
@@ -116,16 +117,21 @@ function Permissions() {
   };
 
   return (
-    <Grid container spacing={5}>
-      <Grid item xs={10}>
-        <Typography component="h2" variant="h6" mb={3}>
-          {t(`${role.name}`)}
+    <Grid
+      container
+      direction="column"
+      spacing={4}
+      sx={{ width: "50%", m: "auto" }}
+    >
+      <Grid item xs={12}>
+        <Typography component="h2" variant="h6">
+          {t(role.name)}
         </Typography>
       </Grid>
 
-      <Grid item xs={10} mt={-5}>
+      <Grid item xs={12}>
         <CheckboxMenu
-          title="City"
+          title={t("city")}
           values={formik.values.city || []}
           onChange={(cityList) => {
             setFieldValue("city", cityList);
@@ -134,9 +140,9 @@ function Permissions() {
         />
       </Grid>
 
-      <Grid item xs={10}>
+      <Grid item xs={12}>
         <CheckboxMenu
-          title="Unit"
+          title={t("unit")}
           values={formik.values.unit || []}
           onChange={(unitList) => {
             setFieldValue("unit", unitList);
@@ -145,9 +151,9 @@ function Permissions() {
         />
       </Grid>
 
-      <Grid item xs={10}>
+      <Grid item xs={12}>
         <CheckboxMenu
-          title="Company"
+          title={t("company")}
           values={formik.values.company || []}
           onChange={(companyList) => {
             setFieldValue("company", companyList);
@@ -156,9 +162,9 @@ function Permissions() {
         />
       </Grid>
 
-      <Grid item xs={10}>
+      <Grid item xs={12}>
         <CheckboxMenu
-          title="Room"
+          title={t("room")}
           values={formik.values.room || []}
           onChange={(roomList) => {
             setFieldValue("room", roomList);
@@ -167,9 +173,9 @@ function Permissions() {
         />
       </Grid>
 
-      <Grid item xs={10}>
+      <Grid item xs={12}>
         <CheckboxMenu
-          title="Room Type"
+          title={t("roomType")}
           values={formik.values.roomType || []}
           onChange={(roomTypeList) => {
             setFieldValue("roomType", roomTypeList);
@@ -178,9 +184,9 @@ function Permissions() {
         />
       </Grid>
 
-      <Grid item xs={10}>
+      <Grid item xs={12}>
         <CheckboxMenu
-          title="Unit Type"
+          title={t("uintType")}
           values={formik.values.uintType || []}
           onChange={(unitTypeList) => {
             setFieldValue("uintType", unitTypeList);
@@ -189,7 +195,7 @@ function Permissions() {
         />
       </Grid>
 
-      <Grid item xs={10} textAlign="right" mt={6} mb={4}>
+      <Grid item alignSelf="flex-end">
         <Dialog
           title={t("saveMesage")}
           open={open}

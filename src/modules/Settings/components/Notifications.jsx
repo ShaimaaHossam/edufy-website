@@ -163,7 +163,7 @@ function Notifications() {
       </Typography>
 
       <Select
-        title="Contact"
+        title={t("contact")}
         values={userList}
         setٍٍSecondaryist={setٍٍSecondaryist}
       />

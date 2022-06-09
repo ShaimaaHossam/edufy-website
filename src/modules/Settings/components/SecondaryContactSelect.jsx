@@ -27,12 +27,12 @@ function SecondaryContactSelect({ title, values, setٍٍSecondaryist }) {
     <FormControl sx={{ m: 1, width: "100%", marginTop: 5, marginBottom: 5 }}>
       <InputLabel id="label">{title}</InputLabel>
       <Select
-        labelId="multiple-chip-label"
-        id="multiple-chip"
+        labelId="demo-multiple-chip-label"
+        id="demo-multiple-chip"
         multiple
         value={person}
         onChange={handleChange}
-        input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+        input={<OutlinedInput id="select-multiple-chip" label={title} />}
         renderValue={(selected) => (
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
             {selected.map((value) => (

@@ -44,6 +44,14 @@ const en = {
 
   imageError: "Please upload only image",
   crError: "Please upload CR document",
+
+  city: "City",
+  company: "Company",
+  room: "Room",
+  roomType: "Room Type",
+  uintType: "Unit Type",
+  unit: "Unit",
+  contact:"Contact"
 };
 
 export default en;

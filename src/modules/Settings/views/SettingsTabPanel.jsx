@@ -3,9 +3,9 @@ import { Tabs, Tab, Box } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
 
-import Notifications from "./Notifications";
-import CompanyInformation from "./CompanyInformation";
-import Roles from "./Roles";
+import Notifications from "../components/Notifications";
+import CompanyInformation from "../components/CompanyInformationForm";
+import Roles from "../components/Roles";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

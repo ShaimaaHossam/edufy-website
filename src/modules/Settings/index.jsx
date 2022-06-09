@@ -4,10 +4,10 @@ import { Routes, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import BasicTabs from "./views/SettingsTabPanel";
-import CompanyInformation from "./views/CompanyInformation";
-import Notifications from "./views/Notifications";
-import Roles from "./views/Roles";
-import Permissions from "./views/Permissions";
+import CompanyInformation from "./components/CompanyInformationForm";
+import Notifications from "./components/Notifications";
+import Roles from "./components/Roles";
+import Permissions from "./components/Permissions";
 
 function Settings() {
   const { t } = useTranslation("settings");
@@ -15,7 +15,7 @@ function Settings() {
   return (
     <Grid container spacing={2} direction="column">
       <Grid item>
-        <Typography color="text.primary" component="h1" variant="h5">
+        <Typography component="h1" variant="h5">
           {t("settings")}
         </Typography>
       </Grid>
