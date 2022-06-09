@@ -108,7 +108,7 @@ function Notifications() {
 
   return (
     <>
-      <Typography variant="h6" mb={1}>
+      <Typography component="h2" variant="h6" mb={1}>
         {t("notifications")}
       </Typography>
 
@@ -118,7 +118,9 @@ function Notifications() {
 
       <Grid container spacing={1} margin="auto" mt={5} mb={5}>
         <Grid item container xs={7}>
-          <Typography>{t("summary")}</Typography>
+          <Typography component="h3" variant="h6">
+            {t("summary")}
+          </Typography>
           {notificationsMessages.map((obj) => {
             return (
               <Grid item xs={12} key={obj.id}>
@@ -152,7 +154,7 @@ function Notifications() {
         </Grid>
       </Grid>
 
-      <Typography variant="h6" mb={1}>
+      <Typography component="h2" variant="h6" mb={1}>
         {t("contactNotification")}
       </Typography>
 
@@ -161,7 +163,7 @@ function Notifications() {
       </Typography>
 
       <Select
-        title="Contact"
+        title={t("contact")}
         values={userList}
         setٍٍSecondaryist={setٍٍSecondaryist}
       />

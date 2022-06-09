@@ -81,7 +81,7 @@ function CompanyInformation() {
   }, [isError, isSuccess, errors]);
 
   return (
-    <Grid container spacing={3} margin="auto">
+    <Grid container spacing={3}>
       <Grid item xs={12}>
         <ImageDropbox
           lable={t("logo")}
@@ -99,7 +99,9 @@ function CompanyInformation() {
       </Grid>
 
       <Grid item xs={12}>
-        <Typography variant="h5">{t("legalInformation")}</Typography>
+        <Typography component="h2" variant="h6">
+          {t("legalInformation")}
+        </Typography>
       </Grid>
 
       <Grid item xs={12}>
@@ -109,9 +111,6 @@ function CompanyInformation() {
           label={t("legalCompanyName")}
           placeholder={t("legalCompanyName")}
           {...formik.getFieldProps("name")}
-          sx={{
-            marginBottom: 5,
-          }}
           error={formik.touched.name && !!formik.errors.name}
           helperText={formik.touched.name && formik.errors.name}
         />
@@ -130,7 +129,9 @@ function CompanyInformation() {
       </Grid>
 
       <Grid item xs={12}>
-        <Typography variant="h5">{t("companyDocuments")}</Typography>
+        <Typography component="h2" variant="h6">
+          {t("companyDocuments")}
+        </Typography>
       </Grid>
 
       <Grid item xs={12}>
@@ -152,9 +153,6 @@ function CompanyInformation() {
           {...formik.getFieldProps("cr_number")}
           error={formik.touched.cr_number && !!formik.errors.cr_number}
           helperText={formik.touched.cr_number && formik.errors.cr_number}
-          sx={{
-            marginBottom: 3,
-          }}
         />
       </Grid>
 

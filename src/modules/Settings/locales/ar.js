@@ -43,6 +43,15 @@ const ar = {
 
   imageError: "برجاء تحميل صوره فقط",
   crError: "بر جاء تحميل ملف وتيقه السجل التجاري ",
+
+  city: "مدينه",
+  company: "شركه",
+  room: "حجره",
+  roomType: "نوع الحجره",
+  uintType: "نوع الوحده",
+  unit: "وحده",
+  contact:"فرد"
+
 };
 
 export default ar;

@@ -3,9 +3,9 @@ import { Tabs, Tab, Box } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
 
-import Notifications from "./Notifications";
-import CompanyInformation from "./CompanyInformation";
-import Roles from "./Roles";
+import Notifications from "../components/Notifications";
+import CompanyInformation from "../components/CompanyInformationForm";
+import Roles from "../components/Roles";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -48,7 +48,7 @@ function BasicTabs() {
   };
 
   return (
-    <Box sx={{ width: "100%", px: 5, py: 2 }}>
+    <>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -72,7 +72,7 @@ function BasicTabs() {
       <TabPanel value={value} index={2}>
         <Roles />
       </TabPanel>
-    </Box>
+    </>
   );
 }
 
