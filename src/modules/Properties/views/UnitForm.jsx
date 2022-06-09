@@ -456,7 +456,6 @@ function UnitForm({ formType }) {
                         required
                         name={`rooms[${idx}].room_type_id`}
                         label={t("roomType")}
-                        fixedValue={formType === "edit"}
                         options={allRoomTypes.map((type) => ({
                           value: type.id,
                           label: type.title,
