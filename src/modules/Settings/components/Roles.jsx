@@ -4,8 +4,8 @@ import { mdiPencil } from "@mdi/js";
 import { useTranslation } from "react-i18next";
 
 import RolesTable from "../../../shared/components/Table";
-import Icon from "../../../shared/components/Icon";
 import Link from "../../../shared/components/Link";
+import IconButton from "../../../shared/components/IconButton";
 
 import { getRoles, settingsSelector } from "../../../redux/slices/settings";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,8 +16,6 @@ function Roles() {
 
   const { t } = useTranslation("settings");
 
-  const Action = () => <Icon icon={mdiPencil} />;
-
   let rowsData = roles.map((obj) => {
     return {
       id: obj.id,
@@ -26,9 +24,15 @@ function Roles() {
       rowCells: [
         t(`${obj.name}`),
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
-        <Link to="/settings/permissions" state={obj}>
-          <Action />
-        </Link>,
+        <IconButton
+          aria-label="action"
+          icon={mdiPencil}
+          size="small"
+          component={Link}
+          color="primary"
+          to="/settings/permissions"
+          state={obj}
+        />,
       ],
     };
   });

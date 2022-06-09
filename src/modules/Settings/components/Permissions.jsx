@@ -24,7 +24,6 @@ function Permissions() {
   const location = useLocation();
   const role = location.state;
   const permesionRef = useRef(false);
-
   const { t } = useTranslation("settings");
 
   const [cityPermesion, setCityPermesion] = useState([]);
@@ -33,6 +32,8 @@ function Permissions() {
   const [roomPermesion, setRoomPermesion] = useState([]);
   const [roomTypePermesion, setRoomTypePermesion] = useState([]);
   const [unitTypePermesion, setunitTypePermesion] = useState([]);
+
+  const [loading, setLoading] = useState(true);
 
   const formik = useFormik({
     initialValues: {
@@ -76,6 +77,7 @@ function Permissions() {
           return { id: obj.id, label: obj.name, value: false };
         }),
       });
+      setLoading(false);
     }
   }, [permesions]);
 
@@ -115,6 +117,7 @@ function Permissions() {
     setOpen(true);
   };
 
+  if (loading) return null;
   return (
     <Grid
       container
