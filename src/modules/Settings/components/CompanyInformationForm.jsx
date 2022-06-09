@@ -8,13 +8,10 @@ import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import { authSelector } from "../../../redux/slices/auth";
 
-import {
-  clearState,
-  settingsSelector,
-} from "../../../redux/services/SettingsServices";
-import { updateCompanyInfo } from "../../../redux/services/SettingsServices";
+import { clearState, settingsSelector } from "../../../redux/slices/settings";
+import { updateCompanyInfo } from "../../../redux/slices/settings";
 
-import { Grid, Box, Typography, Button } from "@mui/material";
+import { Grid, Typography, Button } from "@mui/material";
 import TextInput from "../../../shared/components/inputs/TextInput";
 import ImageDropbox from "../../../shared/components/inputs/ImageDropbox";
 import FileInput from "../../../shared/components/inputs/FileInput";

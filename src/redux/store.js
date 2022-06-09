@@ -7,7 +7,7 @@ import { peopleAPI } from "./services/people";
 import { generalAPI } from "./services/general";
 
 import { authSlice } from "./slices/auth";
-import { settingsSlice } from "./services/SettingsServices";
+import { settingsSlice } from "./slices/settings";
 
 import { propertiesSlice } from "../modules/Properties/state";
 export const store = configureStore({

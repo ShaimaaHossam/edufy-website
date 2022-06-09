@@ -8,7 +8,7 @@ import {
   getSecondaryContcat,
   updateNotification,
   settingsSelector,
-} from "../../../redux/services/SettingsServices";
+} from "../../../redux/slices/settings";
 
 import { useTranslation } from "react-i18next";
 
