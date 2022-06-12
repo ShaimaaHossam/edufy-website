@@ -109,6 +109,8 @@ function UnitForm({ formType }) {
           return title !== unit?.title;
         }),
       unit_type_id: Yup.string().required(t("requiredField")),
+      floor: Yup.number().nullable(),
+      size: Yup.number().nullable(),
 
       rooms: Yup.array().of(
         Yup.object().shape({
