@@ -29,7 +29,6 @@ function Roles() {
           icon={mdiPencil}
           size="small"
           component={Link}
-          color="primary"
           to="/settings/permissions"
           state={obj}
         />,
