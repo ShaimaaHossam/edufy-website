@@ -421,138 +421,140 @@ function UnitForm({ formType }) {
               </Grid>
 
               {!!formik.values.rooms.length ? (
-                formik.values.rooms.map((room, idx) => (
-                  <Fragment key={idx}>
-                    <Grid
-                      item
-                      xs={12}
-                      container
-                      alignItems="center"
-                      justifyContent="space-between"
-                      sx={{ mb: -1 }}
-                    >
-                      <Grid item>
-                        <Typography variant="subtitle1">
-                          {t("room")} {idx + 1}:
-                        </Typography>
-                      </Grid>
-
-                      <Grid item>
-                        <Button
-                          color="error"
-                          size="small"
-                          variant="text"
-                          startIcon={<Icon icon={mdiDeleteOutline} />}
-                          sx={{ textDecoration: "underline" }}
-                          onClick={() => removeRoom(idx)}
-                        >
-                          {t("removeRoom")}
-                        </Button>
-                      </Grid>
-                    </Grid>
-
-                    <Grid item xs={6}>
-                      <Autocomplete
-                        required
-                        name={`rooms[${idx}].room_type_id`}
-                        label={t("roomType")}
-                        options={allRoomTypes.map((type) => ({
-                          value: type.id,
-                          label: type.title,
-                        }))}
-                        noOptionsText={t("noTypes")}
-                        value={room.room_type_id}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        error={
-                          formik.touched.rooms?.[idx]?.room_type_id &&
-                          !!formik.errors.rooms?.[idx]?.room_type_id
-                        }
-                        helperText={
-                          formik.touched.rooms?.[idx]?.room_type_id &&
-                          formik.errors.rooms?.[idx]?.room_type_id
-                        }
-                      />
-                    </Grid>
-
-                    <Grid item xs={6}>
-                      <CounterInput
-                        required
-                        name={`rooms[${idx}].quantity`}
-                        label={t("quantity")}
-                        step={1}
-                        min={1}
-                        value={room.quantity}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        error={
-                          formik.touched.rooms?.[idx]?.quantity &&
-                          !!formik.errors.rooms?.[idx]?.quantity
-                        }
-                        helperText={
-                          formik.touched.rooms?.[idx]?.quantity &&
-                          formik.errors.rooms?.[idx]?.quantity
-                        }
-                      />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <TextInput
-                        required
-                        name={`rooms[${idx}].title`}
-                        label={t("roomName")}
-                        type="text"
-                        value={room.title}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        error={
-                          formik.touched.rooms?.[idx]?.title &&
-                          !!formik.errors.rooms?.[idx]?.title
-                        }
-                        helperText={
-                          formik.touched.rooms?.[idx]?.title &&
-                          formik.errors.rooms?.[idx]?.title
-                        }
-                      />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <NumberInput
-                        name={`rooms[${idx}].size`}
-                        label={t("size")}
-                        unit={
-                          <>
-                            {t("m")}
-                            <sup>{t("2")}</sup>
-                          </>
-                        }
-                        value={room.size}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        error={
-                          formik.touched.rooms?.[idx]?.size &&
-                          !!formik.errors.rooms?.[idx]?.size
-                        }
-                        helperText={
-                          formik.touched.rooms?.[idx]?.size &&
-                          formik.errors.rooms?.[idx]?.size
-                        }
-                      />
-                    </Grid>
-
-                    <Grid item>
-                      <Button
-                        color="primary"
-                        variant="outlined"
-                        disabled={!!formik.errors.rooms?.[idx]}
-                        startIcon={<Icon icon={mdiPlusCircleOutline} />}
-                        onClick={addRoom}
+                <>
+                  {formik.values.rooms.map((room, idx) => (
+                    <Fragment key={idx}>
+                      <Grid
+                        item
+                        xs={12}
+                        container
+                        alignItems="center"
+                        justifyContent="space-between"
+                        sx={{ mb: -1 }}
                       >
-                        {t("addRoom")}
-                      </Button>
-                    </Grid>
-                  </Fragment>
-                ))
+                        <Grid item>
+                          <Typography variant="subtitle1">
+                            {t("room")} {idx + 1}:
+                          </Typography>
+                        </Grid>
+
+                        <Grid item>
+                          <Button
+                            color="error"
+                            size="small"
+                            variant="text"
+                            startIcon={<Icon icon={mdiDeleteOutline} />}
+                            sx={{ textDecoration: "underline" }}
+                            onClick={() => removeRoom(idx)}
+                          >
+                            {t("removeRoom")}
+                          </Button>
+                        </Grid>
+                      </Grid>
+
+                      <Grid item xs={6}>
+                        <Autocomplete
+                          required
+                          name={`rooms[${idx}].room_type_id`}
+                          label={t("roomType")}
+                          options={allRoomTypes.map((type) => ({
+                            value: type.id,
+                            label: type.title,
+                          }))}
+                          noOptionsText={t("noTypes")}
+                          value={room.room_type_id}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          error={
+                            formik.touched.rooms?.[idx]?.room_type_id &&
+                            !!formik.errors.rooms?.[idx]?.room_type_id
+                          }
+                          helperText={
+                            formik.touched.rooms?.[idx]?.room_type_id &&
+                            formik.errors.rooms?.[idx]?.room_type_id
+                          }
+                        />
+                      </Grid>
+
+                      <Grid item xs={6}>
+                        <CounterInput
+                          required
+                          name={`rooms[${idx}].quantity`}
+                          label={t("quantity")}
+                          step={1}
+                          min={1}
+                          value={room.quantity}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          error={
+                            formik.touched.rooms?.[idx]?.quantity &&
+                            !!formik.errors.rooms?.[idx]?.quantity
+                          }
+                          helperText={
+                            formik.touched.rooms?.[idx]?.quantity &&
+                            formik.errors.rooms?.[idx]?.quantity
+                          }
+                        />
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <TextInput
+                          required
+                          name={`rooms[${idx}].title`}
+                          label={t("roomName")}
+                          type="text"
+                          value={room.title}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          error={
+                            formik.touched.rooms?.[idx]?.title &&
+                            !!formik.errors.rooms?.[idx]?.title
+                          }
+                          helperText={
+                            formik.touched.rooms?.[idx]?.title &&
+                            formik.errors.rooms?.[idx]?.title
+                          }
+                        />
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <NumberInput
+                          name={`rooms[${idx}].size`}
+                          label={t("size")}
+                          unit={
+                            <>
+                              {t("m")}
+                              <sup>{t("2")}</sup>
+                            </>
+                          }
+                          value={room.size}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          error={
+                            formik.touched.rooms?.[idx]?.size &&
+                            !!formik.errors.rooms?.[idx]?.size
+                          }
+                          helperText={
+                            formik.touched.rooms?.[idx]?.size &&
+                            formik.errors.rooms?.[idx]?.size
+                          }
+                        />
+                      </Grid>
+                    </Fragment>
+                  ))}
+
+                  <Grid item>
+                    <Button
+                      color="primary"
+                      variant="outlined"
+                      disabled={!!formik.errors.rooms}
+                      startIcon={<Icon icon={mdiPlusCircleOutline} />}
+                      onClick={addRoom}
+                    >
+                      {t("addRoom")}
+                    </Button>
+                  </Grid>
+                </>
               ) : (
                 <Grid item xs={12}>
                   <Typography variant="body2" color="text.secondary" mb={0.5}>
