@@ -44,7 +44,6 @@ function UnitsTable() {
     t("type"),
     t("roomsNo"),
     t("customer"),
-    t("services"),
     t("totalSpent"),
     t("actions"),
   ];
@@ -79,8 +78,6 @@ function UnitsTable() {
       ) : (
         <Icon icon={mdiMinus} color="action" />
       ),
-
-      null,
 
       <Typography component="span" variant="body2">
         {item.total_spent} {t("sr")}
