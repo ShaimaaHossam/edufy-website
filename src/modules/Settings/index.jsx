@@ -1,5 +1,5 @@
 import { Typography, Grid, Paper } from "@mui/material";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useParams } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
@@ -11,6 +11,7 @@ import Permissions from "./components/Permissions";
 
 function Settings() {
   const { t } = useTranslation("settings");
+  const { roleID } = useParams();
 
   return (
     <Grid container spacing={2} direction="column">
@@ -30,7 +31,11 @@ function Settings() {
             />
             <Route path="notifications" element={<Notifications />} />
             <Route path="roles" element={<Roles />} />
-            <Route path="permissions" element={<Permissions />} />
+            <Route
+              path="roles/update/:roleID"
+              element={<Permissions /> }
+            />
+            {/* <Route path="permissions" element={<Permissions />} /> */}
           </Routes>
         </Paper>
       </Grid>

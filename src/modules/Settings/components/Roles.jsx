@@ -29,7 +29,7 @@ function Roles() {
           icon={mdiPencil}
           size="small"
           component={Link}
-          to="/settings/permissions"
+          to={`/settings/roles/update/${obj.id}`}
           state={obj}
         />,
       ],
