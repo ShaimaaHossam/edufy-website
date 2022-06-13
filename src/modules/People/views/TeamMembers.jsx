@@ -38,8 +38,8 @@ function TeamMembers() {
             <Grid item sx={{ width: 320 }}>
               <SearchInput
                 size="small"
-                label={t("searchProperties")}
-                placeholder={t("propertyOrManager")}
+                label={t("searchUser")}
+                placeholder={t("user")}
                 onChange={(keyword) => console.log("jjj")}
               />
             </Grid>
