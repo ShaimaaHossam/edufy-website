@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 import { propertiesAPI } from "./services/properties";
@@ -6,9 +7,9 @@ import { peopleAPI } from "./services/people";
 import { generalAPI } from "./services/general";
 
 import { authSlice } from "./slices/auth";
+import { settingsSlice } from "./slices/settings";
 
 import { propertiesSlice } from "../modules/Properties/state";
-
 export const store = configureStore({
   reducer: {
     [propertiesAPI.reducerPath]: propertiesAPI.reducer,
@@ -16,10 +17,10 @@ export const store = configureStore({
     [generalAPI.reducerPath]: generalAPI.reducer,
 
     [authSlice.name]: authSlice.reducer,
+    [settingsSlice.name]: settingsSlice.reducer,
 
     [propertiesSlice.name]: propertiesSlice.reducer,
   },
-
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
       propertiesAPI.middleware,

@@ -25,6 +25,7 @@ const ar = {
 
   inputsErrorMessage: "هذا الحقل مطلوب",
   phoneError: "  برجاء ادخال الرقم بشكل صحيح",
+  otpError: "برجاء ادخال  كود التفعيل بشكل صحيح ",
 
   verificationCode: "0000",
   verificationLabel: "كود التفعيل",

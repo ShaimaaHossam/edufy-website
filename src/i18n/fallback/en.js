@@ -18,10 +18,19 @@ const en = {
   english: "English",
   arabic: "العربية",
 
+  change: "change",
+  upload: "upload",
+  fileUploaded: "No CR Document Uploaded",
+
   stepper_pending_status: "pending",
   stepper_active_status: "active",
   stepper_success_status: "success",
   stepper_error_status: "error",
+
+  required: "Required",
+
+  contactMunjz: "Contact Munjz",
+  munjzMessage: "Please contact Munjiz to upload a new VAT",
 };
 
 export default en;
