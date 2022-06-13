@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
@@ -14,201 +14,118 @@ import {
 } from "../../../redux/slices/settings";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Typography, Button, Grid } from "@mui/material";
+import { Typography, Box, Button, Grid } from "@mui/material";
 import CheckboxMenu from "../../../shared/components/inputs/CheckboxMenu";
 import Dialog from "../../../shared/components/Dialog";
 
 function Permissions() {
-  const [open, setOpen] = useState(false);
-  const { permesions, selectedPermesion } = useSelector(settingsSelector);
-  const location = useLocation();
-  const role = location.state;
-  const permesionRef = useRef(false);
-  const { t } = useTranslation("settings");
+  const [openDialog, setOpenDialog] = useState(false);
 
-  const [cityPermesion, setCityPermesion] = useState([]);
-  const [unitPermesion, setUnitPermesion] = useState([]);
-  const [companyPermesion, setCompanyPermesion] = useState([]);
-  const [roomPermesion, setRoomPermesion] = useState([]);
-  const [roomTypePermesion, setRoomTypePermesion] = useState([]);
-  const [unitTypePermesion, setunitTypePermesion] = useState([]);
+  const { permesions , role } = useSelector(settingsSelector);
+  
+  const { t } = useTranslation("settings");
+  
+  const { roleID } = useParams();
 
   const [loading, setLoading] = useState(true);
-
+  
   const formik = useFormik({
-    initialValues: {
-      city: [],
-      unit: [],
-      company: [],
-      room: [],
-      roomType: [],
-      uintType: [],
-    },
+    validateOnMount: false,
+    validateOnBlur: false,
+    validateOnChange: true,
+    initialValues: {},
   });
-  const { setValues, setFieldValue } = formik;
-  const dispatch = useDispatch();
 
+  const { setValues } = formik;
+
+  const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch(getPermesion());
-    dispatch(getSelectedPermesion(role.id));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    if (!permesionRef.current) {
-      permesionRef.current = true;
-    } else {
-      setValues({
-        city: permesions.City.map((obj) => {
-          return { id: obj.id, label: obj.name, value: false };
-        }),
-        unit: permesions.Unit.map((obj) => {
-          return { id: obj.id, label: obj.name, value: false };
-        }),
-        company: permesions.Company.map((obj) => {
-          return { id: obj.id, label: obj.name, value: false };
-        }),
-        room: permesions.Room.map((obj) => {
-          return { id: obj.id, label: obj.name, value: false };
-        }),
-        roomType: permesions.RoomType.map((obj) => {
-          return { id: obj.id, label: obj.name, value: false };
-        }),
-        uintType: permesions.UnitType.map((obj) => {
-          return { id: obj.id, label: obj.name, value: false };
-        }),
-      });
-      setLoading(false);
-    }
-  }, [permesions]);
+    dispatch(getSelectedPermesion(roleID));
+  }, [dispatch, roleID]);
 
-  const selectPerm = (permissionslist, callBack) => {
-    let list = permissionslist.filter((obj) => obj.value === true);
-    let perm = list.map((obj) => obj.id);
-    callBack(perm);
-  };
+  useEffect(() => {
+    if (!permesions || !role) return;
+
+    const selectedPermissionsIds =  role.permissions.map((p)=> p.id)
+    const reducedData = Object.keys(permesions).reduce(
+      (acc, key) => ({
+        ...acc,
+        [key.toLowerCase()]: permesions[key].map((permission) => ({
+          id: permission.id,
+          value: selectedPermissionsIds.indexOf(permission.id) > -1,
+          label: t(
+            `${key.toLowerCase()}Permissions.${permission.name
+              .split(" ")[0]
+              .toLocaleLowerCase()}`
+          ),
+        })),
+      }),
+      {}
+    );
+    
+    setValues(reducedData);
+    setLoading(false);
+  }, [permesions, role, setValues, t]);
 
   const handelSave = () => {
-    let permesions = [
-      ...cityPermesion,
-      ...unitPermesion,
-      ...companyPermesion,
-      ...roomPermesion,
-      ...roomTypePermesion,
-      ...unitTypePermesion,
-    ];
-
-    let data = {
+    const data = Object.values(formik.values).reduce((acc, item) => {
+      return [...acc, ...item.filter((p) => p.value).map((p) => p.id)];
+    }, []);
+    const respond = {
       id: role.id,
       data: {
         company_id: role.company_id,
         name: role.name,
+        permissions: data,
       },
-      permesion: permesions,
     };
-    dispatch(updatePermesion(data));
+    dispatch(updatePermesion(respond));
     handleClose();
   };
-
   const handleClose = () => {
-    setOpen(false);
+    setOpenDialog(false);
   };
 
   const handleOpen = () => {
-    setOpen(true);
+    setOpenDialog(true);
   };
-
   if (loading) return null;
   return (
-    <Grid
-      container
-      direction="column"
-      spacing={4}
-      sx={{ width: "50%", m: "auto" }}
-    >
-      <Grid item xs={12}>
-        <Typography component="h2" variant="h6">
-          {t(role.name)}
-        </Typography>
-      </Grid>
+    <Box width="60%" mx="auto">
+      <Grid container spacing={3} direction="column" component="form">
+        <Grid item xs={12}>
+          <Typography component="h2" variant="h6">
+            {t(role.name)}
+          </Typography>
+        </Grid>
 
-      <Grid item xs={12}>
-        <CheckboxMenu
-          title={t("city")}
-          values={formik.values.city || []}
-          onChange={(cityList) => {
-            setFieldValue("city", cityList);
-            selectPerm(cityList, setCityPermesion);
-          }}
-        />
+        {Object.keys(formik.values).map((key) => (
+          <Grid key={key} item xs={12}>
+            <CheckboxMenu
+              title={t(key)}
+              values={formik.values[key]}
+              onChange={(values) => formik.setFieldValue(key, values)}
+            />
+          </Grid>
+        ))}
+        <Grid item alignSelf="flex-end">
+          <Dialog
+            title={t("saveMesage")}
+            open={openDialog}
+            onClose={handleClose}
+            onConfirm={handelSave}
+          />
+          <Button color="success" onClick={handleOpen}>
+            {t("saveChanges")}
+          </Button>
+        </Grid>
       </Grid>
-
-      <Grid item xs={12}>
-        <CheckboxMenu
-          title={t("unit")}
-          values={formik.values.unit || []}
-          onChange={(unitList) => {
-            setFieldValue("unit", unitList);
-            selectPerm(unitList, setUnitPermesion);
-          }}
-        />
-      </Grid>
-
-      <Grid item xs={12}>
-        <CheckboxMenu
-          title={t("company")}
-          values={formik.values.company || []}
-          onChange={(companyList) => {
-            setFieldValue("company", companyList);
-            selectPerm(companyList, setCompanyPermesion);
-          }}
-        />
-      </Grid>
-
-      <Grid item xs={12}>
-        <CheckboxMenu
-          title={t("room")}
-          values={formik.values.room || []}
-          onChange={(roomList) => {
-            setFieldValue("room", roomList);
-            selectPerm(roomList, setRoomPermesion);
-          }}
-        />
-      </Grid>
-
-      <Grid item xs={12}>
-        <CheckboxMenu
-          title={t("roomType")}
-          values={formik.values.roomType || []}
-          onChange={(roomTypeList) => {
-            setFieldValue("roomType", roomTypeList);
-            selectPerm(roomTypeList, setRoomTypePermesion);
-          }}
-        />
-      </Grid>
-
-      <Grid item xs={12}>
-        <CheckboxMenu
-          title={t("uintType")}
-          values={formik.values.uintType || []}
-          onChange={(unitTypeList) => {
-            setFieldValue("uintType", unitTypeList);
-            selectPerm(unitTypeList, setunitTypePermesion);
-          }}
-        />
-      </Grid>
-
-      <Grid item alignSelf="flex-end">
-        <Dialog
-          title={t("saveMesage")}
-          open={open}
-          onClose={handleClose}
-          onConfirm={handelSave}
-        />
-        <Button color="success" onClick={handleOpen}>
-          {t("saveChanges")}
-        </Button>
-      </Grid>
-    </Grid>
+    </Box>
   );
 }
 

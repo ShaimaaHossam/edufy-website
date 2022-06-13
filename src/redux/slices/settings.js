@@ -242,8 +242,8 @@ export const settingsSlice = createSlice({
     secondaryContcat: [],
     errors: "",
     roles: [],
-    permesions: {},
-    selectedPermesion: [],
+    permesions: null,
+    role: null,
     isFetching: false,
     isSuccess: false,
     isError: false,
@@ -308,7 +308,7 @@ export const settingsSlice = createSlice({
     },
 
     [getSelectedPermesion.fulfilled]: (state, { payload }) => {
-      state.selectedPermesion = payload.data;
+      state.role = payload.data;
 
       state.isFetching = false;
       state.isSuccess = true;
