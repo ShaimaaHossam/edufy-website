@@ -24,6 +24,7 @@ function CounterInput({
   size,
 
   step,
+  min = 0,
   max = Infinity,
   unit,
   icon,
@@ -41,9 +42,9 @@ function CounterInput({
   const [isFocused, setIsFocused] = useState(false);
 
   const handleChange = (value) => {
-    const validValue = value < 0 ? 0 : value > max ? max : value;
-    const fakeEvent = { target: { name, value: validValue } };
-    onChange(fakeEvent);
+    const newValue =
+      value < min ? min : value > max ? max : isNaN(value) ? null : value;
+    onChange({ target: { name, value: newValue } });
   };
 
   return (
@@ -51,9 +52,8 @@ function CounterInput({
       fullWidth
       variant="outlined"
       error={error}
-      disabled={disabled}
+      required={required}
       size={size || "medium"}
-      focused={isFocused}
     >
       <InputLabel htmlFor={name}>{label}</InputLabel>
 
@@ -64,7 +64,7 @@ function CounterInput({
         placeholder={placeholder || ""}
         disabled={disabled || fixedValue}
         value={value === null ? "" : value}
-        onChange={(e) => handleChange(parseInt(e.target.value) || null)}
+        onChange={(e) => handleChange(parseInt(e.target.value))}
         onBlur={(e) => {
           setIsFocused(false);
           !!onBlur && onBlur(e);
@@ -150,9 +150,10 @@ CounterInput.propTypes = {
   size: PropTypes.oneOf(["medium", "small"]),
 
   step: PropTypes.number.isRequired,
+  min: PropTypes.number,
   max: PropTypes.number,
   icon: PropTypes.string,
-  unit: PropTypes.string,
+  unit: PropTypes.node,
 
   value: PropTypes.number,
   onChange: PropTypes.func,

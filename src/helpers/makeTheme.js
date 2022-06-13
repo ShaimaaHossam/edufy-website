@@ -97,6 +97,11 @@ function makeTheme({ lang }) {
             body {
               background-color: #FAFBFF;
             }
+            #root {
+              display: flex;
+              flex-direction: column;
+              min-height: 100vh;
+            }
           `,
         },
         MuiPaper: {
@@ -140,6 +145,35 @@ function makeTheme({ lang }) {
             input: {
               "&.Mui-disabled": {
                 WebkitTextFillColor: "inherit",
+              },
+            },
+          },
+        },
+        MuiTabs: {
+          styleOverrides: {
+            root: {
+              position: "relative",
+              zIndex: 1,
+              "&::after": {
+                content: '""',
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 1,
+                backgroundColor: "#DBEAFD",
+                zIndex: -1,
+              },
+            },
+          },
+        },
+        MuiTab: {
+          styleOverrides: {
+            root: {
+              minWidth: 100,
+              textTransform: "none",
+              "@media (max-width: 600px)": {
+                minWidth: 80,
               },
             },
           },

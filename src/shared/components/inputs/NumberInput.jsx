@@ -155,7 +155,7 @@ NumberInput.propTypes = {
   size: PropTypes.oneOf(["medium", "small"]),
 
   icon: PropTypes.string,
-  unit: PropTypes.string,
+  unit: PropTypes.node,
 
   isString: PropTypes.bool,
   isDecimal: PropTypes.bool,

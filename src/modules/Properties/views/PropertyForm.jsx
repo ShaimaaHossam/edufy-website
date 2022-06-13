@@ -28,6 +28,8 @@ import {
   RadioGroup,
 } from "@mui/material";
 
+import NotFound from "../../../shared/views/NotFound";
+
 import Breadcrumbs from "../../../shared/components/Breadcrumbs";
 import Link from "../../../shared/components/Link";
 import TextInput from "../../../shared/components/inputs/TextInput";
@@ -46,7 +48,7 @@ function PropertyForm({ formType }) {
   const { propertyID } = useParams();
   const navigate = useNavigate();
 
-  const { isFetching, data: property } = useGetPropertyQuery(propertyID, {
+  const { error, data: property } = useGetPropertyQuery(propertyID, {
     skip: !propertyID,
   });
   const [addProperty] = useAddPropertyMutation();
@@ -126,16 +128,22 @@ function PropertyForm({ formType }) {
         }),
     }),
     onSubmit: async (values, { setErrors }) => {
-      const { property_type_id, property_subtype_id, ...formData } = values;
+      const { title, property_type_id, property_subtype_id, ...formData } =
+        values;
 
       if (formType === "edit") {
         Object.assign(formData, { id: propertyID });
+        title !== property.title && Object.assign(formData, { title });
         updateProperty(formData)
           .unwrap()
           .then((data) => navigate(`/properties/${data.id}`))
           .catch(({ data: { errors } }) => setErrors(errors));
       } else {
-        Object.assign(formData, { property_type_id, property_subtype_id });
+        Object.assign(formData, {
+          title,
+          property_type_id,
+          property_subtype_id,
+        });
         addProperty(formData)
           .unwrap()
           .then((data) => navigate(`/properties/${data.id}`))
@@ -176,7 +184,7 @@ function PropertyForm({ formType }) {
   }, [propertyTypeID, setFieldValue]);
 
   useEffect(() => {
-    if (formType === "add" || isFetching || !property) return;
+    if (formType === "add" || !property) return;
 
     setValues({
       title: property.title,
@@ -190,7 +198,9 @@ function PropertyForm({ formType }) {
       wallet_type_id: property.wallet_type_id,
       wallet_amount: property.wallet_amount || null,
     });
-  }, [formType, isFetching, property, setValues]);
+  }, [formType, property, setValues]);
+
+  if (error?.status === 404) return <NotFound />;
 
   return (
     <Grid container spacing={2} direction="column">
