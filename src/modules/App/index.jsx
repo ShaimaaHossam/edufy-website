@@ -64,6 +64,10 @@ function App() {
                     <Route path="help/*" element={<Help />} />
 
                     <Route path="/" element={<Navigate to="/dashboard" />} />
+                    <Route
+                      path="/auth/*"
+                      element={<Navigate to="/dashboard" />}
+                    />
 
                     <Route path="*" element={<NotFound />} />
                   </Routes>
