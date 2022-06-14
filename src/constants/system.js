@@ -1,6 +1,6 @@
 export const WALLET_TYPES = { unlimited: 1, restricted: 2 };
 
-export const USER_TYPES = {
+export const USER_ROLES = {
   admin: "admin",
   areaManager: "Area Manager",
   propertyManager: "Property Manager",

@@ -49,7 +49,7 @@ import DatePicker from "../../../shared/components/inputs/DatePicker";
 
 import {
   WALLET_TYPES,
-  USER_TYPES,
+  USER_ROLES,
   UNIT_CUSTOMER_TYPES,
 } from "../../../constants/system";
 
@@ -70,10 +70,10 @@ function UnitForm({ formType }) {
   });
   const { data: allRoomTypes = [] } = useGetAllRoomTypesQuery();
   const { data: allOwners = [] } = useGetAllUsersByRoleQuery(
-    USER_TYPES.unitOwner
+    USER_ROLES.unitOwner
   );
   const { data: allTenants = [] } = useGetAllUsersByRoleQuery(
-    USER_TYPES.unitTenant
+    USER_ROLES.unitTenant
   );
   const [addUnit] = useAddUnitMutation();
   const [updateUnit] = useUpdateUnitMutation();

@@ -15,7 +15,7 @@ import Autocomplete from "../../../shared/components/inputs/Autocomplete";
 
 import useDebouncedEffect from "../../../shared/hooks/useDebouncedEffect";
 
-import { USER_TYPES } from "../../../constants/system";
+import { USER_ROLES } from "../../../constants/system";
 
 function PropertiesFilters() {
   const { t } = useTranslation("properties");
@@ -29,7 +29,7 @@ function PropertiesFilters() {
 
   const { data: allPropertyTypes = [] } = useGetAllPropertyTypesQuery();
   const { data: allAreaManagers = [] } = useGetAllUsersByRoleQuery(
-    USER_TYPES.areaManager
+    USER_ROLES.areaManager
   );
   const { data: allCities = [] } = useGetAllUsedCitiesQuery(companyID);
   const allServices = [];
