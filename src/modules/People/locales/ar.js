@@ -27,6 +27,10 @@ const ar = {
     assignOptionalPropertyLabel:"هذا العضو لم يتم تعينه علي  اي عقار ",
     assignProperty:"عين عقار",
 
+    requiredField: "هذا الحقل مطلوب",
+    invalidEmailFormat:"هذا البريد غير صالح",
+    invalidPhoneNumber:"رقم الهاتف غير صالح",
+
 
 
 

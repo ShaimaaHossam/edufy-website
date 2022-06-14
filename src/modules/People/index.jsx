@@ -4,10 +4,14 @@ import TeamMembers from "./views/TeamMembers";
 import TeamMembersForm from "./views/TeamMembersForm";
 
 function PeopleRoot() {
+  const { teamID } = useParams();
+
   return (
     <Routes>
       <Route index element={<TeamMembers />} />
-      <Route path="add" element={<TeamMembersForm formType="add" />} />
+      <Route path="team/add" element={<TeamMembersForm formType="add" />} />
+      <Route path="team/edit/:teamID" element={<TeamMembersForm formType="add" />} />
+      <Route path="team/clone/:teamID" element={<TeamMembersForm formType="add" />} />
 
       <Route path="*" element={<NotFound />} />
 

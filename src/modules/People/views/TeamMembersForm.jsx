@@ -2,6 +2,13 @@ import { useState } from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
 
+import { useSelector, useDispatch } from "react-redux";
+import { peopleSelector, setPeopleFilters } from "../state";
+
+import { useGetAllRolesByUserTypeQuery } from "../../../redux/services/roles";
+import { useGetPropertiesListQuery } from "../../../redux/services/properties";
+import { useAddTeamMemberMutation } from "../../../redux/services/people";
+
 import { useTranslation } from "react-i18next";
 
 import { useFormik } from "formik";
@@ -26,27 +33,45 @@ import Radio from "../../../shared/components/inputs/Radio";
 import NumberInput from "../../../shared/components/inputs/NumberInput";
 import { mdiPlusCircleOutline } from "@mdi/js";
 
+import { USER_TYPES } from "../../../constants/global";
+
 function TeamMembersForm({ formType }) {
   const { t } = useTranslation("people");
   const [propertyShown, setPropertyShown] = useState(true);
 
+  const navigate = useNavigate();
+
+  const [addTeamMember] = useAddTeamMemberMutation();
+
+  const { data: listProperties } = useGetPropertiesListQuery();
+  const { data: allRoles } = useGetAllRolesByUserTypeQuery(
+    USER_TYPES.teamMember
+  );
   const formik = useFormik({
-    validateOnMount: false,
-    validateOnBlur: false,
-    validateOnChange: true,
     initialValues: {
-      title: "",
+      name: "",
       email: "",
       phone: "",
+      role: "",
       wallet_amount: null,
-      property_name: "",
+      monthly_cap: "",
+      user_type: USER_TYPES.teamMember,
+      property_ids: "",
     },
-    validationSchema: Yup.object().shape({}),
-    onSubmit: async (values) => {
-      console.log("values", values);
-    },
-  });
 
+    validationSchema: Yup.object({
+      name: Yup.string().required(t("requiredField")),
+      email: Yup.string()
+        .email(t("invalidEmailFormat"))
+        .required(t("requiredField")),
+      phone: Yup.string()
+        .max(10, t("invalidPhoneNumber"))
+        .required(t("requiredField")),
+      role: Yup.string().required(t("requiredField")),
+      wallet_amount: Yup.number().required(t("requiredField")),
+      monthly_cap: Yup.number().required(t("requiredField")),
+    }),
+  });
   return (
     <Grid container spacing={2} direction="column">
       <Grid item>
@@ -80,14 +105,14 @@ function TeamMembersForm({ formType }) {
               <Grid item xs={12}>
                 <TextInput
                   required
-                  name="title"
+                  name="name"
                   label={t("name")}
                   type="text"
-                  value={formik.values.title}
+                  value={formik.values.name}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  error={formik.touched.title && !!formik.errors.title}
-                  helperText={formik.touched.title && formik.errors.title}
+                  error={formik.touched.name && !!formik.errors.name}
+                  helperText={formik.touched.name && formik.errors.name}
                 />
               </Grid>
 
@@ -125,6 +150,30 @@ function TeamMembersForm({ formType }) {
                   {t("teamMemberRole")}
                 </Typography>
               </Grid>
+
+              <Grid item xs={12} my={-1}>
+                <FormControl>
+                  <RadioGroup
+                    column
+                    name="role"
+                    aria-labelledby="radio-group-label"
+                    value={formik.values.role}
+                    onChange={(_, value) => formik.setFieldValue("role", value)}
+                  >
+                    {allRoles?.map((role) => {
+                      return (
+                        <Grid item key={role.name}>
+                          <FormControlLabel
+                            label={role.name}
+                            value={role.name}
+                            control={<Radio />}
+                          />
+                        </Grid>
+                      );
+                    })}
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
             </Grid>
 
             <Grid item container spacing={3}>
@@ -141,18 +190,18 @@ function TeamMembersForm({ formType }) {
               <Grid item xs={12}>
                 <NumberInput
                   required
-                  name="wallet_amount"
+                  name="monthly_cap"
                   label={t("walletBalance")}
                   unit={t("sr")}
-                  value={formik.values.wallet_amount}
+                  value={formik.values.monthly_cap}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   error={
-                    formik.touched.wallet_amount &&
-                    !!formik.errors.wallet_amount
+                    formik.touched.monthly_cap &&
+                    !!formik.errors.monthly_cap
                   }
                   helperText={
-                    formik.touched.wallet_amount && formik.errors.wallet_amount
+                    formik.touched.monthly_cap && formik.errors.monthly_cap
                   }
                 />
               </Grid>
@@ -167,7 +216,7 @@ function TeamMembersForm({ formType }) {
 
               {propertyShown ? (
                 <Grid item width="100%">
-                    <Typography component="p" variant="p" color="text.secondary">
+                  <Typography component="p" variant="p" color="text.secondary">
                     {t("assignOptionalPropertyLabel")}
                   </Typography>
                   <Link to="" onClick={() => setPropertyShown(!propertyShown)}>
@@ -178,26 +227,29 @@ function TeamMembersForm({ formType }) {
                       shape="rounded"
                       variant="contained"
                     />
-                    <span style={{ marginLeft: 5 }}>{t("assignProperty")}</span>
+                    <Typography  component="span" ml={2}>{t("assignProperty")}</Typography>
                   </Link>
                 </Grid>
               ) : (
                 <Grid item width="100%">
                   <Autocomplete
-                    name="property_name"
+                    name="property_ids"
+                    isMulti={true}
                     label={t("property")}
                     noOptionsText={t("noTypes")}
-                    options={[]}
-                    value={formik.values.property_name}
+                    options={listProperties.map((type) => ({
+                      value: type.id,
+                      label: type.title,
+                    }))}
+                    value={formik.values.property_ids}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={
-                      formik.touched.property_name &&
-                      !!formik.errors.property_name
+                      formik.touched.property_ids &&
+                      !!formik.errors.property_ids
                     }
                     helperText={
-                      formik.touched.property_name &&
-                      formik.errors.property_name
+                      formik.touched.property_ids && formik.errors.property_ids
                     }
                   />
                 </Grid>
@@ -205,7 +257,13 @@ function TeamMembersForm({ formType }) {
             </Grid>
 
             <Grid item alignSelf="flex-end">
-              <Button type="submit" color="primary">
+              <Button
+                color="primary"
+                onClick={() => {
+                  addTeamMember(formik.values);
+                  navigate("/people")
+                }}
+              >
                 {t("createUser")}
               </Button>
             </Grid>

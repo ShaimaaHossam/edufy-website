@@ -29,7 +29,12 @@ const en = {
     
 
 
-    createUser:"Create User"
+    createUser:"Create User",
+
+    requiredField: "This field is required",
+    invalidEmailFormat:"Invalid email formait",
+    invalidPhoneNumber:"Invalid phone number",
+
 
 };
 

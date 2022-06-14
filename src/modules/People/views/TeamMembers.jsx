@@ -60,7 +60,7 @@ function TeamMembers() {
               <Button
                 startIcon={<Icon icon={mdiPlus} />}
                 component={Link}
-                to="/people/add"
+                to="/people/team/add"
               >
                 {t("newUser")}
               </Button>
