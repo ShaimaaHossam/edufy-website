@@ -23,7 +23,6 @@ function UnitsFilters() {
   const { unitsFilters } = useSelector(propertiesSelector);
 
   const { data: allUnitTypes = [] } = useGetAllUnitTypesQuery(propertyID);
-  const allServices = [];
 
   const formik = useFormik({
     validateOnMount: false,
@@ -44,7 +43,6 @@ function UnitsFilters() {
           ...unitsFilters,
           page: "1",
           "filter[unit_type_id]": values.unit_type_id,
-          "filter[service_id]": values.service_id,
           "filter[status]": values.status,
         })
       );
@@ -70,24 +68,6 @@ function UnitsFilters() {
           }))}
           noOptionsText={t("noTypes")}
           value={formik.values.unit_type_id}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-      </Grid>
-
-      <Grid item xs={3}>
-        <Autocomplete
-          size="small"
-          name="service_id"
-          label={t("byService")}
-          isMulti
-          limitTags={1}
-          options={allServices.map((service) => ({
-            value: service.id,
-            label: service.title,
-          }))}
-          noOptionsText={t("noServices")}
-          value={formik.values.service_id}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
