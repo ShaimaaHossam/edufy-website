@@ -38,7 +38,7 @@ import LocationInput from "../../../shared/components/inputs/LocationInput";
 import Radio from "../../../shared/components/inputs/Radio";
 import NumberInput from "../../../shared/components/inputs/NumberInput";
 
-import { WALLET_TYPES, USER_TYPES } from "../../../constants/system";
+import { WALLET_TYPES, USER_ROLES } from "../../../constants/system";
 
 import { getDeviceLocation } from "../../../helpers/maps";
 
@@ -56,10 +56,10 @@ function PropertyForm({ formType }) {
 
   const { data: allCities = [] } = useGetAllCitiesQuery();
   const { data: allPropertyManagers = [] } = useGetAllUsersByRoleQuery(
-    USER_TYPES.propertyManager
+    USER_ROLES.propertyManager
   );
   const { data: allAreaManagers = [] } = useGetAllUsersByRoleQuery(
-    USER_TYPES.areaManager
+    USER_ROLES.areaManager
   );
 
   const formik = useFormik({
