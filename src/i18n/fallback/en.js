@@ -17,6 +17,7 @@ const en = {
     "It seems something has been broken, we are working on it now.",
 
   confirm: "Confirm",
+  cancel: "Cancel",
   go_back: "Go Back",
   english: "English",
   arabic: "العربية",
