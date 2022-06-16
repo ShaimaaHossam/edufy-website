@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { USER_TYPES } from "../../../constants/global";
 
 export const peopleSlice = createSlice({
   name: "people",
@@ -9,19 +10,19 @@ export const peopleSlice = createSlice({
       "filter[user_type]": "customer"
     },
     teamMembersFilters: {
-      page: 1,
-      perPage: 20,
-      "filter[user_type]": "team_member"
-      
+      "filter[user_type]": USER_TYPES.teamMember
     },
   },
   reducers: {
     setPeopleFilters: (state, { payload }) => {
       state.peopleFilters = payload;
     },
+    setTeamMembersFilters: (state, {payload})=>{
+      state.teamMembersFilters = payload;
+    }
   },
 });
 
-export const { setPeopleFilters } = peopleSlice.actions;
+export const { setPeopleFilters, setTeamMembersFilters } = peopleSlice.actions;
 
 export const peopleSelector = (state) => state.people;

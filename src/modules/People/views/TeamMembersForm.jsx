@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -7,7 +7,11 @@ import { peopleSelector, setPeopleFilters } from "../state";
 
 import { useGetAllRolesByUserTypeQuery } from "../../../redux/services/roles";
 import { useGetPropertiesListQuery } from "../../../redux/services/properties";
-import { useAddTeamMemberMutation } from "../../../redux/services/people";
+import {
+  useAddTeamMemberMutation,
+  useUpdateUser1Mutation,
+  useGetUserQuery,
+} from "../../../redux/services/people";
 
 import { useTranslation } from "react-i18next";
 
@@ -37,11 +41,16 @@ import { USER_TYPES } from "../../../constants/global";
 
 function TeamMembersForm({ formType }) {
   const { t } = useTranslation("people");
-  const [propertyShown, setPropertyShown] = useState(true);
 
+  const { teamMemberID } = useParams();
+
+  const [propertyShown, setPropertyShown] = useState(true);
   const navigate = useNavigate();
 
+  const { isFetching, data: user } = useGetUserQuery(teamMemberID, { skip: !teamMemberID });
+
   const [addTeamMember] = useAddTeamMemberMutation();
+  const [updateUser1] = useUpdateUser1Mutation();
 
   const { data: listProperties } = useGetPropertiesListQuery();
   const { data: allRoles } = useGetAllRolesByUserTypeQuery(
@@ -53,7 +62,6 @@ function TeamMembersForm({ formType }) {
       email: "",
       phone: "",
       role: "",
-      wallet_amount: null,
       monthly_cap: "",
       user_type: USER_TYPES.teamMember,
       property_ids: "",
@@ -68,17 +76,70 @@ function TeamMembersForm({ formType }) {
         .max(10, t("invalidPhoneNumber"))
         .required(t("requiredField")),
       role: Yup.string().required(t("requiredField")),
-      wallet_amount: Yup.number().required(t("requiredField")),
       monthly_cap: Yup.number().required(t("requiredField")),
     }),
+    onSubmit: async (values, { setErrors }) => {
+      if (formType === "add" || formType === "clone") {
+        addTeamMember(values)
+          .unwrap()
+          .then(() => navigate("/people"))
+          .catch(({ data: { errors } }) => setErrors(errors));
+      }
+
+      if (formType === "edit") {
+        const { email, phone, name, ...formData } = values;
+        if (email !== user.email) {
+          Object.assign(formData, { email: email });
+        }
+        if (phone !== user.phone) {
+          Object.assign(formData, { phone: phone });
+        }
+        if (name !== user.name) {
+          Object.assign(formData, { name: name });
+        }
+        updateUser1({ id: user.id, formData })
+          .unwrap()
+          .then((data) => navigate(`/people/team/edit/${data.id}`))
+          .catch(({ data: { errors } }) => setErrors(errors));
+      }
+    },
   });
+
+  const { setValues } = formik;
+
+  useEffect(() => {
+    if (formType === "add" || isFetching || !user) return;
+
+    setValues({
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      role: user.role,
+      monthly_cap: user.monthly_cap,
+      user_type: USER_TYPES.teamMember,
+      property_ids: user.property_ids,
+    });
+
+    if (formType === "clone") {
+      setValues({
+        name: "",
+        email: "",
+        phone: "",
+        role: user.role,
+        monthly_cap: user.monthly_cap,
+        user_type: USER_TYPES.teamMember,
+        property_ids: user.property_ids,
+      });
+    }
+  }, [formType, isFetching, user, setValues]);
+
   return (
     <Grid container spacing={2} direction="column">
       <Grid item>
         <Breadcrumbs items={[{ label: t("people"), url: "/people" }]} />
 
         <Typography component="h1" variant="h5">
-          {t(`${formType}PeopleFormTitle`)}
+          {t(`${formType}TeamMembersFormTitle`)}
         </Typography>
       </Grid>
 
@@ -197,8 +258,7 @@ function TeamMembersForm({ formType }) {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   error={
-                    formik.touched.monthly_cap &&
-                    !!formik.errors.monthly_cap
+                    formik.touched.monthly_cap && !!formik.errors.monthly_cap
                   }
                   helperText={
                     formik.touched.monthly_cap && formik.errors.monthly_cap
@@ -227,7 +287,9 @@ function TeamMembersForm({ formType }) {
                       shape="rounded"
                       variant="contained"
                     />
-                    <Typography  component="span" ml={2}>{t("assignProperty")}</Typography>
+                    <Typography component="span" ml={2}>
+                      {t("assignProperty")}
+                    </Typography>
                   </Link>
                 </Grid>
               ) : (
@@ -258,13 +320,10 @@ function TeamMembersForm({ formType }) {
 
             <Grid item alignSelf="flex-end">
               <Button
-                color="primary"
-                onClick={() => {
-                  addTeamMember(formik.values);
-                  navigate("/people")
-                }}
+                color={formType === "edit" ? "success" : "primary"}
+                type="submit"
               >
-                {t("createUser")}
+                {formType === "edit" ? t("saveChanges") : t("createUser")}
               </Button>
             </Grid>
           </Grid>

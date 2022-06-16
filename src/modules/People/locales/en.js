@@ -4,6 +4,7 @@ const en = {
     newUser:"New User",
 
     searchUser:"Search User",
+    byUserRole:"By User Role",
     user:"User",
 
     name:"Name",
@@ -14,6 +15,10 @@ const en = {
     actions:"Actions",
 
     addPeopleFormTitle:"Add Team Member",
+
+    addTeamMembersFormTitle:"Add Team Member",
+    cloneTeamMembersFormTitle:"Clone  Team Member",
+    editTeamMembersFormTitle:"Edit Team Member",
 
     teamMemberInformation:"Team member information",
     name:"Member Name",
@@ -26,14 +31,13 @@ const en = {
     assignOptionalProperty:"Assign to Property (Optional)",
     assignOptionalPropertyLabel:"This team meamber haven't been assigned property",
     assignProperty:"Assign Property",
-    
-
-
-    createUser:"Create User",
 
     requiredField: "This field is required",
     invalidEmailFormat:"Invalid email formait",
     invalidPhoneNumber:"Invalid phone number",
+
+    createUser:"Create User",
+    saveChanges:"Save Changes",
 
 
 };

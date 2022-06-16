@@ -1,9 +1,12 @@
 const ar = {
     people:"المستخدمين",
     teamMembers:"اعضاء الفريق",
+    
     newUser:"اضف عضوا جديد",
 
+
     searchUser:"ابحث عن مستخدم",
+    byUserRole:"البحث من خلال دور المستخدم",
     user:"مستخدم",
 
     name:"الاسم ",
@@ -14,6 +17,10 @@ const ar = {
     action:"الخيارات",
 
     addPeopleFormTitle:"اضف عضو للفريق ",
+    
+    addTeamMembersFormTitle:"اضف عضو للفريق",
+    cloneTeamMembersFormTitle:"استنسخ عضو من الفريق",
+    editTeamMembersFormTitle:"تعديل عضو في الفريق",
 
     teamMemberInformation:"معلومات عن عضو الفريق",
     name:"اسم العضو",
@@ -37,7 +44,8 @@ const ar = {
 
 
 
-    createUser:"انشأ مستخدم جديد"
+    createUser:"انشأ مستخدم جديد",
+    saveChanges:"احفظ التغيرات",
 
 
 

@@ -1,11 +1,11 @@
+import { useEffect } from "react";
+
 import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { peopleSelector, setPeopleFilters } from "../state";
+import { peopleSelector, setTeamMembersFilters } from "../state";
 
-import {
-  useGetUsersQuery,
-} from "../../../redux/services/people";
+import { useGetUsersQuery } from "../../../redux/services/people";
 
 import { useTranslation } from "react-i18next";
 
@@ -17,13 +17,34 @@ import IconButton from "../../../shared/components/IconButton";
 import Link from "../../../shared/components/Link";
 import Switch from "../../../shared/components/inputs/Switch";
 
+import { USER_TYPES } from "../../../constants/global";
+
 import NoContent from "../../../shared/views/NoContent";
 
-function TeamMembersTable() {
+function TeamMembersTable({ userRole }) {
   const { t } = useTranslation("people");
+  
+  const dispatch = useDispatch();
+
+
   const { teamMembersFilters } = useSelector(peopleSelector);
+  
+  useEffect(()=>{
+    if (userRole) {
+      dispatch(setTeamMembersFilters({
+        ...teamMembersFilters,
+        "filter[role]":userRole
+      }))
+    }
+    else{
+      dispatch(setTeamMembersFilters({
+        "filter[user_type]": USER_TYPES.teamMember
+      }))
+    }
+  },[userRole])
 
   const { isLoading, data: teamMembers } = useGetUsersQuery(teamMembersFilters);
+
 
   const tableLabels = [
     t("name"),
@@ -45,7 +66,7 @@ function TeamMembersTable() {
         {item.role}
       </Typography>,
       <Typography component="span" variant="body2">
-        {item.properties.length ? item.properties[0] : "-"}
+        {/* {item.properties.length ? item.properties[0] : "-"} */}
       </Typography>,
       <Typography component="span" variant="body2">
         {item.email}
