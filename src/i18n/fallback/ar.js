@@ -16,6 +16,7 @@ const ar = {
 
   confirm: "تأكيد",
   go_back: "رجوع",
+  cancel: "إلغاء",
   english: "English",
   arabic: "العربية",
 

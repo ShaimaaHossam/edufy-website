@@ -48,6 +48,10 @@ export const propertiesAPI = createApi({
       invalidatesTags: (res, error, { id }) =>
         res ? [{ type: "PROPERTY", id }] : [],
     }),
+    getAllProperties: build.query({
+      query: () => ({ url: "/properties", params: { listing: "1" } }),
+      transformResponse: (res) => res.data,
+    }),
     getAllPropertyTypes: build.query({
       query: () => ({ url: "/properties/types", params: { listing: "1" } }),
       transformResponse: (res) => res.data,
@@ -100,6 +104,13 @@ export const propertiesAPI = createApi({
       invalidatesTags: (res, error, { id }) =>
         res ? [{ type: "UNIT", id }] : [],
     }),
+    getAllUnits: build.query({
+      query: (queryParams) => ({
+        url: "/units",
+        params: { listing: "1", ...queryParams },
+      }),
+      transformResponse: (res) => res.data,
+    }),
     getAllUnitTypes: build.query({
       query: (propertyID) => ({
         url: `/units/types/${propertyID}`,
@@ -128,6 +139,7 @@ export const {
   useGetPropertyQuery,
   useAddPropertyMutation,
   useUpdatePropertyMutation,
+  useGetAllPropertiesQuery,
   useGetAllPropertyTypesQuery,
   useGetAllPropertySubtypesQuery,
 
@@ -135,6 +147,7 @@ export const {
   useGetUnitQuery,
   useAddUnitMutation,
   useUpdateUnitMutation,
+  useGetAllUnitsQuery,
   useGetAllUnitTypesQuery,
   useGetAllRoomTypesQuery,
   useDeleteRoomMutation,

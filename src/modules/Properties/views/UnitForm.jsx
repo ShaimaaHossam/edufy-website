@@ -1,4 +1,4 @@
-import { useEffect, Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 
 import { useParams, useLocation, useNavigate } from "react-router-dom";
@@ -33,10 +33,13 @@ import { mdiPlusCircleOutline, mdiDeleteOutline } from "@mdi/js";
 import { endOfToday } from "date-fns";
 import { formatDate } from "../../../helpers/datetime";
 
+import useNavigationBlocker from "../../../shared/hooks/useNavigationBlocker";
+
 import AccessDenied from "../../../shared/views/AccessDenied";
 import NotFound from "../../../shared/views/NotFound";
 
 import Loader from "../../../shared/components/Loader";
+import Dialog from "../../../shared/components/Dialog";
 import Breadcrumbs from "../../../shared/components/Breadcrumbs";
 import Link from "../../../shared/components/Link";
 import Icon from "../../../shared/components/Icon";
@@ -204,7 +207,7 @@ function UnitForm({ formType }) {
   });
 
   const {
-    setValues,
+    resetForm,
     setFieldValue,
     values: { wallet_type_id: walletType },
   } = formik;
@@ -216,33 +219,35 @@ function UnitForm({ formType }) {
   }, [walletType, setFieldValue]);
 
   useEffect(() => {
-    if (formType !== "add" || !property) return;
-
-    setFieldValue("wallet_type_id", property.wallet_type_id);
-  }, [formType, property, setFieldValue]);
-
-  useEffect(() => {
     if (formType === "add" || !unit || !property) return;
 
-    setValues({
-      property_id: property.id,
-      title: unit.title,
-      unit_type_id: unit.unit_type.id,
-      floor: unit.floor,
-      size: unit.size,
-      rooms: unit.rooms,
-      wallet_type_id:
-        property.wallet_type_id === WALLET_TYPES.restricted &&
-        unit.wallet_type_id === WALLET_TYPES.unlimited
-          ? property.wallet_type_id
-          : unit.wallet_type_id,
-      wallet_amount: unit.wallet_amount || null,
+    resetForm({
+      values: {
+        property_id: property.id,
+        title: unit.title,
+        unit_type_id: unit.unit_type.id,
+        floor: unit.floor,
+        size: unit.size,
+        rooms: unit.rooms,
+        wallet_type_id:
+          property.wallet_type_id === WALLET_TYPES.restricted &&
+          unit.wallet_type_id === WALLET_TYPES.unlimited
+            ? property.wallet_type_id
+            : unit.wallet_type_id,
+        wallet_amount: unit.wallet_amount || null,
 
-      customer_type_id: unit.customer_type_id,
-      customer_id: unit.customer?.id,
-      expiry_date: !!unit.expiry_date ? new Date(unit.expiry_date) : null,
+        customer_type_id: unit.customer_type_id,
+        customer_id: unit.customer?.id,
+        expiry_date: !!unit.expiry_date ? new Date(unit.expiry_date) : null,
+      },
     });
-  }, [formType, unit, property, setValues]);
+  }, [formType, unit, property, resetForm]);
+
+  const [leaveConfirmed, setLeaveConfirmed] = useState(false);
+  const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
+  useNavigationBlocker(formik.dirty && !leaveConfirmed, () =>
+    setLeaveDialogOpen(true)
+  );
 
   const addRoom = () => {
     const newRooms = [
@@ -803,6 +808,19 @@ function UnitForm({ formType }) {
           </Grid>
         </Paper>
       </Grid>
+
+      <Dialog
+        size="small"
+        open={leaveDialogOpen}
+        title={t("discardChanges")}
+        titleColor="error"
+        confirmLabel={t("discard")}
+        confirmColor="error"
+        onClose={() => setLeaveDialogOpen(false)}
+        onConfirm={() => setLeaveConfirmed(true)}
+      >
+        {t("unitFormLeaveMessage")}
+      </Dialog>
     </Grid>
   );
 }

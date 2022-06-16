@@ -123,6 +123,11 @@ const ar = {
     "الحد الأقصى للنفقات الشهرية يجب أن يكون أكثر من ١٠٠٠ وأقل من {{amount}}",
   invalidDate: "التاريخ غير صحيح",
   startFromTomorrow: "التاريخ يجب أن يبدأ من الغد",
+
+  discard: "تجاوز",
+  discardChanges: "تجاوز التعديلات",
+  propertyFormLeaveMessage: "هل تريد تجاوز التعديلات على العقار؟",
+  unitFormLeaveMessage: "هل تريد تجاوز التعديلات على الوحدة؟",
 };
 
 export default ar;

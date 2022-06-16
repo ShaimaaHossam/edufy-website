@@ -80,14 +80,8 @@ function makeTheme({ lang }) {
       },
       shadows: [
         "none",
-        "0px 2px 8px #ADB5D12B",
-        "0px 2px 8px #ADB5D12B",
-        "0px 2px 8px #ADB5D12B",
-        "0px 2px 8px #ADB5D12B",
-        "0px 2px 8px #ADB5D12B",
-        "0px 2px 8px #ADB5D12B",
-        "0px 2px 8px #ADB5D12B",
-        "0px 2px 8px #ADB5D12B",
+        ...Array.from({ length: 23 }).fill("0px 2px 8px #ADB5D12B"),
+        "0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)",
       ],
 
       // MUI components overrides
@@ -174,6 +168,22 @@ function makeTheme({ lang }) {
               textTransform: "none",
               "@media (max-width: 600px)": {
                 minWidth: 80,
+              },
+            },
+          },
+        },
+        MuiChip: {
+          styleOverrides: {
+            outlined: {
+              position: "relative",
+              "::before": {
+                content: "''",
+                width: "100%",
+                height: "100%",
+                backgroundColor: "currentColor",
+                opacity: "0.07",
+                position: "absolute",
+                borderRadius: "inherit",
               },
             },
           },

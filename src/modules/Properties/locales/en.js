@@ -123,6 +123,12 @@ const en = {
     "Max. spendings should be more than 1000 and less than {{amount}}",
   invalidDate: "Invalid date",
   startFromTomorrow: "Date should start from tomorrow",
+
+  discard: "Discard",
+  discardChanges: "Discard Changes",
+  propertyFormLeaveMessage:
+    "Are you sure you want to discard property changes?",
+  unitFormLeaveMessage: "Are you sure you want to discard unit changes?",
 };
 
 export default en;
