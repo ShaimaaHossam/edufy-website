@@ -30,12 +30,23 @@ export const peopleAPI = createApi({
         url: "/peoples",
         params: { ...userType},
       }),
-      transformResponse: (res) => res.data,
+      transformResponse: (res) => ({
+        data: res.data,
+        meta: res.meta,
+      }),
     }),
 
  
-
     addTeamMember: build.mutation({
+      query: (data) => ({
+        url: "/peoples/create",
+        method: "POST",
+        body: data,
+      }),
+      transformResponse: (res) => res.data,
+    }),
+
+    addCustomer: build.mutation({
       query: (data) => ({
         url: "/peoples/create",
         method: "POST",
@@ -51,11 +62,13 @@ export const peopleAPI = createApi({
     }),
 
     updateUser1: build.mutation({
-      query: ({ id, formData }) => ({
+      query: ({ id, formData }) =>{ 
+        console.log("formData", formData)
+        return ({
         url: `/peoples/update/${id}`,
         method: "PATCH",
         body: formData,
-      }),
+      })},
       transformResponse: (res) => res.data,
     }),
 
@@ -67,6 +80,7 @@ export const {
   useGetAllUsersByRoleQuery,
   useGetUsersQuery,
   useAddTeamMemberMutation,
+  useAddCustomerMutation,
   useGetUserQuery,
   useUpdateUser1Mutation
 } = peopleAPI;

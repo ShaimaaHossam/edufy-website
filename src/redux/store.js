@@ -5,6 +5,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { propertiesAPI } from "./services/properties";
 import { peopleAPI } from "./services/people";
 import { rolesAPI } from "./services/roles";
+import { unitsAPI } from "./services/units";
 import { generalAPI } from "./services/general";
 
 import { authSlice } from "./slices/auth";
@@ -18,6 +19,7 @@ export const store = configureStore({
     [propertiesAPI.reducerPath]: propertiesAPI.reducer,
     [peopleAPI.reducerPath]: peopleAPI.reducer,
     [rolesAPI.reducerPath]: rolesAPI.reducer,
+    [unitsAPI.reducerPath]: unitsAPI.reducer,
     [generalAPI.reducerPath]: generalAPI.reducer,
 
     [authSlice.name]: authSlice.reducer,
@@ -31,6 +33,7 @@ export const store = configureStore({
       propertiesAPI.middleware,
       peopleAPI.middleware,
       rolesAPI.middleware,
+      unitsAPI.middleware,
       generalAPI.middleware,
     ]),
 });

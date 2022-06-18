@@ -6,9 +6,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { peopleSelector, setPeopleFilters } from "../state";
 
 import { useGetAllRolesByUserTypeQuery } from "../../../redux/services/roles";
+import { useGetAllUnitsByUserTypeQuery } from "../../../redux/services/units";
 import { useGetPropertiesListQuery } from "../../../redux/services/properties";
 import {
-  useAddTeamMemberMutation,
+  useAddCustomerMutation,
   useUpdateUser1Mutation,
   useGetUserQuery,
 } from "../../../redux/services/people";
@@ -42,34 +43,27 @@ import { mdiPlusCircleOutline, mdiAlertCircle } from "@mdi/js";
 
 import { USER_TYPES } from "../../../constants/global";
 
-function TeamMembersForm({ formType }) {
+function CustomersForm({ formType }) {
   const { t } = useTranslation("people");
 
-  const { teamMemberID } = useParams();
+  const { customerID } = useParams();
 
   const [propertyShown, setPropertyShown] = useState(true);
   const navigate = useNavigate();
 
-  const { isFetching, data: user } = useGetUserQuery(teamMemberID, {
-    skip: !teamMemberID,
-  });
-
-  const [addTeamMember] = useAddTeamMemberMutation();
+  const [addCustomer] = useAddCustomerMutation();
   const [updateUser1] = useUpdateUser1Mutation();
 
-  const { data: listProperties } = useGetPropertiesListQuery();
-  const { data: allRoles } = useGetAllRolesByUserTypeQuery(
-    USER_TYPES.teamMember
-  );
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
       phone: "",
       role: "",
-      monthly_cap: "",
-      user_type: USER_TYPES.teamMember,
+      user_type: USER_TYPES.customer,
       property_ids: "",
+      unit_ids: [],
+      monthly_cap: 10,
     },
 
     validationSchema: Yup.object({
@@ -81,18 +75,19 @@ function TeamMembersForm({ formType }) {
         .min(10, t("invalidPhoneNumber"))
         .required(t("requiredField")),
       role: Yup.string().required(t("requiredField")),
-      monthly_cap: Yup.number().required(t("requiredField")),
     }),
     onSubmit: async (values, { setErrors }) => {
       if (formType === "add" || formType === "clone") {
-        addTeamMember(values)
+        const { property_ids, ...formData } = values;
+        addCustomer(formData)
           .unwrap()
           .then(() => navigate("/people"))
           .catch(({ data: { errors } }) => setErrors(errors));
       }
 
       if (formType === "edit") {
-        const { email, phone, name, ...formData } = values;
+        const { email, phone, name,property_ids, ...formData } = values;
+        console.log("formData", formData)
         if (email !== user.email) {
           Object.assign(formData, { email: email });
         }
@@ -112,6 +107,23 @@ function TeamMembersForm({ formType }) {
 
   const { setValues } = formik;
 
+  const { data: listProperties = [] } = useGetPropertiesListQuery();
+
+  const { data: allRoles = [] } = useGetAllRolesByUserTypeQuery(
+    USER_TYPES.customer
+  );
+
+  const { data: allUnits = [] } = useGetAllUnitsByUserTypeQuery(
+    formik.values.property_ids,
+    { skip: !formik.values.property_ids }
+  );
+
+  console.log("unit_ids",  formik.values.unit_ids)
+  const { isFetching, data: user } = useGetUserQuery(customerID, {
+    skip: !customerID,
+  });
+
+
   useEffect(() => {
     if (formType === "add" || isFetching || !user) return;
 
@@ -120,9 +132,10 @@ function TeamMembersForm({ formType }) {
       email: user.email,
       phone: user.phone,
       role: user.role,
-      monthly_cap: user.monthly_cap,
-      user_type: USER_TYPES.teamMember,
+      user_type: USER_TYPES.customer,
+      unit_ids: user.unit_ids,
       property_ids: user.property_ids,
+
     });
 
     if (formType === "clone") {
@@ -131,14 +144,14 @@ function TeamMembersForm({ formType }) {
         email: "",
         phone: "",
         role: user.role,
-        monthly_cap: user.monthly_cap,
-        user_type: USER_TYPES.teamMember,
+        user_type: USER_TYPES.customer,
+        unit_ids: user.unit_ids,
         property_ids: user.property_ids,
+        monthly_cap: 10,
+
       });
     }
   }, [formType, isFetching, user, setValues]);
-
-  console.log("property_ids", formik.values.property_ids)
 
   return (
     <Grid container spacing={2} direction="column">
@@ -146,7 +159,7 @@ function TeamMembersForm({ formType }) {
         <Breadcrumbs items={[{ label: t("people"), url: "/people" }]} />
 
         <Typography component="h1" variant="h5">
-          {t(`${formType}TeamMembersFormTitle`)}
+          {t(`${formType}CustomersFormTitle`)}
         </Typography>
       </Grid>
 
@@ -166,7 +179,7 @@ function TeamMembersForm({ formType }) {
             <Grid item container spacing={3}>
               <Grid item xs={12}>
                 <Typography component="h2" variant="h6">
-                  {t("teamMemberInformation")}
+                  {t("customerInformation")}
                 </Typography>
               </Grid>
 
@@ -174,7 +187,7 @@ function TeamMembersForm({ formType }) {
                 <TextInput
                   required
                   name="name"
-                  label={t("name")}
+                  label={t("customerName")}
                   type="text"
                   value={formik.values.name}
                   onChange={formik.handleChange}
@@ -215,7 +228,7 @@ function TeamMembersForm({ formType }) {
             <Grid item container spacing={3}>
               <Grid item xs={12}>
                 <Typography component="h2" variant="h6">
-                  {t("teamMemberRole")}
+                  {t("customerRole")}
                 </Typography>
               </Grid>
 
@@ -236,7 +249,7 @@ function TeamMembersForm({ formType }) {
                             value={role.name}
                             control={<Radio />}
                           />
-                          <Tooltip
+                           <Tooltip
                             title={
                               <Box padding={2}>
                                 {role.permissions.map((per) => {
@@ -265,44 +278,13 @@ function TeamMembersForm({ formType }) {
             <Grid item container spacing={3}>
               <Grid item xs={12}>
                 <Typography component="h2" variant="h6">
-                  {t("monyhlyCap")}
-                </Typography>
-
-                <Typography component="p" variant="p" color="text.secondary">
-                  {t("adminApproval")}
+                  {t("assignUnitOptional")}
                 </Typography>
               </Grid>
-
-              <Grid item xs={12}>
-                <NumberInput
-                  required
-                  name="monthly_cap"
-                  label={t("walletBalance")}
-                  unit={t("sr")}
-                  value={formik.values.monthly_cap}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.monthly_cap && !!formik.errors.monthly_cap
-                  }
-                  helperText={
-                    formik.touched.monthly_cap && formik.errors.monthly_cap
-                  }
-                />
-              </Grid>
-            </Grid>
-
-            <Grid item container spacing={3}>
-              <Grid item xs={12}>
-                <Typography component="h2" variant="h6">
-                  {t("assignOptionalProperty")}
-                </Typography>
-              </Grid>
-
               {propertyShown ? (
                 <Grid item width="100%">
                   <Typography component="p" variant="p" color="text.secondary">
-                    {t("assignOptionalPropertyLabel")}
+                    {t("assignOptionalUnitLabel")}
                   </Typography>
                   <Link to="" onClick={() => setPropertyShown(!propertyShown)}>
                     <Icon
@@ -313,32 +295,61 @@ function TeamMembersForm({ formType }) {
                       variant="contained"
                     />
                     <Typography component="span" ml={2}>
-                      {t("assignProperty")}
+                      {t("assignUnit")}
                     </Typography>
                   </Link>
                 </Grid>
               ) : (
-                <Grid item width="100%">
-                  <Autocomplete
-                    name="property_ids"
-                    isMulti={true}
-                    label={t("property")}
-                    noOptionsText={t("noTypes")}
-                    options={listProperties.map((type) => ({
-                      value: type.id,
-                      label: type.title,
-                    }))}
-                    value={formik.values.property_ids}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={
-                      formik.touched.property_ids &&
-                      !!formik.errors.property_ids
-                    }
-                    helperText={
-                      formik.touched.property_ids && formik.errors.property_ids
-                    }
-                  />
+                <Grid item container spacing={3} r width="100%">
+                  <Grid item xs={12}>
+                    <Autocomplete
+                      name="property_ids"
+                      label={t("property")}
+                      noOptionsText={t("noTypes")}
+                      options={listProperties?.map((type) => ({
+                        value: type.id,
+                        label: type.title,
+                      }))}
+                      value={formik.values.property_ids}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched.property_ids &&
+                        !!formik.errors.property_ids
+                      }
+                      helperText={
+                        formik.touched.property_ids &&
+                        formik.errors.property_ids
+                      }
+                    />
+                  </Grid>
+
+                  {formik.values.property_ids && (
+                    <Grid item xs={12}>
+                      <Autocomplete
+                        name="unit_ids"
+                        isMulti={true}
+                        label={t("unitNama")}
+                        noOptionsText={t("noTypes")}
+                        options={allUnits?.map((type) => ({
+                          value: type.id,
+                          label: type.title,
+                        }))}
+                        value={formik.values.unit_ids}
+                        onChange={(e)=>{
+                          formik.setFieldValue("unit_ids", [...formik.values.unit_ids, e.target.value])
+                          console.log("e", formik.values.unit_ids)
+                        }}
+                        onBlur={formik.handleBlur}
+                        error={
+                          formik.touched.unit_ids && !!formik.errors.unit_ids
+                        }
+                        helperText={
+                          formik.touched.unit_ids && formik.errors.unit_ids
+                        }
+                      />
+                    </Grid>
+                  )}
                 </Grid>
               )}
             </Grid>
@@ -358,4 +369,4 @@ function TeamMembersForm({ formType }) {
   );
 }
 
-export default TeamMembersForm;
+export default CustomersForm;

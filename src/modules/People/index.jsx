@@ -1,20 +1,76 @@
 import { Routes, Route, useParams } from "react-router-dom";
 import NotFound from "../../shared/views/NotFound";
+
 import TeamMembers from "./views/TeamMembers";
 import TeamMembersForm from "./views/TeamMembersForm";
 
-function PeopleRoot() {
+import Customers from "./views/Customers";
+import CustomersForm from "./views/CustomersForm";
+
+import People from "./views/People";
+
+import { isUUIDValid } from "../../helpers/routing";
+
+const TeamMembersIDValidator = ({ children }) => {
   const { teamMemberID } = useParams();
 
+  return isUUIDValid(teamMemberID) ? children : <NotFound />;
+};
+
+const CustomersIDValidator = ({ children }) => {
+  const { customerID } = useParams();
+
+  return isUUIDValid(customerID) ? children : <NotFound />;
+};
+
+function PeopleRoot() {
   return (
     <Routes>
-      <Route index element={<TeamMembers />} />
+      <Route index element={<People />} />
+      <Route path="team" element={<TeamMembers />} />
+      <Route path="customers" element={<Customers />} />
+
       <Route path="team/add" element={<TeamMembersForm formType="add" />} />
-      <Route path="team/clone/:teamMemberID" element={<TeamMembersForm formType="clone" />} />
-      <Route path="team/edit/:teamMemberID" element={<TeamMembersForm formType="edit" />} />
+      
+      <Route
+        path="team/clone/:teamMemberID"
+        element={
+          <TeamMembersIDValidator>
+            <TeamMembersForm formType="clone" />
+          </TeamMembersIDValidator>
+        }
+      />
+
+      <Route
+        path="team/edit/:teamMemberID"
+        element={
+          <TeamMembersIDValidator>
+            <TeamMembersForm formType="edit" />
+          </TeamMembersIDValidator>
+        }
+      />
+
+      <Route path="customers/add" element={<CustomersForm formType="add" />} />
+
+      <Route
+        path="customers/clone/:customerID"
+        element={
+          <CustomersIDValidator>
+            <TeamMembersForm formType="clone" />
+          </CustomersIDValidator>
+        }
+      />
+
+      <Route
+        path="customers/edit/:customerID"
+        element={
+          <CustomersIDValidator>
+            <TeamMembersForm formType="edit" />
+          </CustomersIDValidator>
+        }
+      />
 
       <Route path="*" element={<NotFound />} />
-
     </Routes>
   );
 }

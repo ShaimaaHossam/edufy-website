@@ -1,8 +1,7 @@
 import { useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { peopleSelector, setTeamMembersFilters } from "../state";
-
+import { peopleSelector, setCustomerFilters } from "../state";
 
 import { useGetAllRolesByUserTypeQuery } from "../../../redux/services/roles";
 
@@ -19,19 +18,18 @@ import Link from "../../../shared/components/Link";
 import SearchInput from "../../../shared/components/inputs/SearchInput";
 import { mdiPlus } from "@mdi/js";
 
-import TeamMembersTable from "../components/TeamMembersTable";
+import CustomersTable from "../components/CustomersTable";
 
 import { USER_TYPES } from "../../../constants/global";
 
-function TeamMembers() {
+function Customers() {
   const { t } = useTranslation("people");
 
   const dispatch = useDispatch();
-  const { teamMembersFilters } = useSelector(peopleSelector);
-
+  const { customerFilters } = useSelector(peopleSelector);
 
   const { data: allRoles = [] } = useGetAllRolesByUserTypeQuery(
-    USER_TYPES.teamMember
+    USER_TYPES.customer
   );
 
   const formik = useFormik({
@@ -40,12 +38,11 @@ function TeamMembers() {
     },
   });
 
-
   return (
     <Grid container spacing={2} direction="column">
       <Grid item>
         <Typography component="h1" variant="h5">
-          {t("teamMembers")}
+          {t("customers")}
         </Typography>
       </Grid>
 
@@ -53,13 +50,14 @@ function TeamMembers() {
         <Paper sx={{ p: 3 }}>
           <Grid container columnSpacing={2} rowSpacing={3}>
             <Grid item sx={{ width: 320 }}>
-            <SearchInput
+              <SearchInput
                 size="small"
                 label={t("searchUser")}
                 placeholder={t("user")}
                 onChange={(keyword) => {
-                  dispatch(setTeamMembersFilters({
-                    ...teamMembersFilters,
+                  console.log("keyword", keyword)
+                  dispatch(setCustomerFilters({
+                    ...customerFilters,
                     "filter[keyword]":keyword
                   }))
                 }}
@@ -85,14 +83,14 @@ function TeamMembers() {
               <Button
                 startIcon={<Icon icon={mdiPlus} />}
                 component={Link}
-                to="/people/team/add"
+                to="/people/customers/add"
               >
                 {t("newUser")}
               </Button>
             </Grid>
 
             <Grid item xs={12}>
-              <TeamMembersTable userRole={formik.values.userRole} />
+              <CustomersTable userRole={formik.values.userRole}/>
             </Grid>
           </Grid>
         </Paper>
@@ -101,4 +99,4 @@ function TeamMembers() {
   );
 }
 
-export default TeamMembers;
+export default Customers;

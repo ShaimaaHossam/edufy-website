@@ -1,7 +1,8 @@
 const ar = {
     people:"المستخدمين",
     teamMembers:"اعضاء الفريق",
-    
+    customers:"الزبائن",
+
     newUser:"اضف عضوا جديد",
 
 
@@ -9,9 +10,10 @@ const ar = {
     byUserRole:"البحث من خلال دور المستخدم",
     user:"مستخدم",
 
-    name:"الاسم ",
+    userName:"الاسم ",
     role:"الدور",
     property:"العقار",
+    unit:"الوحده",
     email:"البريد الالكتروني",
     phoneNumber:"رقم التليفون",
     action:"الخيارات",
@@ -33,6 +35,19 @@ const ar = {
     assignOptionalProperty:"تعين الي عقار (اختيارية)",
     assignOptionalPropertyLabel:"هذا العضو لم يتم تعينه علي  اي عقار ",
     assignProperty:"عين عقار",
+    
+
+    customerInformation:"معلومات عن الزبون", 
+    customerName:"اسم الزبون",
+    customerRole:"دور الزبون ",
+    assignUnitOptional:" تعين الي وحدة ( اختيارية )",
+    unitNama:"اسم الوحدة",
+    assignOptionalUnitLabel:"هذ الزبون لم يتم تعينه علي اي عقار او وحدة",
+    assignUnit:"عين وحدة",
+
+
+
+
 
     requiredField: "هذا الحقل مطلوب",
     invalidEmailFormat:"هذا البريد غير صالح",

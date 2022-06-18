@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { peopleSelector, setTeamMembersFilters } from "../state";
+import { peopleSelector, setCustomerFilters } from "../state";
 
 import {
   useGetUsersQuery,
@@ -15,46 +15,43 @@ import { mdiPencil, mdiContentCopy } from "@mdi/js";
 
 import Table from "../../../shared/components/Table";
 import IconButton from "../../../shared/components/IconButton";
-import Icon from "../../../shared/components/Icon";
 import Link from "../../../shared/components/Link";
 import Switch from "../../../shared/components/inputs/Switch";
 
 import NoContent from "../../../shared/views/NoContent";
 
-function TeamMembersTable({ userRole }) {
+function CustomersTable({ userRole }) {
   const { t } = useTranslation("people");
 
   const dispatch = useDispatch();
 
-  const { teamMembersFilters } = useSelector(peopleSelector);
+  const { customerFilters } = useSelector(peopleSelector);
 
   useEffect(() => {
     if (userRole) {
       dispatch(
-        setTeamMembersFilters({
-          ...teamMembersFilters,
+        setCustomerFilters({
+          ...customerFilters,
           "filter[role]": userRole,
         })
       );
     } else {
-      dispatch(setTeamMembersFilters(teamMembersFilters));
+      dispatch(setCustomerFilters(customerFilters));
     }
   }, [userRole]);
 
-  const { isLoading, data: teamMembers } = useGetUsersQuery(teamMembersFilters);
+  const { isLoading, data: customer } = useGetUsersQuery(customerFilters);
   const [updateUser1] = useUpdateUser1Mutation();
-
-
 
   const tableLabels = [
     t("userName"),
     t("role"),
-    t("property"),
+    t("unit"),
     t("email"),
     t("phoneNumber"),
     t("actions"),
   ];
-  const tableData = teamMembers?.data?.map((item) => ({
+  const tableData = customer?.data?.map((item) => ({
     id: item.id,
     active: item.active,
     clickable: false,
@@ -120,7 +117,7 @@ function TeamMembersTable({ userRole }) {
             icon={mdiPencil}
             disabled={!item.active}
             component={Link}
-            to={`/people/team/edit/${item.id}`}
+            to={`/people/customers/edit/${item.id}`}
           />
         </Grid>
 
@@ -131,7 +128,7 @@ function TeamMembersTable({ userRole }) {
             icon={mdiContentCopy}
             disabled={!item.active}
             component={Link}
-            to={`/people/team/clone/${item.id}`}
+            to={`/people/customers/clone/${item.id}`}
           />
         </Grid>
 
@@ -141,8 +138,7 @@ function TeamMembersTable({ userRole }) {
             checked={item.active}
             onChange={() => {
               console.log("item", !item.active);
-
-              updateUser1({ id: item.id, formData: { active: !item.active } });
+              updateUser1({ id: item.id, active: !item.active });
             }}
           />
           <Typography component="span" variant="caption" display="block">
@@ -161,15 +157,13 @@ function TeamMembersTable({ userRole }) {
       headLabels={tableLabels}
       rowsData={tableData}
       metadata={{
-        total: teamMembers.meta.total,
-        pages: teamMembers.meta.lastPage,
-        perPage: teamMembers.meta.perPage,
-        currentPage: teamMembers.meta.currentPage,
+        total: customer.meta.total,
+        pages: customer.meta.lastPage,
+        perPage: customer.meta.perPage,
+        currentPage: customer.meta.currentPage,
       }}
       onPageChange={(page, perPage) =>
-        dispatch(
-          setTeamMembersFilters({ ...teamMembersFilters, page, perPage })
-        )
+        dispatch(setCustomerFilters({ ...customerFilters, page, perPage }))
       }
     />
   ) : (
@@ -177,4 +171,4 @@ function TeamMembersTable({ userRole }) {
   );
 }
 
-export default TeamMembersTable;
+export default CustomersTable;
