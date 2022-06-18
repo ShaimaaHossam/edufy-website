@@ -153,6 +153,8 @@ function CustomersForm({ formType }) {
     }
   }, [formType, isFetching, user, setValues]);
 
+  console.log("property_ids", formik.values.unit_ids)
+
   return (
     <Grid container spacing={2} direction="column">
       <Grid item>
@@ -336,10 +338,7 @@ function CustomersForm({ formType }) {
                           label: type.title,
                         }))}
                         value={formik.values.unit_ids}
-                        onChange={(e)=>{
-                          formik.setFieldValue("unit_ids", [...formik.values.unit_ids, e.target.value])
-                          console.log("e", formik.values.unit_ids)
-                        }}
+                        onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         error={
                           formik.touched.unit_ids && !!formik.errors.unit_ids

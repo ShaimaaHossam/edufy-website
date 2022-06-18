@@ -51,6 +51,8 @@ function CustomersTable({ userRole }) {
     t("phoneNumber"),
     t("actions"),
   ];
+  console.log("item", customer?.data[0])
+
   const tableData = customer?.data?.map((item) => ({
     id: item.id,
     active: item.active,
@@ -63,16 +65,16 @@ function CustomersTable({ userRole }) {
         {item.role}
       </Typography>,
       <Typography component="span" variant="body2">
-        {item.properties.length ? (
+        {item.units.length ? (
           <>
             <Typography component="span" variant="body2">
-              {item.properties[0].title}
+              {item.units[0].title}
             </Typography>
             <Tooltip
               title={
                 <Box padding={2}>
-                  {item.properties.map((pro) => {
-                    return <Typography key={pro.title}>{pro.title}</Typography>;
+                  {item.units.map((unit) => {
+                    return <Typography key={unit.title}>{unit.title}</Typography>;
                   })}
                 </Box>
               }
@@ -95,7 +97,7 @@ function CustomersTable({ userRole }) {
                   color: "black",
                 }}
               >
-                {item.properties.length}
+                {item.units.length}
               </Button>
             </Tooltip>
           </>
