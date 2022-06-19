@@ -12,8 +12,12 @@ const en = {
     "An error occurred on server! We are working on it now.",
   no_content: "No Content",
   no_content_message: "There's no content to show right now.",
+  error_occurred: "Something has gone wrong!",
+  error_occurred_message:
+    "It seems something has been broken, we are working on it now.",
 
   confirm: "Confirm",
+  cancel: "Cancel",
   go_back: "Go Back",
   english: "English",
   arabic: "العربية",

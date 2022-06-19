@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import { Breadcrumbs as MuiBreadcrumbs, Typography } from "@mui/material";
+import { Breadcrumbs as MuiBreadcrumbs } from "@mui/material";
 
 import Link from "./Link";
 

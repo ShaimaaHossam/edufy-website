@@ -7,14 +7,22 @@ export const propertiesSlice = createSlice({
       page: 1,
       perPage: 20,
     },
+    unitsFilters: {
+      page: 1,
+      perPage: 20,
+    },
   },
   reducers: {
     setPropertiesFilters: (state, { payload }) => {
       state.propertiesFilters = payload;
     },
+    setUnitsFilters: (state, { payload }) => {
+      state.unitsFilters = payload;
+    },
   },
 });
 
-export const { setPropertiesFilters } = propertiesSlice.actions;
+export const { setPropertiesFilters, setUnitsFilters } =
+  propertiesSlice.actions;
 
 export const propertiesSelector = (state) => state.properties;

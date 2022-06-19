@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 
 import { useParams, useNavigate } from "react-router-dom";
@@ -28,6 +28,11 @@ import {
   RadioGroup,
 } from "@mui/material";
 
+import useNavigationBlocker from "../../../shared/hooks/useNavigationBlocker";
+
+import NotFound from "../../../shared/views/NotFound";
+
+import Dialog from "../../../shared/components/Dialog";
 import Breadcrumbs from "../../../shared/components/Breadcrumbs";
 import Link from "../../../shared/components/Link";
 import TextInput from "../../../shared/components/inputs/TextInput";
@@ -36,8 +41,7 @@ import LocationInput from "../../../shared/components/inputs/LocationInput";
 import Radio from "../../../shared/components/inputs/Radio";
 import NumberInput from "../../../shared/components/inputs/NumberInput";
 
-import { WALLET_TYPES, USER_TYPES } from "../../../constants/system";
-
+import { WALLET_TYPES, USER_ROLES } from "../../../constants/system";
 import { getDeviceLocation } from "../../../helpers/maps";
 
 function PropertyForm({ formType }) {
@@ -46,7 +50,7 @@ function PropertyForm({ formType }) {
   const { propertyID } = useParams();
   const navigate = useNavigate();
 
-  const { isFetching, data: property } = useGetPropertyQuery(propertyID, {
+  const { error, data: property } = useGetPropertyQuery(propertyID, {
     skip: !propertyID,
   });
   const [addProperty] = useAddPropertyMutation();
@@ -54,10 +58,10 @@ function PropertyForm({ formType }) {
 
   const { data: allCities = [] } = useGetAllCitiesQuery();
   const { data: allPropertyManagers = [] } = useGetAllUsersByRoleQuery(
-    USER_TYPES.propertyManager
+    USER_ROLES.propertyManager
   );
   const { data: allAreaManagers = [] } = useGetAllUsersByRoleQuery(
-    USER_TYPES.areaManager
+    USER_ROLES.areaManager
   );
 
   const formik = useFormik({
@@ -126,16 +130,22 @@ function PropertyForm({ formType }) {
         }),
     }),
     onSubmit: async (values, { setErrors }) => {
-      const { property_type_id, property_subtype_id, ...formData } = values;
+      const { title, property_type_id, property_subtype_id, ...formData } =
+        values;
 
       if (formType === "edit") {
         Object.assign(formData, { id: propertyID });
+        title !== property.title && Object.assign(formData, { title });
         updateProperty(formData)
           .unwrap()
           .then((data) => navigate(`/properties/${data.id}`))
           .catch(({ data: { errors } }) => setErrors(errors));
       } else {
-        Object.assign(formData, { property_type_id, property_subtype_id });
+        Object.assign(formData, {
+          title,
+          property_type_id,
+          property_subtype_id,
+        });
         addProperty(formData)
           .unwrap()
           .then((data) => navigate(`/properties/${data.id}`))
@@ -145,7 +155,8 @@ function PropertyForm({ formType }) {
   });
 
   const {
-    setValues,
+    values,
+    resetForm,
     setFieldValue,
     values: { wallet_type_id: walletType, property_type_id: propertyTypeID },
   } = formik;
@@ -155,14 +166,6 @@ function PropertyForm({ formType }) {
     propertyTypeID,
     { skip: !propertyTypeID }
   );
-
-  // set initial property location (device location)
-  useEffect(() => {
-    formType === "add" &&
-      getDeviceLocation().then((location) =>
-        setFieldValue("location", location)
-      );
-  }, [formType, setFieldValue]);
 
   // reset wallet amount if type changed to unlimited
   useEffect(() => {
@@ -175,22 +178,40 @@ function PropertyForm({ formType }) {
     !propertyTypeID && setFieldValue("property_subtype_id", "");
   }, [propertyTypeID, setFieldValue]);
 
+  const valuesRef = useRef(values);
   useEffect(() => {
-    if (formType === "add" || isFetching || !property) return;
+    if (formType === "add") {
+      getDeviceLocation().then((location) => {
+        console.log("here");
+        resetForm({ values: { ...valuesRef.current, location } });
+      });
+      return;
+    }
+    if (!property) return;
 
-    setValues({
-      title: property.title,
-      city_id: property.city.id,
-      address: property.address,
-      location: property.location,
-      property_type_id: property.property_type.id,
-      property_subtype_id: property.property_subtype.id,
-      property_manager_id: property.property_manager.id,
-      area_manager_id: property.area_manager.id,
-      wallet_type_id: property.wallet_type_id,
-      wallet_amount: property.wallet_amount || null,
+    resetForm({
+      values: {
+        title: property.title,
+        city_id: property.city.id,
+        address: property.address,
+        location: property.location,
+        property_type_id: property.property_type.id,
+        property_subtype_id: property.property_subtype.id,
+        property_manager_id: property.property_manager.id,
+        area_manager_id: property.area_manager.id,
+        wallet_type_id: property.wallet_type_id,
+        wallet_amount: property.wallet_amount || null,
+      },
     });
-  }, [formType, isFetching, property, setValues]);
+  }, [formType, property, resetForm]);
+
+  const [leaveConfirmed, setLeaveConfirmed] = useState(false);
+  const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
+  useNavigationBlocker(formik.dirty && !leaveConfirmed, () =>
+    setLeaveDialogOpen(true)
+  );
+
+  if (error?.status === 404) return <NotFound />;
 
   return (
     <Grid container spacing={2} direction="column">
@@ -548,6 +569,19 @@ function PropertyForm({ formType }) {
           </Grid>
         </Paper>
       </Grid>
+
+      <Dialog
+        size="small"
+        open={leaveDialogOpen}
+        title={t("discardChanges")}
+        titleColor="error"
+        confirmLabel={t("discard")}
+        confirmColor="error"
+        onClose={() => setLeaveDialogOpen(false)}
+        onConfirm={() => setLeaveConfirmed(true)}
+      >
+        {t("propertyFormLeaveMessage")}
+      </Dialog>
     </Grid>
   );
 }

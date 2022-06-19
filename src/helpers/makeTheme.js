@@ -80,14 +80,8 @@ function makeTheme({ lang }) {
       },
       shadows: [
         "none",
-        "0px 2px 8px #ADB5D12B",
-        "0px 2px 8px #ADB5D12B",
-        "0px 2px 8px #ADB5D12B",
-        "0px 2px 8px #ADB5D12B",
-        "0px 2px 8px #ADB5D12B",
-        "0px 2px 8px #ADB5D12B",
-        "0px 2px 8px #ADB5D12B",
-        "0px 2px 8px #ADB5D12B",
+        ...Array.from({ length: 23 }).fill("0px 2px 8px #ADB5D12B"),
+        "0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)",
       ],
 
       // MUI components overrides
@@ -96,6 +90,11 @@ function makeTheme({ lang }) {
           styleOverrides: `
             body {
               background-color: #FAFBFF;
+            }
+            #root {
+              display: flex;
+              flex-direction: column;
+              min-height: 100vh;
             }
           `,
         },
@@ -140,6 +139,51 @@ function makeTheme({ lang }) {
             input: {
               "&.Mui-disabled": {
                 WebkitTextFillColor: "inherit",
+              },
+            },
+          },
+        },
+        MuiTabs: {
+          styleOverrides: {
+            root: {
+              position: "relative",
+              zIndex: 1,
+              "&::after": {
+                content: '""',
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 1,
+                backgroundColor: "#DBEAFD",
+                zIndex: -1,
+              },
+            },
+          },
+        },
+        MuiTab: {
+          styleOverrides: {
+            root: {
+              minWidth: 100,
+              textTransform: "none",
+              "@media (max-width: 600px)": {
+                minWidth: 80,
+              },
+            },
+          },
+        },
+        MuiChip: {
+          styleOverrides: {
+            outlined: {
+              position: "relative",
+              "::before": {
+                content: "''",
+                width: "100%",
+                height: "100%",
+                backgroundColor: "currentColor",
+                opacity: "0.07",
+                position: "absolute",
+                borderRadius: "inherit",
               },
             },
           },

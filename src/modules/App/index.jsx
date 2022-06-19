@@ -12,7 +12,9 @@ import { authSelector, rememberMe } from "../../redux/slices/auth";
 import NotFound from "../../shared/views/NotFound";
 import Theme from "./components/Theme";
 import AppContainer from "./components/AppContainer";
-import Spinner from "./components/Spinner";
+import ErrorBoundary from "./components/ErrorBoundary";
+
+import Loader from "../../shared/components/Loader";
 
 const Auth = lazy(() => import("../Auth"));
 const Profiles = lazy(() => import("../Profiles"));
@@ -37,48 +39,56 @@ function App() {
     }
   }, [token, user, dispatch]);
 
-  if (token && !user) return <Spinner />;
+  if (token && !user) return <Loader />;
 
   return (
-    <Theme>
-      <Router>
-        <Suspense fallback={<></>}>
+    <Router>
+      <Theme>
+        <Suspense fallback={<Loader />}>
           {token && user ? (
             <AppContainer>
-              <Suspense fallback={<></>}>
-                <Routes>
-                  {/* LIST APP ROUTES HERE */}
-                  <Route path="profiles/*" element={<Profiles />} />
+              <ErrorBoundary>
+                <Suspense fallback={<Loader />}>
+                  <Routes>
+                    {/* LIST APP ROUTES HERE */}
+                    <Route path="profiles/*" element={<Profiles />} />
 
-                  <Route path="dashboard/*" element={<Dashboard />} />
-                  <Route path="properties/*" element={<Properties />} />
-                  <Route path="people/*" element={<People />} />
-                  <Route path="orders/*" element={<Orders />} />
-                  <Route path="accounting/*" element={<Accounting />} />
-                  <Route path="communication/*" element={<Communication />} />
-                  <Route path="services/*" element={<Services />} />
-                  <Route path="settings/*" element={<Settings />} />
-                  <Route path="help/*" element={<Help />} />
-                  <Route path="/" element={<Navigate to="/dashboard" />} />
-                  <Route
-                    path="/auth/*"
-                    element={<Navigate to="/dashboard" />}
-                  />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
+                    <Route path="dashboard/*" element={<Dashboard />} />
+                    <Route path="properties/*" element={<Properties />} />
+                    <Route path="people/*" element={<People />} />
+                    <Route path="orders/*" element={<Orders />} />
+                    <Route path="accounting/*" element={<Accounting />} />
+                    <Route path="communication/*" element={<Communication />} />
+                    <Route path="services/*" element={<Services />} />
+                    <Route path="settings/*" element={<Settings />} />
+                    <Route path="help/*" element={<Help />} />
+
+                    <Route path="/" element={<Navigate to="/dashboard" />} />
+                    <Route
+                      path="/auth/*"
+                      element={<Navigate to="/dashboard" />}
+                    />
+
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </Suspense>
+              </ErrorBoundary>
             </AppContainer>
           ) : (
-            <Routes>
-              {/* LIST PUBLIC ROUTES HERE */}
-              <Route index path="/auth/*" element={<Auth />} />
+            <ErrorBoundary>
+              <Suspense fallback={<Loader />}>
+                <Routes>
+                  {/* LIST PUBLIC ROUTES HERE */}
+                  <Route index path="/auth/*" element={<Auth />} />
 
-              <Route path="*" element={<Navigate to="/auth" />} />
-            </Routes>
+                  <Route path="*" element={<Navigate to="/auth" />} />
+                </Routes>
+              </Suspense>
+            </ErrorBoundary>
           )}
         </Suspense>
-      </Router>
-    </Theme>
+      </Theme>
+    </Router>
   );
 }
 
