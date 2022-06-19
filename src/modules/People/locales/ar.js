@@ -16,13 +16,17 @@ const ar = {
     unit:"الوحده",
     email:"البريد الالكتروني",
     phoneNumber:"رقم التليفون",
-    action:"الخيارات",
+    actions:"الخيارات",
 
     addPeopleFormTitle:"اضف عضو للفريق ",
     
     addTeamMembersFormTitle:"اضف عضو للفريق",
     cloneTeamMembersFormTitle:"استنسخ عضو من الفريق",
     editTeamMembersFormTitle:"تعديل عضو في الفريق",
+
+    addCustomersFormTitle:"اضف زبون",
+    cloneCustomersFormTitle:"استنسح زبون",
+    editCustomersFormTitle:"عدل بيانات الزبون",
 
     teamMemberInformation:"معلومات عن عضو الفريق",
     name:"اسم العضو",
@@ -35,7 +39,10 @@ const ar = {
     assignOptionalProperty:"تعين الي عقار (اختيارية)",
     assignOptionalPropertyLabel:"هذا العضو لم يتم تعينه علي  اي عقار ",
     assignProperty:"عين عقار",
-    
+    noProperties:" لا يوجد عقارات ",
+    noUnits:" لا يوجد  وحدات ",
+    active:"نشط",
+    inactive:"غير نشط",
 
     customerInformation:"معلومات عن الزبون", 
     customerName:"اسم الزبون",
@@ -45,22 +52,24 @@ const ar = {
     assignOptionalUnitLabel:"هذ الزبون لم يتم تعينه علي اي عقار او وحدة",
     assignUnit:"عين وحدة",
 
-
-
-
-
     requiredField: "هذا الحقل مطلوب",
     invalidEmailFormat:"هذا البريد غير صالح",
     invalidPhoneNumber:"رقم الهاتف غير صالح",
 
-
-
-
-
-
-
     createUser:"انشأ مستخدم جديد",
     saveChanges:"احفظ التغيرات",
+
+    teamMmberRole:{
+        "Admin":"مسؤل",
+        "Area Manager":"مدير المنطقة",
+        "Accountant":"محاسب",
+        "Property Manager":"مدير العقار"
+    },
+
+    customerRole:{
+        "Unit Owner":"مالك الوحدة",
+        "Unit Tenant":"مستأجر الوحدة"
+    }
 
 
 

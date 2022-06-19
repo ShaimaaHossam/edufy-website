@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import { useSelector, useDispatch } from "react-redux";
 import { peopleSelector, setTeamMembersFilters } from "../state";
 
@@ -15,36 +13,21 @@ import { mdiPencil, mdiContentCopy } from "@mdi/js";
 
 import Table from "../../../shared/components/Table";
 import IconButton from "../../../shared/components/IconButton";
-import Icon from "../../../shared/components/Icon";
 import Link from "../../../shared/components/Link";
 import Switch from "../../../shared/components/inputs/Switch";
 
 import NoContent from "../../../shared/views/NoContent";
 
-function TeamMembersTable({ userRole }) {
+function TeamMembersTable() {
   const { t } = useTranslation("people");
 
   const dispatch = useDispatch();
 
   const { teamMembersFilters } = useSelector(peopleSelector);
 
-  useEffect(() => {
-    if (userRole) {
-      dispatch(
-        setTeamMembersFilters({
-          ...teamMembersFilters,
-          "filter[role]": userRole,
-        })
-      );
-    } else {
-      dispatch(setTeamMembersFilters(teamMembersFilters));
-    }
-  }, [userRole]);
-
   const { isLoading, data: teamMembers } = useGetUsersQuery(teamMembersFilters);
+
   const [updateUser1] = useUpdateUser1Mutation();
-
-
 
   const tableLabels = [
     t("userName"),
@@ -54,6 +37,7 @@ function TeamMembersTable({ userRole }) {
     t("phoneNumber"),
     t("actions"),
   ];
+
   const tableData = teamMembers?.data?.map((item) => ({
     id: item.id,
     active: item.active,
@@ -103,7 +87,9 @@ function TeamMembersTable({ userRole }) {
             </Tooltip>
           </>
         ) : (
-          "-"
+          <Typography component="span" variant="body2">
+           {t("noProperties")}
+          </Typography>
         )}
       </Typography>,
       <Typography component="span" variant="body2">
@@ -115,7 +101,7 @@ function TeamMembersTable({ userRole }) {
       <Grid container onClick={(e) => e.stopPropagation()}>
         <Grid item>
           <IconButton
-            aria-label="edit property"
+            aria-label="edit team member"
             size="small"
             icon={mdiPencil}
             disabled={!item.active}
@@ -126,7 +112,7 @@ function TeamMembersTable({ userRole }) {
 
         <Grid item>
           <IconButton
-            aria-label="clone property"
+            aria-label="clone team member"
             size="small"
             icon={mdiContentCopy}
             disabled={!item.active}
@@ -140,9 +126,7 @@ function TeamMembersTable({ userRole }) {
             color="primary"
             checked={item.active}
             onChange={() => {
-              console.log("item", !item.active);
-
-              updateUser1({ id: item.id, formData: { active: !item.active } });
+              updateUser1({ id: item.id, active: !item.active });
             }}
           />
           <Typography component="span" variant="caption" display="block">

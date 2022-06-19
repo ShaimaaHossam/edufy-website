@@ -55,11 +55,12 @@ function Customers() {
                 label={t("searchUser")}
                 placeholder={t("user")}
                 onChange={(keyword) => {
-                  console.log("keyword", keyword)
-                  dispatch(setCustomerFilters({
-                    ...customerFilters,
-                    "filter[keyword]":keyword
-                  }))
+                  dispatch(
+                    setCustomerFilters({
+                      ...customerFilters,
+                      "filter[keyword]": keyword,
+                    })
+                  );
                 }}
               />
             </Grid>
@@ -75,7 +76,15 @@ function Customers() {
                   label: type.name,
                 }))}
                 value={formik.values.userRole}
-                onChange={formik.handleChange}
+                onChange={(e) => {
+                  formik.setFieldValue("userRole", e.target.value);
+                  dispatch(
+                    setCustomerFilters({
+                      ...customerFilters,
+                      "filter[role]": e.target.value,
+                    })
+                  );
+                }}
               />
             </Grid>
 
@@ -90,7 +99,7 @@ function Customers() {
             </Grid>
 
             <Grid item xs={12}>
-              <CustomersTable userRole={formik.values.userRole}/>
+              <CustomersTable />
             </Grid>
           </Grid>
         </Paper>

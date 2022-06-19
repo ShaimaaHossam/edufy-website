@@ -2,9 +2,6 @@ import { useState, useEffect } from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
 
-import { useSelector, useDispatch } from "react-redux";
-import { peopleSelector, setPeopleFilters } from "../state";
-
 import { useGetAllRolesByUserTypeQuery } from "../../../redux/services/roles";
 import { useGetAllUnitsByUserTypeQuery } from "../../../redux/services/units";
 import { useGetPropertiesListQuery } from "../../../redux/services/properties";
@@ -32,14 +29,12 @@ import {
 } from "@mui/material";
 
 import Breadcrumbs from "../../../shared/components/Breadcrumbs";
-import Link from "../../../shared/components/Link";
 import TextInput from "../../../shared/components/inputs/TextInput";
 import Icon from "../../../shared/components/Icon";
 import IconButton from "../../../shared/components/IconButton";
 import Autocomplete from "../../../shared/components/inputs/Autocomplete";
 import Radio from "../../../shared/components/inputs/Radio";
-import NumberInput from "../../../shared/components/inputs/NumberInput";
-import { mdiPlusCircleOutline, mdiAlertCircle } from "@mdi/js";
+import { mdiPlusCircleOutline as PlusIcon, mdiAlertCircle } from "@mdi/js";
 
 import { USER_TYPES } from "../../../constants/global";
 
@@ -63,7 +58,6 @@ function CustomersForm({ formType }) {
       user_type: USER_TYPES.customer,
       property_ids: "",
       unit_ids: [],
-      monthly_cap: 10,
     },
 
     validationSchema: Yup.object({
@@ -86,8 +80,7 @@ function CustomersForm({ formType }) {
       }
 
       if (formType === "edit") {
-        const { email, phone, name,property_ids, ...formData } = values;
-        console.log("formData", formData)
+        const { email, phone, name, property_ids, ...formData } = values;
         if (email !== user.email) {
           Object.assign(formData, { email: email });
         }
@@ -97,9 +90,9 @@ function CustomersForm({ formType }) {
         if (name !== user.name) {
           Object.assign(formData, { name: name });
         }
-        updateUser1({ id: user.id, formData })
+        updateUser1({ id: user.id, ...formData })
           .unwrap()
-          .then((data) => navigate("/people"))
+          .then(() => navigate("/people"))
           .catch(({ data: { errors } }) => setErrors(errors));
       }
     },
@@ -118,11 +111,9 @@ function CustomersForm({ formType }) {
     { skip: !formik.values.property_ids }
   );
 
-  console.log("unit_ids",  formik.values.unit_ids)
   const { isFetching, data: user } = useGetUserQuery(customerID, {
     skip: !customerID,
   });
-
 
   useEffect(() => {
     if (formType === "add" || isFetching || !user) return;
@@ -133,9 +124,8 @@ function CustomersForm({ formType }) {
       phone: user.phone,
       role: user.role,
       user_type: USER_TYPES.customer,
-      unit_ids: user.unit_ids,
-      property_ids: user.property_ids,
-
+      unit_ids: user.unit_ids || [],
+      property_ids: user.units.length === 0 ? "" : user.units[0].property_id,
     });
 
     if (formType === "clone") {
@@ -145,15 +135,13 @@ function CustomersForm({ formType }) {
         phone: "",
         role: user.role,
         user_type: USER_TYPES.customer,
-        unit_ids: user.unit_ids,
-        property_ids: user.property_ids,
-        monthly_cap: 10,
-
+        unit_ids: user.unit_ids || [],
+        property_ids: user.units.length === 0 ? "" : user.units[0].property_id,
       });
     }
   }, [formType, isFetching, user, setValues]);
 
-  console.log("property_ids", formik.values.unit_ids)
+  if ((formType === "edit" && !user)|| (formType === "clone" && !user)) return null;
 
   return (
     <Grid container spacing={2} direction="column">
@@ -230,7 +218,7 @@ function CustomersForm({ formType }) {
             <Grid item container spacing={3}>
               <Grid item xs={12}>
                 <Typography component="h2" variant="h6">
-                  {t("customerRole")}
+                  {t("customerRoleLable")}
                 </Typography>
               </Grid>
 
@@ -247,11 +235,11 @@ function CustomersForm({ formType }) {
                       return (
                         <Grid item key={role.name}>
                           <FormControlLabel
-                            label={role.name}
+                            label={t(`customerRole.${role.name}`)}
                             value={role.name}
                             control={<Radio />}
                           />
-                           <Tooltip
+                          <Tooltip
                             title={
                               <Box padding={2}>
                                 {role.permissions.map((per) => {
@@ -283,26 +271,30 @@ function CustomersForm({ formType }) {
                   {t("assignUnitOptional")}
                 </Typography>
               </Grid>
-              {propertyShown ? (
-                <Grid item width="100%">
-                  <Typography component="p" variant="p" color="text.secondary">
-                    {t("assignOptionalUnitLabel")}
-                  </Typography>
-                  <Link to="" onClick={() => setPropertyShown(!propertyShown)}>
-                    <Icon
-                      aria-label="toggle properties visibility"
-                      icon={mdiPlusCircleOutline}
-                      size="small"
-                      shape="rounded"
-                      variant="contained"
-                    />
-                    <Typography component="span" ml={2}>
-                      {t("assignUnit")}
+              {(propertyShown && formType === "add") ||
+              (propertyShown && user.units.length === 0) ? (
+                <Grid item container xs={12} spacing={3}>
+                  <Grid item xs={12}>
+                    <Typography
+                      component="p"
+                      variant="p"
+                      color="text.secondary"
+                    >
+                      {t("assignOptionalUnitLabel")}
                     </Typography>
-                  </Link>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button
+                      variant="outlined"
+                      onClick={() => setPropertyShown(!propertyShown)}
+                      startIcon={<Icon icon={PlusIcon} />}
+                    >
+                      {t("assignUnit")}
+                    </Button>
+                  </Grid>
                 </Grid>
               ) : (
-                <Grid item container spacing={3} r width="100%">
+                <Grid item container xs={12} spacing={3}>
                   <Grid item xs={12}>
                     <Autocomplete
                       name="property_ids"
@@ -332,7 +324,7 @@ function CustomersForm({ formType }) {
                         name="unit_ids"
                         isMulti={true}
                         label={t("unitNama")}
-                        noOptionsText={t("noTypes")}
+                        noOptionsText={t("noUnits")}
                         options={allUnits?.map((type) => ({
                           value: type.id,
                           label: type.title,

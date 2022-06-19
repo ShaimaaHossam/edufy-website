@@ -2,9 +2,6 @@ import { useState, useEffect } from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
 
-import { useSelector, useDispatch } from "react-redux";
-import { peopleSelector, setPeopleFilters } from "../state";
-
 import { useGetAllRolesByUserTypeQuery } from "../../../redux/services/roles";
 import { useGetPropertiesListQuery } from "../../../redux/services/properties";
 import {
@@ -31,14 +28,13 @@ import {
 } from "@mui/material";
 
 import Breadcrumbs from "../../../shared/components/Breadcrumbs";
-import Link from "../../../shared/components/Link";
 import TextInput from "../../../shared/components/inputs/TextInput";
 import Icon from "../../../shared/components/Icon";
 import IconButton from "../../../shared/components/IconButton";
 import Autocomplete from "../../../shared/components/inputs/Autocomplete";
 import Radio from "../../../shared/components/inputs/Radio";
 import NumberInput from "../../../shared/components/inputs/NumberInput";
-import { mdiPlusCircleOutline, mdiAlertCircle } from "@mdi/js";
+import { mdiPlusCircleOutline as PlusIcon, mdiAlertCircle } from "@mdi/js";
 
 import { USER_TYPES } from "../../../constants/global";
 
@@ -57,10 +53,11 @@ function TeamMembersForm({ formType }) {
   const [addTeamMember] = useAddTeamMemberMutation();
   const [updateUser1] = useUpdateUser1Mutation();
 
-  const { data: listProperties } = useGetPropertiesListQuery();
-  const { data: allRoles } = useGetAllRolesByUserTypeQuery(
+  const { data: listProperties = [] } = useGetPropertiesListQuery();
+  const { data: allRoles = [] } = useGetAllRolesByUserTypeQuery(
     USER_TYPES.teamMember
   );
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -69,7 +66,7 @@ function TeamMembersForm({ formType }) {
       role: "",
       monthly_cap: "",
       user_type: USER_TYPES.teamMember,
-      property_ids: "",
+      property_ids: [],
     },
 
     validationSchema: Yup.object({
@@ -102,9 +99,9 @@ function TeamMembersForm({ formType }) {
         if (name !== user.name) {
           Object.assign(formData, { name: name });
         }
-        updateUser1({ id: user.id, formData })
+        updateUser1({ id: user.id, ...formData })
           .unwrap()
-          .then((data) => navigate("/people"))
+          .then(() => navigate("/people"))
           .catch(({ data: { errors } }) => setErrors(errors));
       }
     },
@@ -122,7 +119,10 @@ function TeamMembersForm({ formType }) {
       role: user.role,
       monthly_cap: user.monthly_cap,
       user_type: USER_TYPES.teamMember,
-      property_ids: user.property_ids,
+      property_ids:
+        user.property_ids === null || user.property_ids.length === 0
+          ? ""
+          : user.property_ids,
     });
 
     if (formType === "clone") {
@@ -133,12 +133,16 @@ function TeamMembersForm({ formType }) {
         role: user.role,
         monthly_cap: user.monthly_cap,
         user_type: USER_TYPES.teamMember,
-        property_ids: user.property_ids,
+        property_ids:
+          user.property_ids === null || user.property_ids.length === 0
+            ? ""
+            : user.property_ids,
       });
     }
   }, [formType, isFetching, user, setValues]);
 
-  console.log("property_ids", formik.values.property_ids)
+  if ((formType === "edit" && !user) || (formType === "clone" && !user))
+    return null;
 
   return (
     <Grid container spacing={2} direction="column">
@@ -215,7 +219,7 @@ function TeamMembersForm({ formType }) {
             <Grid item container spacing={3}>
               <Grid item xs={12}>
                 <Typography component="h2" variant="h6">
-                  {t("teamMemberRole")}
+                  {t("teamMemberRoleLable")}
                 </Typography>
               </Grid>
 
@@ -232,7 +236,7 @@ function TeamMembersForm({ formType }) {
                       return (
                         <Grid item key={role.name}>
                           <FormControlLabel
-                            label={role.name}
+                            label={t(`teamMemberRole.${role.name}`)}
                             value={role.name}
                             control={<Radio />}
                           />
@@ -299,31 +303,35 @@ function TeamMembersForm({ formType }) {
                 </Typography>
               </Grid>
 
-              {propertyShown ? (
-                <Grid item width="100%">
-                  <Typography component="p" variant="p" color="text.secondary">
-                    {t("assignOptionalPropertyLabel")}
-                  </Typography>
-                  <Link to="" onClick={() => setPropertyShown(!propertyShown)}>
-                    <Icon
-                      aria-label="toggle properties visibility"
-                      icon={mdiPlusCircleOutline}
-                      size="small"
-                      shape="rounded"
-                      variant="contained"
-                    />
-                    <Typography component="span" ml={2}>
-                      {t("assignProperty")}
+              {(propertyShown && formType === "add") ||
+              (propertyShown && formik.values.property_ids === "") ? (
+                <Grid item container xs={12} spacing={3}>
+                  <Grid item xs={12}>
+                    <Typography
+                      component="p"
+                      variant="p"
+                      color="text.secondary"
+                    >
+                      {t("assignOptionalPropertyLabel")}
                     </Typography>
-                  </Link>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button
+                      variant="outlined"
+                      onClick={() => setPropertyShown(!propertyShown)}
+                      startIcon={<Icon icon={PlusIcon} />}
+                    >
+                      {t("assignProperty")}
+                    </Button>
+                  </Grid>
                 </Grid>
               ) : (
-                <Grid item width="100%">
+                <Grid item xs={12}>
                   <Autocomplete
                     name="property_ids"
                     isMulti={true}
                     label={t("property")}
-                    noOptionsText={t("noTypes")}
+                    noOptionsText={t("noProperties")}
                     options={listProperties.map((type) => ({
                       value: type.id,
                       label: type.title,

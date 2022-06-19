@@ -28,15 +28,26 @@ export const peopleAPI = createApi({
     getUsers: build.query({
       query: (userType) => ({
         url: "/peoples",
-        params: { ...userType},
+        params: { ...userType },
       }),
       transformResponse: (res) => ({
         data: res.data,
         meta: res.meta,
       }),
+      providesTags: (res, err, queryParams) =>
+        res
+          ? [
+              ...res.data.map(({ id }) => ({ type: "People", id })),
+              { type: "People", id: "PARTIAL-LIST" },
+            ]
+          : [{ type: "People", id: "PARTIAL-LIST" }],
+    }),
+    getUser: build.query({
+      query: (id) => ({ url: `/peoples/${id}` }),
+      transformResponse: (res) => res.data,
+      providesTags: (res, err, id) => [{ type: "People", id }],
     }),
 
- 
     addTeamMember: build.mutation({
       query: (data) => ({
         url: "/peoples/create",
@@ -44,6 +55,8 @@ export const peopleAPI = createApi({
         body: data,
       }),
       transformResponse: (res) => res.data,
+      invalidatesTags: [{ type: "People", id: "PARTIAL-LIST" }],
+
     }),
 
     addCustomer: build.mutation({
@@ -53,25 +66,21 @@ export const peopleAPI = createApi({
         body: data,
       }),
       transformResponse: (res) => res.data,
-    }),
-
-
-    getUser: build.query({
-      query: (id) => ({ url: `/peoples/${id}` }),
-      transformResponse: (res) => res.data,
+      invalidatesTags: [{ type: "People", id: "PARTIAL-LIST" }],
     }),
 
     updateUser1: build.mutation({
-      query: ({ id, formData }) =>{ 
-        console.log("formData", formData)
-        return ({
+      query: ({ id, ...data }) => ({
         url: `/peoples/update/${id}`,
         method: "PATCH",
-        body: formData,
-      })},
+        body: data,
+      }),
       transformResponse: (res) => res.data,
+      invalidatesTags: (result, error, { id }) => [
+        { type: "People", id },
+        { type: "People", id: "PARTIAL-LIST" },
+      ],
     }),
-
   }),
 });
 
@@ -82,5 +91,5 @@ export const {
   useAddTeamMemberMutation,
   useAddCustomerMutation,
   useGetUserQuery,
-  useUpdateUser1Mutation
+  useUpdateUser1Mutation,
 } = peopleAPI;

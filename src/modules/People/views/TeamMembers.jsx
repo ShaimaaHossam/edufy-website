@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { peopleSelector, setTeamMembersFilters } from "../state";
 
-
 import { useGetAllRolesByUserTypeQuery } from "../../../redux/services/roles";
 
 import { useTranslation } from "react-i18next";
@@ -77,7 +76,13 @@ function TeamMembers() {
                   label: type.name,
                 }))}
                 value={formik.values.userRole}
-                onChange={formik.handleChange}
+                onChange={(e)=>{
+                  formik.setFieldValue("userRole", e.target.value)
+                  dispatch(setTeamMembersFilters({
+                    ...teamMembersFilters,
+                    "filter[role]": e.target.value
+                  }))
+                }}
               />
             </Grid>
 
@@ -90,9 +95,9 @@ function TeamMembers() {
                 {t("newUser")}
               </Button>
             </Grid>
-
+            
             <Grid item xs={12}>
-              <TeamMembersTable userRole={formik.values.userRole} />
+              <TeamMembersTable/>
             </Grid>
           </Grid>
         </Paper>

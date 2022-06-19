@@ -27,11 +27,8 @@ function PeopleRoot() {
   return (
     <Routes>
       <Route index element={<People />} />
-      <Route path="team" element={<TeamMembers />} />
-      <Route path="customers" element={<Customers />} />
-
-      <Route path="team/add" element={<TeamMembersForm formType="add" />} />
-      
+     
+      <Route path="team/add" element={<TeamMembersForm formType="add" />} /> 
       <Route
         path="team/clone/:teamMemberID"
         element={
@@ -40,7 +37,6 @@ function PeopleRoot() {
           </TeamMembersIDValidator>
         }
       />
-
       <Route
         path="team/edit/:teamMemberID"
         element={
@@ -51,21 +47,19 @@ function PeopleRoot() {
       />
 
       <Route path="customers/add" element={<CustomersForm formType="add" />} />
-
       <Route
         path="customers/clone/:customerID"
         element={
           <CustomersIDValidator>
-            <TeamMembersForm formType="clone" />
+            <CustomersForm formType="clone" />
           </CustomersIDValidator>
         }
       />
-
       <Route
         path="customers/edit/:customerID"
         element={
           <CustomersIDValidator>
-            <TeamMembersForm formType="edit" />
+            <CustomersForm formType="edit" />
           </CustomersIDValidator>
         }
       />

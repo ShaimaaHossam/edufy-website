@@ -28,21 +28,25 @@ const en = {
 
     teamMemberInformation:"Team member information",
     name:"Member Name",
-    teamMemberRole:"Team Member Role",
+    teamMemberRoleLable:"Team Member Role",
     monyhlyCap:"Monthly Cap",
     adminApproval:"No admin approval needed to:", 
     walletBalance:" Wallet Balance",
     assignOptionalProperty:"Assign to Property (Optional)",
-    assignOptionalPropertyLabel:"This team meamber haven't been assigned property",
+    assignOptionalPropertyLabel:"This team meamber haven't been assigned a property",
 
     customerInformation:"Customer information", 
     customerName:"Customer Name",
-    customerRole:"Customer Role",
+    customerRoleLable:"Customer Role",
     assignUnitOptional:"Assign to Unit ( Optional )",
     unitNama:"Unit Name",
     assignOptionalUnitLabel:"This team meamber haven't been assigned Property / Unit",
 
     assignUnit:"Assign Unit",
+    noProperties:"There is no properties",
+    noUnits:"There is no units",
+    active:"active",
+    inactive:"inactive",
 
     assignProperty:"Assign Property",
 
@@ -52,6 +56,18 @@ const en = {
 
     createUser:"Create User",
     saveChanges:"Save Changes",
+
+    teamMemberRole:{
+        "Admin":"Admin",
+        "Area Manager":"Area Manager",
+        "Accountant":"Accountant",
+        "Property Manager":"Property Manager"
+    },
+
+    customerRole:{
+        "Unit Owner":"Unit Owner",
+        "Unit Tenant":"Unit Tenant"
+    }
 
 
 };

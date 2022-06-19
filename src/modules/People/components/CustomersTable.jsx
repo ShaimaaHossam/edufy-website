@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import { useSelector, useDispatch } from "react-redux";
 import { peopleSelector, setCustomerFilters } from "../state";
 
@@ -20,25 +18,12 @@ import Switch from "../../../shared/components/inputs/Switch";
 
 import NoContent from "../../../shared/views/NoContent";
 
-function CustomersTable({ userRole }) {
+function CustomersTable() {
   const { t } = useTranslation("people");
 
   const dispatch = useDispatch();
 
   const { customerFilters } = useSelector(peopleSelector);
-
-  useEffect(() => {
-    if (userRole) {
-      dispatch(
-        setCustomerFilters({
-          ...customerFilters,
-          "filter[role]": userRole,
-        })
-      );
-    } else {
-      dispatch(setCustomerFilters(customerFilters));
-    }
-  }, [userRole]);
 
   const { isLoading, data: customer } = useGetUsersQuery(customerFilters);
   const [updateUser1] = useUpdateUser1Mutation();
@@ -51,7 +36,6 @@ function CustomersTable({ userRole }) {
     t("phoneNumber"),
     t("actions"),
   ];
-  console.log("item", customer?.data[0])
 
   const tableData = customer?.data?.map((item) => ({
     id: item.id,
@@ -102,7 +86,9 @@ function CustomersTable({ userRole }) {
             </Tooltip>
           </>
         ) : (
-          "-"
+          <Typography component="span" variant="body2">
+          {t("noUnits")}
+        </Typography>
         )}
       </Typography>,
       <Typography component="span" variant="body2">
@@ -114,7 +100,7 @@ function CustomersTable({ userRole }) {
       <Grid container onClick={(e) => e.stopPropagation()}>
         <Grid item>
           <IconButton
-            aria-label="edit property"
+            aria-label="edit customer"
             size="small"
             icon={mdiPencil}
             disabled={!item.active}
@@ -125,7 +111,7 @@ function CustomersTable({ userRole }) {
 
         <Grid item>
           <IconButton
-            aria-label="clone property"
+            aria-label="clone customer"
             size="small"
             icon={mdiContentCopy}
             disabled={!item.active}
@@ -139,8 +125,7 @@ function CustomersTable({ userRole }) {
             color="primary"
             checked={item.active}
             onChange={() => {
-              console.log("item", !item.active);
-              updateUser1({ id: item.id, active: !item.active });
+              updateUser1({ id: item.id,  active: !item.active });
             }}
           />
           <Typography component="span" variant="caption" display="block">
@@ -155,7 +140,7 @@ function CustomersTable({ userRole }) {
 
   return !!tableData?.length ? (
     <Table
-      tableLabel="team members list"
+      tableLabel="customers list"
       headLabels={tableLabels}
       rowsData={tableData}
       metadata={{
