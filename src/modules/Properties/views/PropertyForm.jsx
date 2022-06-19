@@ -49,6 +49,7 @@ function PropertyForm({ formType }) {
 
   const { propertyID } = useParams();
   const navigate = useNavigate();
+  const [canLeave, setCanLeave] = useState(false);
 
   const { error, data: property } = useGetPropertyQuery(propertyID, {
     skip: !propertyID,
@@ -139,7 +140,10 @@ function PropertyForm({ formType }) {
         updateProperty(formData)
           .unwrap()
           .then((data) => navigate(`/properties/${data.id}`))
-          .catch(({ data: { errors } }) => setErrors(errors));
+          .catch(({ data: { errors } }) => {
+            setErrors(errors);
+            setCanLeave(false);
+          });
       } else {
         Object.assign(formData, {
           title,
@@ -149,7 +153,10 @@ function PropertyForm({ formType }) {
         addProperty(formData)
           .unwrap()
           .then((data) => navigate(`/properties/${data.id}`))
-          .catch(({ data: { errors } }) => setErrors(errors));
+          .catch(({ data: { errors } }) => {
+            setErrors(errors);
+            setCanLeave(false);
+          });
       }
     },
   });
@@ -205,9 +212,8 @@ function PropertyForm({ formType }) {
     });
   }, [formType, property, resetForm]);
 
-  const [leaveConfirmed, setLeaveConfirmed] = useState(false);
   const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
-  useNavigationBlocker(formik.dirty && !leaveConfirmed, () =>
+  useNavigationBlocker(formik.dirty && !canLeave, () =>
     setLeaveDialogOpen(true)
   );
 
@@ -562,7 +568,11 @@ function PropertyForm({ formType }) {
             </Grid>
 
             <Grid item alignSelf="flex-end">
-              <Button type="submit" color="success">
+              <Button
+                type="submit"
+                color="success"
+                onClick={() => setCanLeave(true)}
+              >
                 {t("saveProperty")}
               </Button>
             </Grid>
@@ -578,7 +588,7 @@ function PropertyForm({ formType }) {
         confirmLabel={t("discard")}
         confirmColor="error"
         onClose={() => setLeaveDialogOpen(false)}
-        onConfirm={() => setLeaveConfirmed(true)}
+        onConfirm={() => setCanLeave(true)}
       >
         {t("propertyFormLeaveMessage")}
       </Dialog>

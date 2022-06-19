@@ -62,6 +62,7 @@ function UnitForm({ formType }) {
   const { unitID } = useParams();
   const { propertyID } = useLocation().state || {};
   const navigate = useNavigate();
+  const [canLeave, setCanLeave] = useState(false);
 
   const { isFetching: isFetchingProperty, data: property } =
     useGetPropertyQuery(propertyID, { skip: !propertyID });
@@ -190,7 +191,10 @@ function UnitForm({ formType }) {
         updateUnit(formData)
           .unwrap()
           .then(() => navigate(`/properties/${propertyID}`))
-          .catch(({ data: { errors } }) => setErrors(errors));
+          .catch(({ data: { errors } }) => {
+            setErrors(errors);
+            setCanLeave(false);
+          });
       } else {
         Object.assign(formData, { title, unit_type_id });
         formType === "clone" &&
@@ -201,7 +205,10 @@ function UnitForm({ formType }) {
         addUnit(formData)
           .unwrap()
           .then(() => navigate(`/properties/${propertyID}`))
-          .catch(({ data: { errors } }) => setErrors(errors));
+          .catch(({ data: { errors } }) => {
+            setErrors(errors);
+            setCanLeave(false);
+          });
       }
     },
   });
@@ -243,9 +250,8 @@ function UnitForm({ formType }) {
     });
   }, [formType, unit, property, resetForm]);
 
-  const [leaveConfirmed, setLeaveConfirmed] = useState(false);
   const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
-  useNavigationBlocker(formik.dirty && !leaveConfirmed, () =>
+  useNavigationBlocker(formik.dirty && !canLeave, () =>
     setLeaveDialogOpen(true)
   );
 
@@ -801,7 +807,11 @@ function UnitForm({ formType }) {
             </Grid>
 
             <Grid item alignSelf="flex-end">
-              <Button type="submit" color="success">
+              <Button
+                type="submit"
+                color="success"
+                onClick={() => setCanLeave(true)}
+              >
                 {t("saveUnit")}
               </Button>
             </Grid>
@@ -817,7 +827,7 @@ function UnitForm({ formType }) {
         confirmLabel={t("discard")}
         confirmColor="error"
         onClose={() => setLeaveDialogOpen(false)}
-        onConfirm={() => setLeaveConfirmed(true)}
+        onConfirm={() => setCanLeave(true)}
       >
         {t("unitFormLeaveMessage")}
       </Dialog>
