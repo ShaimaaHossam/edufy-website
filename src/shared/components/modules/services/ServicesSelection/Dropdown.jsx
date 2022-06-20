@@ -64,7 +64,7 @@ function Dropdown({ tree, onChange, changedServices, hasEndItems, children }) {
       <Collapse in={isExpanded} timeout="auto">
         {items.map(
           (item, idx) =>
-            (item.active === undefined || item.active === true) && (
+            item.active !== false && (
               <Fragment key={item.id}>
                 <FormControlLabel
                   label={language === "en" ? item.name.en : item.name.ar}

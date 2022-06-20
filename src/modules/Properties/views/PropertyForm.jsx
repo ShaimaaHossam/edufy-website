@@ -11,7 +11,10 @@ import {
   useGetAllPropertySubtypesQuery,
 } from "../../../redux/services/properties";
 import { useGetAllUsersByRoleQuery } from "../../../redux/services/people";
-import { useGetAllCitiesQuery } from "../../../redux/services/general";
+import {
+  useGetAllCitiesQuery,
+  useGetPropertyServicesTreeQuery,
+} from "../../../redux/services/general";
 
 import { useTranslation } from "react-i18next";
 
@@ -41,6 +44,8 @@ import LocationInput from "../../../shared/components/inputs/LocationInput";
 import Radio from "../../../shared/components/inputs/Radio";
 import NumberInput from "../../../shared/components/inputs/NumberInput";
 
+import ServicesSelection from "../../../shared/components/modules/services/ServicesSelection";
+
 import { WALLET_TYPES, USER_ROLES } from "../../../constants/system";
 import { getDeviceLocation } from "../../../helpers/maps";
 
@@ -64,6 +69,7 @@ function PropertyForm({ formType }) {
   const { data: allAreaManagers = [] } = useGetAllUsersByRoleQuery(
     USER_ROLES.areaManager
   );
+  const { data: services } = useGetPropertyServicesTreeQuery(propertyID);
 
   const formik = useFormik({
     validateOnMount: false,
@@ -80,6 +86,8 @@ function PropertyForm({ formType }) {
       area_manager_id: "",
       wallet_type_id: WALLET_TYPES.unlimited,
       wallet_amount: null,
+
+      changedServices: {},
     },
     validationSchema: Yup.object().shape({
       title: Yup.string()
@@ -131,8 +139,23 @@ function PropertyForm({ formType }) {
         }),
     }),
     onSubmit: async (values, { setErrors }) => {
-      const { title, property_type_id, property_subtype_id, ...formData } =
-        values;
+      const {
+        title,
+        property_type_id,
+        property_subtype_id,
+        changedServices,
+        ...formData
+      } = values;
+
+      const service_items = Object.values(changedServices).map(
+        ({ id, checked, name, description }) => ({
+          service_id: id,
+          service_name: name,
+          service_description: description,
+          checked: checked,
+        })
+      );
+      !!service_items.length && Object.assign(formData, { service_items });
 
       if (formType === "edit") {
         Object.assign(formData, { id: propertyID });
@@ -207,6 +230,8 @@ function PropertyForm({ formType }) {
         area_manager_id: property.area_manager.id,
         wallet_type_id: property.wallet_type_id,
         wallet_amount: property.wallet_amount || null,
+
+        changedServices: {},
       },
     });
   }, [formType, property, resetForm]);
@@ -563,6 +588,24 @@ function PropertyForm({ formType }) {
                   {t("didntFoundManager")}{" "}
                   <Link to="/people/add">{t("createNewManager")}</Link>
                 </Typography>
+              </Grid>
+            </Grid>
+
+            <Grid item container spacing={3}>
+              <Grid item xs={12}>
+                <Typography component="h2" variant="h6">
+                  {t("services")}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12}>
+                <ServicesSelection
+                  services={services}
+                  changedServices={formik.values.changedServices}
+                  onChange={(changedServices) =>
+                    formik.setFieldValue("services", changedServices)
+                  }
+                />
               </Grid>
             </Grid>
 
