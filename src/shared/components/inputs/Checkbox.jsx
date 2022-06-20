@@ -105,7 +105,7 @@ Checkbox.propTypes = {
   disabled: PropTypes.bool,
   indeterminate: PropTypes.bool,
   checked: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   color: PropTypes.oneOf([
     "info",
     "error",
