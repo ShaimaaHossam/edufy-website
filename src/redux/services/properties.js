@@ -126,13 +126,6 @@ export const propertiesAPI = createApi({
       transformResponse: (res) => res.data,
     }),
 
-    getPropertiesList: build.query({
-      query: () => ({
-        url: "/properties",
-        params: { listing: "1" },
-      }),
-      transformResponse: (res) => res.data,
-    }),
     deleteRoom: build.mutation({
       query: (roomID) => ({
         url: `/units/rooms/delete/${roomID}`,
@@ -159,5 +152,4 @@ export const {
   useGetAllUnitTypesQuery,
   useGetAllRoomTypesQuery,
   useDeleteRoomMutation,
-  useGetPropertiesListQuery,
 } = propertiesAPI;

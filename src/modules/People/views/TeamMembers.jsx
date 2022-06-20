@@ -7,12 +7,9 @@ import { useGetAllRolesByUserTypeQuery } from "../../../redux/services/roles";
 
 import { useTranslation } from "react-i18next";
 
-import { useFormik } from "formik";
-
 import { Grid, Paper, Typography, Button, Collapse } from "@mui/material";
 
 import Icon from "../../../shared/components/Icon";
-import IconButton from "../../../shared/components/IconButton";
 import Autocomplete from "../../../shared/components/inputs/Autocomplete";
 import Link from "../../../shared/components/Link";
 import SearchInput from "../../../shared/components/inputs/SearchInput";
@@ -20,23 +17,19 @@ import { mdiPlus } from "@mdi/js";
 
 import TeamMembersTable from "../components/TeamMembersTable";
 
-import { USER_TYPES } from "../../../constants/global";
+import { USER_ROLES } from "../../../constants/system";
 
 function TeamMembers() {
   const { t } = useTranslation("people");
+
+  const [userRole, setUserRole] = useState("");
 
   const dispatch = useDispatch();
   const { teamMembersFilters } = useSelector(peopleSelector);
 
   const { data: allRoles = [] } = useGetAllRolesByUserTypeQuery(
-    USER_TYPES.teamMember
+    USER_ROLES.teamMember
   );
-
-  const formik = useFormik({
-    initialValues: {
-      userRole: "",
-    },
-  });
 
   return (
     <Grid container spacing={2} direction="column">
@@ -68,16 +61,15 @@ function TeamMembers() {
             <Grid item sx={{ width: 320 }}>
               <Autocomplete
                 size="small"
-                name="userRole"
                 label={t("byUserRole")}
                 noOptionsText={t("noTypes")}
                 options={allRoles?.map((type) => ({
                   value: type.name,
                   label: type.name,
                 }))}
-                value={formik.values.userRole}
+                value={userRole}
                 onChange={(e) => {
-                  formik.setFieldValue("userRole", e.target.value);
+                  setUserRole(e.target.value);
                   dispatch(
                     setTeamMembersFilters({
                       ...teamMembersFilters,

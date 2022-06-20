@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { USER_TYPES } from "../../../constants/global";
+import { USER_ROLES } from "../../../constants/system";
 
 export const peopleSlice = createSlice({
   name: "people",
@@ -7,12 +7,12 @@ export const peopleSlice = createSlice({
     customerFilters: {
       page: 1,
       perPage: 20,
-      "filter[user_type]": USER_TYPES.customer,
+      "filter[user_type]": USER_ROLES.customer,
     },
     teamMembersFilters: {
       page: 1,
       perPage: 20,
-      "filter[user_type]": USER_TYPES.teamMember,
+      "filter[user_type]": USER_ROLES.teamMember,
     },
   },
   reducers: {

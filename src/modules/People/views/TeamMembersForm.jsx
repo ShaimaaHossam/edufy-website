@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { useGetAllRolesByUserTypeQuery } from "../../../redux/services/roles";
-import { useGetPropertiesListQuery } from "../../../redux/services/properties";
+import { useGetAllPropertiesQuery } from "../../../redux/services/properties";
 import {
   useAddTeamMemberMutation,
   useUpdateUser1Mutation,
@@ -36,7 +36,7 @@ import Radio from "../../../shared/components/inputs/Radio";
 import NumberInput from "../../../shared/components/inputs/NumberInput";
 import { mdiPlusCircleOutline as PlusIcon, mdiAlertCircle } from "@mdi/js";
 
-import { USER_TYPES } from "../../../constants/global";
+import { USER_ROLES } from "../../../constants/system";
 
 function TeamMembersForm({ formType }) {
   const { t } = useTranslation("people");
@@ -53,9 +53,9 @@ function TeamMembersForm({ formType }) {
   const [addTeamMember] = useAddTeamMemberMutation();
   const [updateUser1] = useUpdateUser1Mutation();
 
-  const { data: listProperties = [] } = useGetPropertiesListQuery();
+  const { data: listProperties = [] } = useGetAllPropertiesQuery();
   const { data: allRoles = [] } = useGetAllRolesByUserTypeQuery(
-    USER_TYPES.teamMember
+    USER_ROLES.teamMember
   );
 
   const formik = useFormik({
@@ -65,7 +65,7 @@ function TeamMembersForm({ formType }) {
       phone: "",
       role: "",
       monthly_cap: "",
-      user_type: USER_TYPES.teamMember,
+      user_type: USER_ROLES.teamMember,
       property_ids: [],
     },
 
@@ -113,32 +113,32 @@ function TeamMembersForm({ formType }) {
     if (formType === "add" || isFetching || !user) return;
 
     setValues({
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
+      name: formType==="clone" ? "": user.name,
+      email: formType==="clone" ? "": user.email,
+      phone: formType==="clone" ? "": user.phone,
       role: user.role,
       monthly_cap: user.monthly_cap,
-      user_type: USER_TYPES.teamMember,
+      user_type: USER_ROLES.teamMember,
       property_ids:
         user.property_ids === null || user.property_ids.length === 0
           ? ""
           : user.property_ids,
     });
 
-    if (formType === "clone") {
-      setValues({
-        name: "",
-        email: "",
-        phone: "",
-        role: user.role,
-        monthly_cap: user.monthly_cap,
-        user_type: USER_TYPES.teamMember,
-        property_ids:
-          user.property_ids === null || user.property_ids.length === 0
-            ? ""
-            : user.property_ids,
-      });
-    }
+    // if (formType === "clone") {
+    //   setValues({
+    //     name: "",
+    //     email: "",
+    //     phone: "",
+    //     role: user.role,
+    //     monthly_cap: user.monthly_cap,
+    //     user_type: USER_ROLES.teamMember,
+    //     property_ids:
+    //       user.property_ids === null || user.property_ids.length === 0
+    //         ? ""
+    //         : user.property_ids,
+    //   });
+    // }
   }, [formType, isFetching, user, setValues]);
 
   if ((formType === "edit" && !user) || (formType === "clone" && !user))

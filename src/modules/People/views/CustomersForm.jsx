@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { useGetAllRolesByUserTypeQuery } from "../../../redux/services/roles";
-import { useGetAllUnitsByUserTypeQuery } from "../../../redux/services/units";
-import { useGetPropertiesListQuery } from "../../../redux/services/properties";
+import { useGetAllUnitsQuery } from "../../../redux/services/properties";
+import { useGetAllPropertiesQuery } from "../../../redux/services/properties";
 import {
   useAddCustomerMutation,
   useUpdateUser1Mutation,
@@ -36,7 +36,7 @@ import Autocomplete from "../../../shared/components/inputs/Autocomplete";
 import Radio from "../../../shared/components/inputs/Radio";
 import { mdiPlusCircleOutline as PlusIcon, mdiAlertCircle } from "@mdi/js";
 
-import { USER_TYPES } from "../../../constants/global";
+import { USER_ROLES } from "../../../constants/system";
 
 function CustomersForm({ formType }) {
   const { t } = useTranslation("people");
@@ -55,7 +55,7 @@ function CustomersForm({ formType }) {
       email: "",
       phone: "",
       role: "",
-      user_type: USER_TYPES.customer,
+      user_type: USER_ROLES.customer,
       property_ids: "",
       unit_ids: [],
     },
@@ -100,14 +100,14 @@ function CustomersForm({ formType }) {
 
   const { setValues } = formik;
 
-  const { data: listProperties = [] } = useGetPropertiesListQuery();
+  const { data: listProperties = [] } = useGetAllPropertiesQuery();
 
   const { data: allRoles = [] } = useGetAllRolesByUserTypeQuery(
-    USER_TYPES.customer
+    USER_ROLES.customer
   );
 
-  const { data: allUnits = [] } = useGetAllUnitsByUserTypeQuery(
-    formik.values.property_ids,
+  const { data: allUnits = [] } = useGetAllUnitsQuery(
+    {"filter[property_id]": formik.values.property_ids},
     { skip: !formik.values.property_ids }
   );
 
@@ -119,26 +119,15 @@ function CustomersForm({ formType }) {
     if (formType === "add" || isFetching || !user) return;
 
     setValues({
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
+      name: formType==="clone" ? "":user.name,
+      email: formType==="clone" ? "":user.email,
+      phone: formType==="clone" ? "":user.phone,
       role: user.role,
-      user_type: USER_TYPES.customer,
+      user_type: USER_ROLES.customer,
       unit_ids: user.unit_ids || [],
       property_ids: user.units.length === 0 ? "" : user.units[0].property_id,
     });
 
-    if (formType === "clone") {
-      setValues({
-        name: "",
-        email: "",
-        phone: "",
-        role: user.role,
-        user_type: USER_TYPES.customer,
-        unit_ids: user.unit_ids || [],
-        property_ids: user.units.length === 0 ? "" : user.units[0].property_id,
-      });
-    }
   }, [formType, isFetching, user, setValues]);
 
   if ((formType === "edit" && !user) || (formType === "clone" && !user))
