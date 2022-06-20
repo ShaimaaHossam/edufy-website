@@ -125,6 +125,7 @@ export const propertiesAPI = createApi({
       }),
       transformResponse: (res) => res.data,
     }),
+
     deleteRoom: build.mutation({
       query: (roomID) => ({
         url: `/units/rooms/delete/${roomID}`,

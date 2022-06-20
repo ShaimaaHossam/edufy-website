@@ -46,96 +46,95 @@ const en = {
   crError: "Please upload CR document",
 
   city: "City",
-  cityPermissions:{
-    update:"Update city",
-    view:"View city",
-    clone:"Clone city",
-    delete:"Delete city",
-    create:"Create city",
-    download:"Download city"
+  cityPermissions: {
+    update: "Update city",
+    view: "View city",
+    clone: "Clone city",
+    delete: "Delete city",
+    create: "Create city",
+    download: "Download city",
   },
   company: "Company",
-  companyPermissions:{
-    update:"Update company",
-    view:"View company",
-    clone:"Clone company",
-    delete:"Delete company",
-    create:"Create company",
-    download:"Download company"
+  companyPermissions: {
+    update: "Update company",
+    view: "View company",
+    clone: "Clone company",
+    delete: "Delete company",
+    create: "Create company",
+    download: "Download company",
   },
   room: "Room",
-  roomPermissions:{
-    update:"Update room",
-    view:"View room",
-    clone:"Clone room",
-    delete:"Delete room",
-    create:"Create room",
-    download:"Download room"
+  roomPermissions: {
+    update: "Update room",
+    view: "View room",
+    clone: "Clone room",
+    delete: "Delete room",
+    create: "Create room",
+    download: "Download room",
   },
   property: "Property",
-  propertyPermissions:{
-    update:"Update property",
-    view:"View property",
-    clone:"Clone property",
-    delete:"Delete property",
-    create:"Create property",
-    download:"Download property"
+  propertyPermissions: {
+    update: "Update property",
+    view: "View property",
+    clone: "Clone property",
+    delete: "Delete property",
+    create: "Create property",
+    download: "Download property",
   },
   propertytype: "Property Type",
-  propertytypePermissions:{
-    update:"Update property type",
-    view:"View property type",
-    clone:"Clone property type",
-    delete:"Delete property type",
-    create:"Create property type",
-    download:"Download property type"
+  propertytypePermissions: {
+    update: "Update property type",
+    view: "View property type",
+    clone: "Clone property type",
+    delete: "Delete property type",
+    create: "Create property type",
+    download: "Download property type",
   },
   user: "User",
-  userPermissions:{
-    update:"Update User",
-    view:"View User",
-    clone:"Clone User",
-    delete:"Delete User",
-    create:"Create User",
-    download:"Download User"
+  userPermissions: {
+    update: "Update User",
+    view: "View User",
+    clone: "Clone User",
+    delete: "Delete User",
+    create: "Create User",
+    download: "Download User",
   },
   roomtype: "Room Type",
-  roomtypePermissions:{
-    update:"Update room type",
-    view:"View room type",
-    clone:"Clone room type",
-    delete:"Delete room type",
-    create:"Create room type",
-    download:"Download room type"
+  roomtypePermissions: {
+    update: "Update room type",
+    view: "View room type",
+    clone: "Clone room type",
+    delete: "Delete room type",
+    create: "Create room type",
+    download: "Download room type",
   },
   unittype: "Unit Type",
-  unittypePermissions:{
-    update:"Update uint type",
-    view:"View uint type",
-    clone:"Clone uint type",
-    delete:"Delete uint type",
-    create:"Create uint type",
-    download:"Download uint type"
+  unittypePermissions: {
+    update: "Update uint type",
+    view: "View uint type",
+    clone: "Clone uint type",
+    delete: "Delete uint type",
+    create: "Create uint type",
+    download: "Download uint type",
   },
   unitroom: "Unit Room",
-  unitroomPermissions:{
-    update:"Update uint room",
-    view:"View uint room",
-    clone:"Clone uint room",
-    delete:"Delete uint room",
-    create:"Create uint room",
-    download:"Download uint room"
+  unitroomPermissions: {
+    update: "Update uint room",
+    view: "View uint room",
+    clone: "Clone uint room",
+    delete: "Delete uint room",
+    create: "Create uint room",
+    download: "Download uint room",
   },
   unit: "Unit",
-  unitPermissions:{
-    update:"Update unit",
-    view:"View unit",
-    clone:"Clone unit",
-    delete:"Delete unit",
-    create:"Create unit",
-    download:"Download unit"
+  unitPermissions: {
+    update: "Update unit",
+    view: "View unit",
+    clone: "Clone unit",
+    delete: "Delete unit",
+    create: "Create unit",
+    download: "Download unit",
   },
-
 };
 
 export default en;
