@@ -10,6 +10,8 @@ function Menu({
   AnchorComponentProps,
   AnchorComponentOpenProps,
 
+  menuWidth,
+
   badgeContent,
   badgeColor,
   hideBadgeOnOpen,
@@ -77,7 +79,11 @@ function Menu({
         }}
         MenuListProps={{
           dense: true,
-          sx: { minWidth: 180, maxWidth: 340, maxHeight: 300 },
+          sx: {
+            minWidth: menuWidth || 180,
+            maxWidth: menuWidth || 340,
+            maxHeight: 400,
+          },
         }}
       >
         {children}
@@ -93,6 +99,8 @@ Menu.propTypes = {
     .isRequired,
   AnchorComponentProps: PropTypes.object,
   AnchorComponentOpenProps: PropTypes.object,
+
+  menuWidth: PropTypes.number,
 
   badgeContent: PropTypes.node,
   badgeColor: PropTypes.oneOf([
