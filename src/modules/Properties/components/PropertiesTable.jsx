@@ -17,6 +17,7 @@ import Table from "../../../shared/components/Table";
 import IconButton from "../../../shared/components/IconButton";
 import Link from "../../../shared/components/Link";
 import Switch from "../../../shared/components/inputs/Switch";
+import ServicesTableList from "../../../shared/components/modules/services/ServicesTableList";
 
 import NoContent from "../../../shared/views/NoContent";
 
@@ -102,7 +103,7 @@ function PropertiesTable() {
         {item.city.title}
       </Typography>,
 
-      <></>,
+      <ServicesTableList services={item.service_items} />,
 
       <Grid container onClick={(e) => e.stopPropagation()}>
         <Grid item>
