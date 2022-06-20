@@ -3,7 +3,10 @@ import { propertiesSelector, setPropertiesFilters } from "../state";
 
 import { useGetAllPropertyTypesQuery } from "../../../redux/services/properties";
 import { useGetAllUsersByRoleQuery } from "../../../redux/services/people";
-import { useGetAllUsedCitiesQuery } from "../../../redux/services/general";
+import {
+  useGetAllUsedCitiesQuery,
+  useGetAllCompanyServicesQuery,
+} from "../../../redux/services/general";
 import { authSelector } from "../../../redux/slices/auth";
 
 import { useTranslation } from "react-i18next";
@@ -18,7 +21,10 @@ import useDebouncedEffect from "../../../shared/hooks/useDebouncedEffect";
 import { USER_ROLES } from "../../../constants/system";
 
 function PropertiesFilters() {
-  const { t } = useTranslation("properties");
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation("properties");
 
   const dispatch = useDispatch();
   const { propertiesFilters } = useSelector(propertiesSelector);
@@ -32,7 +38,7 @@ function PropertiesFilters() {
     USER_ROLES.areaManager
   );
   const { data: allCities = [] } = useGetAllUsedCitiesQuery(companyID);
-  const allServices = [];
+  const { data: allServices = [] } = useGetAllCompanyServicesQuery();
 
   const formik = useFormik({
     validateOnMount: false,
@@ -131,7 +137,7 @@ function PropertiesFilters() {
           limitTags={1}
           options={allServices.map((service) => ({
             value: service.id,
-            label: service.title,
+            label: language === "en" ? service.name.en : service.name.ar,
           }))}
           noOptionsText={t("noServices")}
           value={formik.values.service_id}
