@@ -113,9 +113,9 @@ function TeamMembersForm({ formType }) {
     if (formType === "add" || isFetching || !user) return;
 
     setValues({
-      name: formType==="clone" ? "": user.name,
-      email: formType==="clone" ? "": user.email,
-      phone: formType==="clone" ? "": user.phone,
+      name: formType === "clone" ? "" : user.name,
+      email: formType === "clone" ? "" : user.email,
+      phone: formType === "clone" ? "" : user.phone,
       role: user.role,
       monthly_cap: user.monthly_cap,
       user_type: USER_ROLES.teamMember,
@@ -124,21 +124,6 @@ function TeamMembersForm({ formType }) {
           ? ""
           : user.property_ids,
     });
-
-    // if (formType === "clone") {
-    //   setValues({
-    //     name: "",
-    //     email: "",
-    //     phone: "",
-    //     role: user.role,
-    //     monthly_cap: user.monthly_cap,
-    //     user_type: USER_ROLES.teamMember,
-    //     property_ids:
-    //       user.property_ids === null || user.property_ids.length === 0
-    //         ? ""
-    //         : user.property_ids,
-    //   });
-    // }
   }, [formType, isFetching, user, setValues]);
 
   if ((formType === "edit" && !user) || (formType === "clone" && !user))

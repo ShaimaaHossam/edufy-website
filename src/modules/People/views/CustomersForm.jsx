@@ -107,7 +107,7 @@ function CustomersForm({ formType }) {
   );
 
   const { data: allUnits = [] } = useGetAllUnitsQuery(
-    {"filter[property_id]": formik.values.property_ids},
+    { "filter[property_id]": formik.values.property_ids },
     { skip: !formik.values.property_ids }
   );
 
@@ -119,15 +119,14 @@ function CustomersForm({ formType }) {
     if (formType === "add" || isFetching || !user) return;
 
     setValues({
-      name: formType==="clone" ? "":user.name,
-      email: formType==="clone" ? "":user.email,
-      phone: formType==="clone" ? "":user.phone,
+      name: formType === "clone" ? "" : user.name,
+      email: formType === "clone" ? "" : user.email,
+      phone: formType === "clone" ? "" : user.phone,
       role: user.role,
       user_type: USER_ROLES.customer,
       unit_ids: user.unit_ids || [],
       property_ids: user.units.length === 0 ? "" : user.units[0].property_id,
     });
-
   }, [formType, isFetching, user, setValues]);
 
   if ((formType === "edit" && !user) || (formType === "clone" && !user))

@@ -22,7 +22,7 @@ import { USER_ROLES } from "../../../constants/system";
 function Customers() {
   const { t } = useTranslation("people");
 
-  const[userRole, setUserRole] = useState("");
+  const [userRole, setUserRole] = useState("");
 
   const dispatch = useDispatch();
   const { customerFilters } = useSelector(peopleSelector);
@@ -30,8 +30,6 @@ function Customers() {
   const { data: allRoles = [] } = useGetAllRolesByUserTypeQuery(
     USER_ROLES.customer
   );
-
-
 
   return (
     <Grid container spacing={2} direction="column">
