@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, useRef, Fragment } from "react";
 import PropTypes from "prop-types";
 
 import { useParams, useLocation, useNavigate } from "react-router-dom";
@@ -214,6 +214,7 @@ function UnitForm({ formType }) {
   });
 
   const {
+    values,
     resetForm,
     setFieldValue,
     values: { wallet_type_id: walletType },
@@ -225,9 +226,20 @@ function UnitForm({ formType }) {
       setFieldValue("wallet_amount", null);
   }, [walletType, setFieldValue]);
 
+  const valuesRef = useRef(values);
   useEffect(() => {
-    if (formType === "add" || !unit || !property) return;
+    if (!property) return;
+    if (formType === "add") {
+      resetForm({
+        values: {
+          ...valuesRef.current,
+          wallet_type_id: property.wallet_type_id,
+        },
+      });
+      return;
+    }
 
+    if (!unit) return;
     resetForm({
       values: {
         property_id: property.id,

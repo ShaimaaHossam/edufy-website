@@ -189,13 +189,12 @@ function PropertyForm({ formType }) {
   useEffect(() => {
     if (formType === "add") {
       getDeviceLocation().then((location) => {
-        console.log("here");
         resetForm({ values: { ...valuesRef.current, location } });
       });
       return;
     }
-    if (!property) return;
 
+    if (!property) return;
     resetForm({
       values: {
         title: property.title,
