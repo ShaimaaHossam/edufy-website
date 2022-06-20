@@ -65,7 +65,6 @@ function People() {
       <TabPanel value={value} index={1}>
         <Customers />
       </TabPanel>
-
     </>
   );
 }

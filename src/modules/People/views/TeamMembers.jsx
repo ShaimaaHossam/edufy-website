@@ -28,7 +28,6 @@ function TeamMembers() {
   const dispatch = useDispatch();
   const { teamMembersFilters } = useSelector(peopleSelector);
 
-
   const { data: allRoles = [] } = useGetAllRolesByUserTypeQuery(
     USER_TYPES.teamMember
   );
@@ -38,7 +37,6 @@ function TeamMembers() {
       userRole: "",
     },
   });
-
 
   return (
     <Grid container spacing={2} direction="column">
@@ -52,15 +50,17 @@ function TeamMembers() {
         <Paper sx={{ p: 3 }}>
           <Grid container columnSpacing={2} rowSpacing={3}>
             <Grid item sx={{ width: 320 }}>
-            <SearchInput
+              <SearchInput
                 size="small"
                 label={t("searchUser")}
                 placeholder={t("user")}
                 onChange={(keyword) => {
-                  dispatch(setTeamMembersFilters({
-                    ...teamMembersFilters,
-                    "filter[keyword]":keyword
-                  }))
+                  dispatch(
+                    setTeamMembersFilters({
+                      ...teamMembersFilters,
+                      "filter[keyword]": keyword,
+                    })
+                  );
                 }}
               />
             </Grid>
@@ -76,12 +76,14 @@ function TeamMembers() {
                   label: type.name,
                 }))}
                 value={formik.values.userRole}
-                onChange={(e)=>{
-                  formik.setFieldValue("userRole", e.target.value)
-                  dispatch(setTeamMembersFilters({
-                    ...teamMembersFilters,
-                    "filter[role]": e.target.value
-                  }))
+                onChange={(e) => {
+                  formik.setFieldValue("userRole", e.target.value);
+                  dispatch(
+                    setTeamMembersFilters({
+                      ...teamMembersFilters,
+                      "filter[role]": e.target.value,
+                    })
+                  );
                 }}
               />
             </Grid>
@@ -95,9 +97,9 @@ function TeamMembers() {
                 {t("newUser")}
               </Button>
             </Grid>
-            
+
             <Grid item xs={12}>
-              <TeamMembersTable/>
+              <TeamMembersTable />
             </Grid>
           </Grid>
         </Paper>

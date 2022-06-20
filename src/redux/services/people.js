@@ -56,7 +56,6 @@ export const peopleAPI = createApi({
       }),
       transformResponse: (res) => res.data,
       invalidatesTags: [{ type: "People", id: "PARTIAL-LIST" }],
-
     }),
 
     addCustomer: build.mutation({

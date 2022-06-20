@@ -139,8 +139,6 @@ export const propertiesAPI = createApi({
         method: "DELETE",
       }),
     }),
-
-  
   }),
 });
 

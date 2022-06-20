@@ -31,10 +31,7 @@ function Settings() {
             />
             <Route path="notifications" element={<Notifications />} />
             <Route path="roles" element={<Roles />} />
-            <Route
-              path="roles/update/:roleID"
-              element={<Permissions /> }
-            />
+            <Route path="roles/update/:roleID" element={<Permissions />} />
             {/* <Route path="permissions" element={<Permissions />} /> */}
           </Routes>
         </Paper>

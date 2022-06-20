@@ -27,8 +27,8 @@ function PeopleRoot() {
   return (
     <Routes>
       <Route index element={<People />} />
-     
-      <Route path="team/add" element={<TeamMembersForm formType="add" />} /> 
+
+      <Route path="team/add" element={<TeamMembersForm formType="add" />} />
       <Route
         path="team/clone/:teamMemberID"
         element={

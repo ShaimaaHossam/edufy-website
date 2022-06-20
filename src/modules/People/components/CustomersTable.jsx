@@ -58,7 +58,9 @@ function CustomersTable() {
               title={
                 <Box padding={2}>
                   {item.units.map((unit) => {
-                    return <Typography key={unit.title}>{unit.title}</Typography>;
+                    return (
+                      <Typography key={unit.title}>{unit.title}</Typography>
+                    );
                   })}
                 </Box>
               }
@@ -87,8 +89,8 @@ function CustomersTable() {
           </>
         ) : (
           <Typography component="span" variant="body2">
-          {t("noUnits")}
-        </Typography>
+            {t("noUnits")}
+          </Typography>
         )}
       </Typography>,
       <Typography component="span" variant="body2">
@@ -125,7 +127,7 @@ function CustomersTable() {
             color="primary"
             checked={item.active}
             onChange={() => {
-              updateUser1({ id: item.id,  active: !item.active });
+              updateUser1({ id: item.id, active: !item.active });
             }}
           />
           <Typography component="span" variant="caption" display="block">

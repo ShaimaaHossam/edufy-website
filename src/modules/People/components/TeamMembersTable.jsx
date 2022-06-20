@@ -88,7 +88,7 @@ function TeamMembersTable() {
           </>
         ) : (
           <Typography component="span" variant="body2">
-           {t("noProperties")}
+            {t("noProperties")}
           </Typography>
         )}
       </Typography>,

@@ -7,24 +7,25 @@ export const peopleSlice = createSlice({
     customerFilters: {
       page: 1,
       perPage: 20,
-      "filter[user_type]": USER_TYPES.customer
+      "filter[user_type]": USER_TYPES.customer,
     },
     teamMembersFilters: {
       page: 1,
       perPage: 20,
-      "filter[user_type]": USER_TYPES.teamMember
+      "filter[user_type]": USER_TYPES.teamMember,
     },
   },
   reducers: {
-    setCustomerFilters: (state, {payload})=>{
+    setCustomerFilters: (state, { payload }) => {
       state.customerFilters = payload;
     },
-    setTeamMembersFilters: (state, {payload})=>{
+    setTeamMembersFilters: (state, { payload }) => {
       state.teamMembersFilters = payload;
-    }
+    },
   },
 });
 
-export const {  setTeamMembersFilters, setCustomerFilters } = peopleSlice.actions;
+export const { setTeamMembersFilters, setCustomerFilters } =
+  peopleSlice.actions;
 
 export const peopleSelector = (state) => state.people;

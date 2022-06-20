@@ -141,7 +141,8 @@ function CustomersForm({ formType }) {
     }
   }, [formType, isFetching, user, setValues]);
 
-  if ((formType === "edit" && !user)|| (formType === "clone" && !user)) return null;
+  if ((formType === "edit" && !user) || (formType === "clone" && !user))
+    return null;
 
   return (
     <Grid container spacing={2} direction="column">
@@ -243,7 +244,15 @@ function CustomersForm({ formType }) {
                             title={
                               <Box padding={2}>
                                 {role.permissions.map((per) => {
-                                  return <Typography>{per.name}</Typography>;
+                                  return (
+                                    <Typography
+                                      component="h2"
+                                      variant="h6"
+                                      key={per.name}
+                                    >
+                                      {per.name}
+                                    </Typography>
+                                  );
                                 })}
                               </Box>
                             }
