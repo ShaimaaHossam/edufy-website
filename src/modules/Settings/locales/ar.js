@@ -4,6 +4,7 @@ const ar = {
   notifications: "الاشعارات",
   companyInformation: "معلومات الشركة",
   rolesAndPermissions: "الأدوار و التصاريح",
+  servicesSettings: "إعدادات الخدمات",
 
   logo: "الشعار",
   legalInformation: "المعلومات القانونية",
@@ -44,12 +45,8 @@ const ar = {
   imageError: "برجاء تحميل صوره فقط",
   crError: "بر جاء تحميل ملف وتيقه السجل التجاري ",
 
-  city: "مدينه",
-  company: "شركه",
-  room: "حجره",
   roomType: "نوع الحجره",
   uintType: "نوع الوحده",
-  unit: "وحده",
   contact: "فرد",
 
   city: "المدينه",

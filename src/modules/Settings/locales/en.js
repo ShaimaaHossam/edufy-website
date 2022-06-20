@@ -4,6 +4,7 @@ const en = {
   notifications: "Notifications",
   companyInformation: "Company Information",
   rolesAndPermissions: "Roles and permissions",
+  servicesSettings: "Services Settings",
 
   logo: "Logo",
   legalInformation: "Legal information",
