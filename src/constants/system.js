@@ -10,3 +10,17 @@ export const USER_ROLES = {
 };
 
 export const UNIT_CUSTOMER_TYPES = { owner: 1, tenant: 2 };
+
+export const ORDER_TYPES = {
+  maintenance: "maintenance",
+  cleaning: "cleaning",
+};
+
+export const ORDER_STATUSES = {
+  requested: "requested",
+  pending: "pending",
+  assigned: "assigned",
+  in_progress: "in_progress",
+  completed: "completed",
+  canceled: "canceled",
+};
