@@ -36,7 +36,7 @@ import Radio from "../../../shared/components/inputs/Radio";
 import NumberInput from "../../../shared/components/inputs/NumberInput";
 import { mdiPlusCircleOutline as PlusIcon, mdiAlertCircle } from "@mdi/js";
 
-import { USER_ROLES } from "../../../constants/system";
+import { USER_TYPES } from "../../../constants/system";
 
 function TeamMembersForm({ formType }) {
   const { t } = useTranslation("people");
@@ -55,7 +55,7 @@ function TeamMembersForm({ formType }) {
 
   const { data: listProperties = [] } = useGetAllPropertiesQuery();
   const { data: allRoles = [] } = useGetAllRolesByUserTypeQuery(
-    USER_ROLES.teamMember
+    USER_TYPES.teamMember
   );
 
   const formik = useFormik({
@@ -65,7 +65,7 @@ function TeamMembersForm({ formType }) {
       phone: "",
       role: "",
       monthly_cap: "",
-      user_type: USER_ROLES.teamMember,
+      user_type: USER_TYPES.teamMember,
       property_ids: [],
     },
 
@@ -118,7 +118,7 @@ function TeamMembersForm({ formType }) {
       phone: formType === "clone" ? "" : user.phone,
       role: user.role,
       monthly_cap: user.monthly_cap,
-      user_type: USER_ROLES.teamMember,
+      user_type: USER_TYPES.teamMember,
       property_ids:
         user.property_ids === null || user.property_ids.length === 0
           ? ""

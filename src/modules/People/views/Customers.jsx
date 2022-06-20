@@ -17,7 +17,7 @@ import { mdiPlus } from "@mdi/js";
 
 import CustomersTable from "../components/CustomersTable";
 
-import { USER_ROLES } from "../../../constants/system";
+import { USER_TYPES } from "../../../constants/system";
 
 function Customers() {
   const { t } = useTranslation("people");
@@ -28,7 +28,7 @@ function Customers() {
   const { customerFilters } = useSelector(peopleSelector);
 
   const { data: allRoles = [] } = useGetAllRolesByUserTypeQuery(
-    USER_ROLES.customer
+    USER_TYPES.customer
   );
 
   return (

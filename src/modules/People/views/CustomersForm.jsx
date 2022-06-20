@@ -36,7 +36,7 @@ import Autocomplete from "../../../shared/components/inputs/Autocomplete";
 import Radio from "../../../shared/components/inputs/Radio";
 import { mdiPlusCircleOutline as PlusIcon, mdiAlertCircle } from "@mdi/js";
 
-import { USER_ROLES } from "../../../constants/system";
+import { USER_TYPES } from "../../../constants/system";
 
 function CustomersForm({ formType }) {
   const { t } = useTranslation("people");
@@ -55,7 +55,7 @@ function CustomersForm({ formType }) {
       email: "",
       phone: "",
       role: "",
-      user_type: USER_ROLES.customer,
+      user_type: USER_TYPES.customer,
       property_ids: "",
       unit_ids: [],
     },
@@ -103,7 +103,7 @@ function CustomersForm({ formType }) {
   const { data: listProperties = [] } = useGetAllPropertiesQuery();
 
   const { data: allRoles = [] } = useGetAllRolesByUserTypeQuery(
-    USER_ROLES.customer
+    USER_TYPES.customer
   );
 
   const { data: allUnits = [] } = useGetAllUnitsQuery(
@@ -123,7 +123,7 @@ function CustomersForm({ formType }) {
       email: formType === "clone" ? "" : user.email,
       phone: formType === "clone" ? "" : user.phone,
       role: user.role,
-      user_type: USER_ROLES.customer,
+      user_type: USER_TYPES.customer,
       unit_ids: user.unit_ids || [],
       property_ids: user.units.length === 0 ? "" : user.units[0].property_id,
     });

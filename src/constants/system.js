@@ -7,6 +7,9 @@ export const USER_ROLES = {
   accountant: "Accountant",
   unitOwner: "Unit Owner",
   unitTenant: "Unit Tenant",
+};
+
+export const USER_TYPES = {
   customer: "customer",
   teamMember: "team_member",
 };

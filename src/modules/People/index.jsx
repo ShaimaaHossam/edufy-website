@@ -1,10 +1,8 @@
 import { Routes, Route, useParams } from "react-router-dom";
 import NotFound from "../../shared/views/NotFound";
 
-import TeamMembers from "./views/TeamMembers";
 import TeamMembersForm from "./views/TeamMembersForm";
 
-import Customers from "./views/Customers";
 import CustomersForm from "./views/CustomersForm";
 
 import People from "./views/People";

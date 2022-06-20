@@ -17,7 +17,7 @@ import { mdiPlus } from "@mdi/js";
 
 import TeamMembersTable from "../components/TeamMembersTable";
 
-import { USER_ROLES } from "../../../constants/system";
+import { USER_TYPES } from "../../../constants/system";
 
 function TeamMembers() {
   const { t } = useTranslation("people");
@@ -28,7 +28,7 @@ function TeamMembers() {
   const { teamMembersFilters } = useSelector(peopleSelector);
 
   const { data: allRoles = [] } = useGetAllRolesByUserTypeQuery(
-    USER_ROLES.teamMember
+    USER_TYPES.teamMember
   );
 
   return (
