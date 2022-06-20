@@ -8,3 +8,4 @@ export const IS_PROD = process.env.REACT_APP_ENV === "PRODUCTION";
 export const IS_STAG = process.env.REACT_APP_ENV === "STAGE";
 
 export const SENTRY_KEY = process.env.REACT_APP_SENTRY_KEY;
+export const FRESHDESK_KEY = process.env.REACT_APP_FRESHDESK_KEY;

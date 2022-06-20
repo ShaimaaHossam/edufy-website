@@ -8,10 +8,12 @@ import * as serviceWorker from "./serviceWorker";
 
 import "./i18n";
 import { initSentry } from "./utils/sentry";
+import { initFreshdesk } from "./utils/freshdesk";
 
 import App from "./modules/App";
 
 initSentry();
+initFreshdesk();
 
 ReactDOM.render(
   <React.StrictMode>
