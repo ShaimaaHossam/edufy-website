@@ -10,7 +10,10 @@ export const propertiesAPI = createApi({
   endpoints: (build) => ({
     /** PROPERTIES SECTION **/
     getProperties: build.query({
-      query: (queryParams) => ({ url: "/properties", params: queryParams }),
+      query: (queryParams) => ({
+        url: "/properties",
+        params: { include: "services", ...queryParams },
+      }),
       transformResponse: (res, meta, queryParams) => ({
         data: res.data,
         meta: res.meta,
