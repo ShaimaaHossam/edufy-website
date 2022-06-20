@@ -120,9 +120,9 @@ function TeamMembersForm({ formType }) {
       monthly_cap: user.monthly_cap,
       user_type: USER_TYPES.teamMember,
       property_ids:
-        user.property_ids === null || user.property_ids.length === 0
-          ? ""
-          : user.property_ids,
+        user.properties.length === 0
+          ? []
+          : user.properties.map((property) => property.id),
     });
   }, [formType, isFetching, user, setValues]);
 
@@ -289,7 +289,7 @@ function TeamMembersForm({ formType }) {
               </Grid>
 
               {(propertyShown && formType === "add") ||
-              (propertyShown && formik.values.property_ids === "") ? (
+              (propertyShown && formik.values.property_ids.length === 0) ? (
                 <Grid item container xs={12} spacing={3}>
                   <Grid item xs={12}>
                     <Typography

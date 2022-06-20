@@ -56,7 +56,7 @@ function CustomersForm({ formType }) {
       phone: "",
       role: "",
       user_type: USER_TYPES.customer,
-      property_ids: "",
+      property_ids: [],
       unit_ids: [],
     },
 
@@ -124,8 +124,9 @@ function CustomersForm({ formType }) {
       phone: formType === "clone" ? "" : user.phone,
       role: user.role,
       user_type: USER_TYPES.customer,
-      unit_ids: user.unit_ids || [],
-      property_ids: user.units.length === 0 ? "" : user.units[0].property_id,
+      unit_ids:
+        user.units.length === 0 ? [] : user.units.map((unit) => unit.id),
+      property_ids: user.units.length === 0 ? [] : user?.units[0].property_id,
     });
   }, [formType, isFetching, user, setValues]);
 
