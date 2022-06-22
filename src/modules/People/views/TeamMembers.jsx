@@ -7,7 +7,7 @@ import { useGetAllRolesByUserTypeQuery } from "../../../redux/services/roles";
 
 import { useTranslation } from "react-i18next";
 
-import { Grid, Paper, Typography, Button, Collapse } from "@mui/material";
+import { Grid, Paper, Typography, Button } from "@mui/material";
 
 import Icon from "../../../shared/components/Icon";
 import Autocomplete from "../../../shared/components/inputs/Autocomplete";

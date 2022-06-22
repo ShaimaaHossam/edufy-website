@@ -215,9 +215,7 @@ function TeamMembersForm({ formType }) {
               <Grid item xs={12} my={-1}>
                 <FormControl error={!!formik.errors.role} variant="standard">
                   <RadioGroup
-                    column="true"
                     name="role"
-                    aria-labelledby="radio-group-label"
                     value={formik.values.role}
                     onChange={(_, value) => formik.setFieldValue("role", value)}
                   >
@@ -240,11 +238,8 @@ function TeamMembersForm({ formType }) {
                           >
                             <Box component="span">
                               <Icon
-                                aria-label="info"
                                 icon={mdiAlertCircle}
                                 size="medium"
-                                shape="rounded"
-                                variant="contained"
                                 color="primary"
                                 sx={{
                                   "&::before": {

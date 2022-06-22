@@ -45,7 +45,7 @@ const ar = {
 
   customerInformation: "معلومات عن الزبون",
   customerName: "اسم الزبون",
-  customerRole: "دور الزبون ",
+  customerRoleLable: "دور الزبون ",
   assignUnitOptional: " تعين الي وحدة ( اختيارية )",
   unitNama: "اسم الوحدة",
   assignOptionalUnitLabel: "هذ الزبون لم يتم تعينه علي اي عقار او وحدة",

@@ -13,6 +13,7 @@ export const initFreshdesk = () => {
 
   function initialize(i, t) {
     let e;
+    /* eslint-disable */
     let result = i.getElementById(t)
       ? initFreshChat()
       : (((e = i.createElement("script")).id = t),
