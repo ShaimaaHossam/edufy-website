@@ -7,7 +7,7 @@ import { useGetAllRolesByUserTypeQuery } from "../../../redux/services/roles";
 
 import { useTranslation } from "react-i18next";
 
-import { Grid, Paper, Typography, Button, Collapse } from "@mui/material";
+import { Grid, Paper, Typography, Button } from "@mui/material";
 
 import Icon from "../../../shared/components/Icon";
 import Autocomplete from "../../../shared/components/inputs/Autocomplete";
@@ -28,7 +28,8 @@ function TeamMembers() {
   const { teamMembersFilters } = useSelector(peopleSelector);
 
   const { data: allRoles = [] } = useGetAllRolesByUserTypeQuery(
-    USER_TYPES.teamMember
+    USER_TYPES.teamMember,
+    { refetchOnMountOrArgChange: true }
   );
 
   return (
@@ -61,6 +62,7 @@ function TeamMembers() {
             <Grid item sx={{ width: 320 }}>
               <Autocomplete
                 size="small"
+                name="roles filter"
                 label={t("byUserRole")}
                 noOptionsText={t("noTypes")}
                 options={allRoles?.map((type) => ({

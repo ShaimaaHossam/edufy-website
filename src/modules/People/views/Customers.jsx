@@ -60,6 +60,7 @@ function Customers() {
 
             <Grid item sx={{ width: 320 }}>
               <Autocomplete
+                name="roles filter"
                 size="small"
                 label={t("byUserRole")}
                 noOptionsText={t("noTypes")}

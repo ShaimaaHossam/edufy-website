@@ -55,6 +55,10 @@ const en = {
   requiredField: "This field is required",
   invalidEmailFormat: "Invalid email formait",
   invalidPhoneNumber: "Invalid phone number",
+  invalidName: {
+    alphabets: "Only alphabets are allowed for this field ",
+    charactersNumber: "name should be at lest 3 characters",
+  },
 
   createUser: "Create User",
   saveChanges: "Save Changes",
@@ -70,6 +74,8 @@ const en = {
     "Unit Owner": "Unit Owner",
     "Unit Tenant": "Unit Tenant",
   },
+
+  noPermissions: "There is no permissions for this role yet ",
 };
 
 export default en;

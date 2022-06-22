@@ -30,7 +30,7 @@ const ar = {
   teamMemberInformation: "معلومات عن عضو الفريق",
   name: "اسم العضو",
 
-  teamMemberRole: "دور عضو الفريق",
+  teamMemberRoleLable: "دور عضو الفريق",
 
   monyhlyCap: "الحد الاقصي الشهري",
   adminApproval: "لا حاجه لموافقه المسؤل حتي:",
@@ -45,7 +45,7 @@ const ar = {
 
   customerInformation: "معلومات عن الزبون",
   customerName: "اسم الزبون",
-  customerRole: "دور الزبون ",
+  customerRoleLable: "دور الزبون ",
   assignUnitOptional: " تعين الي وحدة ( اختيارية )",
   unitNama: "اسم الوحدة",
   assignOptionalUnitLabel: "هذ الزبون لم يتم تعينه علي اي عقار او وحدة",
@@ -54,11 +54,15 @@ const ar = {
   requiredField: "هذا الحقل مطلوب",
   invalidEmailFormat: "هذا البريد غير صالح",
   invalidPhoneNumber: "رقم الهاتف غير صالح",
+  invalidName: {
+    alphabets: "الاسم يجب ان يتكون من حروف فقط ",
+    charactersNumber: "الاسم يجب ان يكون علي الاقل ثلاثه احرف ",
+  },
 
   createUser: "انشأ مستخدم جديد",
   saveChanges: "احفظ التغيرات",
 
-  teamMmberRole: {
+  teamMemberRole: {
     Admin: "مسؤل",
     "Area Manager": "مدير المنطقة",
     Accountant: "محاسب",
@@ -69,6 +73,8 @@ const ar = {
     "Unit Owner": "مالك الوحدة",
     "Unit Tenant": "مستأجر الوحدة",
   },
+
+  noPermissions: " لا يوجد تصاريح لهذا الدور حاليا  ",
 };
 
 export default ar;
