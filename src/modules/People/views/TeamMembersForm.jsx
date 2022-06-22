@@ -17,17 +17,17 @@ import * as Yup from "yup";
 
 import {
   Grid,
-  Box,
   Paper,
   Typography,
   Button,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   RadioGroup,
-  Tooltip,
 } from "@mui/material";
 
 import Breadcrumbs from "../../../shared/components/Breadcrumbs";
+import PermissionsTooltip from "../components/PermissionsTooltip";
 import TextInput from "../../../shared/components/inputs/TextInput";
 import Icon from "../../../shared/components/Icon";
 import IconButton from "../../../shared/components/IconButton";
@@ -55,7 +55,8 @@ function TeamMembersForm({ formType }) {
 
   const { data: listProperties = [] } = useGetAllPropertiesQuery();
   const { data: allRoles = [] } = useGetAllRolesByUserTypeQuery(
-    USER_TYPES.teamMember
+    USER_TYPES.teamMember,
+    { refetchOnMountOrArgChange: true }
   );
 
   const formik = useFormik({
@@ -70,14 +71,17 @@ function TeamMembersForm({ formType }) {
     },
 
     validationSchema: Yup.object({
-      name: Yup.string().required(t("requiredField")),
+      name: Yup.string()
+        .min(3, t("invalidName.charactersNumber"))
+        .required(t("requiredField"))
+        .matches(/^[aA-zZ\s]+$/, t("invalidName.alphabets")),
       email: Yup.string()
         .email(t("invalidEmailFormat"))
         .required(t("requiredField")),
       phone: Yup.string()
         .min(10, t("invalidPhoneNumber"))
         .required(t("requiredField")),
-      role: Yup.string().required(t("requiredField")),
+      role: Yup.string(),
       monthly_cap: Yup.number().required(t("requiredField")),
     }),
     onSubmit: async (values, { setErrors }) => {
@@ -209,9 +213,9 @@ function TeamMembersForm({ formType }) {
               </Grid>
 
               <Grid item xs={12} my={-1}>
-                <FormControl>
+                <FormControl error={!!formik.errors.role} variant="standard">
                   <RadioGroup
-                    column
+                    column="true"
                     name="role"
                     aria-labelledby="radio-group-label"
                     value={formik.values.role}
@@ -225,28 +229,33 @@ function TeamMembersForm({ formType }) {
                             value={role.name}
                             control={<Radio />}
                           />
-                          <Tooltip
-                            title={
-                              <Box padding={2}>
-                                {role.permissions.map((per) => {
-                                  return <Typography>{per.name}</Typography>;
-                                })}
-                              </Box>
-                            }
+                          <PermissionsTooltip
+                            permissions={role.permissions}
+                            noPermissions={t("noPermissions")}
                           >
-                            <IconButton
-                              aria-label="info"
-                              icon={mdiAlertCircle}
-                              size="small"
-                              shape="rounded"
-                              variant="contained"
-                              color="primary"
-                            />
-                          </Tooltip>
+                            <>
+                              <IconButton
+                                aria-label="info"
+                                icon={mdiAlertCircle}
+                                size="small"
+                                shape="rounded"
+                                variant="contained"
+                                color="primary"
+                                sx={{
+                                  "&::before": {
+                                    content: "none",
+                                  },
+                                }}
+                              />
+                            </>
+                          </PermissionsTooltip>
                         </Grid>
                       );
                     })}
                   </RadioGroup>
+                  <FormHelperText>
+                    {formik.values.role === "" ? formik.errors.role : ""}
+                  </FormHelperText>
                 </FormControl>
               </Grid>
             </Grid>

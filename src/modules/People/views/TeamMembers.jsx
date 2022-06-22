@@ -28,7 +28,8 @@ function TeamMembers() {
   const { teamMembersFilters } = useSelector(peopleSelector);
 
   const { data: allRoles = [] } = useGetAllRolesByUserTypeQuery(
-    USER_TYPES.teamMember
+    USER_TYPES.teamMember,
+    { refetchOnMountOrArgChange: true }
   );
 
   return (
@@ -61,6 +62,7 @@ function TeamMembers() {
             <Grid item sx={{ width: 320 }}>
               <Autocomplete
                 size="small"
+                name="roles filter"
                 label={t("byUserRole")}
                 noOptionsText={t("noTypes")}
                 options={allRoles?.map((type) => ({
