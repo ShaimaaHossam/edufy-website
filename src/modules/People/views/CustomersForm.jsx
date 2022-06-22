@@ -245,11 +245,6 @@ function CustomersForm({ formType }) {
                                 icon={mdiAlertCircle}
                                 size="medium"
                                 color="primary"
-                                sx={{
-                                  "&::before": {
-                                    content: "none",
-                                  },
-                                }}
                               />
                             </Box>
                           </PermissionsTooltip>

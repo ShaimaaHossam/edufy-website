@@ -241,11 +241,6 @@ function TeamMembersForm({ formType }) {
                                 icon={mdiAlertCircle}
                                 size="medium"
                                 color="primary"
-                                sx={{
-                                  "&::before": {
-                                    content: "none",
-                                  },
-                                }}
                               />
                             </Box>
                           </PermissionsTooltip>
