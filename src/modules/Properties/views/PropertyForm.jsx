@@ -13,6 +13,7 @@ import {
 import { useGetAllUsersByRoleQuery } from "../../../redux/services/people";
 import {
   useGetAllCitiesQuery,
+  useGetCompanyServicesTreeQuery,
   useGetPropertyServicesTreeQuery,
 } from "../../../redux/services/general";
 
@@ -69,8 +70,15 @@ function PropertyForm({ formType }) {
   const { data: allAreaManagers = [] } = useGetAllUsersByRoleQuery(
     USER_ROLES.areaManager
   );
-  const { data: services } = useGetPropertyServicesTreeQuery(propertyID);
+  const { data: companyServices } = useGetCompanyServicesTreeQuery(undefined, {
+    skip: formType !== "add",
+  });
+  const { data: propertyServices } = useGetPropertyServicesTreeQuery(
+    propertyID,
+    { skip: !propertyID, refetchOnMountOrArgChange: true }
+  );
 
+  const [changedServices, setChangedServices] = useState({});
   const formik = useFormik({
     validateOnMount: false,
     validateOnBlur: false,
@@ -86,8 +94,6 @@ function PropertyForm({ formType }) {
       area_manager_id: "",
       wallet_type_id: WALLET_TYPES.unlimited,
       wallet_amount: null,
-
-      changedServices: {},
     },
     validationSchema: Yup.object().shape({
       title: Yup.string()
@@ -139,22 +145,17 @@ function PropertyForm({ formType }) {
         }),
     }),
     onSubmit: async (values, { setErrors }) => {
-      const {
-        title,
-        property_type_id,
-        property_subtype_id,
-        changedServices,
-        ...formData
-      } = values;
+      const { title, property_type_id, property_subtype_id, ...formData } =
+        values;
 
-      const service_items = Object.values(changedServices).map(
-        ({ id, checked, name, description }) => ({
+      const service_items = Object.values(changedServices)
+        .filter(({ active }) => active)
+        .map(({ id, checked, name, description }) => ({
           service_id: id,
           service_name: name,
           service_description: description,
           checked: checked,
-        })
-      );
+        }));
       !!service_items.length && Object.assign(formData, { service_items });
 
       if (formType === "edit") {
@@ -230,8 +231,6 @@ function PropertyForm({ formType }) {
         area_manager_id: property.area_manager.id,
         wallet_type_id: property.wallet_type_id,
         wallet_amount: property.wallet_amount || null,
-
-        changedServices: {},
       },
     });
   }, [formType, property, resetForm]);
@@ -599,13 +598,17 @@ function PropertyForm({ formType }) {
               </Grid>
 
               <Grid item xs={12}>
-                <ServicesSelection
-                  services={services}
-                  changedServices={formik.values.changedServices}
-                  onChange={(changedServices) =>
-                    formik.setFieldValue("services", changedServices)
-                  }
-                />
+                {(companyServices || propertyServices) && (
+                  <ServicesSelection
+                    services={
+                      formType === "add" ? companyServices : propertyServices
+                    }
+                    changedServices={changedServices}
+                    onChange={(changedServices) =>
+                      setChangedServices(changedServices)
+                    }
+                  />
+                )}
               </Grid>
             </Grid>
 

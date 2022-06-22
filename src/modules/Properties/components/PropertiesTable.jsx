@@ -103,7 +103,16 @@ function PropertiesTable() {
         {item.city.title}
       </Typography>,
 
-      <ServicesTableList services={item.service_items} />,
+      !!item.services && (
+        <ServicesTableList
+          services={item.services
+            .filter((s) => s.active && s.checked)
+            .map((s) => ({
+              id: s.service_id,
+              name: s.service_name,
+            }))}
+        />
+      ),
 
       <Grid container onClick={(e) => e.stopPropagation()}>
         <Grid item>

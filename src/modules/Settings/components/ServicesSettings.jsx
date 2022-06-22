@@ -38,6 +38,7 @@ function ServicesSettings() {
       <Grid item xs={12}>
         <ServicesSelection
           services={services}
+          isCompany
           changedServices={changedServices}
           onChange={(changedServices) => setChangedServices(changedServices)}
         />

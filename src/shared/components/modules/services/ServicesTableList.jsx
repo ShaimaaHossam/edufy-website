@@ -3,17 +3,23 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
 import { Typography, ListItem, Button } from "@mui/material";
+import { mdiMinus } from "@mdi/js";
 
 import Menu from "../../Menu";
+import Icon from "../../Icon";
 
 function ServicesTableList({ services }) {
   const {
     i18n: { language },
   } = useTranslation();
 
+  if (!services.length) {
+    return <Icon icon={mdiMinus} />;
+  }
+
   if (services.length === 1) {
     return (
-      <Typography component="span" variant="body2">
+      <Typography component="span" variant="body2" sx={{ maxWidth: 150 }}>
         {language === "en" ? services[0].name.en : services[0].name.ar}
       </Typography>
     );
@@ -28,12 +34,17 @@ function ServicesTableList({ services }) {
         color: "inherit",
         variant: "text",
         endIcon: `+${services.length - 1}`,
-        children: services[0].name,
         onClick: (e) => e.stopPropagation(),
-        sx: { fontWeight: 400, fontSize: 14, p: 0 },
+        children: (
+          <Typography component="span" variant="body2" noWrap>
+            {language === "en" ? services[0].name.en : services[0].name.ar}
+          </Typography>
+        ),
+        sx: { maxWidth: 150, px: "4px", fontSize: 14 },
       }}
       AnchorComponentOpenProps={{
         color: "primary",
+        variant: "outlined",
       }}
     >
       {services.map((service) => (
@@ -48,7 +59,15 @@ function ServicesTableList({ services }) {
 }
 
 ServicesTableList.propTypes = {
-  services: PropTypes.arrayOf(PropTypes.object).isRequired,
+  services: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.shape({
+        en: PropTypes.string.isRequired,
+        ar: PropTypes.string.isRequired,
+      }).isRequired,
+    })
+  ).isRequired,
 };
 
 export default ServicesTableList;

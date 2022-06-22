@@ -62,7 +62,7 @@ function PropertiesFilters() {
           "filter[property_type_id]": values.property_type_id,
           "filter[area_manager_id]": values.area_manager_id,
           "filter[city_id]": values.city_id,
-          "filter[service_id]": values.service_id,
+          "filter[services]": values.service_id,
         })
       );
     },
@@ -134,10 +134,14 @@ function PropertiesFilters() {
           name="service_id"
           label={t("byService")}
           isMulti
+          limitTagWidth
           limitTags={1}
           options={allServices.map((service) => ({
-            value: service.id,
-            label: language === "en" ? service.name.en : service.name.ar,
+            value: service.service_id,
+            label:
+              language === "en"
+                ? service.service_name.en
+                : service.service_name.ar,
           }))}
           noOptionsText={t("noServices")}
           value={formik.values.service_id}

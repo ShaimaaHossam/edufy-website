@@ -23,8 +23,7 @@ export const generalAPI = createApi({
     getCompanyServicesTree: build.query({
       query: () => ({ url: "/companies/services" }),
       transformResponse: (res) => res.data,
-      providesTags: (res) =>
-        res ? [{ type: "SERVICES-TREE", id: "COMPANY" }] : [],
+      providesTags: (res) => (res ? [{ type: "SERVICES-TREE" }] : []),
     }),
     getAllCompanyServices: build.query({
       query: () => ({
@@ -32,8 +31,7 @@ export const generalAPI = createApi({
         params: { listing: "1" },
       }),
       transformResponse: (res) => res.data,
-      providesTags: (res) =>
-        res ? [{ type: "SERVICES-LIST", id: "COMPANY" }] : [],
+      providesTags: (res) => (res ? [{ type: "SERVICES-LIST" }] : []),
     }),
     updateCompanyServices: build.mutation({
       query: (data) => ({
@@ -42,18 +40,13 @@ export const generalAPI = createApi({
         body: data,
       }),
       invalidatesTags: (res) =>
-        res
-          ? [
-              { type: "SERVICES-TREE", id: "COMPANY" },
-              { type: "SERVICES-LIST", id: "COMPANY" },
-            ]
-          : [],
+        res ? [{ type: "SERVICES-TREE" }, { type: "SERVICES-LIST" }] : [],
     }),
 
     getPropertyServicesTree: build.query({
       query: (id) => ({
         url: "/properties/services",
-        params: { property_id: id },
+        params: { "filter[property_id]": id },
       }),
       transformResponse: (res) => res.data,
       providesTags: (res, err, id) =>
@@ -62,7 +55,7 @@ export const generalAPI = createApi({
     getAllPropertyServices: build.query({
       query: (id) => ({
         url: "/properties/services",
-        params: { listing: "1", property_id: id },
+        params: { listing: "1", "filter[property_id]": id },
       }),
       transformResponse: (res) => res.data,
       providesTags: (res, err, id) =>
