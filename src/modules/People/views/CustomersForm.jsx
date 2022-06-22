@@ -18,6 +18,7 @@ import * as Yup from "yup";
 
 import {
   Grid,
+  Box,
   Paper,
   Typography,
   Button,
@@ -241,7 +242,7 @@ function CustomersForm({ formType }) {
                             permissions={role.permissions}
                             noPermissions={t("noPermissions")}
                           >
-                            <span>
+                            <Box component="span">
                               <Icon
                                 aria-label="info"
                                 icon={mdiAlertCircle}
@@ -255,7 +256,7 @@ function CustomersForm({ formType }) {
                                   },
                                 }}
                               />
-                            </span>
+                            </Box>
                           </PermissionsTooltip>
                         </Grid>
                       );
