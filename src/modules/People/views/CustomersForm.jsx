@@ -31,7 +31,6 @@ import Breadcrumbs from "../../../shared/components/Breadcrumbs";
 import PermissionsTooltip from "../components/PermissionsTooltip";
 import TextInput from "../../../shared/components/inputs/TextInput";
 import Icon from "../../../shared/components/Icon";
-import IconButton from "../../../shared/components/IconButton";
 import Autocomplete from "../../../shared/components/inputs/Autocomplete";
 import Radio from "../../../shared/components/inputs/Radio";
 import { mdiPlusCircleOutline as PlusIcon, mdiAlertCircle } from "@mdi/js";
@@ -227,7 +226,12 @@ function CustomersForm({ formType }) {
                   >
                     {allRoles?.map((role) => {
                       return (
-                        <Grid item key={role.name}>
+                        <Grid
+                          item
+                          container
+                          alignItems="center"
+                          key={role.name}
+                        >
                           <FormControlLabel
                             label={t(`customerRole.${role.name}`)}
                             value={role.name}
@@ -237,11 +241,11 @@ function CustomersForm({ formType }) {
                             permissions={role.permissions}
                             noPermissions={t("noPermissions")}
                           >
-                            <>
-                              <IconButton
+                            <span>
+                              <Icon
                                 aria-label="info"
                                 icon={mdiAlertCircle}
-                                size="small"
+                                size="medium"
                                 shape="rounded"
                                 variant="contained"
                                 color="primary"
@@ -251,7 +255,7 @@ function CustomersForm({ formType }) {
                                   },
                                 }}
                               />
-                            </>
+                            </span>
                           </PermissionsTooltip>
                         </Grid>
                       );

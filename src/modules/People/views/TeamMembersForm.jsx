@@ -24,13 +24,13 @@ import {
   FormControlLabel,
   FormHelperText,
   RadioGroup,
+  Box,
 } from "@mui/material";
 
 import Breadcrumbs from "../../../shared/components/Breadcrumbs";
 import PermissionsTooltip from "../components/PermissionsTooltip";
 import TextInput from "../../../shared/components/inputs/TextInput";
 import Icon from "../../../shared/components/Icon";
-import IconButton from "../../../shared/components/IconButton";
 import Autocomplete from "../../../shared/components/inputs/Autocomplete";
 import Radio from "../../../shared/components/inputs/Radio";
 import NumberInput from "../../../shared/components/inputs/NumberInput";
@@ -223,7 +223,12 @@ function TeamMembersForm({ formType }) {
                   >
                     {allRoles?.map((role) => {
                       return (
-                        <Grid item key={role.name}>
+                        <Grid
+                          item
+                          container
+                          alignItems="center"
+                          key={role.name}
+                        >
                           <FormControlLabel
                             label={t(`teamMemberRole.${role.name}`)}
                             value={role.name}
@@ -233,11 +238,11 @@ function TeamMembersForm({ formType }) {
                             permissions={role.permissions}
                             noPermissions={t("noPermissions")}
                           >
-                            <>
-                              <IconButton
+                            <Box component="span">
+                              <Icon
                                 aria-label="info"
                                 icon={mdiAlertCircle}
-                                size="small"
+                                size="medium"
                                 shape="rounded"
                                 variant="contained"
                                 color="primary"
@@ -247,7 +252,7 @@ function TeamMembersForm({ formType }) {
                                   },
                                 }}
                               />
-                            </>
+                            </Box>
                           </PermissionsTooltip>
                         </Grid>
                       );
