@@ -19,9 +19,9 @@ export default function Hero() {
             lecture hall.
           </p>
           <div className="mt-12">
-            <Link href="/" passHref>
+            <Link href="/join-meeting" passHref>
               <a className="bg-gray-800 hover:bg-gray-900 text-center mt-3 text-base text-white font-bold px-8 py-3 rounded-md lg:px-12 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xlhover:bg-gray-900 transition">
-                Download Now
+                Meet Now
               </a>
             </Link>
           </div>

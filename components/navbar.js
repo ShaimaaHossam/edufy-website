@@ -57,7 +57,7 @@ export default function Navbar() {
             </li>
             <li className="lg:mr-6 hover:cursor-pointer border-l-2 px-4 border-gray-200">
               {user ? (
-                <p onClick={()=>setDropdown(!dropdown)}>{user.email}</p>
+                <p onClick={() => setDropdown(!dropdown)}>{user.email}</p>
               ) : (
                 <Link href="/login">
                   <a>Log In</a>
@@ -68,7 +68,7 @@ export default function Navbar() {
         </div>
       </div>
       {dropdown ? <Dropdown closeMenu={closeMenu} /> : null}
-    
+
       {/**Medium and Small Screens */}
       <ul
         className={
