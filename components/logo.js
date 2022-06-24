@@ -2,7 +2,7 @@ import Link from "next/link";
 export default function Logo() {
   return (
     <div className="hover:cursor-pointer">
-      <Link href="/">
+      <Link href="/" passHref>
         <svg
           width="100"
           height="36"
