@@ -43,7 +43,6 @@ const PermissionsTooltip = styled(
     backgroundColor: "#fafbff",
     maxWidth: 300,
     maxHeight: 300,
-    // overflow: "scroll",
     overflowX: "hidden",
     overflowY: "auto",
     fontSize: theme.typography.pxToRem(12),
