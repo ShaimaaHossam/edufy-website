@@ -64,7 +64,7 @@ function JoinMeeting() {
                   htmlFor="meeting"
                   className="mb-1 text-sm  tracking-wide text-white"
                 >
-                  meeting id:
+                  Meeting ID:
                 </label>
                 <div >
                   <input
@@ -72,7 +72,7 @@ function JoinMeeting() {
                     type="text"
                     name="meeting"
                     className="text-sm sm:text-base placeholder-gray-500 pl-2 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
-                    placeholder="meeting id"
+                    placeholder="Meeting ID"
                     onChange={(e) => setMeetingId(e.target.value)}
                   />
                 </div>
@@ -84,7 +84,7 @@ function JoinMeeting() {
                   htmlFor="name"
                   className="mb-1 text-sm  tracking-wide text-white"
                 >
-                  name:
+                  Name:
                 </label>
                 <div >
                   <input
@@ -92,7 +92,7 @@ function JoinMeeting() {
                     type="text"
                     name="name"
                     className="text-sm sm:text-base placeholder-gray-500 pl-2 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
-                    placeholder="your name"
+                    placeholder="Enter your name"
                     onChange={(e) => setStudentName(e.target.value)}
                   />
                 </div>

@@ -22,7 +22,7 @@ export default function Navbar() {
   return (
     <>
       {/**Large Screens */}
-      <div className="w-full flex justify-between shadow-md py-4">
+      <div className="w-full bg-gray-900 flex justify-between shadow-md py-4">
         {/** LOGO */}
         <div className="ml-16">
           <Logo />
@@ -34,7 +34,7 @@ export default function Navbar() {
           className="text-gray-400 lg:hidden my-2 cursor-pointer z-20"
         />
         <div className="hidden lg:block mr-16">
-          <ul className="text-gray-700 flex">
+          <ul className="text-gray-300 flex">
             <li className="lg:mr-6 hover:cursor-pointer hover:border-b-2 border-gray-200">
               <Link href="/">
                 <a>Home</a>
