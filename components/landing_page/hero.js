@@ -5,7 +5,10 @@ export default function Hero() {
     <>
       <div className="relative m-0 ">
         <div className="w-full overflow-clip hero-height md:opacity-50 opacity-20">
-          <picture src="/img.jpg" className="w-full  object-fill" />
+          <picture src="/img.jpg" className="w-full  object-fill">
+            <source srcSet="/img.jpg" type="image/jpg" />
+            <img src="/img.jpg" alt="Landscape picture" />
+          </picture>
         </div>
         <div className="md:w-1/3 absolute top-0  text-center md:text-left md:pt-40 py-10 md:ml-8  px-8 ">
           <p className=" text-start text-2xl md:text-4xl font-extrabold text-gray-900">
