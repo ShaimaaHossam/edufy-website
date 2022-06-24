@@ -26,9 +26,9 @@ export const peopleAPI = createApi({
     }),
 
     getUsers: build.query({
-      query: (userType) => ({
+      query: (queryParams) => ({
         url: "/peoples",
-        params: { ...userType },
+        params: queryParams,
       }),
       transformResponse: (res) => ({
         data: res.data,
