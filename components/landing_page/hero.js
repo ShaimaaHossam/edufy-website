@@ -1,16 +1,15 @@
 import Link from "next/link";
-import Image from 'next/image'
 export default function Hero() {
   return (
     <>
       <div className="relative m-0 ">
         <div className="w-full overflow-clip hero-height md:opacity-50 opacity-20">
-          <picture src="/img.jpg" className="w-full  object-fill">
+          <picture src="/img.jpg">
             <source srcSet="/img.jpg" type="image/jpg" />
-            <img src="/img.jpg" alt="Landscape picture" />
+            <img src="/img.jpg" alt="Landscape picture"  className="w-full h-full object-fill" />
           </picture>
         </div>
-        <div className="md:w-1/3 absolute top-0  text-center md:text-left md:pt-40 py-10 md:ml-8  px-8 ">
+        <div className="lg:w-1/3 absolute top-0 mt-6   md:pt-40 py-10 md:ml-8  px-8 ">
           <p className=" text-start text-2xl md:text-4xl font-extrabold text-gray-900">
             Modern learning solutions for today&apos;s{" "}
             <span className="text-violet-800">digital world</span>

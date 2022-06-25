@@ -27,3 +27,7 @@ border-bottom: 10px;
 .custom-img{
   width: 100% !important;
 }
+.bg-img{
+  background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/dot-grid.png') ;
+  
+}
