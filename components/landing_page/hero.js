@@ -3,7 +3,7 @@ import Image from 'next/image'
 export default function Hero() {
   return (
     <>
-      <div className="relative m-0 ">
+      <div className="relative m-0">
         <div className="w-full overflow-clip hero-height md:opacity-50 opacity-20">
           <picture src="/img.jpg" className="w-full  object-fill">
             <source srcSet="/img.jpg" type="image/jpg" />

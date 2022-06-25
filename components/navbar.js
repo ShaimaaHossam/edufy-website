@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAlignJustify } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Logo from "./logo";
-import Dropdown from '../components/dropdown';
+import Dropdown from "../components/dropdown";
 import { auth } from "../firebase/firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 export default function Navbar() {
@@ -17,104 +17,118 @@ export default function Navbar() {
     flag === 0 ? setFlag(1) : setFlag(0);
   }
   function closeMenu() {
-    setDropdown(false)
+    setDropdown(false);
   }
   return (
     <>
-      {/**Large Screens */}
-      <div className="w-full bg-gray-900 flex justify-between shadow-md py-4">
-        {/** LOGO */}
-        <div className="ml-16">
-          <Logo />
-        </div>
-        {/**LINKS */}
-        <FontAwesomeIcon
-          icon={faAlignJustify}
-          onClick={switchFlag}
-          className="text-gray-400 lg:hidden my-2 cursor-pointer z-20"
-        />
-        <div className="hidden lg:block mr-16">
-          <ul className="text-gray-300 flex">
-            <li className="lg:mr-6 hover:cursor-pointer hover:border-b-2 border-gray-200">
-              <Link href="/">
-                <a>Home</a>
-              </Link>
-            </li>
-            <li className="lg:mr-6 hover:cursor-pointer hover:border-b-2 border-gray-200">
-              <Link href="/#about">
-                <a>About Us</a>
-              </Link>
-            </li>
-            <li className="lg:mr-6 hover:cursor-pointer hover:border-b-2 border-gray-200">
-              <Link href="/pricing">
-                <a>Pricing</a>
-              </Link>
-            </li>
-            <li className="lg:mr-6 hover:cursor-pointer hover:border-b-2 border-gray-200">
-              <Link href="/contact-us">
-                <a>Contact Us</a>
-              </Link>
-            </li>
-            <li className="lg:mr-6 hover:cursor-pointer border-l-2 px-4 border-gray-200">
-              {user ? (
-                <p onClick={() => setDropdown(!dropdown)}>{user.email}</p>
-              ) : (
-                <Link href="/login">
-                  <a>Log In</a>
+      <nav class="  px-2 sm:px-4 py-2.5  bg-gray-900 relative">
+        <div class="container flex flex-wrap justify-between items-center mx-auto">
+          <div className="ml-16">
+            <Logo />
+          </div>
+          <button
+            onClick={switchFlag}
+            type="button"
+            class="inline-flex items-center p-2 mr-6 text-sm text-gray-500 rounded-lg lg:hidden focus:outline-none focus:ring-2  dark:text-gray-400 "
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <svg
+              class="hidden w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+          <div
+            class={
+              flag == 1
+                ? "w-full  absolute top-16 left-0 bg-gray-900 z-20 pb-6"
+                : "hidden lg:block"
+            }
+            id="mobile-menu"
+          >
+            <ul class="flex flex-col lg:flex-row mt-4 md:mt-0 md:text-sm ">
+              <li>
+                <Link href="/" passHref>
+                  <a
+                  onClick={()=>switchFlag()}
+                    class="block py-2 pr-4 pl-3 text-gray-200 border-b lg:border-0 border-gray-100  "
+                    aria-current="page"
+                  >
+                    Home
+                  </a>
                 </Link>
-              )}
-            </li>
-          </ul>
+              </li>
+              <li>
+                <Link href="#about" passHref>
+                <a
+                onClick={()=>switchFlag()}
+                  href="#"
+                  class="block py-2 pr-4 pl-3 text-gray-200 border-b border-gray-100 lg:border-0  "
+                >
+                  About
+                </a>
+                </Link>
+                
+              </li>
+              <li>
+                <Link href="/pricing" passHref>
+                <a
+                onClick={()=>switchFlag()}
+                  href="#"
+                  class="block py-2 pr-4 pl-3 text-gray-200 border-b border-gray-100 lg:border-0  "
+                >
+                  Pricing
+                </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="#contact" passHref>
+                <a
+                onClick={()=>switchFlag()}
+                  href="#"
+                  class="block py-2 pr-4 pl-3 text-gray-200 border-b border-gray-100 lg:border-0  "
+                >
+                  Contact
+                </a>
+                </Link>
+                
+              </li>
+              <li>
+                <Link href="/sign-up" passHref>
+                <a
+                onClick={()=>switchFlag()}
+                  href="#"
+                  class="block py-2 pr-4 pl-3 text-gray-200  lg:border-l-2 "
+                >
+                  Sign Up
+                </a>
+                </Link>
+                
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-      {dropdown ? <Dropdown closeMenu={closeMenu} /> : null}
-
-      {/**Medium and Small Screens */}
-      <ul
-        className={
-          flag === 1
-            ? "absolute top-1  z-10 w-full h-full lg:hidden bg-gray-200  py-8 rounded-b-xl transition"
-            : "hidden"
-        }
-      >
-        <li
-          onClick={switchFlag}
-          className=" border-b-2 border-gray-100 text-center py-4"
-        >
-          <Link href="/">
-            <a>Home</a>
-          </Link>
-        </li>
-        <li
-          onClick={switchFlag}
-          className="border-b-2 border-gray-100 text-center py-4"
-        >
-          <Link href="/#about">
-            <a>About Us</a>
-          </Link>
-        </li>
-        <li
-          onClick={switchFlag}
-          className=" border-b-2 border-gray-100 text-center py-4  "
-        >
-          <Link href="/pricing">
-            <a>Pricing</a>
-          </Link>
-        </li>
-        <li onClick={switchFlag} className=" text-center py-4  ">
-          <Link href="/contact-us">
-            <a>Contact Us</a>
-          </Link>
-        </li>
-        <li
-          onClick={switchFlag}
-          className="text-white text-center font-bold  my-12"
-        >
-          <Link href="/login">
-            <a className="bg-purple-600 px-12 rounded-md py-2 mb-48">Log In</a>
-          </Link>
-        </li>
-      </ul>
+      </nav>
     </>
   );
 }

@@ -52,7 +52,7 @@ function JoinMeeting() {
   } else
     return (
       <>
-        <div className="min-h-screen flex flex-col items-center justify-center bg-[#212032]">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-[#212032] px-6">
 
           <div className="flex flex-col bg-[#32305a] shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-2 rounded-md w-full max-w-md">
             {error != '' ? (<p className="text-red mx-auto text-red-200 font-semibold my-4">
