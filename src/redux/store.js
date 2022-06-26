@@ -13,6 +13,7 @@ import { settingsSlice } from "./slices/settings";
 import { peopleSlice } from "../modules/People/state";
 
 import { propertiesFiltersSlice } from "../modules/Properties/state/propertiesFiltersSlice";
+import { propertyFormStepperSlice } from "../modules/Properties/state/propertyFormStepperSlice";
 
 export const store = configureStore({
   reducer: {
@@ -27,6 +28,7 @@ export const store = configureStore({
     [peopleSlice.name]: peopleSlice.reducer,
 
     [propertiesFiltersSlice.name]: propertiesFiltersSlice.reducer,
+    [propertyFormStepperSlice.name]: propertyFormStepperSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([

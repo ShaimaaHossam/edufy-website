@@ -38,6 +38,7 @@ const ar = {
   areaManagerEmail: "البريد الإلكتروني لمدير المنطقة",
   didntFoundManager: "لم تجد المدير الذي تبحث عنه؟",
   createNewManager: "إضافة مدير جديد",
+  propertyServices: "خدمات العقار",
   units: "الوحدات",
   assets: "المعدات",
   orders: "الطلبات",
@@ -98,6 +99,8 @@ const ar = {
   removeRoom: "مسح الغرفة",
   addCustomer: "إضافة عميل",
   removeCustomer: "مسح العميل",
+  nextServices: "التالي (الخدمات)",
+  back: "رجوع",
 
   units_count: "{{count}} وحدة",
   units_count_one: "1 وحدة",

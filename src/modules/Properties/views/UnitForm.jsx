@@ -223,7 +223,7 @@ function UnitForm({ formType }) {
   // reset wallet amount if type changed to unlimited
   useEffect(() => {
     walletType === WALLET_TYPES.unlimited &&
-      setFieldValue("wallet_amount", null);
+      setFieldValue("wallet_amount", null, false);
   }, [walletType, setFieldValue]);
 
   const valuesRef = useRef(values);
