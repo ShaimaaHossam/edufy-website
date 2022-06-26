@@ -10,6 +10,8 @@ import { generalAPI } from "./services/general";
 import { authSlice } from "./slices/auth";
 import { settingsSlice } from "./slices/settings";
 
+import { appSlice } from "../modules/App/state";
+
 import { peopleSlice } from "../modules/People/state";
 
 import { propertiesFiltersSlice } from "../modules/Properties/state/propertiesFiltersSlice";
@@ -24,6 +26,8 @@ export const store = configureStore({
 
     [authSlice.name]: authSlice.reducer,
     [settingsSlice.name]: settingsSlice.reducer,
+
+    [appSlice.name]: appSlice.reducer,
 
     [peopleSlice.name]: peopleSlice.reducer,
 
