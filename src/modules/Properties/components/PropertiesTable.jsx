@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { propertiesSelector, setPropertiesFilters } from "../state";
+import { filtersSelector, setFilters } from "../state/propertiesFiltersSlice";
 
 import {
   useGetPropertiesQuery,
@@ -29,10 +29,9 @@ function PropertiesTable() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { propertiesFilters } = useSelector(propertiesSelector);
+  const { filters } = useSelector(filtersSelector);
 
-  const { isLoading, data: properties } =
-    useGetPropertiesQuery(propertiesFilters);
+  const { isLoading, data: properties } = useGetPropertiesQuery(filters);
   const [updateProperty] = useUpdatePropertyMutation();
 
   const tableLabels = [
@@ -167,7 +166,7 @@ function PropertiesTable() {
         currentPage: properties.meta.currentPage,
       }}
       onPageChange={(page, perPage) =>
-        dispatch(setPropertiesFilters({ ...propertiesFilters, page, perPage }))
+        dispatch(setFilters({ ...filters, page, perPage }))
       }
     />
   ) : (

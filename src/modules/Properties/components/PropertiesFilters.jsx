@@ -1,5 +1,11 @@
+import { useEffect } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
-import { propertiesSelector, setPropertiesFilters } from "../state";
+import {
+  filtersSelector,
+  setFilters,
+  clearFilters,
+} from "../state/propertiesFiltersSlice";
 
 import { useGetAllPropertyTypesQuery } from "../../../redux/services/properties";
 import { useGetAllUsersByRoleQuery } from "../../../redux/services/people";
@@ -27,11 +33,15 @@ function PropertiesFilters() {
   } = useTranslation("properties");
 
   const dispatch = useDispatch();
-  const { propertiesFilters } = useSelector(propertiesSelector);
-
   const {
     company: { id: companyID },
   } = useSelector(authSelector);
+  const { filters } = useSelector(filtersSelector);
+
+  // clearing filters on unmount
+  useEffect(() => {
+    return () => dispatch(clearFilters());
+  }, [dispatch]);
 
   const { data: allPropertyTypes = [] } = useGetAllPropertyTypesQuery();
   const { data: allAreaManagers = [] } = useGetAllUsersByRoleQuery(
@@ -56,8 +66,8 @@ function PropertiesFilters() {
   useDebouncedEffect(
     () => {
       dispatch(
-        setPropertiesFilters({
-          ...propertiesFilters,
+        setFilters({
+          ...filters,
           page: "1",
           "filter[property_type_id]": values.property_type_id,
           "filter[area_manager_id]": values.area_manager_id,

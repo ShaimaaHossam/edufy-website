@@ -10,8 +10,9 @@ import { generalAPI } from "./services/general";
 import { authSlice } from "./slices/auth";
 import { settingsSlice } from "./slices/settings";
 
-import { propertiesSlice } from "../modules/Properties/state";
 import { peopleSlice } from "../modules/People/state";
+
+import { propertiesFiltersSlice } from "../modules/Properties/state/propertiesFiltersSlice";
 
 export const store = configureStore({
   reducer: {
@@ -23,8 +24,9 @@ export const store = configureStore({
     [authSlice.name]: authSlice.reducer,
     [settingsSlice.name]: settingsSlice.reducer,
 
-    [propertiesSlice.name]: propertiesSlice.reducer,
     [peopleSlice.name]: peopleSlice.reducer,
+
+    [propertiesFiltersSlice.name]: propertiesFiltersSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
