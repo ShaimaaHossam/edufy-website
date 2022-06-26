@@ -21,7 +21,7 @@ export default function Navbar() {
   }
   return (
     <>
-      <nav className="  px-2 sm:px-4 py-2.5  bg-gray-900 relative">
+      <nav className="  px-2 sm:px-4 py-2.5  bg-gray-900 fixed w-full z-20 top-0">
         <div className="container flex flex-wrap justify-between items-center mx-auto">
           <div className="ml-16">
             <Logo />
@@ -79,6 +79,17 @@ export default function Navbar() {
                 </Link>
               </li>
               <li>
+                <Link href="/join-meeting" passHref>
+                  <a
+                  
+                    className="block py-2 pr-4 pl-3 text-gray-200 border-b lg:border-0 border-gray-100  "
+                    aria-current="page"
+                  >
+                    Join Meeting
+                  </a>
+                </Link>
+              </li>
+              <li>
                 <Link href="#about" passHref>
                 <a
                 
@@ -100,18 +111,6 @@ export default function Navbar() {
                   Pricing
                 </a>
                 </Link>
-              </li>
-              <li>
-                <Link href="#contact" passHref>
-                <a
-                
-                  href="#"
-                  className="block py-2 pr-4 pl-3 text-gray-200 border-b border-gray-100 lg:border-0  "
-                >
-                  Contact
-                </a>
-                </Link>
-                
               </li>
               <li>
                 <Link href="/sign-up" passHref>
