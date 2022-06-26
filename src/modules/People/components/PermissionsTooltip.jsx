@@ -41,9 +41,15 @@ const PermissionsTooltip = styled(
 )(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: "#fafbff",
-    maxWidth: 220,
+    maxWidth: 300,
+    maxHeight: 300,
+    overflowX: "hidden",
+    overflowY: "auto",
     fontSize: theme.typography.pxToRem(12),
   },
 }));
 
 export default PermissionsTooltip;
+
+
+
