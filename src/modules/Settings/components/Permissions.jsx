@@ -4,8 +4,6 @@ import { useParams } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
-import { useFormik } from "formik";
-
 import {
   getPermesion,
   getSelectedPermesion,
@@ -19,26 +17,14 @@ import CheckboxMenu from "../../../shared/components/inputs/CheckboxMenu";
 import Dialog from "../../../shared/components/Dialog";
 
 function Permissions() {
-  const [openDialog, setOpenDialog] = useState(false);
-
-  const { permesions, role } = useSelector(settingsSelector);
-
   const { t } = useTranslation("settings");
 
   const { roleID } = useParams();
 
-  const [loading, setLoading] = useState(true);
-
-  const formik = useFormik({
-    validateOnMount: false,
-    validateOnBlur: false,
-    validateOnChange: true,
-    initialValues: {},
-  });
-
-  const { setValues } = formik;
+  const [openDialog, setOpenDialog] = useState(false);
 
   const dispatch = useDispatch();
+  const { permesions, role } = useSelector(settingsSelector);
 
   useEffect(() => {
     dispatch(getPermesion());
@@ -48,6 +34,8 @@ function Permissions() {
     dispatch(getSelectedPermesion(roleID));
   }, [dispatch, roleID]);
 
+  const [permsMap, setPermsMap] = useState(null);
+
   useEffect(() => {
     if (!permesions || !role) return;
 
@@ -55,76 +43,83 @@ function Permissions() {
     const reducedData = Object.keys(permesions).reduce(
       (acc, key) => ({
         ...acc,
-        [key.toLowerCase()]: permesions[key].map((permission) => ({
+        [t(`${key}.${key}`)]: permesions[key].map((permission) => ({
           id: permission.id,
           value: selectedPermissionsIds.indexOf(permission.id) > -1,
-          label: t(
-            `${key.toLowerCase()}Permissions.${permission.name
-              .split(" ")[0]
-              .toLocaleLowerCase()}`
-          ),
+          label: t(`${key}.${permission.slug}`),
         })),
       }),
       {}
     );
 
-    setValues(reducedData);
-    setLoading(false);
-  }, [permesions, role, setValues, t]);
+    setPermsMap(reducedData);
+  }, [permesions, role, t]);
 
   const handelSave = () => {
-    const data = Object.values(formik.values).reduce((acc, item) => {
+    const permissions = Object.values(permsMap).reduce((acc, item) => {
       return [...acc, ...item.filter((p) => p.value).map((p) => p.id)];
     }, []);
-    const respond = {
+
+    const data = {
       id: role.id,
       data: {
         company_id: role.company_id,
         name: role.name,
-        permissions: data,
+        permissions,
       },
     };
-    dispatch(updatePermesion(respond));
-    handleClose();
-  };
-  const handleClose = () => {
-    setOpenDialog(false);
+
+    dispatch(updatePermesion(data));
+    handleClose(false);
   };
 
-  const handleOpen = () => {
-    setOpenDialog(true);
-  };
-  if (loading) return null;
+  const handleOpen = () => setOpenDialog(true);
+  const handleClose = () => setOpenDialog(false);
+
+  if (role?.id !== roleID || !permsMap) return null;
+
   return (
     <Box width="60%" mx="auto">
-      <Grid container spacing={3} direction="column" component="form">
+      <Grid container spacing={3} direction="column">
         <Grid item xs={12}>
           <Typography component="h2" variant="h6">
             {t(role.name)}
           </Typography>
         </Grid>
 
-        {Object.keys(formik.values).map((key) => (
-          <Grid key={key} item xs={12}>
-            <CheckboxMenu
-              title={t(key)}
-              values={formik.values[key]}
-              onChange={(values) => formik.setFieldValue(key, values)}
-            />
-          </Grid>
-        ))}
-        <Grid item alignSelf="flex-end">
-          <Dialog
-            title={t("saveMesage")}
-            open={openDialog}
-            onClose={handleClose}
-            onConfirm={handelSave}
-          />
-          <Button color="success" onClick={handleOpen}>
-            {t("saveChanges")}
-          </Button>
-        </Grid>
+        {role.name !== "Admin" ? (
+          <>
+            {Object.keys(permsMap).map((key) => (
+              <Grid key={key} item xs={12}>
+                <CheckboxMenu
+                  title={t(key)}
+                  values={permsMap[key]}
+                  onChange={(values) =>
+                    setPermsMap({ ...permsMap, [key]: values })
+                  }
+                />
+              </Grid>
+            ))}
+
+            <Grid item alignSelf="flex-end">
+              <Button color="success" onClick={handleOpen}>
+                {t("saveChanges")}
+              </Button>
+            </Grid>
+          </>
+        ) : (
+          <Typography p variant="subtitle1" color="error" align="center">
+            {t("roleCantBeEdited")}
+          </Typography>
+        )}
       </Grid>
+
+      <Dialog
+        title={t("saveMesage")}
+        open={openDialog}
+        onClose={handleClose}
+        onConfirm={handelSave}
+      />
     </Box>
   );
 }
