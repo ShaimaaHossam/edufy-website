@@ -97,7 +97,7 @@ function JoinMeeting() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col mb-8">
+              {/* <div className="flex flex-col mb-8">
                 <label
                   htmlFor="password"
                   className="mb-1 text-sm  tracking-wide text-white"
@@ -130,7 +130,7 @@ function JoinMeeting() {
                     onChange={(e) => setRegNumber(e.target.value)}
                   />
                 </div>
-              </div>
+              </div> */}
 
               <div className="flex w-full mt-2">
                 <button

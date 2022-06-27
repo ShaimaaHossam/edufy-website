@@ -18,7 +18,7 @@ const Meeting = () => {
                 title="map"
                 scrolling="no"
                 allow="camera;microphone;display-capture"
-                src={`https://edufy-prebuilt.vercel.app/?token=${token}&name=${studentName}&joinScreenEnabled=true&meetingId=${meetingId}&webcamEnabled=true&micEnabled=false&debug=${debug}`}></iframe>
+                src={`https://edufy-meeting-platform.vercel.app/?token=${token}&name=${studentName}&joinScreenEnabled=true&meetingId=${meetingId}&webcamEnabled=true&micEnabled=false&debug=${debug}`}></iframe>
 
         </div>
     );
