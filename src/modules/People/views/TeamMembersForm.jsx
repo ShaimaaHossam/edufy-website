@@ -220,7 +220,7 @@ function TeamMembersForm({ formType }) {
                     onChange={(_, value) => formik.setFieldValue("role", value)}
                   >
                     {allRoles?.map((role) => {
-                      return (
+                      return !role.is_protected ? (
                         <Grid
                           item
                           container
@@ -245,7 +245,7 @@ function TeamMembersForm({ formType }) {
                             </Box>
                           </PermissionsTooltip>
                         </Grid>
-                      );
+                      ) : null;
                     })}
                   </RadioGroup>
                   <FormHelperText>
