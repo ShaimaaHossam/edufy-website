@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 
+import usePermissions from "../../../shared/hooks/usePermissions";
+
 import { useSelector, useDispatch } from "react-redux";
 import { filtersSelector, setFilters } from "../state/propertiesFiltersSlice";
 
@@ -11,7 +13,7 @@ import {
 import { useTranslation } from "react-i18next";
 
 import { Grid, Typography } from "@mui/material";
-import { mdiPencil, mdiContentCopy, mdiMinus } from "@mdi/js";
+import { mdiPencil, mdiContentCopy, mdiMinus, mdiMinusThick } from "@mdi/js";
 
 import Table from "../../../shared/components/Table";
 import Icon from "../../../shared/components/Icon";
@@ -25,6 +27,8 @@ import { UNIT_CUSTOMER_TYPES } from "../../../constants/system";
 
 function UnitsTable() {
   const { t } = useTranslation("properties");
+
+  const unitsPerms = usePermissions("unit");
 
   const { propertyID } = useParams();
 
@@ -84,40 +88,53 @@ function UnitsTable() {
       </Typography>,
 
       <Grid container onClick={(e) => e.stopPropagation()}>
-        <Grid item>
-          <IconButton
-            aria-label="edit unit"
-            size="small"
-            icon={mdiPencil}
-            disabled={!item.active}
-            component={Link}
-            to={`/properties/units/edit/${item.id}`}
-            state={{ propertyID }}
-          />
-        </Grid>
+        {unitsPerms.update || unitsPerms.create ? (
+          <>
+            {unitsPerms.update && (
+              <Grid item>
+                <IconButton
+                  aria-label="edit unit"
+                  size="small"
+                  icon={mdiPencil}
+                  disabled={!item.active}
+                  component={Link}
+                  to={`/properties/units/edit/${item.id}`}
+                  state={{ propertyID }}
+                />
+              </Grid>
+            )}
+            {unitsPerms.create && (
+              <Grid item>
+                <IconButton
+                  aria-label="clone unit"
+                  size="small"
+                  icon={mdiContentCopy}
+                  disabled={!item.active}
+                  component={Link}
+                  to={`/properties/units/clone/${item.id}`}
+                  state={{ propertyID }}
+                />
+              </Grid>
+            )}
 
-        <Grid item>
-          <IconButton
-            aria-label="clone unit"
-            size="small"
-            icon={mdiContentCopy}
-            disabled={!item.active}
-            component={Link}
-            to={`/properties/units/clone/${item.id}`}
-            state={{ propertyID }}
-          />
-        </Grid>
-
-        <Grid item sx={{ textAlign: "center", ml: 0.5, mt: 0.5 }}>
-          <Switch
-            color="primary"
-            checked={item.active}
-            onChange={() => updateUnit({ id: item.id, active: !item.active })}
-          />
-          <Typography component="span" variant="caption" display="block">
-            {item.active ? t("active") : t("inactive")}
-          </Typography>
-        </Grid>
+            {unitsPerms.update && (
+              <Grid item sx={{ textAlign: "center", ml: 0.5, mt: 0.5 }}>
+                <Switch
+                  color="primary"
+                  checked={item.active}
+                  onChange={() =>
+                    updateUnit({ id: item.id, active: !item.active })
+                  }
+                />
+                <Typography component="span" variant="caption" display="block">
+                  {item.active ? t("active") : t("inactive")}
+                </Typography>
+              </Grid>
+            )}
+          </>
+        ) : (
+          <Icon icon={mdiMinusThick} size="small" color="action" />
+        )}
       </Grid>,
     ],
   }));
