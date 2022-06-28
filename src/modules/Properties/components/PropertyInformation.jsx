@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 
+import usePermissions from "../../../shared/hooks/usePermissions";
+
 import { useGetPropertyQuery } from "../../../redux/services/properties";
 
 import { useTranslation } from "react-i18next";
@@ -17,22 +19,26 @@ import { WALLET_TYPES } from "../../../constants/system";
 function PropertyInformation() {
   const { t } = useTranslation("properties");
 
+  const  propertiesPerms = usePermissions("property");
+
   const { propertyID } = useParams();
   const { data: property } = useGetPropertyQuery(propertyID);
 
   return (
     <>
       <Grid container direction="column" alignItems="center" mb={4}>
-        <Grid item xs={12} sx={{ alignSelf: "flex-end" }}>
-          <IconButton
-            aria-label="edit property"
-            icon={mdiPencil}
-            size="large"
-            variant="contained"
-            component={Link}
-            to={`/properties/edit/${propertyID}`}
-          />
-        </Grid>
+        {propertiesPerms.update && (
+          <Grid item xs={12} sx={{ alignSelf: "flex-end" }}>
+            <IconButton
+              aria-label="edit property"
+              icon={mdiPencil}
+              size="large"
+              variant="contained"
+              component={Link}
+              to={`/properties/edit/${propertyID}`}
+            />
+          </Grid>
+        )}
 
         <Grid item xs={12}>
           <Box
@@ -125,7 +131,7 @@ function PropertyInformation() {
         </Grid>
         <Grid item xs={6} component="dd">
           <Typography component="span" variant="body2" color="text.primary">
-            {property.area_manager.name}
+            {/* {property.area_manager.name} */}
           </Typography>
         </Grid>
 
