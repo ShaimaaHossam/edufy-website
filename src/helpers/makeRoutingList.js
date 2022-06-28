@@ -1,30 +1,38 @@
 import { MODS_ICONS } from "../constants/icons";
 
 function makeRoutingList({ permissions }) {
+  const {
+    dashboard :dashboardPerms ,
+    property: propertiesPerms,
+    people: peoplePerms,
+    order: orderPerms,
+    setting : settingPerms,
+  } = permissions;
+
   return [
     {
       navName: "dashboard",
       navLink: "/dashboard",
       icon: MODS_ICONS.dashboard,
-      active: true,
+      active: dashboardPerms.access,
     },
     {
       navName: "properties",
       navLink: "/properties",
       icon: MODS_ICONS.properties,
-      active: true,
+      active: peoplePerms.access,
     },
     {
       navName: "people",
       navLink: "/people",
       icon: MODS_ICONS.people,
-      active: true,
+      active: propertiesPerms.access,
     },
     {
       navName: "orders",
       navLink: "/orders",
       icon: MODS_ICONS.orders,
-      active: true,
+      active: orderPerms.access,
     },
     {
       navName: "accounting",
@@ -48,7 +56,7 @@ function makeRoutingList({ permissions }) {
       navName: "settings",
       navLink: "/settings",
       icon: MODS_ICONS.settings,
-      active: true,
+      active: settingPerms.access,
     },
     {
       navName: "help",
