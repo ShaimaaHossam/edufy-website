@@ -74,7 +74,7 @@ function Switch({
 Switch.propTypes = {
   disabled: PropTypes.bool,
   checked: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   color: PropTypes.oneOf([
     "info",
     "error",

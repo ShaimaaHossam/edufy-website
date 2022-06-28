@@ -1,7 +1,13 @@
+import { useEffect } from "react";
+
 import { useParams } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { propertiesSelector, setUnitsFilters } from "../state";
+import {
+  filtersSelector,
+  setFilters,
+  clearFilters,
+} from "../state/propertiesFiltersSlice";
 
 import { useGetAllUnitTypesQuery } from "../../../redux/services/properties";
 
@@ -20,7 +26,12 @@ function UnitsFilters() {
   const { propertyID } = useParams();
 
   const dispatch = useDispatch();
-  const { unitsFilters } = useSelector(propertiesSelector);
+  const { filters } = useSelector(filtersSelector);
+
+  // clearing filters on unmount
+  useEffect(() => {
+    return () => dispatch(clearFilters());
+  }, [dispatch]);
 
   const { data: allUnitTypes = [] } = useGetAllUnitTypesQuery(propertyID);
 
@@ -39,8 +50,8 @@ function UnitsFilters() {
   useDebouncedEffect(
     () => {
       dispatch(
-        setUnitsFilters({
-          ...unitsFilters,
+        setFilters({
+          ...filters,
           page: "1",
           "filter[unit_type_id]": values.unit_type_id,
           "filter[status]": values.status,

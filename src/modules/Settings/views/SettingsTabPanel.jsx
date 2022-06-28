@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import Notifications from "../components/Notifications";
 import CompanyInformation from "../components/CompanyInformationForm";
 import Roles from "../components/Roles";
+import ServicesSettings from "../components/ServicesSettings";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -49,17 +50,16 @@ function BasicTabs() {
 
   return (
     <>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label={t("companyInformation")} {...a11yProps(0)} />
-          <Tab label={t("notifications")} {...a11yProps(1)} />
-          <Tab label={t("rolesAndPermissions")} {...a11yProps(2)} />
-        </Tabs>
-      </Box>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        aria-label="basic tabs example"
+      >
+        <Tab label={t("companyInformation")} {...a11yProps(0)} />
+        <Tab label={t("notifications")} {...a11yProps(1)} />
+        <Tab label={t("rolesAndPermissions")} {...a11yProps(2)} />
+        <Tab label={t("servicesSettings")} {...a11yProps(3)} />
+      </Tabs>
 
       <TabPanel value={value} index={0}>
         <CompanyInformation />
@@ -71,6 +71,10 @@ function BasicTabs() {
 
       <TabPanel value={value} index={2}>
         <Roles />
+      </TabPanel>
+
+      <TabPanel value={value} index={3}>
+        <ServicesSettings />
       </TabPanel>
     </>
   );

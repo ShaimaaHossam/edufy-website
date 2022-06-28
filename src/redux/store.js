@@ -10,8 +10,12 @@ import { generalAPI } from "./services/general";
 import { authSlice } from "./slices/auth";
 import { settingsSlice } from "./slices/settings";
 
-import { propertiesSlice } from "../modules/Properties/state";
+import { appSlice } from "../modules/App/state";
+
 import { peopleSlice } from "../modules/People/state";
+
+import { propertiesFiltersSlice } from "../modules/Properties/state/propertiesFiltersSlice";
+import { propertyFormStepperSlice } from "../modules/Properties/state/propertyFormStepperSlice";
 
 export const store = configureStore({
   reducer: {
@@ -23,8 +27,12 @@ export const store = configureStore({
     [authSlice.name]: authSlice.reducer,
     [settingsSlice.name]: settingsSlice.reducer,
 
-    [propertiesSlice.name]: propertiesSlice.reducer,
+    [appSlice.name]: appSlice.reducer,
+
     [peopleSlice.name]: peopleSlice.reducer,
+
+    [propertiesFiltersSlice.name]: propertiesFiltersSlice.reducer,
+    [propertyFormStepperSlice.name]: propertyFormStepperSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([

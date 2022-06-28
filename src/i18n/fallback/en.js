@@ -31,6 +31,8 @@ const en = {
   stepper_success_status: "success",
   stepper_error_status: "error",
 
+  noServicesAvailable: "There's no services available",
+
   required: "Required",
 
   contactMunjz: "Contact Munjz",

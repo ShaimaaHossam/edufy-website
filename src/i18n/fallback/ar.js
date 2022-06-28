@@ -29,6 +29,8 @@ const ar = {
   stepper_success_status: "تم بنجاح",
   stepper_error_status: "حدث خطأ ما",
 
+  noServicesAvailable: "لا يوجد خدمات متاحة",
+
   required: "هذا الحقل مطلوب",
 
   contactMunjz: "تواصل مع منجز",

@@ -1,21 +1,32 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-import { Box, FormControlLabel, IconButton, Collapse } from "@mui/material";
-
-import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
+import {
+  Box,
+  Divider,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  FormControlLabel,
+} from "@mui/material";
+import ExpandIcon from "@mui/icons-material/ExpandMore";
 
 import Checkbox from "./Checkbox";
-import Icon from "../Icon";
 
 function CheckboxMenu({ title, color, values, onChange }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Box p="4px" border={1} borderColor="border" borderRadius="4px">
-      <Box display="flex" alignItems="center" justifyContent="space-between">
+    <Accordion
+      expanded={isExpanded}
+      onChange={(e, expanded) => setIsExpanded(expanded)}
+      sx={{ border: 1, borderRadius: "4px", borderColor: "divider" }}
+    >
+      <AccordionSummary expandIcon={<ExpandIcon />}>
         <FormControlLabel
           label={title}
+          onClick={(e) => e.stopPropagation()}
+          onChange={(e) => e.stopPropagation()}
           control={
             <Checkbox
               color={color}
@@ -25,7 +36,7 @@ function CheckboxMenu({ title, color, values, onChange }) {
                 values.some((op) => !!op.value)
               }
               onChange={(checked) => {
-                setIsExpanded(true);
+                !isExpanded && setIsExpanded(true);
                 onChange(values.map((opt) => ({ ...opt, value: checked })));
               }}
             />
@@ -33,17 +44,12 @@ function CheckboxMenu({ title, color, values, onChange }) {
           componentsProps={{ typography: { variant: "body2" } }}
           sx={{ m: 0 }}
         />
+      </AccordionSummary>
 
-        <IconButton size="small" onClick={() => setIsExpanded(!isExpanded)}>
-          <Icon
-            size="medium"
-            icon={isExpanded ? mdiChevronDown : mdiChevronUp}
-          />
-        </IconButton>
-      </Box>
+      {isExpanded && <Divider variant="fullWidth" sx={{ mx: 2, mt: -1 }} />}
 
-      <Collapse in={isExpanded} timeout="auto">
-        <Box mt="4px">
+      <AccordionDetails>
+        <Box ml={3}>
           {values.map((option) => (
             <FormControlLabel
               key={option.id}
@@ -66,8 +72,8 @@ function CheckboxMenu({ title, color, values, onChange }) {
             />
           ))}
         </Box>
-      </Collapse>
-    </Box>
+      </AccordionDetails>
+    </Accordion>
   );
 }
 

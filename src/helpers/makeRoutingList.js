@@ -42,7 +42,7 @@ function makeRoutingList({ permissions }) {
       navName: "services",
       navLink: "/services",
       icon: MODS_ICONS.services,
-      active: true,
+      active: false,
     },
     {
       navName: "settings",
