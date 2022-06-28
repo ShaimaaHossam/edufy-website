@@ -212,6 +212,9 @@ export const authSlice = createSlice({
     isFetching: false,
     isSuccess: false,
     isError: false,
+    permissions:{},
+    role: null
+   
   },
   reducers: {
     clearAuth: (state) => {
@@ -236,6 +239,16 @@ export const authSlice = createSlice({
   },
   extraReducers: {
     [loginWithEmail.fulfilled]: (state, { payload }) => {
+      let {permissions , role } = payload.data;
+      let formatedPerms = Object.keys(permissions).reduce((acc,key)=>({
+        ...acc,
+        [key]: permissions[key].map((item)=>({
+          [item.slug] : item.active
+        })).reduce((acc, key)=>({...acc,...key}))
+      }),{})
+      state.permissions = formatedPerms;
+      state.role = role;
+      
       state.user = payload.data.user;
       state.company = payload.data.company;
       state.language = payload.data.user.language;
@@ -264,6 +277,16 @@ export const authSlice = createSlice({
       state.isFetching = true;
     },
     [loginWithPhone.fulfilled]: (state, { payload }) => {
+      let {permissions , role} = payload.data;
+      let formatedPerms = Object.keys(permissions).reduce((acc,key)=>({
+        ...acc,
+        [key]: permissions[key].map((item)=>({
+          [item.slug] : item.active
+        })).reduce((acc, key)=>({...acc,...key}))
+      }),{})
+      state.permissions = formatedPerms;
+      state.role = role;
+
       state.user = payload.data.user;
       state.company = payload.data.company;
       state.language = payload.data.user.language;
@@ -304,6 +327,16 @@ export const authSlice = createSlice({
       state.isFetching = true;
     },
     [rememberMe.fulfilled]: (state, { payload }) => {
+      let {permissions , role} = payload.data;
+      let formatedPerms = Object.keys(permissions).reduce((acc,key)=>({
+        ...acc,
+        [key]: permissions[key].map((item)=>({
+          [item.slug] : item.active
+        })).reduce((acc, key)=>({...acc,...key}))
+      }),{})
+      state.permissions = formatedPerms;
+      state.role = role;
+
       state.user = payload.data.user;
       state.company = payload.data.company;
       state.language = payload.data.user.language;
