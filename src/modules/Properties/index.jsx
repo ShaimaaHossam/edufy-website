@@ -1,5 +1,7 @@
 import { Routes, Route, useParams } from "react-router-dom";
 
+import usePermissions from "../../shared/hooks/usePermissions";
+
 import NotFound from "../../shared/views/NotFound";
 
 import Properties from "./views/Properties";
@@ -8,6 +10,7 @@ import PropertyForm from "./views/PropertyForm";
 
 import UnitForm from "./views/UnitForm";
 
+import PermissionValidator from "../../shared/components/PermissionValidator";
 import { isUUIDValid } from "../../helpers/routing";
 
 const PropertyIDValidator = ({ children }) => {
@@ -23,6 +26,9 @@ const UnitIDValidator = ({ children }) => {
 };
 
 function PropertiesRoot() {
+  const { property: propertiesPerms, unit: unitsPerms } = usePermissions(["property", "unit"]);
+
+
   return (
     <Routes>
       <Route index element={<Properties />} />
@@ -36,39 +42,61 @@ function PropertiesRoot() {
         }
       />
 
-      <Route path="add" element={<PropertyForm formType="add" />} />
+      <Route
+        path="add"
+        element={
+          <PermissionValidator hasAccess={propertiesPerms.create}>
+            <PropertyForm formType="add" />
+          </PermissionValidator>
+        }
+      />
       <Route
         path="clone/:propertyID"
         element={
-          <PropertyIDValidator>
-            <PropertyForm formType="clone" />
-          </PropertyIDValidator>
+          <PermissionValidator hasAccess={propertiesPerms.create}>
+            <PropertyIDValidator>
+              <PropertyForm formType="clone" />
+            </PropertyIDValidator>
+          </PermissionValidator>
         }
       />
       <Route
         path="edit/:propertyID"
         element={
-          <PropertyIDValidator>
-            <PropertyForm formType="edit" />
-          </PropertyIDValidator>
+          <PermissionValidator hasAccess={propertiesPerms.update}>
+            <PropertyIDValidator>
+              <PropertyForm formType="edit" />
+            </PropertyIDValidator>
+          </PermissionValidator>
         }
       />
 
-      <Route path="units/add" element={<UnitForm formType="add" />} />
+      <Route
+        path="units/add"
+        element={
+          <PermissionValidator hasAccess={unitsPerms.create}>
+            <UnitForm formType="add" />
+          </PermissionValidator>
+        }
+      />
       <Route
         path="units/clone/:unitID"
         element={
-          <UnitIDValidator>
-            <UnitForm formType="clone" />
-          </UnitIDValidator>
+          <PermissionValidator hasAccess={unitsPerms.create}>
+            <UnitIDValidator>
+              <UnitForm formType="clone" />
+            </UnitIDValidator>
+          </PermissionValidator>
         }
       />
       <Route
         path="units/edit/:unitID"
         element={
-          <UnitIDValidator>
-            <UnitForm formType="edit" />
-          </UnitIDValidator>
+          <PermissionValidator hasAccess={unitsPerms.update}>
+            <UnitIDValidator>
+              <UnitForm formType="edit" />
+            </UnitIDValidator>
+          </PermissionValidator>
         }
       />
 
