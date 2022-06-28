@@ -9,4 +9,9 @@ export const USER_ROLES = {
   unitTenant: "Unit Tenant",
 };
 
+export const USER_TYPES = {
+  customer: "customer",
+  teamMember: "team_member",
+};
+
 export const UNIT_CUSTOMER_TYPES = { owner: 1, tenant: 2 };

@@ -21,14 +21,14 @@ import Dialog from "../../../shared/components/Dialog";
 function Permissions() {
   const [openDialog, setOpenDialog] = useState(false);
 
-  const { permesions , role } = useSelector(settingsSelector);
-  
+  const { permesions, role } = useSelector(settingsSelector);
+
   const { t } = useTranslation("settings");
-  
+
   const { roleID } = useParams();
 
   const [loading, setLoading] = useState(true);
-  
+
   const formik = useFormik({
     validateOnMount: false,
     validateOnBlur: false,
@@ -39,7 +39,7 @@ function Permissions() {
   const { setValues } = formik;
 
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch(getPermesion());
   }, [dispatch]);
@@ -51,7 +51,7 @@ function Permissions() {
   useEffect(() => {
     if (!permesions || !role) return;
 
-    const selectedPermissionsIds =  role.permissions.map((p)=> p.id)
+    const selectedPermissionsIds = role.permissions.map((p) => p.id);
     const reducedData = Object.keys(permesions).reduce(
       (acc, key) => ({
         ...acc,
@@ -67,7 +67,7 @@ function Permissions() {
       }),
       {}
     );
-    
+
     setValues(reducedData);
     setLoading(false);
   }, [permesions, role, setValues, t]);
