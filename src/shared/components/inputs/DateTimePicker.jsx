@@ -52,6 +52,7 @@ function DateTimePicker({
         disabled={disabled}
         value={value}
         onChange={(date) => onChange({ target: { name, value: date } })}
+        onOpen={() => onBlur({ target: { name } })}
         renderInput={(params) => (
           <TextField
             {...params}

@@ -37,6 +37,13 @@ const en = {
 
   contactMunjz: "Contact Munjz",
   munjzMessage: "Please contact Munjiz to upload a new VAT",
+
+  fromDate: "From Date",
+  toDate: "To Date",
+  requiredDate: "Date is required",
+  invalidDate: "Invalid Date",
+  fromAfterTo: "Start after end",
+  toBeforeFrom: "End before start",
 };
 
 export default en;

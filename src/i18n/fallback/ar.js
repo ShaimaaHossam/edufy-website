@@ -35,6 +35,13 @@ const ar = {
 
   contactMunjz: "تواصل مع منجز",
   munjzMessage: "تواصل مع منجز لتحميل مستند ضريبه القيمه المضافه",
+
+  fromDate: "من تاريخ",
+  toDate: "إلى تاريخ",
+  requiredDate: "التاريخ مطلوب",
+  invalidDate: "تاريخ غير صحيح",
+  fromAfterTo: "البداية بعد النهاية",
+  toBeforeFrom: "النهاية قبل البداية",
 };
 
 export default ar;
