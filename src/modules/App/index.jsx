@@ -27,7 +27,6 @@ const Properties = lazy(() => import("../Properties"));
 const People = lazy(() => import("../People"));
 const Orders = lazy(() => import("../Orders"));
 const Accounting = lazy(() => import("../Accounting"));
-const Services = lazy(() => import("../Services"));
 const Settings = lazy(() => import("../Settings"));
 const Help = lazy(() => import("../Help"));
 
@@ -97,7 +96,6 @@ function App() {
                       }
                     />
                     <Route path="accounting/*" element={<Accounting />} />
-                    <Route path="services/*" element={<Services />} />
                     <Route
                       path="settings/*"
                       element={
@@ -108,11 +106,9 @@ function App() {
                     />
                     <Route path="help/*" element={<Help />} />
 
-                    <Route
-                      path="/auth/*"
-                      element={<Navigate to="/" />}
-                    />
+                    <Route path="/auth/*" element={<Navigate to="/" />} />
 
+                    <Route path="/" element={null} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </Suspense>
