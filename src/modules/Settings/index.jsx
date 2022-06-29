@@ -1,41 +1,75 @@
-import { Typography, Grid, Paper } from "@mui/material";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useParams } from "react-router-dom";
 
-import { useTranslation } from "react-i18next";
+import PersonalInformationForm from "./views/PersonalInformationForm";
+import Notifications from "./views/Notifications";
+import Roles from "./views/Roles";
+import Permissions from "./views/Permissions";
+import ServicesSettings from "./views/ServicesSettings";
+import NotFound from "../../shared/views/NotFound";
 
-import BasicTabs from "./views/SettingsTabPanel";
-import CompanyInformation from "./components/CompanyInformationForm";
-import Notifications from "./components/Notifications";
-import Roles from "./components/Roles";
-import Permissions from "./components/Permissions";
+import PermissionValidator from "../../shared/components/PermissionValidator";
+import { isUUIDValid } from "../../helpers/routing";
+
+import usePermissions from "../../shared/hooks/usePermissions";
+
+const RoleIDValidator = ({ children }) => {
+  const { roleID } = useParams();
+
+  return isUUIDValid(roleID) ? children : <NotFound />;
+};
 
 function Settings() {
-  const { t } = useTranslation("settings");
+  const settingPerms = usePermissions("setting");
 
   return (
-    <Grid container spacing={2} direction="column">
-      <Grid item>
-        <Typography component="h1" variant="h5">
-          {t("settings")}
-        </Typography>
-      </Grid>
+    <Routes>
+      <Route
+        path="personal"
+        element={
+          <PermissionValidator hasAccess={settingPerms.access}>
+            <PersonalInformationForm />
+          </PermissionValidator>
+        }
+      />
+      <Route
+        path="notifications"
+        element={
+          <PermissionValidator hasAccess={settingPerms.access}>
+            <Notifications />
+          </PermissionValidator>
+        }
+      />
+      <Route
+        path="roles"
+        element={
+          <PermissionValidator hasAccess={settingPerms.access}>
+            <Roles />
+          </PermissionValidator>
+        }
+      />
+      <Route
+        path="services-settings"
+        element={
+          <PermissionValidator hasAccess={settingPerms.access}>
+            <ServicesSettings />
+          </PermissionValidator>
+        }
+      />
 
-      <Grid item>
-        <Paper sx={{ p: 3 }}>
-          <Routes>
-            <Route index element={<BasicTabs />} />
-            <Route
-              path="company-information"
-              element={<CompanyInformation />}
-            />
-            <Route path="notifications" element={<Notifications />} />
-            <Route path="roles" element={<Roles />} />
-            <Route path="roles/update/:roleID" element={<Permissions />} />
-            {/* <Route path="permissions" element={<Permissions />} /> */}
-          </Routes>
-        </Paper>
-      </Grid>
-    </Grid>
+      <Route
+        path="roles/edit/:roleID"
+        element={
+          <PermissionValidator hasAccess={settingPerms.access_details}>
+            <RoleIDValidator>
+              <Permissions />
+            </RoleIDValidator>
+          </PermissionValidator>
+        }
+      />
+
+      <Route path="/" element={<Navigate to="/settings/personal" />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
