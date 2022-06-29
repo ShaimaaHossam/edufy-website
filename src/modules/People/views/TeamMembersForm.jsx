@@ -136,7 +136,7 @@ function TeamMembersForm({ formType }) {
   return (
     <Grid container spacing={2} direction="column">
       <Grid item>
-        <Breadcrumbs items={[{ label: t("people"), url: "/people" }]} />
+        <Breadcrumbs items={[{ label: t("teamMembers"), url: "/people/team" }]} />
 
         <Typography component="h1" variant="h5">
           {t(`${formType}TeamMembersFormTitle`)}
