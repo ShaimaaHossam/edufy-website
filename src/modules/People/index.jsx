@@ -1,11 +1,14 @@
-import { Routes, Route, useParams } from "react-router-dom";
+import { Routes, Route, Navigate, useParams } from "react-router-dom";
 
 import usePermissions from "../../shared/hooks/usePermissions";
 
-import NotFound from "../../shared/views/NotFound";
+import TeamMembers from "./views/TeamMembers";
+import Customers from "./views/Customers";
+
 import TeamMembersForm from "./views/TeamMembersForm";
 import CustomersForm from "./views/CustomersForm";
-import People from "./views/People";
+
+import NotFound from "../../shared/views/NotFound";
 
 import PermissionValidator from "../../shared/components/PermissionValidator";
 import { isUUIDValid } from "../../helpers/routing";
@@ -27,7 +30,8 @@ function PeopleRoot() {
 
   return (
     <Routes>
-      <Route index element={<People />} />
+      <Route path="/team" element={<TeamMembers />} />
+      <Route path="/customers" element={<Customers />} />
 
       <Route
         path="team/add"
@@ -87,6 +91,7 @@ function PeopleRoot() {
         }
       />
 
+      <Route path="/" element={<Navigate to="/people/team" />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
