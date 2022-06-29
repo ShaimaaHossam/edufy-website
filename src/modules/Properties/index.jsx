@@ -26,8 +26,10 @@ const UnitIDValidator = ({ children }) => {
 };
 
 function PropertiesRoot() {
-  const { property: propertiesPerms, unit: unitsPerms } = usePermissions(["property", "unit"]);
-
+  const { property: propertiesPerms, unit: unitsPerms } = usePermissions([
+    "property",
+    "unit",
+  ]);
 
   return (
     <Routes>
@@ -36,9 +38,11 @@ function PropertiesRoot() {
       <Route
         path=":propertyID"
         element={
-          <PropertyIDValidator>
-            <PropertyDetails />
-          </PropertyIDValidator>
+          <PermissionValidator hasAccess={propertiesPerms.access_details}>
+            <PropertyIDValidator>
+              <PropertyDetails />
+            </PropertyIDValidator>
+          </PermissionValidator>
         }
       />
 

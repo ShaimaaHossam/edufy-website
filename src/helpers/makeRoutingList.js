@@ -20,13 +20,13 @@ function makeRoutingList({ permissions }) {
       navName: "properties",
       navLink: "/properties",
       icon: MODS_ICONS.properties,
-      active: peoplePerms.access,
+      active: propertiesPerms,
     },
     {
       navName: "people",
       navLink: "/people",
       icon: MODS_ICONS.people,
-      active: propertiesPerms.access,
+      active: peoplePerms.access,
     },
     {
       navName: "orders",
