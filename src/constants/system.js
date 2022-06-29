@@ -22,7 +22,7 @@ export const WALLET_TRANS_TYPES = {
 };
 
 export const WALLET_TRANS_DESCRIPS = {
-  redund: "redund",
+  refund: "refund",
   deposit: "deposit",
   subs_fees: "subs_fees",
   free_balance: "free_balance",
