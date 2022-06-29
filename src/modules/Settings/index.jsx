@@ -1,5 +1,5 @@
 import { Typography, Grid, Paper } from "@mui/material";
-import { Routes, Route, useParams } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
@@ -11,7 +11,6 @@ import Permissions from "./components/Permissions";
 
 function Settings() {
   const { t } = useTranslation("settings");
-  const { roleID } = useParams();
 
   return (
     <Grid container spacing={2} direction="column">

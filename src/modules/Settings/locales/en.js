@@ -4,6 +4,7 @@ const en = {
   notifications: "Notifications",
   companyInformation: "Company Information",
   rolesAndPermissions: "Roles and permissions",
+  servicesSettings: "Services Settings",
 
   logo: "Logo",
   legalInformation: "Legal information",
@@ -30,7 +31,7 @@ const en = {
   contactNotificationLabel:
     "Selecting secondary contacts will enable your notifications to reach the contacts you select. if you wish disable this feature,simply leave the secondary contact field empty.",
   roles: "Roles",
-  action: "Action",
+  actions: "Actions",
 
   Admin: "Admin",
   Accountant: "Accountant",
@@ -45,95 +46,217 @@ const en = {
   imageError: "Please upload only image",
   crError: "Please upload CR document",
 
-  city: "City",
-  cityPermissions: {
-    update: "Update city",
-    view: "View city",
-    clone: "Clone city",
-    delete: "Delete city",
-    create: "Create city",
-    download: "Download city",
+  name: "Name",
+  roleCantBeEdited: "Admin role can not be edited!",
+
+  company: {
+    company: "Companies",
+
+    access: "Access Companies",
+    access_details: "Access Company Details",
+    create: "Create Company",
+    update: "Update Company",
+    delete: "Delete Company",
+    download: "Download Company",
   },
-  company: "Company",
-  companyPermissions: {
-    update: "Update company",
-    view: "View company",
-    clone: "Clone company",
-    delete: "Delete company",
-    create: "Create company",
-    download: "Download company",
+  company_service: {
+    company_service: "Company Services",
+
+    access: "Access Company Services",
+    access_details: "Access Company Services Details",
+    create: "Create Company Services",
+    update: "Update Company Services",
   },
-  room: "Room",
-  roomPermissions: {
-    update: "Update room",
-    view: "View room",
-    clone: "Clone room",
-    delete: "Delete room",
-    create: "Create room",
-    download: "Download room",
+  city: {
+    city: "Cities",
+
+    access: "Access Cities",
+    access_details: "Access City Details",
+    create: "Create City",
+    update: "Update City",
+    delete: "Delete City",
+    download: "Download City",
   },
-  property: "Property",
-  propertyPermissions: {
-    update: "Update property",
-    view: "View property",
-    clone: "Clone property",
-    delete: "Delete property",
-    create: "Create property",
-    download: "Download property",
+  property_type: {
+    property_type: "Property Types",
+
+    access: "Access Property Types",
+    access_details: "Access Property Type Details",
+    create: "Create Property Type",
+    update: "Update Property Type",
+    delete: "Delete Property Type",
+    download: "Download Property Type",
   },
-  propertytype: "Property Type",
-  propertytypePermissions: {
-    update: "Update property type",
-    view: "View property type",
-    clone: "Clone property type",
-    delete: "Delete property type",
-    create: "Create property type",
-    download: "Download property type",
+  property: {
+    property: "Properties",
+
+    access: "Access Properties",
+    access_details: "Access Property Details",
+    create: "Create Property",
+    update: "Update Property",
+    delete: "Delete Property",
+    download: "Download Property",
   },
-  user: "User",
-  userPermissions: {
-    update: "Update User",
-    view: "View User",
-    clone: "Clone User",
-    delete: "Delete User",
+  property_service: {
+    property_service: "Property Services",
+
+    access: "Access Property Services",
+    access_details: "Access Property Services Details",
+    create: "Create Property Services",
+    update: "Update Property Services",
+  },
+  property_inventory: {
+    property_inventory: "Property Inventory",
+
+    access: "Access Property Inventory",
+    access_details: "Access Property Inventory Details",
+    create: "Create Property Inventory",
+    update: "Update Property Inventory",
+    delete: "Delete Property Inventory",
+    download: "Download Property Inventory",
+  },
+  property_asset: {
+    property_asset: "Property Assets",
+
+    access: "Access Property Assets",
+    access_details: "Access Property Assets Details",
+    create: "Create Property Assets",
+    update: "Update Property Assets",
+    delete: "Delete Property Assets",
+    download: "Download Property Assets",
+  },
+
+  unit_type: {
+    unit_type: "Unit Types",
+
+    access: "Access Unit Types",
+    access_details: "Access Unit Type Details",
+    create: "Create Unit Type",
+    update: "Update Unit Type",
+    delete: "Delete Unit Type",
+    download: "Download Unit Type",
+  },
+  unit: {
+    unit: "Units",
+
+    access: "Access Units",
+    access_details: "Access Unit Details",
+    create: "Create Unit",
+    update: "Update Unit",
+    delete: "Delete Unit",
+    download: "Download Unit",
+  },
+  unit_inventory: {
+    unit_inventory: "Unit Inventory",
+
+    access: "Access Unit Inventory",
+    access_details: "Access Unit Inventory Details",
+    create: "Create Unit Inventory",
+    update: "Update Unit Inventory",
+    delete: "Delete Unit Inventory",
+    download: "Download Unit Inventory",
+  },
+  unit_room: {
+    unit_room: "Unit Rooms",
+
+    access: "Access Unit Rooms",
+    access_details: "Access Unit Room Details",
+    create: "Create Unit Room",
+    update: "Update Unit Room",
+    delete: "Delete Unit Room",
+    download: "Download Unit Room",
+  },
+  room_type: {
+    room_type: "Room Types",
+
+    access: "Access Room Types",
+    access_details: "Access Room Type Details",
+    create: "Create Room Type",
+    update: "Update Room Type",
+    delete: "Delete Room Type",
+    download: "Download Room Type",
+  },
+
+  order: {
+    order: "Orders",
+
+    access: "Access Orders",
+    access_details: "Access Order Details",
+    create: "Create Order",
+    update: "Update Order",
+    delete: "Delete Order",
+    download: "Download Order",
+  },
+  order_transaction: {
+    order_transaction: "Order Transactions",
+
+    access: "Access Order Transactions",
+    access_details: "Access Order Transaction Details",
+    create: "Create Order Transaction",
+    update: "Update Order Transaction",
+    delete: "Delete Order Transaction",
+    download: "Download Order Transaction",
+  },
+
+  user: {
+    user: "Users",
+
+    access: "Access Users",
+    access_details: "Access User Details",
     create: "Create User",
+    update: "Update User",
+    delete: "Delete User",
     download: "Download User",
   },
-  roomtype: "Room Type",
-  roomtypePermissions: {
-    update: "Update room type",
-    view: "View room type",
-    clone: "Clone room type",
-    delete: "Delete room type",
-    create: "Create room type",
-    download: "Download room type",
+  people: {
+    people: "People",
+
+    access: "Access People",
+    access_details: "Access User Details",
+    create: "Create User",
+    update: "Update User",
+    delete: "Delete User",
+    download: "Download User",
+    read_contact_info: "Read Contact Info.",
+    edit_contact_info: "Edit Contact Info.",
+    read_personal_info: "Read Personal Info.",
+    edit_personal_info: "Edit Personal Info.",
   },
-  unittype: "Unit Type",
-  unittypePermissions: {
-    update: "Update uint type",
-    view: "View uint type",
-    clone: "Clone uint type",
-    delete: "Delete uint type",
-    create: "Create uint type",
-    download: "Download uint type",
+
+  invoice: {
+    invoice: "Invoices",
+
+    access: "Access Invoices",
+    access_details: "Access Invoice Details",
+    create: "Create Invoice",
+    update: "Update Invoice",
+    delete: "Delete Invoice",
+    download: "Download Invoice",
   },
-  unitroom: "Unit Room",
-  unitroomPermissions: {
-    update: "Update uint room",
-    view: "View uint room",
-    clone: "Clone uint room",
-    delete: "Delete uint room",
-    create: "Create uint room",
-    download: "Download uint room",
+
+  setting: {
+    setting: "Settings",
+
+    access: "Access Settings",
+    access_details: "Access Settings Details",
+    update: "Update Settings",
   },
-  unit: "Unit",
-  unitPermissions: {
-    update: "Update unit",
-    view: "View unit",
-    clone: "Clone unit",
-    delete: "Delete unit",
-    create: "Create unit",
-    download: "Download unit",
+  permission: {
+    permission: "Permissions",
+
+    access: "Access Permissions",
+    access_details: "Access Permission Details",
+    create: "Create Permission",
+    update: "Update Permission",
+    delete: "Delete Permission",
+    download: "Download Permission",
+  },
+
+  dashboard: {
+    dashboard: "Dashboard",
+
+    access: "Access Dashboard",
+    access_details: "Access Dashboard Details",
   },
 };
 

@@ -32,6 +32,7 @@ function Autocomplete({
 
   isSolo,
   isMulti,
+  limitTagWidth,
 
   options,
   noOptionsText,
@@ -90,7 +91,13 @@ function Autocomplete({
         avatar={avatar || null}
         onDelete={isDeletable && !disabled && !fixedValue ? handleDelete : null}
         variant={fixedValue ? "outlined" : "filled"}
-        {...(fixedValue && { sx: { backgroundColor: "white" } })}
+        sx={{ maxWidth: isDeletable && limitTagWidth ? 110 : "auto" }}
+        {...(fixedValue && {
+          sx: {
+            maxWidth: isDeletable && limitTagWidth ? 110 : "auto",
+            backgroundColor: "white",
+          },
+        })}
       />
     );
   };
@@ -158,6 +165,7 @@ function Autocomplete({
       clearOnBlur
       includeInputInList
       handleHomeEndKeys
+      disableCloseOnSelect={isMulti}
       options={options}
       noOptionsText={noOptionsText}
       multiple={isMulti || isSolo}
@@ -240,6 +248,7 @@ Autocomplete.propTypes = {
 
   isSolo: PropTypes.bool,
   isMulti: PropTypes.bool,
+  limitTagWidth: PropTypes.bool,
 
   options: PropTypes.arrayOf(
     PropTypes.shape({

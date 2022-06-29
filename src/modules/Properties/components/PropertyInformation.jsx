@@ -9,6 +9,7 @@ import { mdiPencil } from "@mdi/js";
 
 import IconButton from "../../../shared/components/IconButton";
 import Link from "../../../shared/components/Link";
+import ServicesTableList from "../../../shared/components/modules/services/ServicesTableList";
 
 import { DEF_IMGS } from "../../../constants/images";
 import { WALLET_TYPES } from "../../../constants/system";
@@ -82,6 +83,24 @@ function PropertyInformation() {
           <Typography component="span" variant="body2" color="text.primary">
             {t("units_count", { count: property.number_of_units })}
           </Typography>
+        </Grid>
+
+        <Grid item xs={6} component="dt">
+          <Typography component="span" variant="body2" color="text.secondary">
+            {t("services")}
+          </Typography>
+        </Grid>
+        <Grid item xs={6} component="dd">
+          {!!property.services && (
+            <ServicesTableList
+              services={property.services
+                .filter((s) => s.active && s.checked)
+                .map((s) => ({
+                  id: s.service_id,
+                  name: s.service_name,
+                }))}
+            />
+          )}
         </Grid>
       </Grid>
 

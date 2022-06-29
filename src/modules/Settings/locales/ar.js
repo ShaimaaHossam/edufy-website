@@ -4,6 +4,7 @@ const ar = {
   notifications: "الاشعارات",
   companyInformation: "معلومات الشركة",
   rolesAndPermissions: "الأدوار و التصاريح",
+  servicesSettings: "إعدادات الخدمات",
 
   logo: "الشعار",
   legalInformation: "المعلومات القانونية",
@@ -29,9 +30,9 @@ const ar = {
     "سيؤدي تحديد جهات الاتصال الثانوية إلى تمكين الإخطارات الخاصة بك من الوصول إلى جهات الاتصال التي تحددها. إذا كنت ترغب في تعطيل هذه الميزة ، فما عليك سوى ترك حقل جهة الاتصال الثانوي فارغًا.",
 
   roles: "الأدوار",
-  action: "Action",
+  actions: "الخيارات",
 
-  Admin: "مسؤل",
+  Admin: "الأدمن",
   Accountant: "محاسب",
   "Area Manager": "مدير المنطقة",
   "Unit Owner": "مالك الوحدة",
@@ -44,103 +45,221 @@ const ar = {
   imageError: "برجاء تحميل صوره فقط",
   crError: "بر جاء تحميل ملف وتيقه السجل التجاري ",
 
-  city: "مدينه",
-  company: "شركه",
-  room: "حجره",
   roomType: "نوع الحجره",
   uintType: "نوع الوحده",
-  unit: "وحده",
   contact: "فرد",
 
-  city: "المدينه",
-  cityPermissions: {
-    update: "حدث المدينه",
-    view: "شاهد المدينه",
-    clone: "انسح المدينه",
-    delete: "امسح المدينه",
-    create: "انشأ المدينه",
-    download: "حمل المدينه",
+  name: "الإسم",
+  roleCantBeEdited: "لا يمكن تعديل وظيفة الأدمن!",
+
+  company: {
+    company: "الشركات",
+
+    access: "الوصول إلى الشركات",
+    access_details: "الوصول إلى تفاصيل شركات",
+    create: "إنشاء شركة",
+    update: "تعديل شركة",
+    delete: "مسح شركة",
+    download: "تحميل شركة",
   },
-  company: "الشركة",
-  companyPermissions: {
-    update: "حدث الشركة",
-    view: "شاهد الشركة",
-    clone: "انسخ الشركة",
-    delete: "امسح الشركة",
-    create: "انشأ الشركة",
-    download: "حمل الشركة",
+  company_service: {
+    company_service: "خدمات الشركة",
+
+    access: "الوصول إلى خدمات الشركة",
+    access_details: "الوصول إلى تفاصيل خدمات الشركة",
+    create: "إنشاء خدمات الشركة",
+    update: "تعديل خدمات الشركة",
   },
-  room: "الحجرة",
-  roomPermissions: {
-    update: "حدث الحجرة",
-    view: "شاهد الحجرة",
-    clone: " انسخ الحجرة",
-    delete: " امسح الحجرة",
-    create: "انشأ الحجرة",
-    download: "حمل الحجرة",
+  city: {
+    city: "المدن",
+
+    access: "الوصول إلى المدن",
+    access_details: "الوصول إلى تفاصيل المدينة",
+    create: "إنشاء مدينة",
+    update: "تعديل مدينة",
+    delete: "مسح مدينة",
+    download: "تحميل مدينة",
   },
-  property: "العقار",
-  propertyPermissions: {
-    update: "حدث العقار",
-    view: "شاهد العقار",
-    clone: "انسخ العقار",
-    delete: "امسح العقار",
-    create: "انشأ العقار",
-    download: "حمل العقار",
+  property_type: {
+    property_type: "أنواع العقارات",
+
+    access: "الوصول إلى أنواع العقارات",
+    access_details: "الوصول إلى تفاصيل نوع العقار",
+    create: "إنشاء نوع عقار",
+    update: "تعديل نوع عقار",
+    delete: "مسح نوع عقار",
+    download: "تحميل نوع عقار",
   },
-  propertytype: "نوع العقار",
-  propertytypePermissions: {
-    update: "حدث نوع العقار",
-    view: "شاهد نوع العقار",
-    clone: "انسخ نوع العقار",
-    delete: "امسح نوع العقار",
-    create: "انشأ نوع العقار",
-    download: "حمل نوع العقار",
+  property: {
+    property: "العقارات",
+
+    access: "الوصول إلى العقارات",
+    access_details: "الوصول إلى تفاصيل العقار",
+    create: "إنشاء عقار",
+    update: "تعديل عقار",
+    delete: "مسح عقار",
+    download: "تحميل عقار",
   },
-  user: "المستخدم",
-  userPermissions: {
-    update: "حدث المستخدم",
-    view: "شاهد المستخدم",
-    clone: "انسخ المستخدم",
-    delete: "امسح المستخدم",
-    create: "انشأ المستخدم",
-    download: "حمل المستخدم",
+  property_service: {
+    property_service: "خدمات العقار",
+
+    access: "الوصول إلى خدمات العقار",
+    access_details: "الوصول إلى تفاصيل خدمات العقار",
+    create: "إنشاء خدمات العقار",
+    update: "تعديل خدمات العقار",
   },
-  roomtype: "نوع الحجرة",
-  roomtypePermissions: {
-    update: "حدث نوع الحجرة",
-    view: "شاهد نوع الحجره",
-    clone: "انسخ نوع الحجرة",
-    delete: "امسح نوع الحجرة",
-    create: "انشأ نوع الحجرة",
-    download: "حمل نوع الحجرة",
+  property_inventory: {
+    property_inventory: "مستودع العقار",
+
+    access: "الوصول إلى مستودع العقار",
+    access_details: "الوصول إلى تفاصيل مستودع عقار",
+    create: "إنشاء مستودع عقار",
+    update: "تعديل مستودع عقار",
+    delete: "مسح مستودع عقار",
+    download: "تحميل مستودع عقار",
   },
-  unittype: "نوع الوحدة",
-  unittypePermissions: {
-    update: "حدث نوع الوحدة",
-    view: "شاهد نوع الوحدة",
-    clone: "انسخ  نوع الوحدة",
-    delete: "امسح نوع الوحدة",
-    create: "انشأ نوع الوحدة",
-    download: "حمل نوع الوحدة",
+  property_asset: {
+    property_asset: "أصول العقار",
+
+    access: "الوصول إلى أصول العقار",
+    access_details: "الوصول إلى تفاصيل أصول العقار",
+    create: "إنشاء أصول عقار",
+    update: "تعديل أصول عقار",
+    delete: "مسح أصول عقار",
+    download: "تحميل أصول عقار",
   },
-  unitroom: "حجرة  الوحدة",
-  unitroomPermissions: {
-    update: "حدث حجرة الوحدة",
-    view: "شاهد حجرة الوحدة",
-    clone: "انسخ حجرة الوحدة",
-    delete: "امسح حجرة الوحدة",
-    create: "انشأ حجرة الوحدة",
-    download: "حمل حجرة الوحدة",
+
+  unit_type: {
+    unit_type: "نوع الوحدات",
+
+    access: "الوصول إلى نوع الوحدات",
+    access_details: "الوصول إلى تفاصيل نوع وحدة",
+    create: "إنشاء نوع وحدة",
+    update: "تعديل نوع وحدة",
+    delete: "مسح نوع وحدة",
+    download: "تحميل نوع وحدة",
   },
-  unit: "الوحدة",
-  unitPermissions: {
-    update: "حدث الوحدة",
-    view: "شاهد الوحدة",
-    clone: "انسخ الوحدة",
-    delete: "امسح الوحدة",
-    create: "انشأ الوحدة",
-    download: "حمل الوحدة",
+  unit: {
+    unit: "الوحدات",
+
+    access: "الوصول إلى الوحدات",
+    access_details: "الوصول إلى تفاصيل وحدة",
+    create: "إنشاء وحدة",
+    update: "تعديل وحدة",
+    delete: "مسح وحدة",
+    download: "تحميل وحدة",
+  },
+  unit_inventory: {
+    unit_inventory: "مستودع الوحدات",
+
+    access: "الوصول إلى مستودع الوحدات",
+    access_details: "الوصول إلى تفاصيل مستودع وحدة",
+    create: "إنشاء مستودع وحدة",
+    update: "تعديل مستودع وحدة",
+    delete: "مسح مستودع وحدة",
+    download: "تحميل مستودع وحدة",
+  },
+  unit_room: {
+    unit_room: "غرف الوحدة",
+
+    access: "الوصول إلى غرف الوحدة",
+    access_details: "الوصول إلى تفاصيل غرفة وحدة",
+    create: "إنشاء غرفة وحدة",
+    update: "تعديل غرفة وحدة",
+    delete: "مسح غرفة وحدة",
+    download: "تحميل غرفة وحدة",
+  },
+  room_type: {
+    room_type: "نوع الغرف",
+
+    access: "الوصول إلى نوع الغرف",
+    access_details: "الوصول إلى تفاصيل نوع غرفة",
+    create: "إنشاء نوع غرفة",
+    update: "تعديل نوع غرفة",
+    delete: "مسح نوع غرفة",
+    download: "تحميل نوع غرفة",
+  },
+
+  order: {
+    order: "الطلبات",
+
+    access: "الوصول إلى الطلبات",
+    access_details: "الوصول إلى تفاصيل طلب",
+    create: "إنشاء طلب",
+    update: "تعديل طلب",
+    delete: "مسح طلب",
+    download: "تحميل طلب",
+  },
+  order_transaction: {
+    order_transaction: "حركات الطلب",
+
+    access: "الوصول إلى حركات الطلب",
+    access_details: "الوصول إلى تفاصيل تحرك الطلب",
+    create: "إنشاء تحرك طلب",
+    update: "تعديل تحرك طلب",
+    delete: "مسح تحرك طلب",
+    download: "تحميل تحرك طلب",
+  },
+
+  user: {
+    user: "المستخدمون",
+
+    access: "الوصول إلى المستخدمين",
+    access_details: "الوصول إلى تفاصيل مستخدم",
+    create: "إنشاء مستخدم",
+    update: "تعديل مستخدم",
+    delete: "مسح مستخدم",
+    download: "تحميل مستخدم",
+  },
+  people: {
+    people: "المستخدمون",
+
+    access: "الوصول إلى المستخدمين",
+    access_details: "الوصول إلى تفاصيل مستخدم",
+    create: "إنشاء مستخدم",
+    update: "تعديل مستخدم",
+    delete: "مسح مستخدم",
+    download: "تحميل مستخدم",
+    read_contact_info: "فراءة بيانات التواصل",
+    edit_contact_info: "تعديل بيانات التواصل",
+    read_personal_info: "قراءة بيانات المستخدم",
+    edit_personal_info: "تعديل بيانات المستخدم",
+  },
+
+  invoice: {
+    invoice: "الفواتير",
+
+    access: "الوصول إلى الفواتير",
+    access_details: "الوصول إلى تفاصيل فاتورة",
+    create: "إنشاء فاتورة",
+    update: "تعديل فاتورة",
+    delete: "مسح فاتورة",
+    download: "تحميل فاتورة",
+  },
+
+  setting: {
+    setting: "الإعدادات",
+
+    access: "الوصول إلى الإعدادات",
+    access_details: "الوصول إلى تفاصيل الإعدادات",
+    update: "تعديل الإعدادات",
+  },
+  permission: {
+    permission: "الصلاحيات",
+
+    access: "الوصول إلى الصلاحيات",
+    access_details: "الوصول إلى تفاصيل الصلاحية",
+    create: "إنشاء صلاحية",
+    update: "تعديل صلاحية",
+    delete: "مسح صلاحية",
+    download: "تحميل صلاحية",
+  },
+
+  dashboard: {
+    dashboard: "لوحة التحكم",
+
+    access: "الوصول إلى لوحة التحكم",
+    access_details: "الوصول إلى تفاصيل لوحة التحكم",
   },
 };
 

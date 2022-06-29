@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { propertiesSelector, setPropertiesFilters } from "../state";
+import { filtersSelector, setFilters } from "../state/propertiesFiltersSlice";
 
 import { useTranslation } from "react-i18next";
 
@@ -20,7 +20,7 @@ function Properties() {
   const { t } = useTranslation("properties");
 
   const dispatch = useDispatch();
-  const { propertiesFilters } = useSelector(propertiesSelector);
+  const { filters } = useSelector(filtersSelector);
 
   const [filtersShown, setFiltersShown] = useState(false);
 
@@ -42,10 +42,7 @@ function Properties() {
                 placeholder={t("propertyOrManager")}
                 onChange={(keyword) =>
                   dispatch(
-                    setPropertiesFilters({
-                      ...propertiesFilters,
-                      "filter[keyword]": keyword,
-                    })
+                    setFilters({ ...filters, "filter[keyword]": keyword })
                   )
                 }
               />

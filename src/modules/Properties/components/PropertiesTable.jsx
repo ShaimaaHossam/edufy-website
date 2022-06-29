@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { propertiesSelector, setPropertiesFilters } from "../state";
+import { filtersSelector, setFilters } from "../state/propertiesFiltersSlice";
 
 import {
   useGetPropertiesQuery,
@@ -17,6 +17,7 @@ import Table from "../../../shared/components/Table";
 import IconButton from "../../../shared/components/IconButton";
 import Link from "../../../shared/components/Link";
 import Switch from "../../../shared/components/inputs/Switch";
+import ServicesTableList from "../../../shared/components/modules/services/ServicesTableList";
 
 import NoContent from "../../../shared/views/NoContent";
 
@@ -28,10 +29,9 @@ function PropertiesTable() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { propertiesFilters } = useSelector(propertiesSelector);
+  const { filters } = useSelector(filtersSelector);
 
-  const { isLoading, data: properties } =
-    useGetPropertiesQuery(propertiesFilters);
+  const { isLoading, data: properties } = useGetPropertiesQuery(filters);
   const [updateProperty] = useUpdatePropertyMutation();
 
   const tableLabels = [
@@ -102,7 +102,16 @@ function PropertiesTable() {
         {item.city.title}
       </Typography>,
 
-      <></>,
+      !!item.services && (
+        <ServicesTableList
+          services={item.services
+            .filter((s) => s.active && s.checked)
+            .map((s) => ({
+              id: s.service_id,
+              name: s.service_name,
+            }))}
+        />
+      ),
 
       <Grid container onClick={(e) => e.stopPropagation()}>
         <Grid item>
@@ -157,7 +166,7 @@ function PropertiesTable() {
         currentPage: properties.meta.currentPage,
       }}
       onPageChange={(page, perPage) =>
-        dispatch(setPropertiesFilters({ ...propertiesFilters, page, perPage }))
+        dispatch(setFilters({ ...filters, page, perPage }))
       }
     />
   ) : (

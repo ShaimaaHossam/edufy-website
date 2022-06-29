@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { propertiesSelector, setUnitsFilters } from "../state";
+import { filtersSelector, setFilters } from "../state/propertiesFiltersSlice";
 
 import {
   useGetUnitsQuery,
@@ -29,11 +29,11 @@ function UnitsTable() {
   const { propertyID } = useParams();
 
   const dispatch = useDispatch();
-  const { unitsFilters } = useSelector(propertiesSelector);
+  const { filters } = useSelector(filtersSelector);
 
   const { isLoading, data: units } = useGetUnitsQuery({
     "filter[property_id]": propertyID,
-    ...unitsFilters,
+    ...filters,
   });
   const [updateUnit] = useUpdateUnitMutation();
 
@@ -134,7 +134,7 @@ function UnitsTable() {
         currentPage: units.meta.currentPage,
       }}
       onPageChange={(page, perPage) =>
-        dispatch(setUnitsFilters({ ...units, page, perPage }))
+        dispatch(setFilters({ ...filters, page, perPage }))
       }
     />
   ) : (
