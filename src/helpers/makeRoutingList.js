@@ -24,9 +24,19 @@ function makeRoutingList({ permissions }) {
     },
     {
       navName: "people",
-      navLink: "/people",
       icon: MODS_ICONS.people,
       active: peoplePerms.access,
+      subItems:[{
+        navName: "teamMember",
+        navLink: "/people/team",
+        active: peoplePerms.access,
+      },{
+        navName: "customers",
+        navLink: "/people/customers",
+        active: peoplePerms.access,
+      },
+      
+      ]
     },
     {
       navName: "orders",
@@ -54,9 +64,29 @@ function makeRoutingList({ permissions }) {
     },
     {
       navName: "settings",
-      navLink: "/settings",
       icon: MODS_ICONS.settings,
       active: settingPerms.access,
+      subItems:[{
+        navName: "personalInformation",
+        navLink: "/settings/personal",
+        active: settingPerms.access,
+      },{
+        navName: "notifications",
+        navLink: "/settings/notifications",
+        active: settingPerms.access,
+      },
+      {
+          navName: "rolesAndPermissions",
+          navLink: "/settings/roles",
+          active: settingPerms.access,
+        },
+        {
+          navName: "servicesSettings",
+          navLink: "/settings/services-settings",
+          active: settingPerms.access,
+        },
+      
+      ]
     },
     {
       navName: "help",
