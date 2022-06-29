@@ -50,6 +50,23 @@ function makeRoutingList({ permissions }) {
       navLink: "/accounting",
       icon: MODS_ICONS.accounting,
       active: true,
+      subItems: [
+        {
+          navName: "wallet",
+          navLink: "/accounting/wallet",
+          active: true,
+        },
+        {
+          navName: "invoices",
+          navLink: "/accounting/invoices",
+          active: true,
+        },
+        {
+          navName: "transactions",
+          navLink: "/accounting/transactions",
+          active: true,
+        },
+      ],
     },
     {
       navName: "communication",
