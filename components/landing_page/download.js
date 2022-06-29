@@ -5,7 +5,7 @@ export default function Download(){
         <div className="bg-indigo-600 w-full py-20 text-center md:text-left flex justify-center flex-wrap px-12">
             <div>
             <p className="text-white text-3xl font-bold">Are you a student?</p>
-            <p className="text-gray-200">Join your class now through the meeting ID provided by your teacher</p>
+            <p className="text-gray-200 text-lg">Join your class now through the meeting ID provided by your teacher</p>
             </div>
             <div className="py-6 mt-6 md:mt-0 ml-0 md:ml-12">
                 <Link href="/join-meeting" passHref>
