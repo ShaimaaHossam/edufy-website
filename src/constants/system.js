@@ -15,3 +15,16 @@ export const USER_TYPES = {
 };
 
 export const UNIT_CUSTOMER_TYPES = { owner: 1, tenant: 2 };
+
+export const WALLET_TRANS_TYPES = {
+  addition: "addition",
+  deduction: "deduction",
+};
+
+export const WALLET_TRANS_DESCRIPS = {
+  redund: "redund",
+  deposit: "deposit",
+  subs_fees: "subs_fees",
+  free_balance: "free_balance",
+  invoice_payment: "invoice_payment",
+};
