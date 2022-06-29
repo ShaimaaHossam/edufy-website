@@ -3,8 +3,9 @@ const en = {
 
   notifications: "Notifications",
   companyInformation: "Company Information",
-  rolesAndPermissions: "Roles and permissions",
+  rolesAndPermissions: "Roles and Permissions",
   servicesSettings: "Services Settings",
+  
 
   logo: "Logo",
   legalInformation: "Legal information",
@@ -16,6 +17,7 @@ const en = {
   vatNumber: "VAT Number",
   vatDocument: "VAT document",
 
+  notificationsSummary:"Notifications Summary", 
   summaryLabel:
     "You can customize Notifications received below. each listed notification must have at least Email, SMS or Application notifications checked",
   summary: "Summary",
