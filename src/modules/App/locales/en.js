@@ -11,12 +11,12 @@ const en = {
   settings: "Settings",
   help: "Help and support",
 
-  teamMember:"Team Members",
-  customers:"Customers",
-  personalInformation:"Personal Information",
-  notifications:"Notifications",
-  rolesAndPermissions:"Roles And Permissions",
-  servicesSettings:"Services Settings",
+  teamMember: "Team Members",
+  customers: "Customers",
+  personalInformation: "Personal Information",
+  notifications: "Notifications",
+  rolesAndPermissions: "Roles And Permissions",
+  servicesSettings: "Services Settings",
 
   my_profile: "My Profile",
   logout: "Logout",

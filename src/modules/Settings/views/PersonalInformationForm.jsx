@@ -13,7 +13,6 @@ import usePermissions from "../../../shared/hooks/usePermissions";
 
 import { useTranslation } from "react-i18next";
 
-
 import { Grid, Typography, Button, Paper } from "@mui/material";
 import TextInput from "../../../shared/components/inputs/TextInput";
 import ImageDropbox from "../../../shared/components/inputs/ImageDropbox";

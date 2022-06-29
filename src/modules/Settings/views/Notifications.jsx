@@ -16,8 +16,6 @@ import {
   settingsSelector,
 } from "../../../redux/slices/settings";
 
-
-
 import { Grid, Typography, Button, Paper } from "@mui/material";
 
 import NotificationList from "../components/NotificationList";

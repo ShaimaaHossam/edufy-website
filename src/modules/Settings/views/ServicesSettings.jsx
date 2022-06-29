@@ -65,7 +65,7 @@ function ServicesSettings() {
                 }
               />
             </Grid>
-            
+
             {settingPerms.update && (
               <Grid item container justifyContent="flex-end">
                 <Button color="success" onClick={handleSave}>

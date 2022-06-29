@@ -11,12 +11,12 @@ const ar = {
   settings: "الإعدادات",
   help: "المساعدة والدعم",
 
-  teamMember:"اعضاء الفريق",
-  customers:"العملاء",
-  personalInformation:"المعلومات الشخصية",
-  notifications:"الاشعارات",
-  rolesAndPermissions:"الادوار و التصاريح",
-  servicesSettings:"اعدادات الخدمات ",
+  teamMember: "اعضاء الفريق",
+  customers: "العملاء",
+  personalInformation: "المعلومات الشخصية",
+  notifications: "الاشعارات",
+  rolesAndPermissions: "الادوار و التصاريح",
+  servicesSettings: "اعدادات الخدمات ",
 
   my_profile: "حسابي",
   logout: "تسجيل خروج",
