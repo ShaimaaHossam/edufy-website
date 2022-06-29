@@ -27,7 +27,6 @@ const Properties = lazy(() => import("../Properties"));
 const People = lazy(() => import("../People"));
 const Orders = lazy(() => import("../Orders"));
 const Accounting = lazy(() => import("../Accounting"));
-const Communication = lazy(() => import("../Communication"));
 const Services = lazy(() => import("../Services"));
 const Settings = lazy(() => import("../Settings"));
 const Help = lazy(() => import("../Help"));
@@ -98,7 +97,6 @@ function App() {
                       }
                     />
                     <Route path="accounting/*" element={<Accounting />} />
-                    <Route path="communication/*" element={<Communication />} />
                     <Route path="services/*" element={<Services />} />
                     <Route
                       path="settings/*"

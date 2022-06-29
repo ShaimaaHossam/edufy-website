@@ -131,7 +131,7 @@ function PropertyInformation() {
         </Grid>
         <Grid item xs={6} component="dd">
           <Typography component="span" variant="body2" color="text.primary">
-            {/* {property.area_manager.name} */}
+            {property.area_manager.name}
           </Typography>
         </Grid>
 

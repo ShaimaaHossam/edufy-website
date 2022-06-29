@@ -9,6 +9,17 @@ export const resrvedToken =
 
 const resrvedLanguage = window.localStorage.getItem("lang") || LANGS.en;
 
+function handlePermissions(data){
+  let formattedPerms = Object.keys(data).reduce((acc,key)=>({
+    ...acc,
+    [key]: data[key].map((item)=>({
+      [item.slug] : item.active
+    })).reduce((acc, key)=>({...acc,...key}))
+  }),{})
+
+  return formattedPerms;
+}
+
 export const loginWithEmail = createAsyncThunk(
   "auth/loginWithEmail",
   async ({ email, password, remember }, thunkAPI) => {
@@ -239,16 +250,11 @@ export const authSlice = createSlice({
   },
   extraReducers: {
     [loginWithEmail.fulfilled]: (state, { payload }) => {
-      let {permissions , role } = payload.data;
-      let formatedPerms = Object.keys(permissions).reduce((acc,key)=>({
-        ...acc,
-        [key]: permissions[key].map((item)=>({
-          [item.slug] : item.active
-        })).reduce((acc, key)=>({...acc,...key}))
-      }),{})
-      state.permissions = formatedPerms;
+      let {permissions , role} = payload.data;
+      let formattedPerms = handlePermissions(permissions);
+      state.permissions = formattedPerms;
       state.role = role;
-      
+
       state.user = payload.data.user;
       state.company = payload.data.company;
       state.language = payload.data.user.language;
@@ -278,13 +284,8 @@ export const authSlice = createSlice({
     },
     [loginWithPhone.fulfilled]: (state, { payload }) => {
       let {permissions , role} = payload.data;
-      let formatedPerms = Object.keys(permissions).reduce((acc,key)=>({
-        ...acc,
-        [key]: permissions[key].map((item)=>({
-          [item.slug] : item.active
-        })).reduce((acc, key)=>({...acc,...key}))
-      }),{})
-      state.permissions = formatedPerms;
+      let formattedPerms = handlePermissions(permissions);
+      state.permissions = formattedPerms;
       state.role = role;
 
       state.user = payload.data.user;
@@ -328,13 +329,8 @@ export const authSlice = createSlice({
     },
     [rememberMe.fulfilled]: (state, { payload }) => {
       let {permissions , role} = payload.data;
-      let formatedPerms = Object.keys(permissions).reduce((acc,key)=>({
-        ...acc,
-        [key]: permissions[key].map((item)=>({
-          [item.slug] : item.active
-        })).reduce((acc, key)=>({...acc,...key}))
-      }),{})
-      state.permissions = formatedPerms;
+      let formattedPerms = handlePermissions(permissions);
+      state.permissions = formattedPerms;
       state.role = role;
 
       state.user = payload.data.user;

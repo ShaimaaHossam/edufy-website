@@ -85,7 +85,7 @@ function Navigation() {
 
   const permissions = usePermissions();
   
-  const routingItems = useMemo(() => makeRoutingList({ permissions }), []);
+  const routingItems = useMemo(() => makeRoutingList({ permissions }), [permissions]);
 
   const [openedItem, setOpenedItem] = useState("");
   useEffect(() => {

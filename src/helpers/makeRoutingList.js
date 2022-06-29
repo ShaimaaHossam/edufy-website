@@ -44,7 +44,7 @@ function makeRoutingList({ permissions }) {
       navName: "communication",
       navLink: "/communication",
       icon: MODS_ICONS.communication,
-      active: true,
+      active: false,
     },
     {
       navName: "services",
