@@ -18,6 +18,8 @@ import { peopleSlice } from "../modules/People/state";
 import { propertiesFiltersSlice } from "../modules/Properties/state/propertiesFiltersSlice";
 import { propertyFormStepperSlice } from "../modules/Properties/state/propertyFormStepperSlice";
 
+import { walletSlice } from "../modules/Accounting/state/walletSlice";
+
 export const store = configureStore({
   reducer: {
     [propertiesAPI.reducerPath]: propertiesAPI.reducer,
@@ -35,6 +37,8 @@ export const store = configureStore({
 
     [propertiesFiltersSlice.name]: propertiesFiltersSlice.reducer,
     [propertyFormStepperSlice.name]: propertyFormStepperSlice.reducer,
+
+    [walletSlice.name]: walletSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
