@@ -1,44 +1,19 @@
 import Link from "next/link";
 import Logo from "../components/logo";
 import { useRouter } from "next/router";
-import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { auth } from "../firebase/firebase-config";
+import axios from "axios";
+
 function Login() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [error, setError] = useState("");
   const [user, setUser] = useState({});
-  const router = useRouter();
 
-  useEffect(() => {
-    if(auth.currentUser != null){
-      router.push("/");
-      return null;
-    }
-  })
-
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-  });
-
-  const login = async () => {
-    try {
-      const user = await signInWithEmailAndPassword(
-        auth,
-        loginEmail,
-        loginPassword
-      );
-      console.log(user);
-      router.replace("/dashboard");
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-  if (auth.currentUser != null) {
-    router.replace("/");
-    return null;
-  } else
+  const login = () => {
+    
+  }
+ 
     return (
       <>
         <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 px-6">

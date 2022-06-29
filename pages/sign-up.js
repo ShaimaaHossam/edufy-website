@@ -2,44 +2,13 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import Logo from "../components/logo";
 import { useState, useEffect } from "react";
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "../firebase/firebase-config";
-import {collection, setDoc, doc } from "firebase/firestore"; 
  function SignUp() {
   const router = useRouter();
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [error, setError] = useState("");
   const [user, setUser] = useState({});
-  const instructorsCollectionRef = collection(db, "instructors");
-  useEffect(() => {
-    if(auth.currentUser != null){
-      router.push("/");
-      return null;
-    }
-  })
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-  })
-  const register = async () => {
-    //AUTHENTICATE USER
-    try {
-      const user = await createUserWithEmailAndPassword(
-        auth,
-        registerEmail,
-        registerPassword
-      );
-      router.replace('/');
-    } catch (error) {
-      setError(error.message);
-    }
-    createUser();
-  };
 
-  const createUser = async () => {
-    const user = auth.currentUser;
-    await setDoc(doc(db, "instructors", user.uid), {meetings:[]});
-  }
   return (
     <>
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 px-6">
@@ -130,7 +99,7 @@ import {collection, setDoc, doc } from "firebase/firestore";
 
               <div className="flex w-full mt-2">
                 <button
-                  onClick={register}
+                
                   className="flex items-center justify-center focus:outline-none text-white text-sm sm:text-base bg-blue-600 hover:bg-blue-700 rounded py-2 w-full transition duration-150 ease-in"
                 >
                   <span className="mr-2 uppercase">Sign Up</span>

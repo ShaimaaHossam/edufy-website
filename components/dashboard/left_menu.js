@@ -1,12 +1,8 @@
 import Link from "next/link";
-import { auth } from "../../firebase/firebase-config";
 import {useRouter} from 'next/router';
 export default function LeftMenu({ menu, active,  updateMenu,  }) {
   const router = useRouter();
-  const logout = async () => {
-    await auth.signOut();
-    router.push('/')
-}
+
   return (
     <div className="w-44 h-screen  fixed  flex flex-col  content-center    bg-gray-900  py-12   text-white">
         <Link href="/" passHref>
@@ -106,7 +102,7 @@ export default function LeftMenu({ menu, active,  updateMenu,  }) {
         
         
         <li
-          onClick={logout}
+        
           className={menu == 7 ? "my-4  text-center hover:cursor-pointer mx-auto py-4  rounded-sm" : "my-4 text-center hover:cursor-pointer  mx-auto py-4  rounded-sm"}>
         
           <svg

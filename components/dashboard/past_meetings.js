@@ -1,13 +1,10 @@
 import BasicModal from "./modal";
 import React, { useEffect } from "react";
-import { doc, getDoc } from "firebase/firestore";
-import { db, auth } from "../../firebase/firebase-config";
 import { useRouter } from "next/router";
 export default function PastMeetings() {
   const [open, setOpen] = React.useState(false);
   const [meeting, setMeeting] = React.useState([]);
   const [meetings, setMeetings] = React.useState([]);
-  const user = auth.currentUser;
   const router = useRouter();
   const handleOpen = (meeting) => {
     setMeeting(meeting);
@@ -15,18 +12,7 @@ export default function PastMeetings() {
   };
   const handleClose = () => setOpen(false);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const docRef = doc(db, "instructors", user.uid);
-        const docSnap = await getDoc(docRef);
-        setMeetings(docSnap.data().meetings);
-      } catch (error) {
-        router.replace("/");
-      }
-    }
-    fetchData();
-  }, [user.uid, router]);
+  
 
   return (
     <div className="mt-4 mx-20">

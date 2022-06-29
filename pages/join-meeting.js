@@ -2,7 +2,6 @@ import Link from "next/link";
 import Logo from "../components/logo";
 import { useRouter } from "next/router";
 import { useEffect, useState, useContext } from "react";
-import { auth } from "../firebase/firebase-config";
 import StudentContext from '../contexts/StudentContext';
 import axios from 'axios';
 function JoinMeeting() {
@@ -11,12 +10,6 @@ function JoinMeeting() {
   // const [user, setUser] = useState({});
   const router = useRouter();
 
-  useEffect(() => {
-    if (auth.currentUser != null) {
-      router.push("/");
-      return null;
-    }
-  })
 
 
 
@@ -46,10 +39,6 @@ function JoinMeeting() {
     //   setError(error.message);
     // }
   };
-  if (auth.currentUser != null) {
-    router.replace("/");
-    return null;
-  } else
     return (
       <>
         <div className="min-h-screen flex flex-col items-center justify-center bg-[#212032] px-6">

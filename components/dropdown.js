@@ -1,13 +1,8 @@
 import Link from "next/link";
-import { auth } from "../firebase/firebase-config";
 import { useRouter } from "next//router";
 export default function Dropdown({closeMenu}) {
     const router = useRouter();
-    const logout = async () => {
-        await auth.signOut();
-        closeMenu();
-        router.push('/')
-    }
+    
   return (
     <>
       <div className="absolute right-0 z-10 bg-white shadow-md px-8 py-4 mr-20">
@@ -31,7 +26,7 @@ export default function Dropdown({closeMenu}) {
   <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
 </svg>
           
-            <p className="hover:cursor-pointer" onClick={logout}>Sign Out</p>
+            <p className="hover:cursor-pointer" >Sign Out</p>
           
         </div>
       </div>

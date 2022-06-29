@@ -4,16 +4,10 @@ import PastMeetings from "../components/dashboard/past_meetings";
 import Reports from "../components/dashboard/reports";
 import Classes from "../components/dashboard/classes";
 import React, { useEffect } from "react";
-import { auth } from "../firebase/firebase-config";
 import { useRouter } from "next/router";
 export default function Dashboard() {
   const router = useRouter()
-  useEffect(()=>{
-    if(auth.currentUser == null)
-    {
-      router.push("/login") ;
-    }
-  })
+  
   const [menu, setMenu] = React.useState(1);
   const [active, setActive] = React.useState(1); //1 if there is an active meeting
   function updateMenu(menu) {

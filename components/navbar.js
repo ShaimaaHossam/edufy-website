@@ -4,15 +4,11 @@ import { faAlignJustify } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Logo from "./logo";
 import Dropdown from "../components/dropdown";
-import { auth } from "../firebase/firebase-config";
-import { onAuthStateChanged } from "firebase/auth";
 export default function Navbar() {
   const [flag, setFlag] = useState(0);
   const [user, setUser] = useState({});
   const [dropdown, setDropdown] = useState(false);
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-  });
+
   function switchFlag() {
     flag === 0 ? setFlag(1) : setFlag(0);
   }
@@ -100,17 +96,6 @@ export default function Navbar() {
                 </a>
                 </Link>
                 
-              </li>
-              <li>
-                <Link href="/pricing" passHref>
-                <a
-                
-                  href="#"
-                  className="block py-2 pr-4 pl-3 text-gray-200 border-b border-gray-100 lg:border-0  "
-                >
-                  Pricing
-                </a>
-                </Link>
               </li>
               <li>
                 <Link href="/sign-up" passHref>
