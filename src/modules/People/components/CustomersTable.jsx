@@ -11,7 +11,7 @@ import {
 import { useTranslation } from "react-i18next";
 
 import { Grid, Typography, Tooltip, Box, Button } from "@mui/material";
-import { mdiPencil, mdiContentCopy, mdiMinus  } from "@mdi/js";
+import { mdiPencil, mdiContentCopy, mdiMinus } from "@mdi/js";
 
 import Table from "../../../shared/components/Table";
 import IconButton from "../../../shared/components/IconButton";
@@ -119,7 +119,7 @@ function CustomersTable() {
                 />
               </Grid>
             )}
-            
+
             {peoplePerms.create && (
               <Grid item>
                 <IconButton
@@ -149,7 +149,7 @@ function CustomersTable() {
             )}
           </>
         ) : (
-          <Icon icon={mdiMinus } size="medium" color="action" />
+          <Icon icon={mdiMinus} size="medium" color="action" />
         )}
       </Grid>,
     ],

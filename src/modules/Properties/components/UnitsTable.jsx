@@ -13,7 +13,7 @@ import {
 import { useTranslation } from "react-i18next";
 
 import { Grid, Typography } from "@mui/material";
-import { mdiPencil, mdiContentCopy, mdiMinus  } from "@mdi/js";
+import { mdiPencil, mdiContentCopy, mdiMinus } from "@mdi/js";
 
 import Table from "../../../shared/components/Table";
 import Icon from "../../../shared/components/Icon";
@@ -133,7 +133,7 @@ function UnitsTable() {
             )}
           </>
         ) : (
-          <Icon icon={mdiMinus } size="small" color="action" />
+          <Icon icon={mdiMinus} size="small" color="action" />
         )}
       </Grid>,
     ],

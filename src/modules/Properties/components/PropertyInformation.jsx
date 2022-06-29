@@ -19,7 +19,7 @@ import { WALLET_TYPES } from "../../../constants/system";
 function PropertyInformation() {
   const { t } = useTranslation("properties");
 
-  const  propertiesPerms = usePermissions("property");
+  const propertiesPerms = usePermissions("property");
 
   const { propertyID } = useParams();
   const { data: property } = useGetPropertyQuery(propertyID);

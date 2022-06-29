@@ -24,7 +24,7 @@ const CustomersIDValidator = ({ children }) => {
 
 function PeopleRoot() {
   const peoplePerms = usePermissions("people");
-  
+
   return (
     <Routes>
       <Route index element={<People />} />

@@ -2,11 +2,11 @@ import { MODS_ICONS } from "../constants/icons";
 
 function makeRoutingList({ permissions }) {
   const {
-    dashboard :dashboardPerms ,
+    dashboard: dashboardPerms,
     property: propertiesPerms,
     people: peoplePerms,
     order: orderPerms,
-    setting : settingPerms,
+    setting: settingPerms,
   } = permissions;
 
   return [

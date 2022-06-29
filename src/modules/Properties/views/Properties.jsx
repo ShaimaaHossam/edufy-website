@@ -21,8 +21,8 @@ import PropertiesFilters from "../components/PropertiesFilters";
 function Properties() {
   const { t } = useTranslation("properties");
 
-  const  propertiesPerms = usePermissions("property");
-  
+  const propertiesPerms = usePermissions("property");
+
   const dispatch = useDispatch();
   const { filters } = useSelector(filtersSelector);
 

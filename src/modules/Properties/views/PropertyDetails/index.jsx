@@ -80,7 +80,7 @@ function PropertyDetails() {
                 aria-controls="tabpanel-orders"
               />
             </Tabs>
-            
+
             {unitsPerms.access && (
               <TabPanel index="units" value={tabIdx}>
                 <Units />

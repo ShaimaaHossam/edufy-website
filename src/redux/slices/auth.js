@@ -9,13 +9,18 @@ export const resrvedToken =
 
 const resrvedLanguage = window.localStorage.getItem("lang") || LANGS.en;
 
-function handlePermissions(data){
-  let formattedPerms = Object.keys(data).reduce((acc,key)=>({
-    ...acc,
-    [key]: data[key].map((item)=>({
-      [item.slug] : item.active
-    })).reduce((acc, key)=>({...acc,...key}))
-  }),{})
+function handlePermissions(data) {
+  let formattedPerms = Object.keys(data).reduce(
+    (acc, key) => ({
+      ...acc,
+      [key]: data[key]
+        .map((item) => ({
+          [item.slug]: item.active,
+        }))
+        .reduce((acc, key) => ({ ...acc, ...key })),
+    }),
+    {}
+  );
 
   return formattedPerms;
 }
@@ -223,9 +228,8 @@ export const authSlice = createSlice({
     isFetching: false,
     isSuccess: false,
     isError: false,
-    permissions:{},
-    role: null
-   
+    permissions: {},
+    role: null,
   },
   reducers: {
     clearAuth: (state) => {
@@ -250,7 +254,7 @@ export const authSlice = createSlice({
   },
   extraReducers: {
     [loginWithEmail.fulfilled]: (state, { payload }) => {
-      let {permissions , role} = payload.data;
+      let { permissions, role } = payload.data;
       let formattedPerms = handlePermissions(permissions);
       state.permissions = formattedPerms;
       state.role = role;
@@ -283,7 +287,7 @@ export const authSlice = createSlice({
       state.isFetching = true;
     },
     [loginWithPhone.fulfilled]: (state, { payload }) => {
-      let {permissions , role} = payload.data;
+      let { permissions, role } = payload.data;
       let formattedPerms = handlePermissions(permissions);
       state.permissions = formattedPerms;
       state.role = role;
@@ -328,7 +332,7 @@ export const authSlice = createSlice({
       state.isFetching = true;
     },
     [rememberMe.fulfilled]: (state, { payload }) => {
-      let {permissions , role} = payload.data;
+      let { permissions, role } = payload.data;
       let formattedPerms = handlePermissions(permissions);
       state.permissions = formattedPerms;
       state.role = role;

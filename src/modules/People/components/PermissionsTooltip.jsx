@@ -50,6 +50,3 @@ const PermissionsTooltip = styled(
 }));
 
 export default PermissionsTooltip;
-
-
-

@@ -10,9 +10,7 @@ import { authSelector } from "../../redux/slices/auth";
  */
 
 function usePermissions(keys) {
-  const {
-    permissions
-  } = useSelector(authSelector);
+  const { permissions } = useSelector(authSelector);
 
   if (!keys) {
     return permissions;
