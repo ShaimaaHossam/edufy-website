@@ -140,7 +140,7 @@ function CustomersForm({ formType }) {
   return (
     <Grid container spacing={2} direction="column">
       <Grid item>
-        <Breadcrumbs items={[{ label: t("people"), url: "/people" }]} />
+        <Breadcrumbs items={[{ label: t("customers"), url: "/people/customers" }]} />
 
         <Typography component="h1" variant="h5">
           {t(`${formType}CustomersFormTitle`)}
