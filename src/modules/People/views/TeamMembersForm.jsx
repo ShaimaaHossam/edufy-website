@@ -136,7 +136,9 @@ function TeamMembersForm({ formType }) {
   return (
     <Grid container spacing={2} direction="column">
       <Grid item>
-        <Breadcrumbs items={[{ label: t("people"), url: "/people" }]} />
+        <Breadcrumbs
+          items={[{ label: t("teamMembers"), url: "/people/team" }]}
+        />
 
         <Typography component="h1" variant="h5">
           {t(`${formType}TeamMembersFormTitle`)}
@@ -220,7 +222,7 @@ function TeamMembersForm({ formType }) {
                     onChange={(_, value) => formik.setFieldValue("role", value)}
                   >
                     {allRoles?.map((role) => {
-                      return (
+                      return !role.is_protected ? (
                         <Grid
                           item
                           container
@@ -245,7 +247,7 @@ function TeamMembersForm({ formType }) {
                             </Box>
                           </PermissionsTooltip>
                         </Grid>
-                      );
+                      ) : null;
                     })}
                   </RadioGroup>
                   <FormHelperText>

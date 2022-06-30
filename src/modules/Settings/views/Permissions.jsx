@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
 
+import usePermissions from "../../../shared/hooks/usePermissions";
+
 import { useTranslation } from "react-i18next";
 
 import {
@@ -12,12 +14,14 @@ import {
 } from "../../../redux/slices/settings";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Typography, Box, Button, Grid } from "@mui/material";
+import { Typography, Box, Button, Grid, Paper } from "@mui/material";
 import CheckboxMenu from "../../../shared/components/inputs/CheckboxMenu";
 import Dialog from "../../../shared/components/Dialog";
 
 function Permissions() {
   const { t } = useTranslation("settings");
+
+  const settingPerms = usePermissions("setting");
 
   const { roleID } = useParams();
 
@@ -79,48 +83,61 @@ function Permissions() {
   if (role?.id !== roleID || !permsMap) return null;
 
   return (
-    <Box width="60%" mx="auto">
-      <Grid container spacing={3} direction="column">
-        <Grid item xs={12}>
-          <Typography component="h2" variant="h6">
-            {t(role.name)}
-          </Typography>
-        </Grid>
-
-        {role.name !== "Admin" ? (
-          <>
-            {Object.keys(permsMap).map((key) => (
-              <Grid key={key} item xs={12}>
-                <CheckboxMenu
-                  title={t(key)}
-                  values={permsMap[key]}
-                  onChange={(values) =>
-                    setPermsMap({ ...permsMap, [key]: values })
-                  }
-                />
-              </Grid>
-            ))}
-
-            <Grid item alignSelf="flex-end">
-              <Button color="success" onClick={handleOpen}>
-                {t("saveChanges")}
-              </Button>
-            </Grid>
-          </>
-        ) : (
-          <Typography p variant="subtitle1" color="error" align="center">
-            {t("roleCantBeEdited")}
-          </Typography>
-        )}
+    <Grid container spacing={3}>
+      <Grid item>
+        <Typography component="h1" variant="h5">
+          {t("permission.permission")}
+        </Typography>
       </Grid>
+      <Grid item>
+        <Paper sx={{ p: 5 }}>
+          <Box width="60%" mx="auto">
+            <Grid container spacing={3} direction="column">
+              <Grid item xs={12}>
+                <Typography component="h2" variant="h6">
+                  {t(role.name)}
+                </Typography>
+              </Grid>
 
-      <Dialog
-        title={t("saveMesage")}
-        open={openDialog}
-        onClose={handleClose}
-        onConfirm={handelSave}
-      />
-    </Box>
+              {role.name !== "Admin" ? (
+                <>
+                  {Object.keys(permsMap).map((key) => (
+                    <Grid key={key} item xs={12}>
+                      <CheckboxMenu
+                        title={t(key)}
+                        values={permsMap[key]}
+                        onChange={(values) =>
+                          setPermsMap({ ...permsMap, [key]: values })
+                        }
+                      />
+                    </Grid>
+                  ))}
+
+                  {settingPerms.update && (
+                    <Grid item alignSelf="flex-end">
+                      <Button color="success" onClick={handleOpen}>
+                        {t("saveChanges")}
+                      </Button>
+                    </Grid>
+                  )}
+                </>
+              ) : (
+                <Typography p variant="subtitle1" color="error" align="center">
+                  {t("roleCantBeEdited")}
+                </Typography>
+              )}
+            </Grid>
+
+            <Dialog
+              title={t("saveMesage")}
+              open={openDialog}
+              onClose={handleClose}
+              onConfirm={handelSave}
+            />
+          </Box>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 }
 

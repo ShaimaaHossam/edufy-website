@@ -7,6 +7,8 @@ import { useLocation } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
+import usePermissions from "../../../../shared/hooks/usePermissions";
+
 import {
   styled,
   Box,
@@ -81,7 +83,12 @@ function Navigation() {
 
   const { pathname } = useLocation();
 
-  const routingItems = useMemo(() => makeRoutingList({}), []);
+  const permissions = usePermissions();
+
+  const routingItems = useMemo(
+    () => makeRoutingList({ permissions }),
+    [permissions]
+  );
 
   const [openedItem, setOpenedItem] = useState("");
   useEffect(() => {
