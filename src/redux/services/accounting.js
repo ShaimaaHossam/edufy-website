@@ -35,5 +35,5 @@ export const {
   useGetWalletOverviewQuery,
   useGetWalletTransactionsQuery,
 
-  addWalletDeposit,
+  useAddWalletDepositMutation,
 } = accountingAPI;

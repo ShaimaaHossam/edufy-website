@@ -1,3 +1,6 @@
+import { useDispatch } from "react-redux";
+import { toggleDepositDialog } from "../state/walletSlice";
+
 import { useGetWalletOverviewQuery } from "../../../redux/services/accounting";
 
 import { useTranslation } from "react-i18next";
@@ -15,8 +18,6 @@ import { mdiWalletPlusOutline } from "@mdi/js";
 
 import Icon from "../../../shared/components/Icon";
 
-import WalletWarningDialog from "../components/WalletWarningDialog";
-
 const LinearProgress = styled(MuiLinearProgress)(({ theme }) => ({
   height: 12,
   borderRadius: 6,
@@ -28,6 +29,8 @@ const LinearProgress = styled(MuiLinearProgress)(({ theme }) => ({
 
 function WalletOverview() {
   const { t } = useTranslation("accounting");
+
+  const dispatch = useDispatch();
 
   const { isLoading, data: overview } = useGetWalletOverviewQuery();
 
@@ -98,7 +101,10 @@ function WalletOverview() {
         </Grid>
 
         <Grid item>
-          <Button size="large" startIcon={<Icon icon={mdiWalletPlusOutline} />}>
+          <Button
+            startIcon={<Icon icon={mdiWalletPlusOutline} />}
+            onClick={() => dispatch(toggleDepositDialog())}
+          >
             {t("rechargeWallet")}
           </Button>
         </Grid>
@@ -129,8 +135,6 @@ function WalletOverview() {
           </Typography>
         </Grid>
       </Grid>
-
-      <WalletWarningDialog />
     </Box>
   );
 }
