@@ -15,6 +15,8 @@ import { mdiWalletPlusOutline } from "@mdi/js";
 
 import Icon from "../../../shared/components/Icon";
 
+import WalletWarningDialog from "../components/WalletWarningDialog";
+
 const LinearProgress = styled(MuiLinearProgress)(({ theme }) => ({
   height: 12,
   borderRadius: 6,
@@ -127,6 +129,8 @@ function WalletOverview() {
           </Typography>
         </Grid>
       </Grid>
+
+      <WalletWarningDialog />
     </Box>
   );
 }

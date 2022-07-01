@@ -28,18 +28,21 @@ const Transition = forwardRef(function Transition(
 const sizeMapping = { small: "xs", medium: "sm", large: "md" };
 
 function SideDialog({
+  withoutTitle,
   title,
   titleColor,
+
+  withoutConfirm,
+  confirmLabel,
+  confirmColor,
+  onConfirm,
+
   open,
   onClose,
   size = "small",
   sided,
 
   onExited,
-
-  confirmLabel,
-  confirmColor,
-  onConfirm,
 
   children,
 }) {
@@ -69,15 +72,17 @@ function SideDialog({
         },
       })}
     >
-      <DialogTitle color={titleColor} sx={{ pt: 3 }}>
-        {title}
-      </DialogTitle>
+      {!withoutTitle && (
+        <DialogTitle color={titleColor} sx={{ pt: 3 }}>
+          {title}
+        </DialogTitle>
+      )}
 
       <DialogContent>
         <Box sx={{ height: "100%" }}>{children}</Box>
       </DialogContent>
 
-      {!!onConfirm && (
+      {!withoutConfirm && (
         <DialogActions
           sx={{
             px: 3,
@@ -110,7 +115,7 @@ function SideDialog({
 }
 
 SideDialog.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   titleColor: PropTypes.oneOf([
     "info",
     "error",
