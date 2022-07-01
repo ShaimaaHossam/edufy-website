@@ -22,7 +22,7 @@ function WalletTransTable() {
   } = useTranslation("accounting");
 
   const dispatch = useDispatch();
-  const { filters } = useSelector(filtersSelector);
+  const filters = useSelector(filtersSelector);
 
   const { isLoading, data: transactions } =
     useGetWalletTransactionsQuery(filters);

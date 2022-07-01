@@ -28,7 +28,7 @@ function WalletTransFilters() {
   const { t } = useTranslation("accounting");
 
   const dispatch = useDispatch();
-  const { filters } = useSelector(filtersSelector);
+  const filters = useSelector(filtersSelector);
 
   // clearing filters on unmount
   useEffect(() => {
