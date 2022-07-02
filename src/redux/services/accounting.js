@@ -45,8 +45,12 @@ export const accountingAPI = createApi({
         res ? [{ type: "INVOICE", id }] : [],
     }),
     rejectInvoice: build.mutation({
-      query: (id) => ({ url: `/invoices/reject/${id}`, method: "POST" }),
-      invalidatesTags: (res, error, id) =>
+      query: ({ id, ...data }) => ({
+        url: `/invoices/reject/${id}`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: (res, error, { id }) =>
         res ? [{ type: "INVOICE", id }] : [],
     }),
   }),
