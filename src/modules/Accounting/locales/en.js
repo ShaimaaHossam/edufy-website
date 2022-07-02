@@ -27,12 +27,30 @@ const en = {
   successWalletRequestMessage: "Your request has just been sent to Munjz team.",
   transferReceipt: "Transfer Receipt",
   transferAmount: "Transfer Amount",
+  invoices: "Invoices",
+  searchInvoices: "Search in Invoices",
+  invoiceNumber: "Invoice Number",
+  byStatus: "By Status",
+  byPaymentType: "By Payment Type",
+  invoiceNo: "Invoice No.",
+  status: "Status",
+  invoiceAmount: "Invoice Amount",
+  vatAmount: "VAT Amount",
+  totalAmount: "Total Amount",
+  paymentType: "Payment Type",
+  downloadInvoicePDF: "Download Invoice PDF",
+  rejectionReason: "Rejection Reason",
+  rejectInvoice: "Reject Invoice",
 
   clear: "Clear",
   requestWalletRecharge: "Request Wallet Charge",
   backToWallet: "Back to Wallet",
+  pay: "Pay",
+  reject: "Reject",
 
   requiredField: "This field is required",
+  minLetters10: "Min. 10 letters for the reason",
+  maxLetters300: "Min. 300 letters for the reason",
 
   addition: "Addition",
   deduction: "Deduction",
@@ -42,6 +60,16 @@ const en = {
   subs_fees: "Subscription Fees",
   free_balance: "Free Balance",
   invoice_payment: "Invoice Payment",
+
+  invoice: "Invoice",
+  credit_note: "Credit Note",
+
+  pending: "Pending",
+  paid: "Paid",
+  rejected: "Rejected",
+
+  wallet: "Wallet",
+  transfer: "Transfer",
 };
 
 export default en;

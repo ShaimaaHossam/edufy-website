@@ -27,12 +27,30 @@ const ar = {
   successWalletRequestMessage: "لقد تم إرسال طلبك لفريق منجز.",
   transferReceipt: "إيصال التحويل",
   transferAmount: "قيمة التحويل",
+  invoices: "الفواتير",
+  searchInvoices: "البحث في الفواتير",
+  invoiceNumber: "رقم الفاتورة",
+  byStatus: "بالحالة",
+  byPaymentType: "بنوع الدفع",
+  invoiceNo: "رقم الفاتورة",
+  status: "الحالة",
+  invoiceAmount: "قيمة الفاتورة",
+  vatAmount: "القيمة المضافة",
+  totalAmount: "الإجمالي",
+  paymentType: "نوع الدفع",
+  downloadInvoicePDF: "تحميل الفاتورة PDF",
+  rejectionReason: "سبب الرفض",
+  rejectInvoice: "رفض الفاتورة",
 
   clear: "إلغاء",
-
-  requiredField: "هذا الحقل مطلوب",
   requestWalletRecharge: "طلب شحن المحفظة",
   backToWallet: "الرجوع إلى المحفظة",
+  pay: "دفع",
+  reject: "رفض",
+
+  requiredField: "هذا الحقل مطلوب",
+  minLetters10: "يجب أن يكون السبب ١٠ حرف على الأقل",
+  maxLetters300: "يجب أن يكون السبب ٣٠٠ حرف على الأكثر",
 
   addition: "إضافة",
   deduction: "خصم",
@@ -42,6 +60,16 @@ const ar = {
   subs_fees: "مصاريف الإشتراك",
   free_balance: "رصيد حر",
   invoice_payment: "دفع فاتورة",
+
+  invoice: "فاتورة",
+  credit_note: "ملاحظة عن الرصيد",
+
+  pending: "في الإنتظار",
+  paid: "تم الدفع",
+  rejected: "تم الرفض",
+
+  wallet: "محفظة",
+  transfer: "تحويل",
 };
 
 export default ar;
