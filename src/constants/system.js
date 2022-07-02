@@ -8,7 +8,6 @@ export const USER_ROLES = {
   unitOwner: "Unit Owner",
   unitTenant: "Unit Tenant",
 };
-
 export const USER_TYPES = {
   customer: "customer",
   teamMember: "team_member",
@@ -20,11 +19,24 @@ export const WALLET_TRANS_TYPES = {
   addition: "addition",
   deduction: "deduction",
 };
-
 export const WALLET_TRANS_DESCRIPS = {
   refund: "refund",
   deposit: "deposit",
   subs_fees: "subs_fees",
   free_balance: "free_balance",
   invoice_payment: "invoice_payment",
+};
+
+export const INVOICE_TYPES = {
+  invoice: "invoice",
+  credit_note: "credit_note",
+};
+export const INVOICE_STATUSES = {
+  pending: "pending",
+  paid: "paid",
+  rejected: "rejected",
+};
+export const INVOICE_PAY_TYPES = {
+  wallet: "wallet",
+  transfer: "transfer",
 };
