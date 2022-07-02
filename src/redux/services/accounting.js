@@ -53,6 +53,9 @@ export const accountingAPI = createApi({
       invalidatesTags: (res, error, { id }) =>
         res ? [{ type: "INVOICE", id }] : [],
     }),
+    downloadInvoicePDF: build.query({
+      query: (id) => ({ url: `/invoices/download/${id}` }),
+    }),
   }),
 });
 
@@ -64,4 +67,5 @@ export const {
   useGetInvoicesQuery,
   usePayInvoiceMutation,
   useRejectInvoiceMutation,
+  useLazyDownloadInvoicePDFQuery,
 } = accountingAPI;
