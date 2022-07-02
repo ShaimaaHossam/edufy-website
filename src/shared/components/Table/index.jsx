@@ -135,7 +135,7 @@ function Table({
               </TableRow>
 
               {!!expandable && (
-                <TableRow>
+                <TableRow active>
                   <TableCell
                     colSpan={Object.keys(row).length + 1}
                     style={{ paddingTop: 0, paddingBottom: 0 }}
