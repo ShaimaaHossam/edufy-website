@@ -17,14 +17,6 @@ const en = {
   capacityLimit: "Capacity Limit",
   deposits: "Deposits",
   spendings: "Spendings",
-  walletWarningMessage:
-    "Your wallet balance is running out, please recharge your wallet.",
-  contactMessage: "Please contact your account manager for any concerns.",
-  rechargeHint:
-    "In order to recharge your account's wallet, please upload the transfer receipt and enter the transfer amount.",
-  rechargeWarning:
-    "The deposit amount must be equal to the amount specified in the receipt.",
-  successWalletRequestMessage: "Your request has just been sent to Munjz team.",
   transferReceipt: "Transfer Receipt",
   transferAmount: "Transfer Amount",
   invoices: "Invoices",
@@ -41,12 +33,32 @@ const en = {
   downloadInvoicePDF: "Download Invoice PDF",
   rejectionReason: "Rejection Reason",
   rejectInvoice: "Reject Invoice",
+  payInvoice: "Pay Invoice",
+  walletBalance: "Wallet Balance",
+  balanceAfterPayment: "Balance after Payment",
+
+  walletWarningMessage:
+    "Your wallet balance is running out, please recharge your wallet.",
+  contactMessage: "Please contact your account manager for any concerns.",
+  rechargeHint:
+    "In order to recharge your account's wallet, please upload the transfer receipt and enter the transfer amount.",
+  amountWarning:
+    "The entered amount must be equal to the amount specified in the receipt.",
+  successWalletRequestMessage:
+    "Your recharge request has just been sent to Munjz team.",
+  successInvoicePaymentMessage:
+    "Your payment request has just been sent to Munjz team.",
+  invoicePaymentHint:
+    "You can pay the invoice either by using your account wallet, or by a transfer.",
+  notEnoughWalletBalance:
+    "There's not enough balance in your wallet to pay this invoice.",
 
   clear: "Clear",
   requestWalletRecharge: "Request Wallet Charge",
   backToWallet: "Back to Wallet",
   pay: "Pay",
   reject: "Reject",
+  backToInvoices: "Back to Invoices",
 
   requiredField: "This field is required",
   minLetters10: "Min. 10 letters for the reason",
