@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const FILTERS_INIT_STATE = { page: 1, perPage: 20 };
 
-export const ordersSlice = createSlice({
-  name: "orders",
+export const ordersFiltersSlice = createSlice({
+  name: "ordersFilters",
   initialState: {
     filters: FILTERS_INIT_STATE,
 
@@ -19,6 +19,6 @@ export const ordersSlice = createSlice({
   },
 });
 
-export const { setFilters, clearFilters } = ordersSlice.actions;
+export const { setFilters, clearFilters } = ordersFiltersSlice.actions;
 
-export const ordersSelector = (state) => state.orders;
+export const ordersFiltersSelector = (state) => state.ordersFilters;

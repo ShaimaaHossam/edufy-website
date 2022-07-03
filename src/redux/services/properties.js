@@ -18,9 +18,9 @@ export const propertiesAPI = createApi({
       providesTags: (res, err, queryParams) =>
         res
           ? [
-              ...res.data.map(({ id }) => ({ type: "PROPERTY", id })),
-              { type: "PROPERTY", id: "PARTIAL-LIST" },
-            ]
+            ...res.data.map(({ id }) => ({ type: "PROPERTY", id })),
+            { type: "PROPERTY", id: "PARTIAL-LIST" },
+          ]
           : [{ type: "PROPERTY", id: "PARTIAL-LIST" }],
     }),
     getProperty: build.query({
@@ -74,9 +74,9 @@ export const propertiesAPI = createApi({
       providesTags: (res, err, queryParams) =>
         res
           ? [
-              ...res.data.map(({ id }) => ({ type: "UNIT", id })),
-              { type: "UNIT", id: "PARTIAL-LIST" },
-            ]
+            ...res.data.map(({ id }) => ({ type: "UNIT", id })),
+            { type: "UNIT", id: "PARTIAL-LIST" },
+          ]
           : [{ type: "UNIT", id: "PARTIAL-LIST" }],
     }),
     getUnit: build.query({

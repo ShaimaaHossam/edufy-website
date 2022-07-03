@@ -3,7 +3,10 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { ordersSelector, setFilters } from "../../../redux/slices/orders";
+import {
+  ordersFiltersSelector,
+  setFilters,
+} from "../../../redux/slices/ordersFilters";
 
 import { useTranslation } from "react-i18next";
 
@@ -24,7 +27,7 @@ function Orders() {
   const { orderType } = useParams();
 
   const dispatch = useDispatch();
-  const { filters } = useSelector(ordersSelector);
+  const { filters } = useSelector(ordersFiltersSelector);
 
   const [filtersShown, setFiltersShown] = useState(false);
 

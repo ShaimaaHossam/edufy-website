@@ -72,6 +72,12 @@ const en = {
   propertyManager: "Property Manager",
   unitOwner: "Unit Owner",
   unitTenant: "Unit Tenant",
+
+  addmaintenanceOrderFormTitle: "New Maintanace Order",
+  addcleaningOrderFormTitle: "New Cleaning Order",
+  selectProperty: "Select Property / Units",
+  SelectServices: "Select Services",
+  Preview: "Preview",
 };
 
 export default en;

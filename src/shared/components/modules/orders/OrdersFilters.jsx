@@ -5,16 +5,15 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   setFilters,
   clearFilters,
-  ordersSelector,
-} from "../../../../redux/slices/orders";
+  ordersFiltersSelector,
+} from "../../../../redux/slices/ordersFilters";
 import {
   useGetAllPropertiesQuery,
   useGetAllUnitsQuery,
 } from "../../../../redux/services/properties";
-import {
-  useGetAllCompanyServicesQuery,
-  useGetAllPropertyServicesQuery,
-} from "../../../../redux/services/general";
+import // useGetAllCompanyServicesQuery,
+// useGetAllPropertyServicesQuery,
+"../../../../redux/services/general";
 
 import { useTranslation } from "react-i18next";
 
@@ -47,7 +46,7 @@ function OrdersFilters({ fixedFitlters }) {
   } = useTranslation("orders");
 
   const dispatch = useDispatch();
-  const { filters } = useSelector(ordersSelector);
+  const { filters } = useSelector(ordersFiltersSelector);
 
   const formik = useFormik({
     validateOnMount: false,
@@ -110,11 +109,11 @@ function OrdersFilters({ fixedFitlters }) {
     { skip: !propertyID }
   );
 
-  const { data: allCompanyServices = [] } = useGetAllCompanyServicesQuery();
-  const { data: allPropertyServices = [] } = useGetAllPropertyServicesQuery(
-    propertyID,
-    { skip: !propertyID }
-  );
+  // const { data: allCompanyServices = [] } = useGetAllCompanyServicesQuery();
+  // const { data: allPropertyServices = [] } = useGetAllPropertyServicesQuery(
+  //   propertyID,
+  //   { skip: !propertyID }
+  // );
 
   useEffect(() => {
     return () => dispatch(clearFilters());
@@ -196,7 +195,7 @@ function OrdersFilters({ fixedFitlters }) {
         />
       </Grid>
 
-      <Grid item xs={4} lg={true}>
+      {/* <Grid item xs={4} lg={true}>
         <Autocomplete
           size="small"
           name="service_id"
@@ -214,7 +213,7 @@ function OrdersFilters({ fixedFitlters }) {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-      </Grid>
+      </Grid> */}
 
       <Grid item xs={4} lg={true}>
         <Autocomplete

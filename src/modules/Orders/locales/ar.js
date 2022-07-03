@@ -72,6 +72,12 @@ const ar = {
   propertyManager: "مدير العقار",
   unitOwner: "مالك الوحدة",
   unitTenant: "مستأجر الوحدة",
+
+  addmaintanaceOrderFormTitle: "New Maintanace Order",
+  addcleaningOrderFormTitle: "New Cleaning Order",
+  selectProperty: "اختيار عقار / وحدة",
+  SelectServices: "اختر خدمة",
+  Preview: "مراجعة نهائية",
 };
 
 export default ar;

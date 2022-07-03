@@ -11,6 +11,7 @@ export const propertiesSlice = createSlice({
       page: 1,
       perPage: 20,
     },
+
   },
   reducers: {
     setPropertiesFilters: (state, { payload }) => {

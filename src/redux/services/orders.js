@@ -18,9 +18,9 @@ export const ordersAPI = createApi({
       providesTags: (res, err, queryParams) =>
         res
           ? [
-              ...res.data.map(({ id }) => ({ type: "ORDER", id })),
-              { type: "ORDERS", id: "PARTIAL-LIST" },
-            ]
+            ...res.data.map(({ id }) => ({ type: "ORDER", id })),
+            { type: "ORDERS", id: "PARTIAL-LIST" },
+          ]
           : [{ type: "ORDERS", id: "PARTIAL-LIST" }],
     }),
     getOrder: build.query({

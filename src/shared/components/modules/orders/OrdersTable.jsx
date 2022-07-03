@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { ordersSelector, setFilters } from "../../../../redux/slices/orders";
+import {
+  ordersFiltersSelector,
+  setFilters,
+} from "../../../../redux/slices/ordersFilters";
 
 import { useGetOrdersQuery } from "../../../../redux/services/orders";
 import { orders } from "../../../../redux/services/ordersData";
@@ -17,7 +20,7 @@ import NoContent from "../../../views/NoContent";
 import Table from "../../Table";
 import Link from "../../Link";
 
-import ServicesTableList from "../services/ServicesTableList";
+// import ServicesTableList from "../services/ServicesTableList";
 import OrderStatus from "./OrderStatus";
 import OrderUnits from "./OrderUnits";
 
@@ -33,7 +36,7 @@ function OrdersTable({ orderType }) {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { filters } = useSelector(ordersSelector);
+  const { filters } = useSelector(ordersFiltersSelector);
 
   // const { isLoading, data: orders } = useGetOrdersQuery({
   //   "filter[service_type]": orderType,
@@ -91,7 +94,7 @@ function OrdersTable({ orderType }) {
 
       <OrderUnits units={item.units} propertyID={item.property.id} />,
 
-      <ServicesTableList services={item.services} />,
+      // <ServicesTableList services={item.services} />,
 
       <Typography component="span" variant="body2">
         {item.total_amount}{" "}
