@@ -46,13 +46,10 @@ function WalletDepositDialog() {
         .min(0, t("requiredField")),
       document: Yup.string().required(t("requiredField")),
     }),
-    onSubmit: async (values, { setErrors, resetForm }) => {
+    onSubmit: async (values, { setErrors }) => {
       addWalletDeposit(values)
         .unwrap()
-        .then(() => {
-          setIsFulfilled(true);
-          resetForm();
-        })
+        .then(() => setIsFulfilled(true))
         .catch(({ data: { errors } }) => setErrors(errors));
     },
   });
@@ -65,6 +62,10 @@ function WalletDepositDialog() {
       title={t("rechargeWallet")}
       open={isDepositDialogOpen}
       onClose={() => dispatch(toggleDepositDialog())}
+      onExited={() => {
+        formik.resetForm();
+        isFulfilled && setIsFulfilled(false);
+      }}
     >
       {isFulfilled && (
         <Grid
@@ -98,13 +99,7 @@ function WalletDepositDialog() {
           </Grid>
 
           <Grid item xx={12}>
-            <Button
-              fullWidth
-              onClick={() => {
-                dispatch(toggleDepositDialog());
-                setIsFulfilled(false);
-              }}
-            >
+            <Button fullWidth onClick={() => dispatch(toggleDepositDialog())}>
               {t("backToWallet")}
             </Button>
           </Grid>
@@ -159,7 +154,7 @@ function WalletDepositDialog() {
 
           <Grid item>
             <InfoBar rounded color="warning">
-              <Typography variant="body2">{t("rechargeWarning")}</Typography>
+              <Typography variant="body2">{t("amountWarning")}</Typography>
             </InfoBar>
           </Grid>
 

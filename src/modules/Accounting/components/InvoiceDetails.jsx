@@ -1,9 +1,7 @@
 import PropTypes from "prop-types";
 
 import { useDispatch } from "react-redux";
-import { setInvoiceToReject } from "../state/invoicesSlice";
-
-import { usePayInvoiceMutation } from "../../../redux/services/accounting";
+import { setInvoiceToReject, setInvoiceToPay } from "../state/invoicesSlice";
 
 import { useTranslation } from "react-i18next";
 
@@ -17,8 +15,6 @@ function InvoiceDetails({ invoice }) {
   const { t } = useTranslation("accounting");
 
   const dispatch = useDispatch();
-
-  const [payInvoice] = usePayInvoiceMutation();
 
   return (
     <Box mx={4} mb={4}>
@@ -88,7 +84,7 @@ function InvoiceDetails({ invoice }) {
                 size="small"
                 color="primary"
                 sx={{ minWidth: 80, borderRadius: 100 }}
-                onClick={() => payInvoice(invoice.id)}
+                onClick={() => dispatch(setInvoiceToPay(invoice))}
               >
                 {t("pay")}
               </Button>

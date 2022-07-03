@@ -18,6 +18,7 @@ import NoContent from "../../../shared/views/NoContent";
 
 import InvoiceDetails from "./InvoiceDetails";
 import InvoiceRejectDialog from "./InvoiceRejectDialog";
+import InvoicePaymentDialog from "./InvoicePaymentDialog";
 
 import { INVOICE_STATUSES } from "../../../constants/system";
 
@@ -134,6 +135,7 @@ function InvoicesTable() {
       />
 
       <InvoiceRejectDialog />
+      <InvoicePaymentDialog />
     </>
   ) : (
     <NoContent />
