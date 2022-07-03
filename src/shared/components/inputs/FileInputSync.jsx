@@ -192,7 +192,7 @@ FileInputSync.propTypes = {
   onChange: PropTypes.func.isRequired,
 
   error: PropTypes.bool,
-  helperText: PropTypes.string,
+  helperText: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 export default FileInputSync;
