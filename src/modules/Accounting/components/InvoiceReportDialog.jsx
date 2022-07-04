@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
-  invoiceToRejectSelector,
-  setInvoiceToReject,
+  invoiceToReportSelector,
+  setInvoiceToReport,
 } from "../state/invoicesSlice";
 
-import { useRejectInvoiceMutation } from "../../../redux/services/accounting";
+import { useReportInvoiceMutation } from "../../../redux/services/accounting";
 
 import { useTranslation } from "react-i18next";
 
@@ -16,31 +16,31 @@ import { Grid, Button } from "@mui/material";
 import Dialog from "../../../shared/components/Dialog";
 import TextInput from "../../../shared/components/inputs/TextInput";
 
-function InvoiceRejectDialog() {
+function InvoiceReportDialog() {
   const { t } = useTranslation("accounting");
 
   const dispatch = useDispatch();
-  const invoiceToReject = useSelector(invoiceToRejectSelector);
+  const invoiceToReport = useSelector(invoiceToReportSelector);
 
-  const [rejectInvoice] = useRejectInvoiceMutation();
+  const [reportInvoice] = useReportInvoiceMutation();
 
   const formik = useFormik({
     validateOnMount: false,
     validateOnBlur: false,
     validateOnChange: true,
     initialValues: {
-      rejection_reason: "",
+      issue: "",
     },
     validationSchema: Yup.object().shape({
-      rejection_reason: Yup.string()
+      issue: Yup.string()
         .required(t("requiredField"))
         .min(10, t("minLetters10"))
         .max(300, t("maxLetters300")),
     }),
     onSubmit: async (values, { setErrors }) => {
-      rejectInvoice({ id: invoiceToReject?.id, ...values })
+      reportInvoice({ id: invoiceToReport?.id, ...values })
         .unwrap()
-        .then(() => dispatch(setInvoiceToReject(null)))
+        .then(() => dispatch(setInvoiceToReport(null)))
         .catch(({ data: { errors } }) => setErrors(errors));
     },
   });
@@ -50,9 +50,9 @@ function InvoiceRejectDialog() {
       sided
       withoutConfirm
       size="small"
-      title={t("rejectInvoice") + ` #${invoiceToReject?.invoice_number || ""}`}
-      open={!!invoiceToReject}
-      onClose={() => dispatch(setInvoiceToReject(null))}
+      title={t("reportInvoice") + ` #${invoiceToReport?.invoice_number || ""}`}
+      open={!!invoiceToReport}
+      onClose={() => dispatch(setInvoiceToReport(null))}
       onExited={formik.resetForm}
     >
       <Grid
@@ -66,25 +66,20 @@ function InvoiceRejectDialog() {
           <TextInput
             required
             type="text"
-            name="rejection_reason"
-            label={t("rejectionReason")}
+            name="issue"
+            label={t("issueDetails")}
             rows={6}
-            value={formik.values.rejection_reason}
+            value={formik.values.issue}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={
-              formik.touched.rejection_reason &&
-              !!formik.errors.rejection_reason
-            }
-            helperText={
-              formik.touched.rejection_reason && formik.errors.rejection_reason
-            }
+            error={formik.touched.issue && !!formik.errors.issue}
+            helperText={formik.touched.issue && formik.errors.issue}
           />
         </Grid>
 
         <Grid item xs={12} mt="auto">
           <Button type="submit" color="error" fullWidth>
-            {t("rejectInvoice")}
+            {t("reportInvoice")}
           </Button>
         </Grid>
       </Grid>
@@ -92,4 +87,4 @@ function InvoiceRejectDialog() {
   );
 }
 
-export default InvoiceRejectDialog;
+export default InvoiceReportDialog;

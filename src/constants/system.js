@@ -32,6 +32,7 @@ export const INVOICE_TYPES = {
   credit_note: "credit_note",
 };
 export const INVOICE_STATUSES = {
+  unpaid: "unpaid",
   pending: "pending",
   paid: "paid",
   rejected: "rejected",

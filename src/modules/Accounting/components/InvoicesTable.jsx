@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { filtersSelector, setFilters } from "../state/walletSlice";
+import { filtersSelector, setFilters } from "../state/invoicesSlice";
 
 import {
   useGetInvoicesQuery,
@@ -9,24 +9,26 @@ import {
 import { useTranslation } from "react-i18next";
 
 import { Typography, Chip, Tooltip } from "@mui/material";
-import { mdiCloudDownloadOutline } from "@mdi/js";
+import { mdiCloudDownloadOutline, mdiMinus } from "@mdi/js";
 
 import Table from "../../../shared/components/Table";
+import Icon from "../../../shared/components/Icon";
 import IconButton from "../../../shared/components/IconButton";
 
 import NoContent from "../../../shared/views/NoContent";
 
 import InvoiceDetails from "./InvoiceDetails";
-import InvoiceRejectDialog from "./InvoiceRejectDialog";
 import InvoicePaymentDialog from "./InvoicePaymentDialog";
+import InvoiceReportDialog from "./InvoiceReportDialog";
 
-import { INVOICE_STATUSES } from "../../../constants/system";
+import { INVOICE_STATUSES, INVOICE_TYPES } from "../../../constants/system";
 
 import { toTimeZone, formatDate, formats } from "../../../helpers/datetime";
 import { downloadFile } from "../../../helpers/routing";
 
 const statusColorMap = {
-  [INVOICE_STATUSES.pending]: "default",
+  [INVOICE_STATUSES.unpaid]: "default",
+  [INVOICE_STATUSES.pending]: "warning",
   [INVOICE_STATUSES.paid]: "success",
   [INVOICE_STATUSES.rejected]: "error",
 };
@@ -48,9 +50,10 @@ function InvoicesTable() {
     t("type"),
     t("date"),
     t("status"),
-    t("invoiceAmount"),
-    t("vatAmount"),
-    t("totalAmount"),
+    t("amount"),
+    t("paidAmount"),
+    t("refundAmount"),
+    t("remainingAmount"),
     t("paymentType"),
     "",
   ];
@@ -73,28 +76,58 @@ function InvoicesTable() {
       </Typography>,
 
       <Chip
-        label={t(item.status)}
+        label={
+          item.type === INVOICE_TYPES.credit_note
+            ? t("approved")
+            : t(item.status)
+        }
         size="small"
         variant="outlined"
         color={statusColorMap[item.status]}
-        sx={{ width: 80 }}
+        sx={{ width: 100 }}
       />,
-
-      <Typography component="span" variant="body2">
-        {item.invoice_amount.toFixed(2)} {t("sr")}
-      </Typography>,
-
-      <Typography component="span" variant="body2">
-        {item.vat_amount.toFixed(2)} {t("sr")}
-      </Typography>,
 
       <Typography component="span" variant="body2">
         {item.total_amount.toFixed(2)} {t("sr")}
       </Typography>,
 
-      <Typography component="span" variant="body2" color="primary">
-        {t(item.payment_type)}
-      </Typography>,
+      item.type === INVOICE_TYPES.invoice ? (
+        <Typography component="span" variant="body2">
+          {item.status === INVOICE_STATUSES.paid
+            ? item.required_amount.toFixed(2)
+            : "0.00"}{" "}
+          {t("sr")}
+        </Typography>
+      ) : (
+        <Icon icon={mdiMinus} size="medium" color="action" />
+      ),
+
+      item.type === INVOICE_TYPES.invoice ? (
+        <Typography component="span" variant="body2">
+          {item.refund_amount.toFixed(2)} {t("sr")}
+        </Typography>
+      ) : (
+        <Icon icon={mdiMinus} size="medium" color="action" />
+      ),
+
+      item.type === INVOICE_TYPES.invoice ? (
+        <Typography component="span" variant="body2">
+          {item.status !== INVOICE_STATUSES.paid
+            ? item.required_amount.toFixed(2)
+            : "0.00"}{" "}
+          {t("sr")}
+        </Typography>
+      ) : (
+        <Icon icon={mdiMinus} size="medium" color="action" />
+      ),
+
+      item.status === INVOICE_STATUSES.paid ? (
+        <Typography component="span" variant="body2" color="primary">
+          {t(item.payment_type)}
+        </Typography>
+      ) : (
+        <Icon icon={mdiMinus} size="medium" color="action" />
+      ),
 
       <Tooltip title={t("downloadInvoicePDF")}>
         <IconButton
@@ -111,7 +144,10 @@ function InvoicesTable() {
         />
       </Tooltip>,
     ],
-    rowDetails: <InvoiceDetails invoice={item} />,
+    rowDetails:
+      item.type === INVOICE_TYPES.invoice ? (
+        <InvoiceDetails invoice={item} />
+      ) : null,
   }));
 
   if (isLoading) return null;
@@ -134,7 +170,7 @@ function InvoicesTable() {
         }
       />
 
-      <InvoiceRejectDialog />
+      <InvoiceReportDialog />
       <InvoicePaymentDialog />
     </>
   ) : (

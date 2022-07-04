@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 import { useTheme, styled, alpha } from "@mui/material/styles";
 import {
+  Box,
+  Collapse,
   TableContainer,
   Table as MuiTable,
   TableBody,
@@ -12,16 +14,13 @@ import {
   TableCell as MuiTableCell,
   tableCellClasses,
   TablePagination,
-  Collapse,
-  IconButton,
-  Box,
 } from "@mui/material";
 
 import { mdiChevronRight, mdiChevronLeft, mdiChevronUp } from "@mdi/js";
 
 import PaginationActions from "./PaginationActions";
 
-import Icon from "../Icon";
+import IconButton from "../IconButton";
 
 const TableRow = styled(MuiTableRow, {
   shouldForwardProp: (prop) =>
@@ -104,26 +103,27 @@ function Table({
               >
                 {expandable && (
                   <TableCell padding="checkbox" expandable={expandable}>
-                    <IconButton
-                      aria-label={
-                        row.id === expandedRowID ? "collapse row" : "expand row"
-                      }
-                      size="small"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setExpandedRowID(
-                          row.id === expandedRowID ? "" : row.id
-                        );
-                      }}
-                    >
-                      <Icon
+                    {!!row.rowDetails && (
+                      <IconButton
+                        aria-label={
+                          row.id === expandedRowID
+                            ? "collapse row"
+                            : "expand row"
+                        }
+                        size="small"
                         icon={
                           row.id === expandedRowID
                             ? mdiChevronUp
                             : chevronIconMapping[direction]
                         }
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setExpandedRowID(
+                            row.id === expandedRowID ? "" : row.id
+                          );
+                        }}
                       />
-                    </IconButton>
+                    )}
                   </TableCell>
                 )}
 
@@ -134,10 +134,10 @@ function Table({
                 ))}
               </TableRow>
 
-              {!!expandable && (
+              {expandable && !!row.rowDetails && (
                 <TableRow active>
                   <TableCell
-                    colSpan={Object.keys(row).length + 1}
+                    colSpan={Object.keys(headLabels).length + 1}
                     style={{ paddingTop: 0, paddingBottom: 0 }}
                   >
                     <Collapse timeout="auto" in={row.id === expandedRowID}>

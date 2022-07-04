@@ -89,7 +89,7 @@ function InvoicePaymentDialog() {
   });
 
   const walletBalance = walletOverview?.current_balance || 0;
-  const invoiceAmount = invoiceToPay?.total_amount || 0;
+  const invoiceAmount = invoiceToPay?.required_amount || 0;
   const amountAfter = walletBalance - invoiceAmount;
 
   return (

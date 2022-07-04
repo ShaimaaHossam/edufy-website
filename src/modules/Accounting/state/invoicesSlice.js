@@ -6,7 +6,7 @@ export const invoicesSlice = createSlice({
   name: "invoices",
   initialState: {
     filters: FILTERS_INIT_STATE,
-    invoiceToReject: null,
+    invoiceToReport: null,
     invoiceToPay: null,
   },
   reducers: {
@@ -16,19 +16,19 @@ export const invoicesSlice = createSlice({
     clearFilters: (state) => {
       state.filters = FILTERS_INIT_STATE;
     },
-    setInvoiceToReject: (state, { payload }) => {
-      state.invoiceToReject = payload;
-    },
     setInvoiceToPay: (state, { payload }) => {
       state.invoiceToPay = payload;
+    },
+    setInvoiceToReport: (state, { payload }) => {
+      state.invoiceToReport = payload;
     },
   },
 });
 
-export const { setFilters, clearFilters, setInvoiceToReject, setInvoiceToPay } =
+export const { setFilters, clearFilters, setInvoiceToReport, setInvoiceToPay } =
   invoicesSlice.actions;
 
 export const filtersSelector = (state) => state.invoices.filters;
-export const invoiceToRejectSelector = (state) =>
-  state.invoices.invoiceToReject;
 export const invoiceToPaySelector = (state) => state.invoices.invoiceToPay;
+export const invoiceToReportSelector = (state) =>
+  state.invoices.invoiceToReport;
