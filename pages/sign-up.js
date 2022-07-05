@@ -3,12 +3,14 @@ import {useRouter} from "next/router";
 import Logo from "../components/logo";
 import axios from 'axios'
 import { useState, useEffect } from "react";
+
  function SignUp() {
   const router = useRouter();
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [error, setError] = useState("");
   const [username, setUsername] = useState("");
+
   useEffect(()=>{
     if(JSON.parse(localStorage.getItem("user"))){
       router.push("/")

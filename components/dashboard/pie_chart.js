@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -27,10 +27,10 @@ export const options = {
  
 
 export default function PieChart({ classData}) {
-
+ useEffect(()=>{console.log(classData)})
   
   const data = {
-    labels: ['Attentive', 'Inattentive', 'Sleepy', 'Confused'],
+    labels: ['Anger', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Contempt'],
     datasets: [
       {
           label:'',

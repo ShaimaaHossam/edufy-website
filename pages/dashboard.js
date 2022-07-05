@@ -21,7 +21,7 @@ export async function getStaticProps()  {
 export default function Dashboard({meetings}) {
   const router = useRouter()
   
-  const [menu, setMenu] = React.useState(1);
+  const [menu, setMenu] = React.useState(0);
   const [active, setActive] = React.useState(1); //1 if there is an active meeting
   useEffect(()=>{
     if(!JSON.parse(localStorage.getItem("user"))){
@@ -36,17 +36,13 @@ export default function Dashboard({meetings}) {
       <LeftMenu menu={menu} active={active} updateMenu={updateMenu} />
       <div className="absolute right-0 w-10/12 pt-20 ml-4 bg-white rounded-md">
         <h1 className="pl-20 text-4xl font-medium text-gray-900">Dashboard</h1>
-        {menu == 1 ? (
-          <Reports />
-        ) : menu == 2 ? (
-          <ActiveMeetings active={active} meetings={meetings} />
-        ) : menu == 3 ? (
-          <PastMeetings />
-        ) : menu == 4 ? (
-          <Classes />
-        ) : (
+        { menu == 0 ? (
+          <ActiveMeetings meetings={meetings} />
+        ) : menu == 1 ? (
+          <PastMeetings meetings={meetings}/>
+        ) : 
           ""
-        )}
+        }
       </div>
     </div>
   );

@@ -8,11 +8,38 @@ export default function ActiveMeetings({meetings}) {
   const [active, setActive] = useState(0)
   const [data, setData] = useState([]);
   const [students, setStudents] = useState([])
+  
   useEffect(()=>{
-    if(meetings.data.filter(meeting => meeting.ended)){
-      setActive(1)
+    const meeting = meetings.data.filter(meeting => meeting.ended == 0)
+    if(meeting){
+      setActive(1);
+      setStudents(meeting[0].students)
+      setData(initializeDataArray())
     }
-  })
+  },[])
+  const initializeDataArray = () => {
+    let dataArray = [0, 0, 0, 0, 0, 0, 0];
+    if(students){
+    students.map((student) => {
+      if (student.status === 'Anger') {
+        dataArray[0] += 1;
+      } else if (student.status === 'Disgust') {
+        dataArray[1] += 1;
+      } else if (student.status === 'Fear') {
+        dataArray[2] += 1;
+      } else if (student.status === 'Happy') {
+        dataArray[3] += 1;
+      }  else if (student.status === 'Sad') {
+        dataArray[4] += 1;
+      } else if (student.status === 'Surprise') {
+        dataArray[5] += 1;
+      } else if (student.status === 'Contempt') {
+        dataArray[6] += 1;
+      } 
+      
+    })};
+    return dataArray;
+  }
   return (
     <div className="mt-4">
     
@@ -24,9 +51,9 @@ export default function ActiveMeetings({meetings}) {
           <h1 className="font-bold text-center text-gray-500">
             Students Evaluation
           </h1>
-          <PieChart classData={data} />
+          <PieChart classData={initializeDataArray()} />
         </div>
-       <Analysis data={data} />
+       <Analysis data={initializeDataArray()} />
       </div>
       <div className="mt-12 ">
            <div className="py-12 mx-20 ">

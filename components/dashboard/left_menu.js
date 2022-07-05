@@ -8,10 +8,10 @@ export default function LeftMenu({ menu, active,  updateMenu,  }) {
     router.replace("/")
   }
   return (
-    <div className="w-44 h-screen  fixed  flex flex-col  content-center    bg-gray-900  py-12   text-white">
+    <div className="fixed flex flex-col content-center h-screen py-12 text-white bg-gray-900 w-44">
         <Link href="/" passHref>
           <svg
-            className="mx-auto  my-6 mb-20 hover:cursor-pointer"
+            className="mx-auto my-6 mb-8 hover:cursor-pointer"
             width="100"
             height="36"
             viewBox="0 0 158 36"
@@ -38,37 +38,13 @@ export default function LeftMenu({ menu, active,  updateMenu,  }) {
         </Link>
 
         <ul className="mx-auto">
-        <li
-          onClick={() => {
-            updateMenu(1);
-          }}
-          className={menu == 1 ? "my-4 bg-gray-600 text-center hover:cursor-pointer mx-auto py-4  rounded-sm" : "my-4 text-center hover:cursor-pointer hover:bg-gray-600 mx-auto py-4  rounded-sm"}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width="20"
-            height="20"
-            className="mx-auto mb-1"
-            fill="#adadaf"
-          >
-            <g id="_01_align_center" data-name="01 align center">
-              <path d="M24,24H3a3,3,0,0,1-3-3V0H2V21a1,1,0,0,0,1,1H24Z" />
-              <rect x="14" y="11" width="2" height="9" />
-              <rect x="6" y="11" width="2" height="9" />
-              <rect x="18" y="6" width="2" height="14" />
-              <rect x="10" y="6" width="2" height="14" />
-            </g>
-          </svg>
-
-          <p className="text-sm">Reports</p>
-        </li>
+    
       
           <li
           onClick={() => {
-            updateMenu(2);
+            updateMenu(0);
           }}
-          className={menu == 2 ? "bg-gray-600 my-4 text-center hover:cursor-pointer mx-auto py-4  rounded-sm" : "my-4 text-center hover:cursor-pointer hover:bg-gray-600 mx-auto py-4  rounded-sm"}
+          className={menu == 0 ? "bg-gray-600 my-12 px-2 text-center hover:cursor-pointer mx-auto py-4  rounded-sm" : "my-12 px-2 text-center hover:cursor-pointer hover:bg-gray-600 mx-auto py-4  rounded-sm"}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -85,9 +61,9 @@ export default function LeftMenu({ menu, active,  updateMenu,  }) {
         </li>
         <li
           onClick={() => {
-            updateMenu(3);
+            updateMenu(1);
           }}
-          className={menu == 3 ? "my-4 bg-gray-600 text-center hover:cursor-pointer mx-auto py-4  rounded-sm" : "my-4 text-center hover:cursor-pointer hover:bg-gray-600 mx-auto py-4  rounded-sm"}>
+          className={menu == 1 ? "my-12 bg-gray-600 px-2 text-center hover:cursor-pointer mx-auto py-4  rounded-sm" : "my-12 px-2 text-center hover:cursor-pointer hover:bg-gray-600 mx-auto py-4  rounded-sm"}>
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +83,7 @@ export default function LeftMenu({ menu, active,  updateMenu,  }) {
         
         <li
           onClick={signout}
-          className={menu == 7 ? "my-4  text-center hover:cursor-pointer mx-auto py-4  rounded-sm" : "my-4 text-center hover:cursor-pointer  mx-auto py-4  rounded-sm"}>
+          className={menu == 2 ? "my-4 px-2  text-center hover:cursor-pointer mx-auto py-4  rounded-sm" : "my-4 text-center px-2 hover:cursor-pointer  mx-auto py-4  rounded-sm"}>
         
           <svg
             xmlns="http://www.w3.org/2000/svg"

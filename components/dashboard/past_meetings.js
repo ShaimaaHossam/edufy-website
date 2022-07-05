@@ -1,31 +1,29 @@
 import BasicModal from "./modal";
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-export default function PastMeetings() {
+export default function PastMeetings({meetings}) {
   const [open, setOpen] = React.useState(false);
   const [meeting, setMeeting] = React.useState([]);
-  const [meetings, setMeetings] = React.useState([]);
   const router = useRouter();
   const handleOpen = (meeting) => {
     setMeeting(meeting);
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
-
   
 
   return (
-    <div className="mt-4 mx-20">
-      <span className=" bg-blue-200 text-blue-800 font-bold px-6  py-1 rounded-full text-lg">
+    <div className="mx-20 my-4 mb-12">
+      <span className="px-6 py-1 text-lg font-bold text-blue-800 bg-blue-200 rounded-full ">
         Past Meetings
       </span>
 
       <ul className="mt-12 ">
-        {meetings.map((meeting, key) => (
+        {meetings.data.map((meeting, key) => (
           <li
             key={key}
             onClick={() => handleOpen(meeting)}
-            className="flex shadow-md py-8 mt-4 px-8 cursor-pointer"
+            className="flex px-8 py-8 mt-4 shadow-md cursor-pointer"
           >
             <div className="mr-12">
               <svg
@@ -41,10 +39,10 @@ export default function PastMeetings() {
               </svg>
             </div>
             <div>
-              <h1 className="font-bold text-gray-600 text-lg">
-                {meeting.meetingTitle}
+              <h1 className="text-lg font-bold text-gray-600">
+                {meeting.courseTitle}
               </h1>
-              <p>Room ID: {meeting.meetingRoomId}</p>
+              <p className="text-gray-400 text-md">Date: {meeting.created_at.slice(0,10)}</p>
             </div>
           </li>
         ))}
