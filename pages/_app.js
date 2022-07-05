@@ -1,10 +1,9 @@
 import Layout from "../components/layout";
 import "../styles/globals.css";
-import App from 'next/app';
+import { useState, useMemo } from "react";
 import { StudentProvider } from "../contexts/StudentContext";
 import MeetingLayout from "../components/meetingLayout";
-
-const MyApp = ({ Component, pageProps, ...appProps }) => {
+function MyApp({ Component, pageProps, ...appProps }) {
   
   function logUser(user){
     localStorage.setItem('user', user)
@@ -41,9 +40,5 @@ const MyApp = ({ Component, pageProps, ...appProps }) => {
    
   );
 }
-MyApp.getInitialProps = async (appContext) => {
-  const appProps = await App.getInitialProps(appContext);
 
-  return { ...appProps };
-};
-export default App;
+export default MyApp;
