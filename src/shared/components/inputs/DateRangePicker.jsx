@@ -12,13 +12,7 @@ import { Grid } from "@mui/material";
 
 import DatePicker from "./DatePicker";
 
-function DateRangePicker({
-  required,
-  size,
-  spacing,
-  onChange,
-  initialValues = [],
-}) {
+function DateRangePicker({ required, size, spacing, values, onChange }) {
   const { t } = useTranslation();
 
   const formik = useFormik({
@@ -26,8 +20,8 @@ function DateRangePicker({
     validateOnChange: true,
     validateOnBlur: false,
     initialValues: {
-      date1: initialValues[0] || null,
-      date2: initialValues[1] || null,
+      date1: values[0] || null,
+      date2: values[1] || null,
     },
     validationSchema: Yup.object().shape({
       date1: Yup.date()
@@ -55,19 +49,19 @@ function DateRangePicker({
     }),
   });
 
-  const { values, validateForm } = formik;
+  const { values: formValues, validateForm } = formik;
   const onChangeRef = useRef(onChange);
   const isMountedRef = useRef(false);
   useEffect(() => {
     if (isMountedRef.current) {
       validateForm().then((errors) => {
         !Object.keys(errors).length &&
-          onChangeRef.current([values.date1, values.date2]);
+          onChangeRef.current([formValues.date1, formValues.date2]);
       });
     } else {
       isMountedRef.current = true;
     }
-  }, [values, validateForm]);
+  }, [formValues, validateForm]);
 
   return (
     <Grid container spacing={spacing}>
@@ -77,7 +71,7 @@ function DateRangePicker({
           label={t("fromDate")}
           size={size}
           required={required}
-          value={formik.values.date1}
+          value={values[0] || null}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={!!formik.touched.date1 && !!formik.errors.date1}
@@ -91,7 +85,7 @@ function DateRangePicker({
           label={t("toDate")}
           size={size}
           required={required}
-          value={formik.values.date2}
+          value={values[1] || null}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={!!formik.touched.date2 && !!formik.errors.date2}
@@ -108,8 +102,8 @@ DateRangePicker.propTypes = {
   size: PropTypes.oneOf(["medium", "small"]),
   spacing: PropTypes.number,
 
-  onChange: PropTypes.func,
-  initialValues: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+  values: PropTypes.arrayOf(PropTypes.instanceOf(Date)).isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default DateRangePicker;

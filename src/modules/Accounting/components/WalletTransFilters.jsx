@@ -72,7 +72,7 @@ function WalletTransFilters() {
         <DateRangePicker
           size="small"
           spacing={2}
-          initialValues={[null, null]}
+          values={formik.values.dates}
           onChange={(dates) => formik.setFieldValue("dates", dates)}
         />
       </Grid>
