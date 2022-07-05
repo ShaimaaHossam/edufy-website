@@ -20,6 +20,7 @@ import { propertyFormStepperSlice } from "../modules/Properties/state/propertyFo
 
 import { walletSlice } from "../modules/Accounting/state/walletSlice";
 import { invoicesSlice } from "../modules/Accounting/state/invoicesSlice";
+import { transactionsSlice } from "../modules/Accounting/state/transactionsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -41,6 +42,7 @@ export const store = configureStore({
 
     [walletSlice.name]: walletSlice.reducer,
     [invoicesSlice.name]: invoicesSlice.reducer,
+    [transactionsSlice.name]: transactionsSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
