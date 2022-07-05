@@ -24,18 +24,25 @@ const style = {
 
 export default function BasicModal({ handleClose, open, meeting }) {
   const initializeDataArray = () => {
-    let dataArray = [0, 0, 0, 0];
+    let dataArray = [0, 0, 0, 0, 0, 0, 0];
     if(meeting.students){
     meeting.students.map((student) => {
-      if (student.studentStatus === 'Attentive') {
+      if (student.status === 'Anger') {
         dataArray[0] += 1;
-      } else if (student.studentStatus === 'Inattentive') {
+      } else if (student.status === 'Disgust') {
         dataArray[1] += 1;
-      } else if (student.studentStatus === 'Sleepy') {
+      } else if (student.status === 'Fear') {
         dataArray[2] += 1;
-      } else {
+      } else if (student.status === 'Happy') {
         dataArray[3] += 1;
-      }
+      }  else if (student.status === 'Sad') {
+        dataArray[4] += 1;
+      } else if (student.status === 'Surprise') {
+        dataArray[5] += 1;
+      } else if (student.status === 'Contempt') {
+        dataArray[6] += 1;
+      } 
+      
     })};
     return dataArray;
   }
@@ -64,8 +71,8 @@ export default function BasicModal({ handleClose, open, meeting }) {
           >
             {meeting.meetingRoomId}
           </Typography>
-          <div className="mt-12 flex flex-col">
-            <div className="mr-12 w-1/2 flex mb-12">
+          <div className="flex flex-col mt-12">
+            <div className="flex w-1/2 mb-12 mr-12">
               <PieChart classData={initializeDataArray()} />
               <Analysis data={initializeDataArray()} />
             </div>

@@ -61,3 +61,8 @@ export default function MeetingLayout({ children }) {
         </>
     );
 }
+{/* <li className=" mb-16">
+          <Link href="/join-meeting" passHref>
+            <Button sx={{ color: 'white' }} variant="contained">Create Meeting</Button>
+          </Link>
+        </li> */}
