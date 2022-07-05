@@ -70,14 +70,14 @@ const en = {
   minLetters10: "Min. 10 letters for the reason",
   maxLetters300: "Min. 300 letters for the reason",
 
-  addition: "Addition",
-  deduction: "Deduction",
+  deposit: "Addition",
+  withdraw: "Deduction",
 
-  refund: "Refund",
-  deposit: "Deposit",
-  subs_fees: "Subscription Fees",
-  free_balance: "Free Balance",
-  invoice_payment: "Invoice Payment",
+  descrip_refund: "Refund",
+  descrip_deposit: "Deposit",
+  descrip_free_balance: "Free Balance",
+  descrip_invoice_payment: "Invoice Payment",
+  descrip_subscription_fees: "Subscription Fees",
 
   invoice: "Invoice",
   credit_note: "Credit Note",

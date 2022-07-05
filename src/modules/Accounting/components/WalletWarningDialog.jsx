@@ -25,12 +25,13 @@ function WalletWarningDialog() {
 
   const { isLoading, data: overview } = useGetWalletOverviewQuery();
 
+  if (isLoading) return null;
+
   const percentage =
-    (overview.current_balance /
-      (overview.spendings_limit + overview.deposits)) *
+    (overview.current_balance / (overview.spending_limit + overview.deposits)) *
     100;
 
-  if (isLoading || percentage > 25) return null;
+  if (percentage > 25) return null;
 
   return (
     <Dialog

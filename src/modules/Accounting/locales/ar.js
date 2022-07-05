@@ -67,14 +67,14 @@ const ar = {
   minLetters10: "يجب أن يكون السبب ١٠ حرف على الأقل",
   maxLetters300: "يجب أن يكون السبب ٣٠٠ حرف على الأكثر",
 
-  addition: "إضافة",
-  deduction: "خصم",
+  deposit: "إضافة",
+  withdraw: "خصم",
 
-  refund: "إعادة مال",
-  deposit: "إضافة مال",
-  subs_fees: "مصاريف الإشتراك",
-  free_balance: "رصيد حر",
-  invoice_payment: "دفع فاتورة",
+  descrip_refund: "إعادة مال",
+  descrip_deposit: "إضافة مال",
+  descrip_free_balance: "رصيد حر",
+  descrip_invoice_payment: "دفع فاتورة",
+  descrip_subscription_fees: "مصاريف الإشتراك",
 
   invoice: "فاتورة",
   credit_note: "ملاحظة عن الرصيد",

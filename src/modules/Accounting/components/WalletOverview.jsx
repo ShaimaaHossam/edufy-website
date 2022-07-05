@@ -37,8 +37,7 @@ function WalletOverview() {
   if (isLoading) return null;
 
   const percentage =
-    (overview.current_balance /
-      (overview.spendings_limit + overview.deposits)) *
+    (overview.current_balance / (overview.spending_limit + overview.deposits)) *
     100;
 
   return (
@@ -69,7 +68,7 @@ function WalletOverview() {
               {t("capacityLimit")}
             </Typography>
             <Typography component="span" variant="subtitle1">
-              {overview.spendings_limit.toFixed(2)} {t("sr")}
+              {overview.spending_limit.toFixed(2)} {t("sr")}
             </Typography>
           </Grid>
 
@@ -95,7 +94,7 @@ function WalletOverview() {
               {t("spendings")}
             </Typography>
             <Typography component="span" variant="subtitle1">
-              {overview.total_spendings.toFixed(2)} {t("sr")}
+              {overview.total_spending.toFixed(2)} {t("sr")}
             </Typography>
           </Grid>
         </Grid>
@@ -130,8 +129,7 @@ function WalletOverview() {
             color="primary.main"
             align="right"
           >
-            {(overview.spendings_limit + overview.deposits).toFixed(2)}{" "}
-            {t("sr")}
+            {(overview.spending_limit + overview.deposits).toFixed(2)} {t("sr")}
           </Typography>
         </Grid>
       </Grid>

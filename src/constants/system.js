@@ -16,15 +16,15 @@ export const USER_TYPES = {
 export const UNIT_CUSTOMER_TYPES = { owner: 1, tenant: 2 };
 
 export const WALLET_TRANS_TYPES = {
-  addition: "addition",
-  deduction: "deduction",
+  deposit: "deposit",
+  withdraw: "withdraw",
 };
 export const WALLET_TRANS_DESCRIPS = {
   refund: "refund",
   deposit: "deposit",
-  subs_fees: "subs_fees",
   free_balance: "free_balance",
   invoice_payment: "invoice_payment",
+  subscription_fees: "subscription_fees",
 };
 
 export const INVOICE_TYPES = {

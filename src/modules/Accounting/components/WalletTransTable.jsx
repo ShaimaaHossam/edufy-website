@@ -63,7 +63,7 @@ function WalletTransTable() {
       </Typography>,
 
       <Typography component="span" variant="body2">
-        {t(item.description)}
+        {!!item.description ? t(`descrip_${item.description}`) : ""}
       </Typography>,
 
       item.remarks ? (

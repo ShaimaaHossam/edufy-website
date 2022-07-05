@@ -103,7 +103,7 @@ function WalletTransFilters() {
           limitTags={1}
           options={Object.values(WALLET_TRANS_DESCRIPS).map((type) => ({
             value: type,
-            label: t(type),
+            label: t(`descrip_${type}`),
           }))}
           value={formik.values.description}
           onChange={formik.handleChange}
