@@ -58,6 +58,14 @@ export const accountingAPI = createApi({
     downloadInvoicePDF: build.query({
       query: (id) => ({ url: `/invoices/download/${id}` }),
     }),
+
+    getTransactions: build.query({
+      query: (queryParams) => ({ url: "/transactions", params: queryParams }),
+      transformResponse: (res) => ({ data: res.data, meta: res.meta }),
+    }),
+    downloadTransactionsSheet: build.query({
+      query: () => ({ url: "/transactions/download" }),
+    }),
   }),
 });
 
@@ -70,4 +78,7 @@ export const {
   usePayInvoiceMutation,
   useReportInvoiceMutation,
   useLazyDownloadInvoicePDFQuery,
+
+  useGetTransactionsQuery,
+  useLazyDownloadTransactionsSheetQuery,
 } = accountingAPI;
