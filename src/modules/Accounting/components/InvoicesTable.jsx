@@ -8,7 +8,7 @@ import {
 
 import { useTranslation } from "react-i18next";
 
-import { Typography, Chip, Tooltip } from "@mui/material";
+import { Box, Typography, Chip, Tooltip } from "@mui/material";
 import { mdiCloudDownloadOutline, mdiMinus } from "@mdi/js";
 
 import Table from "../../../shared/components/Table";
@@ -146,7 +146,9 @@ function InvoicesTable() {
     ],
     rowDetails:
       item.type === INVOICE_TYPES.invoice ? (
-        <InvoiceDetails invoice={item} />
+        <Box mx={4} mb={4}>
+          <InvoiceDetails invoice={item} />
+        </Box>
       ) : null,
   }));
 
