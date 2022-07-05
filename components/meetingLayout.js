@@ -9,6 +9,7 @@ export default function MeetingLayout({ children }) {
     const Router = useRouter();
     // const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const { meetingId, courseTitle } = useContext(StudentContext);
+    const [meeting, setMeeting] = useState("")
     const [user, setUser] = useState(null)
     const [state, setState] = useState({ left: false });
     const toggleDrawer = (anchor, open) => (event) => {
@@ -54,23 +55,15 @@ export default function MeetingLayout({ children }) {
 
                     >
 
-                        <Grid container spacing={2}>
-
-                            <Grid item xs={6}>
-                                <Typography variant="h6" className="text-center">
-                                    course title={courseTitle}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Typography variant="h6" className="text-center">
-                                    meetingId = {meetingId}
-                                </Typography>
-                            </Grid>
-                        </Grid>
+                        <div className="h-full px-20 py-6 bg-gray-900">
+                            <h1 className="text-lg font-bold text-center text-white ">{courseTitle}</h1>
+                            <p className="text-gray-400 text-md"><span className="text-bold">Meeting ID: </span>{meetingId}</p>
+                        </div>
 
 
 
                         {/* dashboard code here */}
+                        
                     </SwipeableDrawer>
                 )
             }

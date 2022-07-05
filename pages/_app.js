@@ -2,6 +2,7 @@ import Layout from "../components/layout";
 import "../styles/globals.css";
 import { useState, useMemo } from "react";
 import { StudentProvider } from "../contexts/StudentContext";
+
 import MeetingLayout from "../components/meetingLayout";
 function MyApp({ Component, pageProps, ...appProps }) {
   

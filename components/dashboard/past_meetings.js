@@ -42,7 +42,7 @@ export default function PastMeetings({meetings}) {
               <h1 className="text-lg font-bold text-gray-600">
                 {meeting.courseTitle}
               </h1>
-              <p className="text-gray-400 text-md">Date: {meeting.created_at.slice(0,10)}</p>
+              <p className={meeting.ended == 0 ? "text-green-400 text-md" : "text-red-400 text-md"}>{meeting.ended == 0 ? "In progress" : "Ended" }</p>
             </div>
           </li>
         ))}

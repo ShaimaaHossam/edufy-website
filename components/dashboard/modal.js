@@ -61,7 +61,7 @@ export default function BasicModal({ handleClose, open, meeting }) {
             variant="h5"
             component="h2"
           >
-            {meeting.meetingTitle}
+            {meeting.courseTitle}
           </Typography>
           <Typography
             id="modal-modal-title"
@@ -69,7 +69,7 @@ export default function BasicModal({ handleClose, open, meeting }) {
             variant="h7"
             component="h2"
           >
-            {meeting.meetingRoomId}
+           Date: {}
           </Typography>
           <div className="flex flex-col mt-12">
             <div className="flex w-1/2 mb-12 mr-12">
