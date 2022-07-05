@@ -6,7 +6,7 @@ import StudentContext from '../contexts/StudentContext';
 
 import axios from 'axios';
 
-const Meeting = () => {
+const Meeting = ({meetings}) => {
 
     const { meetingId, studentName } = useContext(StudentContext);
     // const [instructor, setInstructor] = useState(null)
@@ -29,11 +29,14 @@ const Meeting = () => {
         };
 
         setMeetingUrl(`https://edufy-meeting-platform.vercel.app/?token=${token}&name=${user.name}&joinScreenEnabled=false&meetingId=${meetingId}&webcamEnabled=true&micEnabled=false&debug=${debug}&participantCanEndMeeting=true&whiteboardEnabled=true&canRemoveOtherParticipant=true&canDrawOnWhiteboard=true&canToggleWhiteboard=true&canPin=true&joinWithoutUserInteraction=true&isInstructor=true`);
+        
+     
+    
     }, [token, studentName, meetingId, debug])
 
     if (isloading) return null;
     return (
-        <div className="w-screen h-screen flex justify-center items-center">
+        <div className="flex items-center justify-center w-screen h-screen">
 
             <iframe
                 width="100%"

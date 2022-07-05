@@ -1,11 +1,11 @@
 import LeftMenu from "../components/dashboard/left_menu";
 import ActiveMeetings from "../components/dashboard/active_meetings";
 import PastMeetings from "../components/dashboard/past_meetings";
-import Reports from "../components/dashboard/reports";
-import Classes from "../components/dashboard/classes";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from 'axios'
+
+let user_id ;
 export async function getStaticProps()  {
   
   const res = await axios.post('http://edufy-backend.jjdu4f46bt-xlm41rjo56dy.p.runcloud.link/api/user/meetings/all', {"user_id" : 2})
@@ -26,6 +26,9 @@ export default function Dashboard({meetings}) {
   useEffect(()=>{
     if(!JSON.parse(localStorage.getItem("user"))){
       router.push("/")
+    }
+    else{
+      user_id = JSON.parse(localStorage.getItem("user")).id
     }
   })
   function updateMenu(menu) {

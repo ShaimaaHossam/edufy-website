@@ -6,15 +6,14 @@ import axios from 'axios'
 
 export default function ActiveMeetings({meetings}) {
   const [active, setActive] = useState(0)
-  const [data, setData] = useState([]);
   const [students, setStudents] = useState([])
   
   useEffect(()=>{
     const meeting = meetings.data.filter(meeting => meeting.ended == 0)
+    console.log(meeting)
     if(meeting){
       setActive(1);
-      setStudents(meeting[0].students)
-      setData(initializeDataArray())
+      setStudents(meeting[meeting.length-1].students)
     }
   },[])
   const initializeDataArray = () => {
