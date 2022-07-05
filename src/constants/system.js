@@ -41,3 +41,11 @@ export const INVOICE_PAY_TYPES = {
   wallet: "wallet",
   transfer: "transfer",
 };
+
+export const TRANSACTION_TYPES = {
+  order: "order",
+  invoice: "invoice",
+  payment: "payment",
+  wallet_recharge: "wallet_recharge",
+  credit_note: "credit_note",
+};
