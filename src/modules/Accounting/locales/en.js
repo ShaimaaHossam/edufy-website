@@ -42,6 +42,13 @@ const en = {
   rejectionReason: "Rejection Reason",
   invoiceIssue: "Invoice Issue",
   approved: "Approved",
+  transactions: "Transactions",
+  searchTransactions: "Search in Transactions",
+  searchTransactionsPlaceholder: "Order, Invoice, Payment Numbers",
+  creditBalance: "Credit Balance",
+  invoicesDue: "Invoices Due",
+  payments: "Payments",
+  creditLimit: "Credit Limit",
 
   walletWarningMessage:
     "Your wallet balance is running out, please recharge your wallet.",
@@ -65,11 +72,13 @@ const en = {
   pay: "Pay",
   report: "Report",
   backToInvoices: "Back to Invoices",
+  downloadTransactions: "Download Transactions",
 
   requiredField: "This field is required",
   minLetters10: "Min. 10 letters for the reason",
   maxLetters300: "Min. 300 letters for the reason",
 
+  /** CONSTANTS **/
   deposit: "Addition",
   withdraw: "Deduction",
 
@@ -89,6 +98,10 @@ const en = {
 
   wallet: "Wallet",
   transfer: "Transfer",
+
+  order: "Order",
+  payment: "Payment",
+  wallet_recharge: "Wallet Recharge",
 };
 
 export default en;

@@ -42,6 +42,13 @@ const ar = {
   rejectionReason: "سبب الرفض",
   invoiceIssue: "مشكلة الفاتورة",
   approved: "تمت الموافقة",
+  transactions: "التحركات",
+  searchTransactions: "البحث في التحركات",
+  searchTransactionsPlaceholder: "أرقام الطلب، الفاتورة، أو السداد",
+  creditBalance: "الرصيد الدائن",
+  invoicesDue: "الفواتير المستحقة",
+  payments: "السداد",
+  creditLimit: "الحد الإئتماني",
 
   walletWarningMessage:
     "رصيدك بالمحفظة أوشك على النفاذ، برجاء إعادة شحن المحفظة.",
@@ -62,11 +69,13 @@ const ar = {
   pay: "دفع",
   report: "مراجعة",
   backToInvoices: "الرجوع إلى الفواتير",
+  downloadTransactions: "تحميل التحركات",
 
   requiredField: "هذا الحقل مطلوب",
   minLetters10: "يجب أن يكون السبب ١٠ حرف على الأقل",
   maxLetters300: "يجب أن يكون السبب ٣٠٠ حرف على الأكثر",
 
+  /** CONSTANTS **/
   deposit: "إضافة",
   withdraw: "خصم",
 
@@ -86,6 +95,10 @@ const ar = {
 
   wallet: "محفظة",
   transfer: "تحويل",
+
+  order: "طلب",
+  payment: "سداد",
+  wallet_recharge: "شحن المحفظة",
 };
 
 export default ar;
