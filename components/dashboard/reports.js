@@ -2,7 +2,7 @@ import PieChart from "./pie_chart";
 import React from 'react'
 import Analysis from "./tables/analysis"
 export default function Reports() {
- const [data, setData] = React.useState([100, 82, 10, 17])
+  const [data, setData] = React.useState([100, 82, 10, 17])
   return (
     <div className="mt-4 mx-20">
       <span className=" bg-violet-200 text-violet-800 font-bold px-6  py-1 rounded-full text-lg">
@@ -15,7 +15,7 @@ export default function Reports() {
           </h1>
           <PieChart classData={data} />
         </div>
-       <Analysis data={data} />
+        <Analysis data={data} />
       </div>
     </div>
   );
