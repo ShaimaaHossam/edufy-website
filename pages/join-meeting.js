@@ -37,6 +37,7 @@ function JoinMeeting() {
       setError("Please enter the required fields");
       return;
     }
+    console.log(user);
     try {
       const res = await axios.post('https://edufy.elkayal.me/api/meeting/create', {
         user_id: user.id,
