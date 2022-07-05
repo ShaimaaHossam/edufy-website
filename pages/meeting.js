@@ -9,7 +9,7 @@ import axios from 'axios';
 const Meeting = () => {
 
     const { meetingId, studentName } = useContext(StudentContext);
-    const [instructor, setInstructor] = useState(null)
+    // const [instructor, setInstructor] = useState(null)
     const [meetingUrl, setMeetingUrl] = useState('')
     const [token, setToken] = useState('')
     const [isloading, setIsloading] = useState(true)
@@ -24,11 +24,11 @@ const Meeting = () => {
         const user = JSON.parse(localStorage.getItem("user"));
         generateMeetingToken();
         if (!user) {
-            setMeetingUrl(`https://edufy-meeting-platform.vercel.app/?token=${token}&name=${studentName}&joinScreenEnabled=true&meetingId=${meetingId}&webcamEnabled=true&micEnabled=false&debug=${debug}`);
+            setMeetingUrl(`https://edufy-meeting-platform.vercel.app/?token=${token}&name=${studentName}&joinScreenEnabled=true&meetingId=${meetingId}&webcamEnabled=true&micEnabled=false&debug=${debug}&isInstructor=false`);
             return;
         };
 
-        setMeetingUrl(`https://edufy-meeting-platform.vercel.app/?token=${token}&name=${user.name}&joinScreenEnabled=false&meetingId=${meetingId}&webcamEnabled=true&micEnabled=false&debug=${debug}&participantCanEndMeeting=true&whiteboardEnabled=true&canRemoveOtherParticipant=true&canDrawOnWhiteboard=true&canToggleWhiteboard=true&canPin=true&joinWithoutUserInteraction=true`);
+        setMeetingUrl(`https://edufy-meeting-platform.vercel.app/?token=${token}&name=${user.name}&joinScreenEnabled=false&meetingId=${meetingId}&webcamEnabled=true&micEnabled=false&debug=${debug}&participantCanEndMeeting=true&whiteboardEnabled=true&canRemoveOtherParticipant=true&canDrawOnWhiteboard=true&canToggleWhiteboard=true&canPin=true&joinWithoutUserInteraction=true&isInstructor=true`);
     }, [token, studentName, meetingId, debug])
 
     if (isloading) return null;
