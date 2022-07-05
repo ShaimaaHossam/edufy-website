@@ -70,6 +70,7 @@ const en = {
   requestWalletRecharge: "Request Wallet Charge",
   backToWallet: "Back to Wallet",
   pay: "Pay",
+  payAgain: "Pay Again",
   report: "Report",
   backToInvoices: "Back to Invoices",
   downloadTransactions: "Download Transactions",

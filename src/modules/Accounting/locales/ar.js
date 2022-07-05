@@ -67,6 +67,7 @@ const ar = {
   requestWalletRecharge: "طلب شحن المحفظة",
   backToWallet: "الرجوع إلى المحفظة",
   pay: "دفع",
+  payAgain: "إعادة الدفع",
   report: "مراجعة",
   backToInvoices: "الرجوع إلى الفواتير",
   downloadTransactions: "تحميل التحركات",

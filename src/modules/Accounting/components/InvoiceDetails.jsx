@@ -90,8 +90,7 @@ function InvoiceDetails({ invoice }) {
           </Typography>
         </Grid>
 
-        {(invoice.status === INVOICE_STATUSES.unpaid ||
-          invoice.status === INVOICE_STATUSES.pending) && (
+        {invoice.status !== INVOICE_STATUSES.paid && (
           <Grid item xs={12} sx={{ mt: 0.5, textAlign: "center" }}>
             <Button
               size="small"
@@ -110,7 +109,9 @@ function InvoiceDetails({ invoice }) {
               sx={{ minWidth: 80, borderRadius: 100 }}
               onClick={() => dispatch(setInvoiceToPay(invoice))}
             >
-              {t("pay")}
+              {invoice.status === INVOICE_STATUSES.rejected
+                ? t("payAgain")
+                : t("pay")}
             </Button>
           </Grid>
         )}
