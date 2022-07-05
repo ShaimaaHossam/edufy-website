@@ -1,34 +1,49 @@
 import Layout from "../components/layout";
 import "../styles/globals.css";
-import { useState } from 'react'
-import { StudentProvider } from '../contexts/StudentContext'
+import App from 'next/app';
+import { StudentProvider } from "../contexts/StudentContext";
 import MeetingLayout from "../components/meetingLayout";
-function MyApp({ Component, pageProps, ...appProps }) {
-  const [user, setUser] = useState("")
-  const [loggedIn, setLoggedIn] = useState(0);
-  const logUser = (user) => {
-    setUser(user);
-    setLoggedIn(1);
+
+const MyApp = ({ Component, pageProps, ...appProps }) => {
+  
+  function logUser(user){
+    localStorage.setItem('user', user)
   }
   if ([`/join-meeting`, `/meeting`].includes(appProps.router.pathname)) {
     return (
       <StudentProvider>
         <MeetingLayout>
-          <Component loggedIn={loggedIn} logUser={logUser} user={user} {...pageProps} />
+          <Component
+            {...pageProps}
+          />
         </MeetingLayout>
       </StudentProvider>
-    )
+    );
   }
 
   if ([`/dashboard`, `/login`, `/sign-up`].includes(appProps.router.pathname))
-    return <Component loggedIn={loggedIn} logUser={logUser} user={user}  {...pageProps} />;
+    return (
+      
+        <StudentProvider>
+        <Component 
+        logUser={logUser}
+        {...pageProps}/>
+        </StudentProvider>
+     
+    );
   return (
-    <StudentProvider>
-      <Layout>
-        <Component loggedIn={loggedIn} logUser={logUser} user={user} {...pageProps} />
-      </Layout>
-    </StudentProvider>
+    
+      <StudentProvider>
+        <Layout>
+          <Component logUser={logUser} {...pageProps}/>
+        </Layout>
+      </StudentProvider>
+   
   );
 }
+MyApp.getInitialProps = async (appContext) => {
+  const appProps = await App.getInitialProps(appContext);
 
-export default MyApp;
+  return { ...appProps };
+};
+export default App;

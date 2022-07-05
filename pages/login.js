@@ -1,51 +1,53 @@
 import Link from "next/link";
 import Logo from "../components/logo";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext,  useEffect,  useState } from "react";
 import axios from "axios";
 
 function Login() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [error, setError] = useState("");
-  const [user, setUser] = useState({});
+  const router = useRouter()
+  useEffect(()=>{
+    if(JSON.parse(localStorage.getItem("user"))){
+      router.push("/")
+    }
+  })
+  const login = async () => {
+    try {
+      const res = await axios.post('http://edufy-backend.jjdu4f46bt-xlm41rjo56dy.p.runcloud.link/api/user/login', {email: loginEmail, password: loginPassword})
+      if(res.status == 200){
+        localStorage.setItem("user", JSON.stringify(res.data));
+        router.push("/dashboard")
+      }
+    } catch (e) {
+      console.log(e)
+    }
 
-  const login = () => {
-    
-  }
+   
+  };
  
     return (
       <>
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 px-6">
-          <div className="flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-md w-full max-w-md">
-            <div className="font-medium self-center text-xl sm:text-2xl uppercase text-gray-800">
+        <div className="flex flex-col items-center justify-center min-h-screen px-6 bg-gray-900">
+          <div className="flex flex-col w-full max-w-md px-4 py-8 bg-white rounded-md shadow-md sm:px-6 md:px-8 lg:px-10">
+            <div className="self-center text-xl font-medium text-gray-800 uppercase sm:text-2xl">
               <Logo />
             </div>
-            {/* <button className="relative mt-6 border rounded-md py-2 text-sm text-gray-800 bg-gray-100 hover:bg-gray-200">
-            <span className="absolute left-0 top-0 flex items-center justify-center h-full w-10 text-blue-500">
-              <i className="fab fa-facebook-f"></i>
-            </span>
-            <span>Login with Facebook</span>
-          </button>
-          <div className="relative mt-10 h-px bg-slate-100">
-            <div className="absolute left-0 top-0 flex justify-center w-full -mt-2">
-              <span className="bg-white px-4 text-xs text-gray-500 uppercase">
-                Or Login With Email
-              </span>
-            </div>
-          </div> */}
+            
             <div className="mt-10">
               <div className="flex flex-col mb-6">
                 <label
                   htmlFor="email"
-                  className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
+                  className="mb-1 text-xs tracking-wide text-gray-600 sm:text-sm"
                 >
                   Email Address:
                 </label>
                 <div className="relative">
-                  <div className="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
+                  <div className="absolute top-0 left-0 inline-flex items-center justify-center w-10 h-full text-gray-400">
                     <svg
-                      className="h-6 w-6"
+                      className="w-6 h-6"
                       fill="none"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -61,7 +63,7 @@ function Login() {
                     id="email"
                     type="email"
                     name="email"
-                    className="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
+                    className="w-full py-2 pl-10 pr-4 text-sm placeholder-gray-500 border border-gray-400 rounded-lg sm:text-base focus:outline-none focus:border-blue-400"
                     placeholder="Email Address"
                     onChange={(e) => setLoginEmail(e.target.value)}
                   />
@@ -70,15 +72,15 @@ function Login() {
               <div className="flex flex-col mb-8">
                 <label
                   htmlFor="password"
-                  className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
+                  className="mb-1 text-xs tracking-wide text-gray-600 sm:text-sm"
                 >
                   Password:
                 </label>
                 <div className="relative">
-                  <div className="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
+                  <div className="absolute top-0 left-0 inline-flex items-center justify-center w-10 h-full text-gray-400">
                     <span>
                       <svg
-                        className="h-6 w-6"
+                        className="w-6 h-6"
                         fill="none"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -95,7 +97,7 @@ function Login() {
                     id="password"
                     type="password"
                     name="password"
-                    className="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
+                    className="w-full py-2 pl-10 pr-4 text-sm placeholder-gray-500 border border-gray-400 rounded-lg sm:text-base focus:outline-none focus:border-blue-400"
                     placeholder="Password"
                     onChange={(e) => setLoginPassword(e.target.value)}
                   />
@@ -105,12 +107,12 @@ function Login() {
               <div className="flex w-full mt-2">
                 <button
                   onClick={login}
-                  className="flex items-center justify-center focus:outline-none text-white text-sm sm:text-base bg-blue-600 hover:bg-blue-700 rounded py-2 w-full transition duration-150 ease-in"
+                  className="flex items-center justify-center w-full py-2 text-sm text-white transition duration-150 ease-in bg-blue-600 rounded focus:outline-none sm:text-base hover:bg-blue-700"
                 >
                   <span className="mr-2 uppercase">Login</span>
                   <span>
                     <svg
-                      className="h-6 w-6"
+                      className="w-6 h-6"
                       fill="none"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -124,19 +126,19 @@ function Login() {
                 </button>
               </div>
             </div>
-            <p className="text-red mx-auto text-red-600 font-semibold my-4">
-              {error.substring(9)}
+            <p className="mx-auto my-4 font-semibold text-red-600 text-red">
+              {error}
             </p>
 
-            <div className="flex justify-center items-center mt-6">
+            <div className="flex items-center justify-center mt-6">
               <Link href="sign-up">
                 <a
                   href="#"
-                  className="inline-flex items-center font-bold text-blue-500 hover:text-blue-700 text-xs text-center"
+                  className="inline-flex items-center text-xs font-bold text-center text-blue-500 hover:text-blue-700"
                 >
                   <span>
                     <svg
-                      className="h-6 w-6"
+                      className="w-6 h-6"
                       fill="none"
                       strokeLinecap="round"
                       strokeLinejoin="round"

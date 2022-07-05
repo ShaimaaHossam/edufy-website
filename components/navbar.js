@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAlignJustify } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
@@ -6,9 +6,14 @@ import Logo from "./logo";
 import Dropdown from "../components/dropdown";
 export default function Navbar() {
   const [flag, setFlag] = useState(0);
-  const [user, setUser] = useState({});
   const [dropdown, setDropdown] = useState(false);
+  const [user, setUser] = useState(null);
 
+  useEffect(()=>{
+    if(JSON.parse(localStorage.getItem('user')))
+      setUser(JSON.parse(localStorage.getItem('user')));
+  },[])
+  
   function switchFlag() {
     flag === 0 ? setFlag(1) : setFlag(0);
   }
@@ -18,14 +23,14 @@ export default function Navbar() {
   return (
     <>
       <nav className="  px-2 sm:px-4 py-2.5  bg-gray-900 fixed w-full z-20 top-0">
-        <div className="container flex flex-wrap justify-between items-center mx-auto">
+        <div className="container flex flex-wrap items-center justify-between mx-auto">
           <div className="ml-16">
             <Logo />
           </div>
           <button
             onClick={switchFlag}
             type="button"
-            className="inline-flex items-center p-2 mr-6 text-sm text-gray-500 rounded-lg lg:hidden focus:outline-none focus:ring-2  dark:text-gray-400 "
+            className="inline-flex items-center p-2 mr-6 text-sm text-gray-500 rounded-lg lg:hidden focus:outline-none focus:ring-2 dark:text-gray-400 "
             aria-controls="mobile-menu"
             aria-expanded="false"
           >
@@ -62,12 +67,12 @@ export default function Navbar() {
             }
             id="mobile-menu"
           >
-            <ul className="flex flex-col lg:flex-row mt-4 md:mt-0 md:text-sm ">
+            <ul className="flex flex-col mt-4 lg:flex-row md:mt-0 md:text-sm ">
               <li>
                 <Link href="/" passHref>
                   <a
                   
-                    className="block py-2 pr-4 pl-3 text-gray-200 border-b lg:border-0 border-gray-100  "
+                    className="block py-2 pl-3 pr-4 text-gray-200 border-b border-gray-100 lg:border-0 "
                     aria-current="page"
                   >
                     Home
@@ -78,7 +83,7 @@ export default function Navbar() {
                 <Link href="/join-meeting" passHref>
                   <a
                   
-                    className="block py-2 pr-4 pl-3 text-gray-200 border-b lg:border-0 border-gray-100  "
+                    className="block py-2 pl-3 pr-4 text-gray-200 border-b border-gray-100 lg:border-0 "
                     aria-current="page"
                   >
                     Join Meeting
@@ -90,7 +95,7 @@ export default function Navbar() {
                 <a
                 
                   href="#about"
-                  className="block py-2 pr-4 pl-3 text-gray-200 border-b border-gray-100 lg:border-0  "
+                  className="block py-2 pl-3 pr-4 text-gray-200 border-b border-gray-100 lg:border-0 "
                 >
                   About
                 </a>
@@ -98,20 +103,24 @@ export default function Navbar() {
                 
               </li>
               <li>
+              { user !== null  ? (
+                <p className="block py-2 pl-3 pr-4 text-gray-200 cursor-pointer lg:border-l-2" onClick={()=>setDropdown(!dropdown)}>{user.email}</p>
+              ) :( 
                 <Link href="/sign-up" passHref>
                 <a
                 
                   href="#"
-                  className="block py-2 pr-4 pl-3 text-gray-200  lg:border-l-2 "
+                  className="block py-2 pl-3 pr-4 text-gray-200 lg:border-l-2 "
                 >
-                  Sign Up
+                  Sign Up 
                 </a>
-                </Link>
-                
-              </li>
+                </Link>)
+              }
+            </li>
             </ul>
           </div>
         </div>
+        {dropdown ? <Dropdown closeMenu={closeMenu} /> : null}
       </nav>
     </>
   );

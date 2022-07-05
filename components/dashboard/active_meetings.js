@@ -2,28 +2,35 @@ import PieChart from "./pie_chart";
 import React, { useState, useEffect } from "react";
 import Analysis from "./tables/analysis";
 import Students from "./tables/students";
-export default function ActiveMeetings({active}) {
+import axios from 'axios'
+
+export default function ActiveMeetings({meetings}) {
+  const [active, setActive] = useState(0)
   const [data, setData] = useState([]);
-  const [meeting, setMeeting] = useState({})
- 
-  
+  const [students, setStudents] = useState([])
+  useEffect(()=>{
+    if(meetings.data.filter(meeting => meeting.ended)){
+      setActive(1)
+    }
+  })
   return (
     <div className="mt-4">
+    
      {active == 1 ?
        <div>
-         <span className="mx-20 bg-green-200 text-green-800 font-bold px-6  py-1 rounded-full text-lg">Active Meeting</span>
-      <div className="mt-12 flex mx-20">
+         <span className="px-6 py-1 mx-20 text-lg font-bold text-green-800 bg-green-200 rounded-full">Active Meeting </span>
+      <div className="flex mx-20 mt-12">
         <div className="w-1/2">
-          <h1 className="text-center text-gray-500 font-bold">
+          <h1 className="font-bold text-center text-gray-500">
             Students Evaluation
           </h1>
           <PieChart classData={data} />
         </div>
        <Analysis data={data} />
       </div>
-      <div className=" mt-12 ">
-           <div className="mx-20 py-12 ">
-                <h1 className="font-bold text-xl text-gray-500">Class Attendance</h1>
+      <div className="mt-12 ">
+           <div className="py-12 mx-20 ">
+                <h1 className="text-xl font-bold text-gray-500">Class Attendance</h1>
                 <div className="mt-8">
                 <Students students={students} />
                 </div>
@@ -32,7 +39,7 @@ export default function ActiveMeetings({active}) {
       </div>
        </div> :
        <div className="">
-         <span className="mx-20 bg-red-200 text-red-800 font-bold px-6  py-1 rounded-full text-lg">No current active meetings</span>
+         <span className="px-6 py-1 mx-20 text-lg font-bold text-red-800 bg-red-200 rounded-full">No current active meetings</span>
        </div>
     }
     </div>
