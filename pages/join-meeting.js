@@ -38,7 +38,7 @@ function JoinMeeting() {
       return;
     }
     try {
-      const res = await axios.post('http://edufy-backend.jjdu4f46bt-xlm41rjo56dy.p.runcloud.link/api/meeting/create', {
+      const res = await axios.post('https://edufy.elkayal.me/api/meeting/create', {
         user_id: user.id,
         meeting_id: meetingId,
         courseTitle: courseTitle
