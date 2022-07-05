@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
-import { Button, IconButton, SwipeableDrawer } from '@mui/material';
+import { Button, Grid, IconButton, Paper, SwipeableDrawer, Typography } from '@mui/material';
 import { useRouter } from "next/router";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LineAxisIcon from '@mui/icons-material/LineAxis';
@@ -8,7 +8,7 @@ import StudentContext from "../contexts/StudentContext";
 export default function MeetingLayout({ children }) {
     const Router = useRouter();
     // const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-    const { meetingId } = useContext(StudentContext);
+    const { meetingId, courseTitle } = useContext(StudentContext);
     const [user, setUser] = useState(null)
     const [state, setState] = useState({ left: false });
     const toggleDrawer = (anchor, open) => (event) => {
@@ -35,7 +35,7 @@ export default function MeetingLayout({ children }) {
                     <ArrowBackIcon className="text-white" fontSize="inherit" />
                 </IconButton>
                 {
-                    user && (
+                    user && courseTitle != '' && (
 
                         <IconButton onClick={toggleDrawer('left', true)} size="large">
                             <LineAxisIcon className="text-white" fontSize="inherit" />
@@ -44,15 +44,32 @@ export default function MeetingLayout({ children }) {
                 }
             </div>
             {
-                user && (
+                user && courseTitle != '' && (
 
                     <SwipeableDrawer
                         anchor={'left'}
                         open={state['left']}
                         onClose={toggleDrawer('left', false)}
                         onOpen={toggleDrawer('left', true)}
+
                     >
-                        meetingId = {meetingId}
+
+                        <Grid container spacing={2}>
+
+                            <Grid item xs={6}>
+                                <Typography variant="h6" className="text-center">
+                                    course title={courseTitle}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography variant="h6" className="text-center">
+                                    meetingId = {meetingId}
+                                </Typography>
+                            </Grid>
+                        </Grid>
+
+
+
                         {/* dashboard code here */}
                     </SwipeableDrawer>
                 )

@@ -7,7 +7,8 @@ export function StudentProvider({ children }) {
     const [meetingId, setMeetingId] = useState("")
     const [token, setToken] = useState("")
     const [regNumber, setRegNumber] = useState(null)
-
+    //for instructor
+    const [courseTitle, setCourseTitle] = useState('')
     return (<StudentContext.Provider value={{
         studentName,
         setStudentName,
@@ -16,7 +17,9 @@ export function StudentProvider({ children }) {
         token,
         setToken,
         meetingId,
-        setMeetingId
+        setMeetingId,
+        courseTitle,
+        setCourseTitle
     }} >
         {children}
     </StudentContext.Provider>)
