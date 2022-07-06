@@ -94,8 +94,8 @@ function Navigation() {
   const [openedItem, setOpenedItem] = useState("");
 
   useEffect(() => {
-    const link = routingItems.find((item) => item.active === true).navLink;
     if (pathname === "/") {
+      const link = routingItems.find((item) => item.active === true).navLink;
       navigate(link, { replace: true });
     }
   }, [pathname]);

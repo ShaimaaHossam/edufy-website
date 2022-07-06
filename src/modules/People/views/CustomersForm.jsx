@@ -295,7 +295,7 @@ function CustomersForm({ formType }) {
                     <Autocomplete
                       name="property_ids"
                       label={t("property")}
-                      noOptionsText={t("noTypes")}
+                      noOptionsText={t("noProperties")}
                       options={listProperties?.map((type) => ({
                         value: type.id,
                         label: type.title,
