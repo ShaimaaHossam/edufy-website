@@ -108,10 +108,9 @@ function App() {
                     />
                     <Route path="help/*" element={<Help />} />
 
-                    <Route path="/" element={<Navigate to="/dashboard" />} />
                     <Route
                       path="/auth/*"
-                      element={<Navigate to="/dashboard" />}
+                      element={<Navigate to="/" />}
                     />
 
                     <Route path="*" element={<NotFound />} />

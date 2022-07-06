@@ -88,7 +88,7 @@ function TeamMembersForm({ formType }) {
       if (formType === "add" || formType === "clone") {
         addTeamMember(values)
           .unwrap()
-          .then(() => navigate("/people"))
+          .then(() => navigate("/people/team"))
           .catch(({ data: { errors } }) => setErrors(errors));
       }
 

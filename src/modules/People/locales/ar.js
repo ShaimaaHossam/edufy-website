@@ -75,6 +75,8 @@ const ar = {
   },
 
   noPermissions: " لا يوجد تصاريح لهذا الدور حاليا  ",
+  noTypes:"لا يوجد عقارت "
+
 };
 
 export default ar;

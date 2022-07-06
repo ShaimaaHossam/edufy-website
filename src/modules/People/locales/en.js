@@ -76,6 +76,7 @@ const en = {
   },
 
   noPermissions: "There is no permissions for this role yet ",
+  noTypes:"There is no properties"
 };
 
 export default en;

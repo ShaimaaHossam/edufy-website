@@ -30,12 +30,12 @@ function makeRoutingList({ permissions }) {
         {
           navName: "teamMember",
           navLink: "/people/team",
-          active: peoplePerms.access,
+          active: true,
         },
         {
           navName: "customers",
           navLink: "/people/customers",
-          active: peoplePerms.access,
+          active: true,
         },
       ],
     },
@@ -71,22 +71,22 @@ function makeRoutingList({ permissions }) {
         {
           navName: "personalInformation",
           navLink: "/settings/personal",
-          active: settingPerms.access,
+          active: true,
         },
         {
           navName: "notifications",
           navLink: "/settings/notifications",
-          active: settingPerms.access,
+          active: true,
         },
         {
           navName: "rolesAndPermissions",
           navLink: "/settings/roles",
-          active: settingPerms.access,
+          active: true,
         },
         {
           navName: "servicesSettings",
           navLink: "/settings/services-settings",
-          active: settingPerms.access,
+          active: true,
         },
       ],
     },
