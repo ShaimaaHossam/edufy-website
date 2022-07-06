@@ -21,11 +21,9 @@ export const isUUIDValid = (uuid) => {
 
 export const isNumericIDValid = (numericID) => numericID.match(/^\d+$/);
 
-export const downloadFile = (data, name) => {
-  const url = window.URL.createObjectURL(data);
-
+export const downloadFile = (dataURL, name) => {
   const link = document.createElement("a");
-  link.href = url;
+  link.href = dataURL;
   link.download = name;
   document.body.appendChild(link);
 

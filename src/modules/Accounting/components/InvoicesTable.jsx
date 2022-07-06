@@ -138,7 +138,7 @@ function InvoicesTable() {
             downloadInvoicePDF(item.id)
               .unwrap()
               .then((data) =>
-                downloadFile(data, `invoice_${item.invoice_number}`)
+                downloadFile(data, `invoice_${item.invoice_number}.pdf`)
               )
           }
         />

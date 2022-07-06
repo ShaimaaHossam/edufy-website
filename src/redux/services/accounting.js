@@ -56,7 +56,11 @@ export const accountingAPI = createApi({
         res ? [{ type: "INVOICE", id }] : [],
     }),
     downloadInvoicePDF: build.query({
-      query: (id) => ({ url: `/invoices/download/${id}` }),
+      query: (id) => ({
+        url: `/invoices/download/${id}`,
+        responseHandler: (response) =>
+          response.blob().then((blob) => URL.createObjectURL(blob)),
+      }),
     }),
 
     getTransactions: build.query({
@@ -64,7 +68,11 @@ export const accountingAPI = createApi({
       transformResponse: (res) => ({ data: res.data, meta: res.meta }),
     }),
     downloadTransactionsSheet: build.query({
-      query: () => ({ url: "/transactions/download" }),
+      query: () => ({
+        url: "/transactions/download",
+        responseHandler: (response) =>
+          response.blob().then((blob) => URL.createObjectURL(blob)),
+      }),
     }),
   }),
 });

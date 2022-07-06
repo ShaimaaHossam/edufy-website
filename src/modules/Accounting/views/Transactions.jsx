@@ -78,7 +78,7 @@ function Transactions() {
                   downloadTransactionsSheet()
                     .unwrap()
                     .then((data) =>
-                      downloadFile(data, `transactions_${formatToday()}`)
+                      downloadFile(data, `transactions_${formatToday()}.xlsx`)
                     )
                 }
               >
