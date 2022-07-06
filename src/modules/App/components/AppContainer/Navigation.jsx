@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { appSelector, openMenu } from "../../state";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
@@ -78,19 +78,28 @@ const ListItemButton = styled(MuiListItemButton, {
 function Navigation() {
   const { t } = useTranslation("app");
 
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
+
   const { isMenuOpen } = useSelector(appSelector);
 
   const { pathname } = useLocation();
-
   const permissions = usePermissions();
 
   const routingItems = useMemo(
     () => makeRoutingList({ permissions }),
     [permissions]
   );
-
   const [openedItem, setOpenedItem] = useState("");
+
+  useEffect(() => {
+    if (pathname === "/") {
+      const link = routingItems.find((item) => item.active === true).navLink;
+      navigate(link, { replace: true });
+    }
+  }, [pathname]);
+
   useEffect(() => {
     !isMenuOpen && setOpenedItem("");
   }, [isMenuOpen]);

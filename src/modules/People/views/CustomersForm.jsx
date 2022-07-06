@@ -78,7 +78,7 @@ function CustomersForm({ formType }) {
         const { property_ids, ...formData } = values;
         addCustomer(formData)
           .unwrap()
-          .then(() => navigate("/people"))
+          .then(() => navigate("/people/customers"))
           .catch(({ data: { errors } }) => setErrors(errors));
       }
 
@@ -295,7 +295,7 @@ function CustomersForm({ formType }) {
                     <Autocomplete
                       name="property_ids"
                       label={t("property")}
-                      noOptionsText={t("noTypes")}
+                      noOptionsText={t("noProperties")}
                       options={listProperties?.map((type) => ({
                         value: type.id,
                         label: type.title,
@@ -314,7 +314,7 @@ function CustomersForm({ formType }) {
                     />
                   </Grid>
 
-                  {formik.values.property_ids && (
+                  {formik.values.property_ids.length !== 0 && (
                     <Grid item xs={12}>
                       <Autocomplete
                         name="unit_ids"
