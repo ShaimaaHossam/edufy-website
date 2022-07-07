@@ -46,6 +46,6 @@ export const TRANSACTION_TYPES = {
   order: "order",
   invoice: "invoice",
   payment: "payment",
-  wallet_recharge: "wallet_recharge",
-  credit_note: "credit_note",
+  walletRecharge: "wallet_recharge",
+  creditNote: "credit_note",
 };

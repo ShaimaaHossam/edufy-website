@@ -21,8 +21,8 @@ const typeColorMap = {
   [TRANSACTION_TYPES.order]: "warning",
   [TRANSACTION_TYPES.invoice]: "error",
   [TRANSACTION_TYPES.payment]: "success",
-  [TRANSACTION_TYPES.credit_note]: "success",
-  [TRANSACTION_TYPES.wallet_recharge]: "success",
+  [TRANSACTION_TYPES.creditNote]: "success",
+  [TRANSACTION_TYPES.walletRecharge]: "success",
 };
 
 function TransactionsTable() {
