@@ -1,16 +1,23 @@
+import {
+  useGetPropertyStateQuery,
+} from "../../../redux/services/dashboard";
+
 import { useDispatch } from "react-redux";
 
 import { useTranslation } from "react-i18next";
 
 import { Typography, Paper, Grid } from "@mui/material";
-import Autocomplete from "../../../shared/components/inputs/Autocomplete";
+
 import Table from "../../../shared/components/Table";
 import NoContent from "../../../shared/views/NoContent";
+import Autocomplete from "../../../shared/components/inputs/Autocomplete";
 
 import { propertyStateReqRes } from "../dashboardData";
 
 function PropertyStats() {
   const { t } = useTranslation("dashboard");
+  
+  const { isLoading, data: propertyState } = useGetPropertyStateQuery();
 
   const dispatch = useDispatch();
 
@@ -24,7 +31,7 @@ function PropertyStats() {
     t("cost"),
   ];
 
-  const tableData = propertyStateReqRes?.data?.map((item) => ({
+  const tableData = propertyState?.data?.map((item) => ({
     id: item.id,
     clickable: false,
     active: true,
@@ -52,6 +59,8 @@ function PropertyStats() {
       </Typography>,
     ],
   }));
+  
+  if (isLoading) return null;
 
   return !!tableData?.length ? (
     <Paper sx={{ p: 5, mt: 4 }}>

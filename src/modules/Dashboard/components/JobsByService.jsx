@@ -1,6 +1,10 @@
-import { Typography, Paper } from "@mui/material";
+import { useGetTotalOrdersByServiceQuery } from "../../../redux/services/dashboard";
+
 import { useTranslation } from "react-i18next";
 
+import { Typography, Paper } from "@mui/material";
+
+import { Bar as OrdersBars } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,22 +15,26 @@ import {
   Legend,
 } from "chart.js";
 
-import { Bar as OrdersBars } from "react-chartjs-2";
-import { servicesReqRes } from "../dashboardData";
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+// import { servicesReqRes } from "../dashboardData";
 
 function JobsByService() {
   const { t } = useTranslation("dashboard");
 
-  const labels = servicesReqRes.map((item) => item.service_type);
-  const orders = servicesReqRes.map((item) => item.total_orders);
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+  const { isLoading, data: totalOrders } = useGetTotalOrdersByServiceQuery();
+
+  const labels = totalOrders?.data?.map((item) => item.service_type);
+
+  const orders = totalOrders?.data?.map((item) => item.total_orders);
+
   const datasets = [
     {
       data: orders,
@@ -37,10 +45,14 @@ function JobsByService() {
       backgroundColor: "#237df0",
     },
   ];
+  
   const data = {
     labels,
     datasets,
   };
+
+  if (isLoading) return null;
+
   return (
     <Paper sx={{ p: 5, mt: 4 }}>
       <Typography component="h1" variant="h5">

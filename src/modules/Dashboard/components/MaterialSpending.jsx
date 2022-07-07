@@ -1,16 +1,21 @@
+import { useGetMaterialSpendingQuery } from "../../../redux/services/dashboard";
+
 import { useDispatch } from "react-redux";
 
 import { useTranslation } from "react-i18next";
 
 import { Typography, Paper, Grid } from "@mui/material";
+
 import Table from "../../../shared/components/Table";
 import NoContent from "../../../shared/views/NoContent";
 import Autocomplete from "../../../shared/components/inputs/Autocomplete";
 
-import { materialSpendingReqRes } from "../dashboardData";
+// import { materialSpendingReqRes } from "../dashboardData";
 
 function MaterialSpending() {
   const { t } = useTranslation("dashboard");
+  
+  const { isLoading, data: materialSpending } = useGetMaterialSpendingQuery();
 
   const dispatch = useDispatch();
 
@@ -24,13 +29,13 @@ function MaterialSpending() {
     t("cost"),
   ];
 
-  const tableData = materialSpendingReqRes?.data?.map((item) => ({
+  const tableData = materialSpending?.data?.map((item) => ({
     id: item.id,
     clickable: false,
     active: true,
     rowCells: [
       <Typography component="span" variant="body2">
-        {item.propert.name}
+        {item.property.name}
       </Typography>,
       <Typography component="span" variant="body2">
         {item.service.name}
@@ -52,6 +57,8 @@ function MaterialSpending() {
       </Typography>,
     ],
   }));
+
+  if (isLoading) return null;
 
   return !!tableData?.length ? (
     <Paper sx={{ p: 5, mt: 4 }}>
@@ -113,10 +120,10 @@ function MaterialSpending() {
             headLabels={tableLabels}
             rowsData={tableData}
             metadata={{
-              total: materialSpendingReqRes.meta.total,
-              pages: materialSpendingReqRes.meta.lastPage,
-              perPage: materialSpendingReqRes.meta.perPage,
-              currentPage: materialSpendingReqRes.meta.currentPage,
+              total: materialSpending.meta.total,
+              pages: materialSpending.meta.lastPage,
+              perPage: materialSpending.meta.perPage,
+              currentPage: materialSpending.meta.currentPage,
             }}
             onPageChange={(page, perPage) => dispatch()}
           />

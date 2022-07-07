@@ -1,13 +1,15 @@
-import React from "react";
-import Wallet from "./Wallet";
-import { Grid, Typography, Paper } from "@mui/material";
+import { useGetTotalOrdersQuery } from "../../../redux/services/dashboard";
+
+import { useDispatch } from "react-redux";
 
 import { useTranslation } from "react-i18next";
 
-import Autocomplete from "../../../shared/components/inputs/Autocomplete";
-import { Bar as OrdersBars } from "react-chartjs-2";
-import { ordersReqRes } from "../dashboardData";
+import { Grid, Typography, Paper } from "@mui/material";
 
+import Wallet from "./Wallet";
+import Autocomplete from "../../../shared/components/inputs/Autocomplete";
+
+import { Bar as OrdersBars } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -18,30 +20,44 @@ import {
   Legend,
 } from "chart.js";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+// import { ordersReqRes } from "../dashboardData";
 
 function Orders() {
   const { t } = useTranslation("dashboard");
 
-  const totalOrders = ordersReqRes.months.map(
+  const dispatch = useDispatch();
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+  const { isLoading, data: allOrders } = useGetTotalOrdersQuery();
+
+  const totalOrders = allOrders?.data?.months.map(
     (item) => item.orders.total_orders
   );
-  const openOrders = ordersReqRes.months.map((item) => item.orders.open_orders);
-  const completedOrders = ordersReqRes.months.map(
+
+  const openOrders = allOrders?.data?.months.map(
+    (item) => item.orders.open_orders
+  );
+
+  const completedOrders = allOrders?.data?.months.map(
     (item) => item.orders.completed_orders
   );
-  const cancelledOrders = ordersReqRes.months.map(
+
+  const cancelledOrders = allOrders?.data?.months.map(
     (item) => item.orders.cancelled_orders
   );
 
-  let orders = [
+  const labels = allOrders?.data?.months.map(
+    (item) => `${item.month}${item.year}`
+  );
+
+  const orders = [
     {
       label: t("totalOrders"),
       data: totalOrders,
@@ -59,22 +75,21 @@ function Orders() {
       data: cancelledOrders,
     },
   ];
+
   const backgroundColors = ["#ffaa17", "#237df0", "#29bf56", "#98abbb"];
+
   const options = {
     borderWidth: 1,
     barThickness: 20,
     maxBarThickness: 10,
   };
-
   const datasets = orders.map((item, index) => ({
     ...item,
     ...options,
     backgroundColor: backgroundColors[index],
   }));
 
-  const labels = ordersReqRes.months.map(
-    (item) =>`${item.month}${item.year}`
-  );
+  if (isLoading) return null;
 
   return (
     <Paper sx={{ p: 5 }}>
@@ -88,9 +103,9 @@ function Orders() {
           <Grid item container xs={12}>
             <Grid item sx={{ width: 135, marginRight: 3 }}>
               <Autocomplete
-                name="roles filter"
+                name="property filter"
                 size="small"
-                label={t("byUserRole")}
+                label={t("byProperty")}
                 noOptionsText={t("noTypes")}
                 options={[]}
                 value={[]}
@@ -99,9 +114,9 @@ function Orders() {
             </Grid>
             <Grid item sx={{ width: 135, marginRight: 3 }}>
               <Autocomplete
-                name="roles filter"
+                name="property filter"
                 size="small"
-                label={t("byUserRole")}
+                label={t("byProperty")}
                 noOptionsText={t("noTypes")}
                 options={[]}
                 value={[]}
@@ -148,16 +163,15 @@ function Orders() {
               border: 3,
               borderColor: "#fafbff",
               borderRadius: "10px",
-              mt:2
+              mt: 2,
             }}
-            
           >
             <Grid item xs={3} textAlign="center">
               <Typography component="p" variant="subtitle1" color="#ffaa17">
                 {t("totalOrders")}
               </Typography>
               <Typography component="p" variant="h6">
-                {ordersReqRes.total_orders}
+                {allOrders.data.total_orders}
               </Typography>
             </Grid>
             <Grid item xs={3} textAlign="center">
@@ -165,7 +179,7 @@ function Orders() {
                 {t("openOrders")}
               </Typography>
               <Typography component="p" variant="h6">
-                {ordersReqRes.open_orders}
+                {allOrders.data.open_orders}
               </Typography>
             </Grid>
             <Grid item xs={3} textAlign="center">
@@ -173,7 +187,7 @@ function Orders() {
                 {t("completedOrders")}
               </Typography>
               <Typography component="p" variant="h6">
-                {ordersReqRes.completed_orders}
+                {allOrders.data.completed_orders}
               </Typography>
             </Grid>
             <Grid item xs={3} textAlign="center">
@@ -181,7 +195,7 @@ function Orders() {
                 {t("cancelledOrders")}
               </Typography>
               <Typography component="p" variant="h6">
-                {ordersReqRes.cancelled_orders}
+                {allOrders.data.cancelled_orders}
               </Typography>
             </Grid>
           </Grid>

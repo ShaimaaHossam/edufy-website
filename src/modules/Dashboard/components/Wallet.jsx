@@ -1,27 +1,38 @@
-import React from "react";
-import { Grid, Typography, Box, Button } from "@mui/material";
+import { useGetWalletOverviewQuery } from "../../../redux/services/dashboard";
+
 import { useTranslation } from "react-i18next";
+
+import { Grid, Typography } from "@mui/material";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { walletReqRes } from "../dashboardData";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
 
-const data = {
-  datasets: [
-    {
-      data: [walletReqRes.total_spendings, walletReqRes.current_balance],
-      backgroundColor: ["#29bf56", "#237df0"],
-      borderColor: ["#29bf56", "#237df0"],
-      borderWidth: 1,
-      cutout: "80%",
-    },
-  ],
-};
+// import { walletReqRes } from "../dashboardData";
 
 function Wallet() {
   const { t } = useTranslation("dashboard");
+  
+  ChartJS.register(ArcElement, Tooltip, Legend);
+
+  const { isLoading, data: walletOverview } = useGetWalletOverviewQuery();
+
+  const data = {
+    datasets: [
+      {
+        data: [
+          walletOverview?.data?.total_spending,
+          walletOverview?.data?.current_balance,
+        ],
+        backgroundColor: ["#29bf56", "#237df0"],
+        borderColor: ["#29bf56", "#237df0"],
+        borderWidth: 1,
+        cutout: "80%",
+      },
+    ],
+  };
+
+  if (isLoading) return null;
 
   return (
     <Grid container>
@@ -41,7 +52,7 @@ function Wallet() {
           {t("accountCapacity")}
         </Typography>
         <Typography component="p" variant="h6">
-          {`${walletReqRes.spendings_limit} ${t("sr")}`}
+          {`${walletOverview.data.spending_limit} ${t("sr")}`}
         </Typography>
       </Grid>
 
@@ -59,7 +70,7 @@ function Wallet() {
           {t("deposit")}
         </Typography>
         <Typography component="p" variant="h6">
-          {`${walletReqRes.deposits} ${t("sr")}`}
+          {`${walletOverview.data.deposits} ${t("sr")}`}
         </Typography>
       </Grid>
 
@@ -77,7 +88,7 @@ function Wallet() {
           {t("availableBlance")}
         </Typography>
         <Typography component="p" variant="h6">
-          {`${walletReqRes.current_balance} ${t("sr")}` }
+          {`${walletOverview.data.current_balance} ${t("sr")}`}
         </Typography>
       </Grid>
 
@@ -93,7 +104,7 @@ function Wallet() {
           {t("totalSpending")}
         </Typography>
         <Typography component="p" variant="h6">
-          {`${walletReqRes.total_spendings} ${t("sr")}`}
+          {`${walletOverview.data.total_spending} ${t("sr")}`}
         </Typography>
       </Grid>
 
