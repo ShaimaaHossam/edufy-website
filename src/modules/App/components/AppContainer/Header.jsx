@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { appSelector, toggleMenu } from "../../state";
+import { isMenuOpenSelector, toggleMenu } from "../../state";
 
 import { useTheme, Box, Grid } from "@mui/material";
 import { mdiMenu, mdiBackburger } from "@mdi/js";
@@ -18,7 +18,7 @@ function Header() {
   const { direction } = useTheme();
 
   const dispatch = useDispatch();
-  const { isMenuOpen } = useSelector(appSelector);
+  const isMenuOpen = useSelector(isMenuOpenSelector);
 
   return (
     <Grid container spacing={1.5} alignItems="center">
