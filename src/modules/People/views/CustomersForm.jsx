@@ -78,7 +78,7 @@ function CustomersForm({ formType }) {
         const { property_ids, ...formData } = values;
         addCustomer(formData)
           .unwrap()
-          .then(() => navigate("/people"))
+          .then(() => navigate("/people/customers"))
           .catch(({ data: { errors } }) => setErrors(errors));
       }
 
@@ -140,7 +140,9 @@ function CustomersForm({ formType }) {
   return (
     <Grid container spacing={2} direction="column">
       <Grid item>
-        <Breadcrumbs items={[{ label: t("people"), url: "/people" }]} />
+        <Breadcrumbs
+          items={[{ label: t("customers"), url: "/people/customers" }]}
+        />
 
         <Typography component="h1" variant="h5">
           {t(`${formType}CustomersFormTitle`)}
@@ -293,7 +295,7 @@ function CustomersForm({ formType }) {
                     <Autocomplete
                       name="property_ids"
                       label={t("property")}
-                      noOptionsText={t("noTypes")}
+                      noOptionsText={t("noProperties")}
                       options={listProperties?.map((type) => ({
                         value: type.id,
                         label: type.title,
@@ -312,7 +314,7 @@ function CustomersForm({ formType }) {
                     />
                   </Grid>
 
-                  {formik.values.property_ids && (
+                  {formik.values.property_ids.length !== 0 && (
                     <Grid item xs={12}>
                       <Autocomplete
                         name="unit_ids"

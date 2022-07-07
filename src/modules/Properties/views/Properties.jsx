@@ -1,7 +1,9 @@
 import { useState } from "react";
 
+import usePermissions from "../../../shared/hooks/usePermissions";
+
 import { useSelector, useDispatch } from "react-redux";
-import { propertiesSelector, setPropertiesFilters } from "../state";
+import { filtersSelector, setFilters } from "../state/propertiesFiltersSlice";
 
 import { useTranslation } from "react-i18next";
 
@@ -19,8 +21,10 @@ import PropertiesFilters from "../components/PropertiesFilters";
 function Properties() {
   const { t } = useTranslation("properties");
 
+  const propertiesPerms = usePermissions("property");
+
   const dispatch = useDispatch();
-  const { propertiesFilters } = useSelector(propertiesSelector);
+  const { filters } = useSelector(filtersSelector);
 
   const [filtersShown, setFiltersShown] = useState(false);
 
@@ -42,10 +46,7 @@ function Properties() {
                 placeholder={t("propertyOrManager")}
                 onChange={(keyword) =>
                   dispatch(
-                    setPropertiesFilters({
-                      ...propertiesFilters,
-                      "filter[keyword]": keyword,
-                    })
+                    setFilters({ ...filters, "filter[keyword]": keyword })
                   )
                 }
               />
@@ -62,16 +63,17 @@ function Properties() {
                 onClick={(e) => setFiltersShown(!filtersShown)}
               />
             </Grid>
-
-            <Grid item sx={{ ml: "auto" }}>
-              <Button
-                startIcon={<Icon icon={mdiPlus} />}
-                component={Link}
-                to="/properties/add"
-              >
-                {t("addProperty")}
-              </Button>
-            </Grid>
+            {propertiesPerms.create && (
+              <Grid item sx={{ ml: "auto" }}>
+                <Button
+                  startIcon={<Icon icon={mdiPlus} />}
+                  component={Link}
+                  to="/properties/add"
+                >
+                  {t("addProperty")}
+                </Button>
+              </Grid>
+            )}
 
             <Grid item xs={12}>
               <Collapse in={filtersShown}>

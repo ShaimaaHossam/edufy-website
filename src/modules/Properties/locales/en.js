@@ -38,6 +38,7 @@ const en = {
   areaManagerEmail: "Area Manager Email",
   didntFoundManager: "Haven't found manager you're looking for?",
   createNewManager: "Add new manager",
+  propertyServices: "Property Services",
   units: "Units",
   assets: "Assets",
   orders: "Orders",
@@ -98,6 +99,8 @@ const en = {
   removeRoom: "Remove Room",
   addCustomer: "Add Customer",
   removeCustomer: "Remove Customer",
+  nextServices: "Next (Services)",
+  back: "Back",
 
   units_count: "{{count}} Units",
   units_count_one: "1 Unit",

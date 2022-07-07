@@ -12,6 +12,8 @@ import { useTranslation } from "react-i18next";
 
 import { Grid, Paper, Typography, Button, Collapse } from "@mui/material";
 
+import { ORDER_TYPES } from "../../../constants/system";
+
 import Icon from "../../../shared/components/Icon";
 import IconButton from "../../../shared/components/IconButton";
 import Link from "../../../shared/components/Link";
@@ -27,7 +29,9 @@ function Orders() {
   const { orderType } = useParams();
 
   const dispatch = useDispatch();
-  const { filters } = useSelector(ordersFiltersSelector);
+  const { maintenanceFilters, cleaningFilters } = useSelector(
+    ordersFiltersSelector
+  );
 
   const [filtersShown, setFiltersShown] = useState(false);
 
@@ -49,7 +53,19 @@ function Orders() {
                 placeholder={t("searchOrdersPlaceholder")}
                 onChange={(keyword) =>
                   dispatch(
-                    setFilters({ ...filters, "filter[keyword]": keyword })
+                    setFilters({
+                      key:
+                        orderType === ORDER_TYPES.maintenance
+                          ? "maintenanceFilters"
+                          : "cleaningFilters",
+                      value:
+                        orderType === ORDER_TYPES.maintenance
+                          ? {
+                              ...maintenanceFilters,
+                              "filter[keyword]": keyword,
+                            }
+                          : { ...cleaningFilters, "filter[keyword]": keyword },
+                    })
                   )
                 }
               />
@@ -71,7 +87,7 @@ function Orders() {
               <Button
                 startIcon={<Icon icon={mdiPlus} />}
                 component={Link}
-                to="/orders/maintenance/add"
+                to={`/orders/${orderType}/add`}
               >
                 {t("addOrder")}
               </Button>
@@ -79,7 +95,7 @@ function Orders() {
 
             <Grid item xs={12}>
               <Collapse in={filtersShown}>
-                <OrdersFilters />
+                <OrdersFilters orderType={orderType} />
               </Collapse>
             </Grid>
 

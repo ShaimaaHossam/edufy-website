@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 
+import usePermissions from "../../../shared/hooks/usePermissions";
+
 import { useGetPropertyQuery } from "../../../redux/services/properties";
 
 import { useTranslation } from "react-i18next";
@@ -9,6 +11,7 @@ import { mdiPencil } from "@mdi/js";
 
 import IconButton from "../../../shared/components/IconButton";
 import Link from "../../../shared/components/Link";
+import ServicesTableList from "../../../shared/components/modules/services/ServicesTableList";
 
 import { DEF_IMGS } from "../../../constants/images";
 import { WALLET_TYPES } from "../../../constants/system";
@@ -16,22 +19,26 @@ import { WALLET_TYPES } from "../../../constants/system";
 function PropertyInformation() {
   const { t } = useTranslation("properties");
 
+  const propertiesPerms = usePermissions("property");
+
   const { propertyID } = useParams();
   const { data: property } = useGetPropertyQuery(propertyID);
 
   return (
     <>
       <Grid container direction="column" alignItems="center" mb={4}>
-        <Grid item xs={12} sx={{ alignSelf: "flex-end" }}>
-          <IconButton
-            aria-label="edit property"
-            icon={mdiPencil}
-            size="large"
-            variant="contained"
-            component={Link}
-            to={`/properties/edit/${propertyID}`}
-          />
-        </Grid>
+        {propertiesPerms.update && (
+          <Grid item xs={12} sx={{ alignSelf: "flex-end" }}>
+            <IconButton
+              aria-label="edit property"
+              icon={mdiPencil}
+              size="large"
+              variant="contained"
+              component={Link}
+              to={`/properties/edit/${propertyID}`}
+            />
+          </Grid>
+        )}
 
         <Grid item xs={12}>
           <Box
@@ -82,6 +89,24 @@ function PropertyInformation() {
           <Typography component="span" variant="body2" color="text.primary">
             {t("units_count", { count: property.number_of_units })}
           </Typography>
+        </Grid>
+
+        <Grid item xs={6} component="dt">
+          <Typography component="span" variant="body2" color="text.secondary">
+            {t("services")}
+          </Typography>
+        </Grid>
+        <Grid item xs={6} component="dd">
+          {!!property.services && (
+            <ServicesTableList
+              services={property.services
+                .filter((s) => s.active && s.checked)
+                .map((s) => ({
+                  id: s.service_id,
+                  name: s.service_name,
+                }))}
+            />
+          )}
         </Grid>
       </Grid>
 

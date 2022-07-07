@@ -1,9 +1,14 @@
 import { useState } from "react";
 
+import usePermissions from "../../../../shared/hooks/usePermissions";
+
 import { useParams } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { propertiesSelector, setUnitsFilters } from "../../state";
+import {
+  filtersSelector,
+  setFilters,
+} from "../../state/propertiesFiltersSlice";
 
 import { useTranslation } from "react-i18next";
 
@@ -21,10 +26,12 @@ import UnitsFilters from "../../components/UnitsFilters";
 function Units() {
   const { t } = useTranslation("properties");
 
+  const unitsPerms = usePermissions("unit");
+
   const { propertyID } = useParams();
 
   const dispatch = useDispatch();
-  const { unitsFilters } = useSelector(propertiesSelector);
+  const { filters } = useSelector(filtersSelector);
 
   const [filtersShown, setFiltersShown] = useState(false);
 
@@ -36,12 +43,7 @@ function Units() {
           label={t("searchUnits")}
           placeholder={t("unitName")}
           onChange={(keyword) =>
-            dispatch(
-              setUnitsFilters({
-                ...unitsFilters,
-                "filter[keyword]": keyword,
-              })
-            )
+            dispatch(setFilters({ ...filters, "filter[keyword]": keyword }))
           }
         />
       </Grid>
@@ -57,17 +59,18 @@ function Units() {
           onClick={(e) => setFiltersShown(!filtersShown)}
         />
       </Grid>
-
-      <Grid item sx={{ ml: "auto" }}>
-        <Button
-          startIcon={<Icon icon={mdiPlus} />}
-          component={Link}
-          to="/properties/units/add"
-          state={{ propertyID }}
-        >
-          {t("addUnit")}
-        </Button>
-      </Grid>
+      {unitsPerms.create && (
+        <Grid item sx={{ ml: "auto" }}>
+          <Button
+            startIcon={<Icon icon={mdiPlus} />}
+            component={Link}
+            to="/properties/units/add"
+            state={{ propertyID }}
+          >
+            {t("addUnit")}
+          </Button>
+        </Grid>
+      )}
 
       {/* <Grid item>
         <Menu

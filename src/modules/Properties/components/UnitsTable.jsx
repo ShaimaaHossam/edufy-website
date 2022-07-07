@@ -1,7 +1,9 @@
 import { useParams } from "react-router-dom";
 
+import usePermissions from "../../../shared/hooks/usePermissions";
+
 import { useSelector, useDispatch } from "react-redux";
-import { propertiesSelector, setUnitsFilters } from "../state";
+import { filtersSelector, setFilters } from "../state/propertiesFiltersSlice";
 
 import {
   useGetUnitsQuery,
@@ -26,14 +28,16 @@ import { UNIT_CUSTOMER_TYPES } from "../../../constants/system";
 function UnitsTable() {
   const { t } = useTranslation("properties");
 
+  const unitsPerms = usePermissions("unit");
+
   const { propertyID } = useParams();
 
   const dispatch = useDispatch();
-  const { unitsFilters } = useSelector(propertiesSelector);
+  const { filters } = useSelector(filtersSelector);
 
   const { isLoading, data: units } = useGetUnitsQuery({
     "filter[property_id]": propertyID,
-    ...unitsFilters,
+    ...filters,
   });
   const [updateUnit] = useUpdateUnitMutation();
 
@@ -76,7 +80,7 @@ function UnitsTable() {
           </Typography>
         </>
       ) : (
-        <Icon icon={mdiMinus} color="action" />
+        <Icon icon={mdiMinus} size="medium" color="action" />
       ),
 
       <Typography component="span" variant="body2">
@@ -84,40 +88,53 @@ function UnitsTable() {
       </Typography>,
 
       <Grid container onClick={(e) => e.stopPropagation()}>
-        <Grid item>
-          <IconButton
-            aria-label="edit unit"
-            size="small"
-            icon={mdiPencil}
-            disabled={!item.active}
-            component={Link}
-            to={`/properties/units/edit/${item.id}`}
-            state={{ propertyID }}
-          />
-        </Grid>
+        {unitsPerms.update || unitsPerms.create ? (
+          <>
+            {unitsPerms.update && (
+              <Grid item>
+                <IconButton
+                  aria-label="edit unit"
+                  size="small"
+                  icon={mdiPencil}
+                  disabled={!item.active}
+                  component={Link}
+                  to={`/properties/units/edit/${item.id}`}
+                  state={{ propertyID }}
+                />
+              </Grid>
+            )}
+            {unitsPerms.create && (
+              <Grid item>
+                <IconButton
+                  aria-label="clone unit"
+                  size="small"
+                  icon={mdiContentCopy}
+                  disabled={!item.active}
+                  component={Link}
+                  to={`/properties/units/clone/${item.id}`}
+                  state={{ propertyID }}
+                />
+              </Grid>
+            )}
 
-        <Grid item>
-          <IconButton
-            aria-label="clone unit"
-            size="small"
-            icon={mdiContentCopy}
-            disabled={!item.active}
-            component={Link}
-            to={`/properties/units/clone/${item.id}`}
-            state={{ propertyID }}
-          />
-        </Grid>
-
-        <Grid item sx={{ textAlign: "center", ml: 0.5, mt: 0.5 }}>
-          <Switch
-            color="primary"
-            checked={item.active}
-            onChange={() => updateUnit({ id: item.id, active: !item.active })}
-          />
-          <Typography component="span" variant="caption" display="block">
-            {item.active ? t("active") : t("inactive")}
-          </Typography>
-        </Grid>
+            {unitsPerms.update && (
+              <Grid item sx={{ textAlign: "center", ml: 0.5, mt: 0.5 }}>
+                <Switch
+                  color="primary"
+                  checked={item.active}
+                  onChange={() =>
+                    updateUnit({ id: item.id, active: !item.active })
+                  }
+                />
+                <Typography component="span" variant="caption" display="block">
+                  {item.active ? t("active") : t("inactive")}
+                </Typography>
+              </Grid>
+            )}
+          </>
+        ) : (
+          <Icon icon={mdiMinus} size="small" color="action" />
+        )}
       </Grid>,
     ],
   }));
@@ -134,7 +151,7 @@ function UnitsTable() {
         currentPage: units.meta.currentPage,
       }}
       onPageChange={(page, perPage) =>
-        dispatch(setUnitsFilters({ ...units, page, perPage }))
+        dispatch(setFilters({ ...filters, page, perPage }))
       }
     />
   ) : (

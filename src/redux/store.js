@@ -14,8 +14,12 @@ import { ordersFiltersSlice } from "./slices/ordersFilters";
 import { orderFormStepsSlice } from "../modules/Orders/state/orderFormSteps";
 import { orderFormDataSlice } from "../modules/Orders/state/orderFormData";
 
-import { propertiesSlice } from "../modules/Properties/state";
+import { appSlice } from "../modules/App/state";
+
 import { peopleSlice } from "../modules/People/state";
+
+import { propertiesFiltersSlice } from "../modules/Properties/state/propertiesFiltersSlice";
+import { propertyFormStepperSlice } from "../modules/Properties/state/propertyFormStepperSlice";
 
 export const store = configureStore({
   reducer: {
@@ -28,7 +32,8 @@ export const store = configureStore({
     [authSlice.name]: authSlice.reducer,
     [settingsSlice.name]: settingsSlice.reducer,
 
-    [propertiesSlice.name]: propertiesSlice.reducer,
+    [appSlice.name]: appSlice.reducer,
+
     [peopleSlice.name]: peopleSlice.reducer,
     [ordersFiltersSlice.name]: ordersFiltersSlice.reducer,
     [orderFormStepsSlice.name]: orderFormStepsSlice.reducer,

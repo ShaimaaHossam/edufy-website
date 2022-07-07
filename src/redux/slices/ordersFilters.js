@@ -5,16 +5,18 @@ const FILTERS_INIT_STATE = { page: 1, perPage: 20 };
 export const ordersFiltersSlice = createSlice({
   name: "ordersFilters",
   initialState: {
-    filters: FILTERS_INIT_STATE,
+    maintenanceFilters: FILTERS_INIT_STATE,
+    cleaningFilters: FILTERS_INIT_STATE,
 
-    formSteps: {},
+    // formSteps: {},
   },
   reducers: {
-    setFilters: (state, { payload }) => {
-      state.filters = payload;
+    setFilters: (state, { payload: { key, value } }) => {
+      state[key] = value;
     },
-    clearFilters: (state) => {
-      state.filters = FILTERS_INIT_STATE;
+    clearFilters: (state, { payload }) => {
+      console.log("clearFilters", payload);
+      state[payload] = FILTERS_INIT_STATE;
     },
   },
 });

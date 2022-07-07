@@ -1,9 +1,18 @@
+import { useEffect } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
-import { propertiesSelector, setPropertiesFilters } from "../state";
+import {
+  filtersSelector,
+  setFilters,
+  clearFilters,
+} from "../state/propertiesFiltersSlice";
 
 import { useGetAllPropertyTypesQuery } from "../../../redux/services/properties";
 import { useGetAllUsersByRoleQuery } from "../../../redux/services/people";
-import { useGetAllUsedCitiesQuery } from "../../../redux/services/general";
+import {
+  useGetAllUsedCitiesQuery,
+  useGetAllCompanyServicesQuery,
+} from "../../../redux/services/general";
 import { authSelector } from "../../../redux/slices/auth";
 
 import { useTranslation } from "react-i18next";
@@ -18,21 +27,28 @@ import useDebouncedEffect from "../../../shared/hooks/useDebouncedEffect";
 import { USER_ROLES } from "../../../constants/system";
 
 function PropertiesFilters() {
-  const { t } = useTranslation("properties");
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation("properties");
 
   const dispatch = useDispatch();
-  const { propertiesFilters } = useSelector(propertiesSelector);
-
   const {
     company: { id: companyID },
   } = useSelector(authSelector);
+  const { filters } = useSelector(filtersSelector);
+
+  // clearing filters on unmount
+  useEffect(() => {
+    return () => dispatch(clearFilters());
+  }, [dispatch]);
 
   const { data: allPropertyTypes = [] } = useGetAllPropertyTypesQuery();
   const { data: allAreaManagers = [] } = useGetAllUsersByRoleQuery(
     USER_ROLES.areaManager
   );
   const { data: allCities = [] } = useGetAllUsedCitiesQuery(companyID);
-  const allServices = [];
+  const { data: allServices = [] } = useGetAllCompanyServicesQuery();
 
   const formik = useFormik({
     validateOnMount: false,
@@ -50,13 +66,13 @@ function PropertiesFilters() {
   useDebouncedEffect(
     () => {
       dispatch(
-        setPropertiesFilters({
-          ...propertiesFilters,
+        setFilters({
+          ...filters,
           page: "1",
           "filter[property_type_id]": values.property_type_id,
           "filter[area_manager_id]": values.area_manager_id,
           "filter[city_id]": values.city_id,
-          "filter[service_id]": values.service_id,
+          "filter[services]": values.service_id,
         })
       );
     },
@@ -128,10 +144,14 @@ function PropertiesFilters() {
           name="service_id"
           label={t("byService")}
           isMulti
+          limitTagWidth
           limitTags={1}
           options={allServices.map((service) => ({
-            value: service.id,
-            label: service.title,
+            value: service.service_id,
+            label:
+              language === "en"
+                ? service.service_name.en
+                : service.service_name.ar,
           }))}
           noOptionsText={t("noServices")}
           value={formik.values.service_id}

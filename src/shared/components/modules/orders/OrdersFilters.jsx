@@ -28,7 +28,11 @@ import Autocomplete from "../../inputs/Autocomplete";
 import useDebouncedEffect from "../../../hooks/useDebouncedEffect";
 
 import { formatDate } from "../../../../helpers/datetime";
-import { USER_ROLES, ORDER_STATUSES } from "../../../../constants/system";
+import {
+  USER_ROLES,
+  ORDER_STATUSES,
+  ORDER_TYPES,
+} from "../../../../constants/system";
 import { differenceInYears } from "date-fns";
 
 const USER_ROLES_FILTERS = {
@@ -39,14 +43,16 @@ const USER_ROLES_FILTERS = {
   unitTenant: USER_ROLES.unitTenant,
 };
 
-function OrdersFilters({ fixedFitlters }) {
+function OrdersFilters({ fixedFitlters, orderType }) {
   const {
     t,
     i18n: { language },
   } = useTranslation("orders");
 
   const dispatch = useDispatch();
-  const { filters } = useSelector(ordersFiltersSelector);
+  const { maintenanceFilters, cleaningFilters } = useSelector(
+    ordersFiltersSelector
+  );
 
   const formik = useFormik({
     validateOnMount: false,
@@ -83,14 +89,32 @@ function OrdersFilters({ fixedFitlters }) {
 
         dispatch(
           setFilters({
-            ...filters,
-            page: "1",
-            "filter[due_date]": formatDate(values.due_date),
-            "filter[creator_role]": values.creator_role,
-            "filter[property_id]": values.property_id,
-            "filter[unit_id]": values.unit_id,
-            "filter[service_id]": values.service_id,
-            "filter[status]": values.status,
+            key:
+              orderType === ORDER_TYPES.maintenance
+                ? "maintenanceFilters"
+                : "cleaningFilters",
+            value:
+              orderType === ORDER_TYPES.maintenance
+                ? {
+                    ...maintenanceFilters,
+                    page: "1",
+                    "filter[due_date]": formatDate(values.due_date),
+                    "filter[creator_role]": values.creator_role,
+                    "filter[property_id]": values.property_id,
+                    "filter[unit_id]": values.unit_id,
+                    "filter[service_id]": values.service_id,
+                    "filter[status]": values.status,
+                  }
+                : {
+                    ...cleaningFilters,
+                    page: "1",
+                    "filter[due_date]": formatDate(values.due_date),
+                    "filter[creator_role]": values.creator_role,
+                    "filter[property_id]": values.property_id,
+                    "filter[unit_id]": values.unit_id,
+                    "filter[service_id]": values.service_id,
+                    "filter[status]": values.status,
+                  },
           })
         );
       });
@@ -116,8 +140,15 @@ function OrdersFilters({ fixedFitlters }) {
   // );
 
   useEffect(() => {
-    return () => dispatch(clearFilters());
-  }, [dispatch]);
+    return () =>
+      dispatch(
+        clearFilters(
+          orderType === ORDER_TYPES.maintenance
+            ? "maintenanceFilters"
+            : "cleaningFilters"
+        )
+      );
+  }, [dispatch, orderType]);
 
   return (
     <Grid columns={12} container spacing={2} component="form">

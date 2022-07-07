@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useSelector } from "react-redux";
+import { appSelector } from "../../state";
 
 import {
   Box,
@@ -12,7 +13,7 @@ import Header from "./Header";
 import Navigation from "./Navigation";
 
 const OPENED_DRAWER_WIDTH = 260;
-const CLOSED_DRAWER_WIDTH = 150;
+const CLOSED_DRAWER_WIDTH = 76;
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -29,6 +30,7 @@ const Drawer = styled(MuiDrawer, {
       duration: theme.transitions.duration.enteringScreen,
     }),
     "& .MuiDrawer-paper": {
+      backgroundColor: "transparent",
       width: OPENED_DRAWER_WIDTH,
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
@@ -36,6 +38,10 @@ const Drawer = styled(MuiDrawer, {
       }),
       border: "none",
       marginTop: theme.spacing(3),
+      [theme.breakpoints.down("md")]: {
+        backgroundColor: theme.palette.common.white,
+        boxShadow: theme.shadows[1],
+      },
     },
   }),
   ...(!open && {
@@ -45,6 +51,7 @@ const Drawer = styled(MuiDrawer, {
       duration: theme.transitions.duration.leavingScreen,
     }),
     "& .MuiDrawer-paper": {
+      backgroundColor: "transparent",
       width: CLOSED_DRAWER_WIDTH,
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
@@ -52,7 +59,11 @@ const Drawer = styled(MuiDrawer, {
       }),
       border: "none",
       marginTop: theme.spacing(3),
-      [theme.breakpoints.up("sm")]: {},
+      [theme.breakpoints.down("md")]: {
+        width: 0,
+        backgroundColor: theme.palette.common.white,
+        boxShadow: theme.shadows[1],
+      },
     },
   }),
 }));
@@ -71,6 +82,9 @@ const Main = styled("main", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    [theme.breakpoints.down("md")]: {
+      marginLeft: 0,
+    },
   }),
   ...(!open && {
     marginLeft: CLOSED_DRAWER_WIDTH,
@@ -78,11 +92,14 @@ const Main = styled("main", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    [theme.breakpoints.down("md")]: {
+      marginLeft: 0,
+    },
   }),
 }));
 
 function AppContainer({ children }) {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(true);
+  const { isMenuOpen } = useSelector(appSelector);
 
   return (
     <Box minHeight="100vh" display="flex" flexDirection="column">
@@ -97,20 +114,13 @@ function AppContainer({ children }) {
       {/* Header's Toolbar height offset */}
       <Toolbar />
 
-      <Drawer
-        variant="permanent"
-        open={isDrawerOpen}
-        PaperProps={{ sx: { backgroundColor: "transparent" } }}
-      >
+      <Drawer variant="permanent" open={isMenuOpen}>
         <Toolbar />
 
-        <Navigation
-          open={isDrawerOpen}
-          toggleDrawer={() => setIsDrawerOpen(!isDrawerOpen)}
-        />
+        <Navigation />
       </Drawer>
 
-      <Main open={isDrawerOpen}>
+      <Main open={isMenuOpen}>
         <Box px={4} flexGrow={1} display="flex" flexDirection="column">
           {children}
         </Box>
