@@ -61,7 +61,7 @@ export const ORDER_STATUSES = {
   assigned: "SPAssigned",
   inprogress: "InProgress",
   pending: "Pending",
-  sp_done: 'SPDone',
+  sp_done: "SPDone",
   completed: "Completed",
   canceled: "Canceled",
 };
@@ -72,27 +72,51 @@ export const MATERIAL_STATUSES = {
   created: "Created",
   confirmed: "Confirmed",
   rejected: "Rejected",
-}
+};
 
 export const SERVICE_STATUSES = {
   created: "Created",
   confirmed: "Confirmed",
   rejected: "Rejected",
-}
+};
 
 export const CLEANING_FREQUENCY_TYPES = [
   {
-    id: '1',
+    id: "1",
     name: {
       en: "Daily",
       ar: "يومي",
     },
   },
   {
-    id: '2',
+    id: "2",
     name: {
       en: "Custom",
       ar: "مخصص",
-    }
+    },
   },
-]
+];
+
+export const NOTIF_TYPES = {
+  orders: "orders",
+  accounting: "accounting",
+  communication: "communication",
+};
+export const NOTIF_EVENTS = {
+  orderSubmitted: "order_submitted",
+  visitSubmitted: "visit_submitted",
+  visitReminder: "visit_reminder",
+  orderAssigned: "order_assigned",
+  orderStarted: "order_started",
+  materialQuoteAdded: "material_quote_added",
+  spFinished: "sp_finished",
+  orderFinished: "order_finished",
+  orderCanceled: "order_canceled",
+
+  invoiceAdded: "invoice_added",
+  invoicePaid: "invoice_paid",
+  creditNoteAdded: "credit_note_added",
+  walletRechargeFaild: "wallet_recharge_faild",
+
+  freshdeskUpdate: "freshdesk_update",
+};
