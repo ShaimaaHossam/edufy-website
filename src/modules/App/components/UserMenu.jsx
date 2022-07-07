@@ -68,7 +68,7 @@ function UserMenu() {
         <ListItemIcon>
           <Icon icon={mdiAccountOutline} />
         </ListItemIcon>
-        <ListItemText>{t("my_profile")}</ListItemText>
+        <ListItemText>{t("myProfile")}</ListItemText>
       </MenuItem>
 
       <MenuItem onClick={() => navigate("/settings")}>
