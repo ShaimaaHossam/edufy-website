@@ -102,9 +102,10 @@ function WalletOverview() {
         <Grid item>
           <Button
             startIcon={<Icon icon={mdiWalletPlusOutline} />}
+            disabled={overview.is_blocked}
             onClick={() => dispatch(toggleDepositDialog())}
           >
-            {t("rechargeWallet")}
+            {overview.is_blocked ? t("pendingRequest") : t("rechargeWallet")}
           </Button>
         </Grid>
 

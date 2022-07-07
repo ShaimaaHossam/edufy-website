@@ -31,7 +31,7 @@ function WalletWarningDialog() {
     (overview.current_balance / (overview.spending_limit + overview.deposits)) *
     100;
 
-  if (percentage > 25) return null;
+  if (overview.is_blocked || percentage > 25) return null;
 
   return (
     <Dialog

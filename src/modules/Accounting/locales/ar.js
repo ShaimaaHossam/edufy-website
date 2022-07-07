@@ -12,7 +12,6 @@ const ar = {
   balanceAfter: "الرصيد بعد",
   description: "الوصف",
   remarks: "الملاحظات",
-  rechargeWallet: "شحن المحفظة",
   currentBalance: "الرصيد الحالي",
   capacityLimit: "حد السعة",
   deposits: "الإيداعات",
@@ -64,6 +63,8 @@ const ar = {
   notEnoughWalletBalance: "لا يوجد رصيد كافي بالمحفظة لدفع هذه الفاتورة.",
 
   clear: "إلغاء",
+  rechargeWallet: "شحن المحفظة",
+  pendingRequest: "طلب تحت المراجعة",
   requestWalletRecharge: "طلب شحن المحفظة",
   backToWallet: "الرجوع إلى المحفظة",
   pay: "دفع",

@@ -12,7 +12,6 @@ const en = {
   balanceAfter: "Balance After",
   description: "Description",
   remarks: "Remarks",
-  rechargeWallet: "Recharge Wallet",
   currentBalance: "Current Balance",
   capacityLimit: "Capacity Limit",
   deposits: "Deposits",
@@ -67,6 +66,8 @@ const en = {
     "There's not enough balance in your wallet to pay this invoice.",
 
   clear: "Clear",
+  rechargeWallet: "Recharge Wallet",
+  pendingRequest: "Pending Request",
   requestWalletRecharge: "Request Wallet Charge",
   backToWallet: "Back to Wallet",
   pay: "Pay",
