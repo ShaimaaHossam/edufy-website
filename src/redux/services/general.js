@@ -76,6 +76,17 @@ export const generalAPI = createApi({
           : [],
     }),
 
+    getNotifications: build.query({
+      query: (page) => ({
+        url: "/notifications",
+        params: { perPage: 20, page },
+      }),
+      transformResponse: (res) => res.data,
+    }),
+    markNotificationRead: build.mutation({
+      query: ({ id }) => ({ url: `notifications/read/${id}`, method: "POST" }),
+    }),
+
     uploadFiles: build.mutation({
       query: (files) => {
         const formData = new FormData();
@@ -100,4 +111,7 @@ export const {
   useUpdatePropertyServicesMutation,
 
   useUploadFilesMutation,
+
+  useLazyGetNotificationsQuery,
+  useMarkNotificationReadMutation,
 } = generalAPI;
