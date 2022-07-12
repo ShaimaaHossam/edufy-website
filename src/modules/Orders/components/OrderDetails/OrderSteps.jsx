@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
-import { useGetOrderQuery } from "../../../redux/services/orders";
-import { order } from "../../../redux/services/ordersData";
+import { useGetOrderQuery } from "../../../../redux/services/orders";
+import { order } from "../../../../redux/services/ordersData";
 
 import { useTranslation } from "react-i18next";
 
@@ -16,9 +16,9 @@ import {
 } from "@mui/material";
 import { mdiCheck, mdiClose } from "@mdi/js";
 
-import Icon from "../../../shared/components/Icon";
+import Icon from "../../../../shared/components/Icon";
 
-import { ORDER_STATUSES as STATUSES } from "../../../constants/system";
+import { ORDER_STATUSES as STATUSES } from "../../../../constants/system";
 
 const StepConnector = styled(MuiStepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -97,75 +97,105 @@ function OrderSteps() {
 
   const { orderID } = useParams();
 
-  // const { data: order } = useGetOrderQuery(orderID);
-
-  const { status } = order;
-  const isAssigned = !!order.assigned_at;
+  const { data: orderDetails } = useGetOrderQuery(orderID);
+  // const orderDetails = {
+  //   status: "Canceled",
+  // };
 
   return (
     <Stepper alternativeLabel connector={<StepConnector />}>
       <Step completed>
-        <StepLabel StepIconComponent={StepIcon}>{t("submitted")}</StepLabel>
-      </Step>
-
-      <Step
-        active={
-          status === STATUSES.requested ||
-          (status === STATUSES.canceled && !isAssigned)
-        }
-        completed={
-          status !== STATUSES.requested &&
-          !(status === STATUSES.canceled && !isAssigned)
-        }
-      >
         <StepLabel
           StepIconComponent={StepIcon}
-          error={status === STATUSES.canceled && !isAssigned}
+          error={orderDetails.status === STATUSES.canceled}
         >
-          {isAssigned ? t("spAssigned") : t("assigningSp")}
+          {orderDetails.status === STATUSES.canceled
+            ? t("canceled")
+            : t("created")}
         </StepLabel>
       </Step>
 
       <Step
-        active={
-          status === STATUSES.assigned ||
-          status === STATUSES.pending ||
-          (status === STATUSES.canceled && !!isAssigned)
-        }
+        active={orderDetails.status === STATUSES.created}
         completed={
-          status === STATUSES.in_progress ||
-          (status === STATUSES.completed &&
-            !(status === STATUSES.canceled && !!isAssigned))
+          orderDetails.status === STATUSES.confirmed ||
+          orderDetails.status === STATUSES.assigned ||
+          orderDetails.status === STATUSES.in_progress ||
+          orderDetails.status === STATUSES.sp_done ||
+          orderDetails.status === STATUSES.completed
         }
       >
         <StepLabel
           StepIconComponent={StepIcon}
-          error={status === STATUSES.canceled && !!isAssigned}
+          // error={status === STATUSES.canceled && !isAssigned}
         >
-          {status === STATUSES.assigned
-            ? t("waitingQuotation")
-            : status === STATUSES.pending
-            ? t("waitingQuotationApproval")
-            : (status === STATUSES.in_progress ||
-                status === STATUSES.completed) &&
-              !!order.materials?.length
-            ? t("quotationApproved")
-            : (status === STATUSES.in_progress ||
-                status === STATUSES.completed) &&
-              !order.materials?.length
-            ? t("noQuotation")
-            : t("quotation")}
+          {orderDetails.status === STATUSES.confirmed
+            ? t("confirmed")
+            : t("confirming")}
         </StepLabel>
       </Step>
 
       <Step
+        active={orderDetails.status === STATUSES.confirmed}
+        completed={
+          orderDetails.status === STATUSES.assigned ||
+          orderDetails.status === STATUSES.in_progress ||
+          orderDetails.status === STATUSES.sp_done ||
+          orderDetails.status === STATUSES.completed
+        }
+      >
+        <StepLabel
+          StepIconComponent={StepIcon}
+          // error={status === STATUSES.canceled && !isAssigned}
+        >
+          {orderDetails.status === STATUSES.assigned
+            ? t("spAssigned")
+            : t("assigningSp")}
+        </StepLabel>
+      </Step>
+
+      <Step
+        active={orderDetails.status === STATUSES.assigned}
+        completed={
+          orderDetails.status === STATUSES.in_progress ||
+          orderDetails.status === STATUSES.sp_done ||
+          orderDetails.status === STATUSES.completed
+        }
+      >
+        <StepLabel
+          StepIconComponent={StepIcon}
+          // error={status === STATUSES.canceled && !isAssigned}
+        >
+          {t("in_progress")}
+        </StepLabel>
+      </Step>
+
+      <Step
+        active={orderDetails.status === STATUSES.in_progress}
+        completed={
+          orderDetails.status === STATUSES.sp_done ||
+          orderDetails.status === STATUSES.completed
+        }
+      >
+        <StepLabel
+          StepIconComponent={StepIcon}
+          // error={status === STATUSES.canceled && !isAssigned}
+        >
+          {t("jobDone")}
+        </StepLabel>
+      </Step>
+
+      {/* <Step
         active={status === STATUSES.in_progress}
         completed={status === STATUSES.completed}
       >
         <StepLabel StepIconComponent={StepIcon}>{t("inProgress")}</StepLabel>
-      </Step>
+      </Step> */}
 
-      <Step completed={status === STATUSES.completed}>
+      <Step
+        active={orderDetails.status === STATUSES.sp_done}
+        completed={orderDetails.status === STATUSES.completed}
+      >
         <StepLabel StepIconComponent={StepIcon}>{t("completed")}</StepLabel>
       </Step>
     </Stepper>

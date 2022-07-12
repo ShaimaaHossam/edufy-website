@@ -7,20 +7,23 @@ import * as Yup from "yup";
 
 import { Button, Grid, Typography } from "@mui/material";
 
-import { useGetAllPropertiesQuery } from "../../../../../redux/services/properties";
+import {
+  useGetAllPropertiesQuery,
+  useGetAllUnitsQuery,
+} from "../../../../../redux/services/properties";
 import Autocomplete from "../../../../../shared/components/inputs/Autocomplete";
 import {
   incrementSteps,
   orderFormStepsSelector,
 } from "../../../state/orderFormSteps";
 import { useDispatch, useSelector } from "react-redux";
-import { updateVal, createState } from "../../../state/orderFormData";
+import { updateVal } from "../../../state/orderFormData";
 
 const SelectPropertyUnits = () => {
   const { t } = useTranslation("orders");
   const dispatch = useDispatch();
   const { currentStep } = useSelector(orderFormStepsSelector);
-  const { isLoading, data: test } = useGetAllPropertiesQuery();
+  const { isLoading, data: properties } = useGetAllPropertiesQuery();
 
   const formik = useFormik({
     // validateOnMount: false,
@@ -41,65 +44,32 @@ const SelectPropertyUnits = () => {
       dispatch(updateVal({ key: "selectedUnits", val: values.unit_ids }));
       dispatch(incrementSteps());
     },
+    onChange: (values) => {
+      console.log(values);
+    },
   });
+  const { data: allUnits = [] } = useGetAllUnitsQuery(
+    { "filter[property_id]": formik.values.property_id },
+    { skip: !formik.values.property_id }
+  );
 
-  const properties = [
-    {
-      value: "1",
-      label: "property 1",
-    },
-    {
-      value: "2",
-      label: "property 2",
-    },
-    {
-      value: "3",
-      label: "property 3",
-    },
-    {
-      value: "4",
-      label: "property 4",
-    },
-    {
-      value: "5",
-      label: "property 5",
-    },
-  ];
-
-  const units = [
-    {
-      value: "1",
-      label: "Unit 1",
-    },
-    {
-      value: "2",
-      label: "Unit 2",
-    },
-    {
-      value: "3",
-      label: "Unit 3",
-    },
-    {
-      value: "4",
-      label: "Unit 4",
-    },
-    {
-      value: "5",
-      label: "Unit 5",
-    },
-  ];
-
+  if (isLoading) {
+    return null;
+  }
   return (
     <Grid container spacing={5} component="form" onSubmit={formik.handleSubmit}>
       <Grid item xs={12}>
         <Typography style={{ paddingBottom: 15 }} component="h6" variant="h6">
-          Select a property
+          {t("selectProperty")}
         </Typography>
         <Autocomplete
           required
           name="property_id"
-          label="Property"
-          options={properties}
+          label={t("property")}
+          options={properties.map((type) => ({
+            value: type.id,
+            label: type.title,
+          }))}
           noOptionsText={t("noProperties")}
           value={formik.values.property_id}
           onChange={formik.handleChange}
@@ -110,14 +80,17 @@ const SelectPropertyUnits = () => {
       </Grid>
       <Grid item xs={12}>
         <Typography style={{ paddingBottom: 15 }} component="h6" variant="h6">
-          Select Units
+          {t("selectUnits")}
         </Typography>
         <Autocomplete
           name="unit_ids"
           isMulti={true}
-          label={t("property")}
+          label={t("units")}
           noOptionsText={t("noProperties")}
-          options={units}
+          options={allUnits.map((type) => ({
+            value: type.id,
+            label: type.title,
+          }))}
           value={formik.values.unit_ids}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -134,7 +107,7 @@ const SelectPropertyUnits = () => {
         >
           <div></div>
           <Button type="submit" variant="contained" sx={{ mt: 1, mr: 1 }}>
-            Next
+            {t("next")}
           </Button>
         </div>
       </Grid>

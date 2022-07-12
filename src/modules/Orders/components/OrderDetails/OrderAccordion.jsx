@@ -17,15 +17,26 @@ function OrderAccordion({ title, children }) {
     <Accordion
       expanded={isExpanded}
       onChange={() => setIsExpanded(!isExpanded)}
-      sx={{ px: 1, border: 1, borderColor: "divider" }}
+      sx={{
+        backgroundColor: "transparent",
+      }}
     >
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography variant="subtitle1">{title}</Typography>
+      <AccordionSummary sx={{ px: 0 }} expandIcon={<ExpandMoreIcon />}>
+        <Typography variant="h6">{title}</Typography>
       </AccordionSummary>
 
-      {isExpanded && <Divider variant="fullWidth" sx={{ mb: 2 }} />}
+      {/* {isExpanded && <Divider variant="fullWidth" sx={{ mb: 2 }} />} */}
 
-      <AccordionDetails>{children}</AccordionDetails>
+      <AccordionDetails
+        sx={{
+          p: 2,
+          border: 1,
+          borderColor: "divider",
+          backgroundColor: "white",
+        }}
+      >
+        {children}
+      </AccordionDetails>
     </Accordion>
   );
 }

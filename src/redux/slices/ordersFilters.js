@@ -14,8 +14,9 @@ export const ordersFiltersSlice = createSlice({
     setFilters: (state, { payload: { key, value } }) => {
       state[key] = value;
     },
+
     clearFilters: (state, { payload }) => {
-      console.log("clearFilters", payload);
+
       state[payload] = FILTERS_INIT_STATE;
     },
   },

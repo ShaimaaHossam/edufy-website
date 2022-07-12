@@ -22,10 +22,14 @@ export const ORDER_TYPES = {
 };
 
 export const ORDER_STATUSES = {
-  requested: "requested",
-  pending: "pending",
-  assigned: "assigned",
-  in_progress: "in_progress",
-  completed: "completed",
-  canceled: "canceled",
+  created: "Created",
+  confirmed: "Confirmed",
+  assigned: "SPAssigned",
+  in_progress: "InProgress",
+  pending: "Pending",
+  sp_done: 'SPDone',
+  completed: "Completed",
+  canceled: "Canceled",
 };
+
+export const VAT_AMOUNT = 0.15;

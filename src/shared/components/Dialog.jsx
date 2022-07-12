@@ -25,7 +25,12 @@ const Transition = forwardRef(function Transition(
   return <Slide ref={ref} direction={slideDir} {...restProps} />;
 });
 
-const sizeMapping = { small: "xs", medium: "sm", large: "md" };
+const sizeMapping = {
+  small: "xs",
+  medium: "sm",
+  large: "md",
+  extraLarge: "lg",
+};
 
 function SideDialog({
   title,
@@ -69,14 +74,14 @@ function SideDialog({
         },
       })}
     >
-      <DialogTitle color={titleColor} sx={{ pt: 3 }}>
-        {title}
-      </DialogTitle>
-
+      {title && (
+        <DialogTitle color={titleColor} sx={{ pt: 3 }}>
+          {title}
+        </DialogTitle>
+      )}
       <DialogContent>
         <Box sx={{ height: "100%" }}>{children}</Box>
       </DialogContent>
-
       {!!onConfirm && (
         <DialogActions
           sx={{
@@ -110,7 +115,7 @@ function SideDialog({
 }
 
 SideDialog.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   titleColor: PropTypes.oneOf([
     "info",
     "error",
@@ -121,7 +126,7 @@ SideDialog.propTypes = {
   ]),
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  size: PropTypes.oneOf(["small", "medium", "large"]),
+  size: PropTypes.oneOf(["small", "medium", "large", "extraLarge"]),
   sided: PropTypes.bool,
 
   onExited: PropTypes.func,

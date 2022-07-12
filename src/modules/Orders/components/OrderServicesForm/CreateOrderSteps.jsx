@@ -108,7 +108,7 @@ function CreateOrderSteps({ currentStep }) {
     >
       <Step active={currentStep === 1} completed={currentStep > 1}>
         <CustomStepLabel StepIconComponent={StepIcon}>
-          {t("selectProperty")}
+          {t("selectPropertyUnits")}
         </CustomStepLabel>
       </Step>
 

@@ -140,7 +140,8 @@ function OrdersFilters({ fixedFitlters, orderType }) {
   // );
 
   useEffect(() => {
-    return () =>
+    return () => {
+      formik.resetForm();
       dispatch(
         clearFilters(
           orderType === ORDER_TYPES.maintenance
@@ -148,6 +149,7 @@ function OrdersFilters({ fixedFitlters, orderType }) {
             : "cleaningFilters"
         )
       );
+    };
   }, [dispatch, orderType]);
 
   return (
@@ -158,7 +160,29 @@ function OrdersFilters({ fixedFitlters, orderType }) {
           name="due_date"
           label={t("byStartDate")}
           value={formik.values.due_date}
-          onChange={formik.handleChange}
+          onChange={(e) => {
+            formik.setFieldValue("due_date", e.target.value);
+            dispatch(
+              setFilters({
+                key:
+                  orderType === ORDER_TYPES.maintenance
+                    ? "maintenanceFilters"
+                    : "cleaningFilters",
+                value:
+                  orderType === ORDER_TYPES.maintenance
+                    ? {
+                        ...maintenanceFilters,
+                        page: "1",
+                        "filter[due_date]": formatDate(e.target.value),
+                      }
+                    : {
+                        ...cleaningFilters,
+                        page: "1",
+                        "filter[due_date]": formatDate(e.target.value),
+                      },
+              })
+            );
+          }}
           onBlur={formik.handleBlur}
           error={!!formik.touched.due_date && !!formik.errors.due_date}
           helperText={!!formik.touched.due_date && formik.errors.due_date}
@@ -177,7 +201,29 @@ function OrdersFilters({ fixedFitlters, orderType }) {
             label: t(key),
           }))}
           value={formik.values.creator_role}
-          onChange={formik.handleChange}
+          onChange={(e) => {
+            formik.setFieldValue("creator_role", e.target.value);
+            dispatch(
+              setFilters({
+                key:
+                  orderType === ORDER_TYPES.maintenance
+                    ? "maintenanceFilters"
+                    : "cleaningFilters",
+                value:
+                  orderType === ORDER_TYPES.maintenance
+                    ? {
+                        ...maintenanceFilters,
+                        page: "1",
+                        "filter[creator_role]": e.target.value,
+                      }
+                    : {
+                        ...cleaningFilters,
+                        page: "1",
+                        "filter[creator_role]": e.target.value,
+                      },
+              })
+            );
+          }}
           onBlur={formik.handleBlur}
         />
       </Grid>
@@ -195,13 +241,33 @@ function OrdersFilters({ fixedFitlters, orderType }) {
             }))}
             noOptionsText={t("noProperties")}
             value={formik.values.property_id}
-            onChange={(e) =>
+            onChange={(e) => {
               formik.setValues({
                 ...formik.values,
                 property_id: e.target.value,
                 unit_id: [],
-              })
-            }
+              });
+              dispatch(
+                setFilters({
+                  key:
+                    orderType === ORDER_TYPES.maintenance
+                      ? "maintenanceFilters"
+                      : "cleaningFilters",
+                  value:
+                    orderType === ORDER_TYPES.maintenance
+                      ? {
+                          ...maintenanceFilters,
+                          page: "1",
+                          "filter[property_id]": e.target.value,
+                        }
+                      : {
+                          ...cleaningFilters,
+                          page: "1",
+                          "filter[property_id]": e.target.value,
+                        },
+                })
+              );
+            }}
             onBlur={formik.handleBlur}
           />
         </Grid>
@@ -221,7 +287,29 @@ function OrdersFilters({ fixedFitlters, orderType }) {
           noOptionsText={t("noUnits")}
           disabled={!formik.values.property_id}
           value={formik.values.unit_id}
-          onChange={formik.handleChange}
+          onChange={(e) => {
+            formik.setFieldValue("unit_id", e.target.value);
+            dispatch(
+              setFilters({
+                key:
+                  orderType === ORDER_TYPES.maintenance
+                    ? "maintenanceFilters"
+                    : "cleaningFilters",
+                value:
+                  orderType === ORDER_TYPES.maintenance
+                    ? {
+                        ...maintenanceFilters,
+                        page: "1",
+                        "filter[unit_id]": e.target.value,
+                      }
+                    : {
+                        ...cleaningFilters,
+                        page: "1",
+                        "filter[unit_id]": e.target.value,
+                      },
+              })
+            );
+          }}
           onBlur={formik.handleBlur}
         />
       </Grid>
@@ -258,7 +346,29 @@ function OrdersFilters({ fixedFitlters, orderType }) {
             label: t(key),
           }))}
           value={formik.values.status}
-          onChange={formik.handleChange}
+          onChange={(e) => {
+            formik.setFieldValue("status", e.target.value);
+            dispatch(
+              setFilters({
+                key:
+                  orderType === ORDER_TYPES.maintenance
+                    ? "maintenanceFilters"
+                    : "cleaningFilters",
+                value:
+                  orderType === ORDER_TYPES.maintenance
+                    ? {
+                        ...maintenanceFilters,
+                        page: "1",
+                        "filter[status]": e.target.value,
+                      }
+                    : {
+                        ...cleaningFilters,
+                        page: "1",
+                        "filter[status]": e.target.value,
+                      },
+              })
+            );
+          }}
           onBlur={formik.handleBlur}
         />
       </Grid>
@@ -268,7 +378,16 @@ function OrdersFilters({ fixedFitlters, orderType }) {
           type="reset"
           color="error"
           variant="outlined"
-          onClick={formik.resetForm}
+          onClick={() => {
+            formik.resetForm();
+            dispatch(
+              clearFilters(
+                orderType === ORDER_TYPES.maintenance
+                  ? "maintenanceFilters"
+                  : "cleaningFilters"
+              )
+            );
+          }}
         >
           {t("clear")}
         </Button>

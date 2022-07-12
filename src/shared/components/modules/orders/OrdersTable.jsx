@@ -9,11 +9,11 @@ import {
 } from "../../../../redux/slices/ordersFilters";
 
 import { useGetOrdersQuery } from "../../../../redux/services/orders";
-import { orders } from "../../../../redux/services/ordersData";
+// import { orders } from "../../../../redux/services/ordersData";
 
 import { useTranslation } from "react-i18next";
 
-import { Typography } from "@mui/material";
+import { Typography, Box, Grid } from "@mui/material";
 
 import NoContent from "../../../views/NoContent";
 
@@ -36,32 +36,41 @@ function OrdersTable({ orderType }) {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { filters } = useSelector(ordersFiltersSelector);
+  const { maintenanceFilters, cleaningFilters } = useSelector(
+    ordersFiltersSelector
+  );
 
-  // const { isLoading, data: orders } = useGetOrdersQuery({
-  //   "filter[service_type]": orderType,
-  //   ...filters,
-  // });
-
+  const { isLoading, data: orders } = useGetOrdersQuery(
+    orderType === ORDER_TYPES.maintenance
+      ? {
+          // "filter[service_type]": orderType,
+          ...maintenanceFilters,
+        }
+      : {
+          // "filter[service_type]": orderType,
+          ...cleaningFilters,
+        }
+  );
+  console.log(orders);
   const tableLabels = [
     t("orderNo"),
     t("startDate"),
     t("createdBy"),
     t("property"),
     t("units"),
-    t("services"),
     t("cost"),
-    t("type"),
+    t("services"),
+    t(orderType === ORDER_TYPES.maintenance ? "serviceDescription" : "type"),
     t("status"),
   ];
   const tableData = orders?.data?.map((item) => ({
     id: item.id,
     active: true,
     clickable: true,
-    onClick: () => navigate(`/orders/${item.service_type}/${item.id}`),
+    onClick: () => navigate(`/orders/${item.type}/${item.id}`),
     rowCells: [
       <Link
-        to={`/orders/${item.service_type}/${item.id}`}
+        to={`/orders/${item.type}/${item.id}`}
         onClick={(e) => e.stopPropagation()}
       >
         <Typography
@@ -70,17 +79,31 @@ function OrdersTable({ orderType }) {
           color="primary"
           sx={{ textDecoration: "underline" }}
         >
-          {`#${item.order_number}`}
+          {/* order number */}
+          {`#${item.reference}`}
         </Typography>
       </Link>,
 
       <Typography component="span" variant="body2">
-        {formatDate(item.due_date, formats.dateShort, language)}
+        {formatDate(
+          item.schedule.date,
+          formats.dateShortSpaceSeparated,
+          language,
+          false
+        )}
       </Typography>,
-
-      <Typography component="span" variant="body2">
-        {item.created_by.name}
-      </Typography>,
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography component="span" variant="body2">
+            {item.user.name}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography component="span" variant="body2" color="textSecondary">
+            {item.user.role}
+          </Typography>
+        </Grid>
+      </Grid>,
 
       <Link
         underline="hover"
@@ -91,25 +114,36 @@ function OrdersTable({ orderType }) {
           {item.property.title}
         </Typography>
       </Link>,
-
-      <OrderUnits units={item.units} propertyID={item.property.id} />,
+      <Typography component="span" variant="body2">
+        {item.unit.title}
+      </Typography>,
+      // <OrderUnits units={item.units} propertyID={item.property.id} />,
 
       // <ServicesTableList services={item.services} />,
 
       <Typography component="span" variant="body2">
-        {item.total_amount}{" "}
+        {item.total}{" "}
         <Typography component="span" variant="inherit" color="textSecondary">
           {t("sr")}
         </Typography>
       </Typography>,
+      <Typography component="span" variant="body2">
+        {language === "en" ? item.category.name.en : item.category.name.ar}
+      </Typography>,
 
-      null,
+      <Typography component="span" variant="body2">
+        {orderType === ORDER_TYPES.maintenance
+          ? language === "en"
+            ? item.category.description.en
+            : item.category.description.ar
+          : "type"}
+      </Typography>,
 
       <OrderStatus status={item.status} />,
     ],
   }));
 
-  // if (isLoading) return null;
+  if (isLoading) return null;
 
   return !!tableData?.length ? (
     <Table
@@ -123,7 +157,18 @@ function OrdersTable({ orderType }) {
         currentPage: orders.meta.currentPage,
       }}
       onPageChange={(page, perPage) =>
-        dispatch(setFilters({ ...filters, page, perPage }))
+        dispatch(
+          setFilters({
+            key:
+              orderType === ORDER_TYPES.maintenance
+                ? "maintenanceFilters"
+                : "cleaningFilters",
+            value:
+              orderType === ORDER_TYPES.maintenance
+                ? { ...maintenanceFilters, page, perPage }
+                : { ...cleaningFilters, page, perPage },
+          })
+        )
       }
     />
   ) : (

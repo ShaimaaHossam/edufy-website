@@ -17,12 +17,37 @@ import Autocomplete from "../../../../../shared/components/inputs/Autocomplete";
 import ScheduleService from "./ScheduleService";
 import CounterInput from "../../../../../shared/components/inputs/CounterInput";
 import IconButton from "../../../../../shared/components/IconButton";
+import {
+  useGetAllCompanyServicesQuery,
+  useGetCompanyServicesTreeQuery,
+} from "../../../../../redux/services/general";
+import { ORDER_TYPES } from "../../../../../constants/system";
+
 const SelectSerivces = () => {
   const { t } = useTranslation("orders");
   const { selectedServiceType } = useSelector(orderFormDataSelector);
   const dispatch = useDispatch();
   const [filterdServices, setSilterdServices] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState("");
+
+  const [selectedItem, setSelectedItem] = useState([]);
+  const [selectedItemType, setSelectedItemType] = useState([]);
+
+  const [servicess, setServicess] = useState([]);
+
+  const { isLoading, data: allServices = [] } =
+    useGetCompanyServicesTreeQuery(undefined);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setServicess(
+        allServices.filter(
+          (service) => service.slug.en === ORDER_TYPES.maintenance
+        )[0].children
+      );
+    }
+  }, [isLoading, allServices]);
+
   const handleClick = (index) => {
     if (selectedIndex === index) {
       setSelectedIndex("");
@@ -104,11 +129,11 @@ const SelectSerivces = () => {
   ];
 
   const formik = useFormik({
-    // validateOnMount: false,
-    // validateOnBlur: false,
-    // validateOnChange: false,
+    validateOnMount: false,
+    validateOnBlur: false,
+    validateOnChange: false,
     initialValues: {
-      servicesContainer: [
+      categories: [
         {
           service_type: "",
           services: [
@@ -116,7 +141,9 @@ const SelectSerivces = () => {
               category_id: "",
               category_label: "",
               quantity: 1,
+              items: [],
               selectedItem: "",
+              itemTypes: [],
               selectedItemType: "",
               unit_cost: 0,
             },
@@ -125,7 +152,7 @@ const SelectSerivces = () => {
       ],
     },
     validationSchema: Yup.object().shape({
-      servicesContainer: Yup.array().of(
+      categories: Yup.array().of(
         Yup.object().shape({
           service_type: Yup.string().required(t("requiredField")),
           services: Yup.array().of(
@@ -153,7 +180,7 @@ const SelectSerivces = () => {
 
   const addSubService = (index) => {
     const newSubServices = [
-      ...formik.values.servicesContainer[index].services,
+      ...formik.values.categories[index].services,
       {
         category_id: "",
         category_label: "",
@@ -163,19 +190,17 @@ const SelectSerivces = () => {
         unit_cost: 0,
       },
     ];
-    setFieldValue(`servicesContainer[${index}].services`, newSubServices);
+    setFieldValue(`categories[${index}].services`, newSubServices);
   };
   const removeSubService = (containerId, serviceId) => {
-    const newSubServices = [
-      ...formik.values.servicesContainer[containerId].services,
-    ];
+    const newSubServices = [...formik.values.categories[containerId].services];
     newSubServices.splice(serviceId, 1);
-    setFieldValue(`servicesContainer[${containerId}].services`, newSubServices);
+    setFieldValue(`categories[${containerId}].services`, newSubServices);
   };
 
   const addService = () => {
     const newServices = [
-      ...formik.values.servicesContainer,
+      ...formik.values.categories,
       {
         service_type: "",
         services: [
@@ -190,31 +215,55 @@ const SelectSerivces = () => {
         ],
       },
     ];
-    console.log(newServices);
-    setFieldValue("servicesContainer", newServices);
+
+    setFieldValue("categories", newServices);
   };
   const removeService = (index) => {
-    const newServices = [...formik.values.servicesContainer];
+    const newServices = [...formik.values.categories];
     newServices.splice(index, 1);
-    setFieldValue("servicesContainer", newServices);
+    setFieldValue("categories", newServices);
   };
 
   const categoryIdChangeHandler = (index, serviceId, value) => {
     formik.setFieldValue(
-      `servicesContainer[${index}].services[${serviceId}].category_id`,
+      `categories[${index}].services[${serviceId}].category_id`,
       value
     );
     if (value) {
       formik.setFieldValue(
-        `servicesContainer[${index}].services[${serviceId}].category_label`,
-        services.find((service) => service.value === value).label
+        `categories[${index}].services[${serviceId}].category_label`,
+        formik.values.categories[index].services[
+          serviceId
+        ].selectedItemType.items.find((service) => service.id === value).name.en
       );
       formik.setFieldValue(
-        `servicesContainer[${index}].services[${serviceId}].unit_cost`,
-        services.find((service) => service.value === value).price
+        `categories[${index}].services[${serviceId}].unit_cost`,
+        formik.values.categories[index].services[
+          serviceId
+        ].selectedItemType.items.find((service) => service.id === value).price
       );
     }
   };
+
+  const resetCategory = (index, serviceType) => {
+    formik.setFieldValue(`categories[${index}]`, {
+      service_type: serviceType,
+      services: [
+        {
+          category_id: "",
+          category_label: "",
+          quantity: 1,
+          items: [],
+          selectedItem: "",
+          itemTypes: [],
+          selectedItemType: "",
+          unit_cost: 0,
+        },
+      ],
+    });
+  };
+
+  if (isLoading) return null;
   return (
     <Grid container spacing={5} component="form" onSubmit={formik.handleSubmit}>
       <Grid item xs={12}>
@@ -222,7 +271,7 @@ const SelectSerivces = () => {
           Select Services
         </Typography>
       </Grid>
-      {formik.values.servicesContainer.map((serviceContainer, index) => (
+      {formik.values.categories.map((category, index) => (
         <Fragment key={index}>
           <Grid item xs={12}>
             <Paper
@@ -239,30 +288,36 @@ const SelectSerivces = () => {
                   </Typography>
                   <Autocomplete
                     required
-                    name={`servicesContainer[${index}].service_type`}
+                    name={`categories[${index}].service_type`}
                     label="service type"
-                    options={services}
+                    options={servicess.map((service) => ({
+                      value: service.id,
+                      label: service.name.en,
+                    }))}
                     noOptionsText={t("noProperties")}
-                    value={serviceContainer.service_type}
-                    onChange={formik.handleChange}
+                    value={category.service_type}
+                    onChange={(e) => {
+                      resetCategory(index, e.target.value);
+                      console.log(formik.values.categories);
+                    }}
                     onBlur={formik.handleBlur}
                     error={
-                      formik.touched.servicesContainer?.[index]?.service_type &&
-                      !!formik.errors.servicesContainer?.[index]?.service_type
+                      formik.touched.categories?.[index]?.service_type &&
+                      !!formik.errors.categories?.[index]?.service_type
                     }
                     helperText={
-                      formik.touched.servicesContainer?.[index]?.service_type &&
-                      formik.errors.servicesContainer?.[index]?.service_type
+                      formik.touched.categories?.[index]?.service_type &&
+                      formik.errors.categories?.[index]?.service_type
                     }
                   />
                 </Grid>
-                {serviceContainer.service_type && (
+                {category.service_type && (
                   <>
-                    {!!serviceContainer.services.length && (
+                    {!!category.services.length && (
                       <>
-                        {serviceContainer.services.map((service, idx) => (
+                        {category.services.map((service, idx) => (
                           <Fragment key={idx}>
-                            {idx === serviceContainer.services.length - 1 ? (
+                            {idx === category.services.length - 1 ? (
                               <Grid item container xs={12}>
                                 <Grid item xs={12} m={2}>
                                   <Divider sx={{ borderColor: "lightgray" }} />
@@ -279,7 +334,7 @@ const SelectSerivces = () => {
                                       Select Item
                                     </Typography>
                                   </Grid>
-                                  {serviceContainer.services.length > 1 && (
+                                  {category.services.length > 1 && (
                                     <Grid item>
                                       <IconButton
                                         aria-label="toggle filters visibility"
@@ -301,32 +356,37 @@ const SelectSerivces = () => {
                                   rowSpacing={3}
                                   columnSpacing={6}
                                 >
-                                  {items.map((item) => (
-                                    <Grid item xs={3} key={item.value}>
-                                      <Button
-                                        onClick={() => {
-                                          formik.setFieldValue(
-                                            `servicesContainer[${index}].services[${idx}].selectedItem`,
-                                            item.value
-                                          );
-                                        }}
-                                        sx={{
-                                          color:
-                                            item.value === service.selectedItem
-                                              ? "primary.main"
-                                              : "#000000",
-                                          width: "100%",
-                                          backgroundColor:
-                                            item.value === service.selectedItem
-                                              ? "#F4F6FC"
-                                              : "#ffffff",
-                                        }}
-                                        variant="outlined"
-                                      >
-                                        {item.label}
-                                      </Button>
-                                    </Grid>
-                                  ))}
+                                  {servicess
+                                    .filter(
+                                      (service) =>
+                                        service.id === category.service_type
+                                    )[0]
+                                    .children.map((item) => (
+                                      <Grid item xs={3} key={item.id}>
+                                        <Button
+                                          onClick={() => {
+                                            formik.setFieldValue(
+                                              `categories[${index}].services[${idx}].selectedItem`,
+                                              item
+                                            );
+                                          }}
+                                          sx={{
+                                            color:
+                                              item.id === service.selectedItem
+                                                ? "primary.main"
+                                                : "#000000",
+                                            width: "100%",
+                                            backgroundColor:
+                                              item.id === service.selectedItem
+                                                ? "#F4F6FC"
+                                                : "#ffffff",
+                                          }}
+                                          variant="outlined"
+                                        >
+                                          {item.name.en}
+                                        </Button>
+                                      </Grid>
+                                    ))}
                                 </Grid>
                                 {service.selectedItem && (
                                   <Grid item xs={12}>
@@ -338,34 +398,36 @@ const SelectSerivces = () => {
                                       rowSpacing={3}
                                       columnSpacing={{ xs: 1, sm: 2, md: 6 }}
                                     >
-                                      {itemTypes.map((item) => (
-                                        <Grid item xs={3} key={item.value}>
-                                          <Button
-                                            onClick={() => {
-                                              formik.setFieldValue(
-                                                `servicesContainer[${index}].services[${idx}].selectedItemType`,
-                                                item.value
-                                              );
-                                            }}
-                                            sx={{
-                                              color:
-                                                item.value ===
-                                                service.selectedItemType
-                                                  ? "primary.main"
-                                                  : "#000000",
-                                              width: "100%",
-                                              backgroundColor:
-                                                item.value ===
-                                                service.selectedItemType
-                                                  ? "#F4F6FC"
-                                                  : "#ffffff",
-                                            }}
-                                            variant="outlined"
-                                          >
-                                            {item.label}
-                                          </Button>
-                                        </Grid>
-                                      ))}
+                                      {service.selectedItem.children.map(
+                                        (item) => (
+                                          <Grid item xs={3} key={item.id}>
+                                            <Button
+                                              onClick={() => {
+                                                formik.setFieldValue(
+                                                  `categories[${index}].services[${idx}].selectedItemType`,
+                                                  item
+                                                );
+                                              }}
+                                              sx={{
+                                                color:
+                                                  item.id ===
+                                                  service.selectedItemType
+                                                    ? "primary.main"
+                                                    : "#000000",
+                                                width: "100%",
+                                                backgroundColor:
+                                                  item.id ===
+                                                  service.selectedItemType
+                                                    ? "#F4F6FC"
+                                                    : "#ffffff",
+                                              }}
+                                              variant="outlined"
+                                            >
+                                              {item.name.en}
+                                            </Button>
+                                          </Grid>
+                                        )
+                                      )}
                                     </Grid>
                                   </Grid>
                                 )}
@@ -377,9 +439,15 @@ const SelectSerivces = () => {
                                     <Grid container spacing={2}>
                                       <Grid item xs={6}>
                                         <Autocomplete
-                                          name={`servicesContainer[${index}].services[${idx}].category_id`}
+                                          name={`categories[${index}].services[${idx}].category_id`}
                                           label="service"
-                                          options={services}
+                                          options={service.selectedItemType.items.map(
+                                            (item) => ({
+                                              value: item.id,
+                                              label: item.name.en,
+                                              price: item.price,
+                                            })
+                                          )}
                                           noOptionsText={t("noProperties")}
                                           value={service.category_id}
                                           onChange={(e) => {
@@ -391,20 +459,16 @@ const SelectSerivces = () => {
                                           }}
                                           onBlur={formik.handleBlur}
                                           error={
-                                            formik.touched.servicesContainer?.[
-                                              index
-                                            ]?.services?.[idx]?.category_id &&
-                                            !!formik.errors.servicesContainer?.[
-                                              index
-                                            ]?.services?.[idx]?.category_id
+                                            formik.touched.categories?.[index]
+                                              ?.services?.[idx]?.category_id &&
+                                            !!formik.errors.categories?.[index]
+                                              ?.services?.[idx]?.category_id
                                           }
                                           helperText={
-                                            formik.touched.servicesContainer?.[
-                                              index
-                                            ]?.services?.[idx]?.category_id &&
-                                            formik.errors.servicesContainer?.[
-                                              index
-                                            ]?.services?.[idx]?.category_id
+                                            formik.touched.categories?.[index]
+                                              ?.services?.[idx]?.category_id &&
+                                            formik.errors.categories?.[index]
+                                              ?.services?.[idx]?.category_id
                                           }
                                         />
                                         <Box
@@ -432,7 +496,7 @@ const SelectSerivces = () => {
                                       </Grid>
                                       <Grid item xs={2}>
                                         <CounterInput
-                                          name={`servicesContainer[${index}].services[${idx}].quantity`}
+                                          name={`categories[${index}].services[${idx}].quantity`}
                                           label={"Quantity"}
                                           value={service.quantity}
                                           disabled={!service.category_id}
@@ -441,20 +505,16 @@ const SelectSerivces = () => {
                                           onChange={formik.handleChange}
                                           onBlur={formik.handleBlur}
                                           error={
-                                            formik.touched.servicesContainer?.[
-                                              index
-                                            ]?.services?.[idx]?.quantity &&
-                                            !!formik.errors.servicesContainer?.[
-                                              index
-                                            ]?.services?.[idx]?.quantity
+                                            formik.touched.categories?.[index]
+                                              ?.services?.[idx]?.quantity &&
+                                            !!formik.errors.categories?.[index]
+                                              ?.services?.[idx]?.quantity
                                           }
                                           helperText={
-                                            formik.touched.servicesContainer?.[
-                                              index
-                                            ]?.services?.[idx]?.quantity &&
-                                            formik.errors.servicesContainer?.[
-                                              index
-                                            ]?.services?.[idx]?.quantity
+                                            formik.touched.categories?.[index]
+                                              ?.services?.[idx]?.quantity &&
+                                            formik.errors.categories?.[index]
+                                              ?.services?.[idx]?.quantity
                                           }
                                         />
                                       </Grid>
@@ -538,14 +598,11 @@ const SelectSerivces = () => {
                                     ) : (
                                       <Typography mb={2} variant="subtitle1">
                                         service {idx + 1} :
-                                        {
-                                          serviceContainer.services[idx]
-                                            .category_label
-                                        }
+                                        {category.services[idx].category_label}
                                       </Typography>
                                     )}
                                   </Grid>
-                                  {serviceContainer.services.length > 1 && (
+                                  {category.services.length > 1 && (
                                     <Grid item>
                                       <IconButton
                                         aria-label="toggle filters visibility"
@@ -589,7 +646,7 @@ const SelectSerivces = () => {
                                           <Button
                                             onClick={() => {
                                               formik.setFieldValue(
-                                                `servicesContainer[${index}].services[${idx}].selectedItem`,
+                                                `categories[${index}].services[${idx}].selectedItem`,
                                                 item.value
                                               );
                                             }}
@@ -637,7 +694,7 @@ const SelectSerivces = () => {
                                               <Button
                                                 onClick={() => {
                                                   formik.setFieldValue(
-                                                    `servicesContainer[${index}].services[${idx}].selectedItemType`,
+                                                    `categories[${index}].services[${idx}].selectedItemType`,
                                                     item.value
                                                   );
                                                 }}
@@ -671,7 +728,7 @@ const SelectSerivces = () => {
                                         <Grid container spacing={2}>
                                           <Grid item xs={6}>
                                             <Autocomplete
-                                              name={`servicesContainer[${index}].services[${idx}].category_id`}
+                                              name={`categories[${index}].services[${idx}].category_id`}
                                               label="service"
                                               options={services}
                                               noOptionsText={t("noProperties")}
@@ -685,22 +742,22 @@ const SelectSerivces = () => {
                                               }}
                                               onBlur={formik.handleBlur}
                                               error={
-                                                formik.touched
-                                                  .servicesContainer?.[index]
-                                                  ?.services?.[idx]
+                                                formik.touched.categories?.[
+                                                  index
+                                                ]?.services?.[idx]
                                                   ?.category_id &&
-                                                !!formik.errors
-                                                  .servicesContainer?.[index]
-                                                  ?.services?.[idx]?.category_id
+                                                !!formik.errors.categories?.[
+                                                  index
+                                                ]?.services?.[idx]?.category_id
                                               }
                                               helperText={
-                                                formik.touched
-                                                  .servicesContainer?.[index]
-                                                  ?.services?.[idx]
+                                                formik.touched.categories?.[
+                                                  index
+                                                ]?.services?.[idx]
                                                   ?.category_id &&
-                                                formik.errors
-                                                  .servicesContainer?.[index]
-                                                  ?.services?.[idx]?.category_id
+                                                formik.errors.categories?.[
+                                                  index
+                                                ]?.services?.[idx]?.category_id
                                               }
                                             />
                                             <Box
@@ -728,7 +785,7 @@ const SelectSerivces = () => {
                                           </Grid>
                                           <Grid item xs={2}>
                                             <CounterInput
-                                              name={`servicesContainer[${index}].services[${idx}].quantity`}
+                                              name={`categories[${index}].services[${idx}].quantity`}
                                               label={"Quantity"}
                                               value={service.quantity}
                                               disabled={!service.category_id}
@@ -737,20 +794,20 @@ const SelectSerivces = () => {
                                               onChange={formik.handleChange}
                                               onBlur={formik.handleBlur}
                                               error={
-                                                formik.touched
-                                                  .servicesContainer?.[index]
-                                                  ?.services?.[idx]?.quantity &&
-                                                !!formik.errors
-                                                  .servicesContainer?.[index]
-                                                  ?.services?.[idx]?.quantity
+                                                formik.touched.categories?.[
+                                                  index
+                                                ]?.services?.[idx]?.quantity &&
+                                                !!formik.errors.categories?.[
+                                                  index
+                                                ]?.services?.[idx]?.quantity
                                               }
                                               helperText={
-                                                formik.touched
-                                                  .servicesContainer?.[index]
-                                                  ?.services?.[idx]?.quantity &&
-                                                formik.errors
-                                                  .servicesContainer?.[index]
-                                                  ?.services?.[idx]?.quantity
+                                                formik.touched.categories?.[
+                                                  index
+                                                ]?.services?.[idx]?.quantity &&
+                                                formik.errors.categories?.[
+                                                  index
+                                                ]?.services?.[idx]?.quantity
                                               }
                                             />
                                           </Grid>
@@ -819,9 +876,8 @@ const SelectSerivces = () => {
                               </Grid>
                             )}
 
-                            {serviceContainer.services.length === idx + 1 &&
-                              !formik.errors.servicesContainer?.[index]
-                                .services && (
+                            {category.services.length === idx + 1 &&
+                              !formik.errors.categories?.[index].services && (
                                 <Grid item xs={12}>
                                   <Button
                                     sx={{ backgroundColor: "#ffffff" }}
@@ -847,6 +903,7 @@ const SelectSerivces = () => {
           </Grid>
         </Fragment>
       ))}
+      {/* control buttons */}
       <Grid item xs={12}>
         <div
           style={{
@@ -855,7 +912,7 @@ const SelectSerivces = () => {
           }}
         >
           <Button
-            disabled={!!formik.errors.servicesContainer}
+            disabled={!!formik.errors.categories}
             variant="outlined"
             sx={{ mt: 1, mr: 1 }}
             onClick={addService}

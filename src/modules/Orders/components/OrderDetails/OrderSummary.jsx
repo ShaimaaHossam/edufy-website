@@ -1,19 +1,16 @@
 import { useParams } from "react-router-dom";
 
-import { useGetOrderQuery } from "../../../redux/services/orders";
-import { order } from "../../../redux/services/ordersData";
+import { useGetOrderQuery } from "../../../../redux/services/orders";
 
 import { useTranslation } from "react-i18next";
 
 import { Grid, Typography } from "@mui/material";
 
-import Link from "../../../shared/components/Link";
-import OrderStatus from "../../../shared/components/modules/orders/OrderStatus";
-import OrderUnits from "../../../shared/components/modules/orders/OrderUnits";
+import Link from "../../../../shared/components/Link";
+import OrderStatus from "../../../../shared/components/modules/orders/OrderStatus";
+import OrderUnits from "../../../../shared/components/modules/orders/OrderUnits";
 
-import OrderAccordion from "./OrderAccordion";
-
-import { formatDate, formats, toTimeZone } from "../../../helpers/datetime";
+import { formatDate, formats, toTimeZone } from "../../../../helpers/datetime";
 
 function OrderSummary() {
   const {
@@ -23,7 +20,9 @@ function OrderSummary() {
 
   const { orderID } = useParams();
 
-  // const { data: order } = useGetOrderQuery(orderID);
+  const { isLoading, data: order } = useGetOrderQuery(orderID);
+
+  if (isLoading) return null;
 
   return (
     <Grid container spacing={2} justifyContent="space-between">
@@ -32,13 +31,13 @@ function OrderSummary() {
           <Typography variant="subtitle2">{t("createdAt")}</Typography>
         </Grid>
         <Grid item>
-          <Typography variant="body2">
+          {/* <Typography variant="body2">
             {formatDate(
               toTimeZone(order.created_at),
               formats.dateTimeShort,
               language
             )}
-          </Typography>
+          </Typography> */}
         </Grid>
       </Grid>
 
@@ -47,13 +46,13 @@ function OrderSummary() {
           <Typography variant="subtitle2">{t("startingAt")}</Typography>
         </Grid>
         <Grid item>
-          <Typography variant="body2">
+          {/* <Typography variant="body2">
             {formatDate(
               `${order.due_date} ${order.due_time_from}`,
               formats.dateTimeShort,
               language
             )}
-          </Typography>
+          </Typography> */}
         </Grid>
       </Grid>
 
@@ -63,9 +62,9 @@ function OrderSummary() {
         </Grid>
         <Grid item>
           <Typography variant="body2">
-            {order.created_by.name}
+            {order.user.name}
             <Typography variant="caption" color="textSecondary" display="block">
-              {order.created_by.role.name}
+              {order.user.role}
             </Typography>
           </Typography>
         </Grid>
@@ -91,7 +90,8 @@ function OrderSummary() {
           <Typography variant="subtitle2">{t("units")}</Typography>
         </Grid>
         <Grid item>
-          <OrderUnits units={order.units} propertyID={order.property.id} />
+          <Typography variant="body2">{order.unit.title}</Typography>
+          {/* <OrderUnits units={order.units} propertyID={order.property.id} /> */}
         </Grid>
       </Grid>
 

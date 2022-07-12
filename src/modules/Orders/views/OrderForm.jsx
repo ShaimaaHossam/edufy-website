@@ -50,12 +50,15 @@ function OrderForm({ formType }) {
           }}
         >
           <Grid container>
-            <Grid item xs={2}>
+            <Grid item xs={3} xl={2}>
               <CreateOrderSteps currentStep={currentStep} />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={9} xl={6}>
               <Grid container spacing={10} direction="column">
-                <CreateOrderContent currentStep={currentStep} />
+                <CreateOrderContent
+                  currentStep={currentStep}
+                  formType={formType}
+                />
               </Grid>
             </Grid>
           </Grid>

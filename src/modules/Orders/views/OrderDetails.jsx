@@ -16,25 +16,31 @@ import NotFound from "../../../shared/views/NotFound";
 import Loader from "../../../shared/components/Loader";
 import Breadcrumbs from "../../../shared/components/Breadcrumbs";
 
-import OrderAccordion from "../components/OrderAccordion";
-import OrderSteps from "../components/OrderSteps";
-import OrderSummary from "../components/OrderSummary";
-import OrderServices from "../components/OrderServices";
-import OrderMaterials from "../components/OrderMaterials";
+import OrderAccordion from "../components/OrderDetails/OrderAccordion";
+import OrderSteps from "../components/OrderDetails/OrderSteps";
+import OrderSummary from "../components/OrderDetails/OrderSummary";
+import OrderServices from "../components/OrderDetails/OrderServices";
+import NewMaterials from "../components/OrderDetails/NewMaterials";
 
 import { ORDER_STATUSES } from "../../../constants/system";
 
 import { order } from "../../../redux/services/ordersData";
+import ApprovedMaterials from "../components/OrderDetails/ApprovedMaterials";
+import RejectedMaterials from "../components/OrderDetails/RejectedMaterials";
+import OrderVisits from "../components/OrderDetails/OrderVisits";
+import OrderActivityLog from "../components/OrderDetails/OrderActivityLog";
+import AdditionalServices from "../components/OrderDetails/AdditionalServices";
 
 function OrderDetails() {
   const { t } = useTranslation("orders");
 
   const { orderType, orderID } = useParams();
 
-  // const { isFetching, error, data: order } = useGetOrderQuery(orderID);
+  const { isFetching, error, data: orderDetails } = useGetOrderQuery(orderID);
+  console.log(orderDetails);
   const [cancelOrder] = useCancelOrderMutation();
 
-  // if (isFetching) return <Loader />;
+  if (isFetching) return <Loader />;
   // if (error?.status === 404) return <NotFound />;
 
   return (
@@ -53,7 +59,7 @@ function OrderDetails() {
             variant="subtitle1"
             color="textSecondary"
           >
-            {order.order_number}
+            {orderDetails.reference}
           </Typography>
         </Typography>
       </Grid>
@@ -62,25 +68,65 @@ function OrderDetails() {
         <OrderSteps />
       </Grid>
 
-      <Grid item xs={12}>
-        <OrderAccordion title={t("orderSummary")}>
-          <OrderSummary />
-        </OrderAccordion>
-      </Grid>
+      {orderDetails.additional_services.length > 0 && (
+        <Grid item xs={12}>
+          <OrderAccordion title={t("additionalServices")}>
+            <AdditionalServices />
+          </OrderAccordion>
+        </Grid>
+      )}
+      {orderDetails.new_quotations.length > 0 && (
+        <Grid item xs={12}>
+          <OrderAccordion title={t("newQuotations")}>
+            <NewMaterials />
+          </OrderAccordion>
+        </Grid>
+      )}
 
-      <Grid item xs={12}>
-        <OrderAccordion title={t("servicesSummary")}>
-          <OrderServices />
-        </OrderAccordion>
-      </Grid>
+      {orderDetails.user && (
+        <Grid item xs={12}>
+          <OrderAccordion title={t("orderSummary")}>
+            <OrderSummary />
+          </OrderAccordion>
+        </Grid>
+      )}
+      {orderDetails.approved_quotations.length > 0 && (
+        <Grid item xs={12}>
+          <OrderAccordion title={t("approvedQuotations")}>
+            <ApprovedMaterials />
+          </OrderAccordion>
+        </Grid>
+      )}
+      {orderDetails.rejected_quotations.length > 0 && (
+        <Grid item xs={12}>
+          <OrderAccordion title={t("rejectedQuotations")}>
+            <RejectedMaterials />
+          </OrderAccordion>
+        </Grid>
+      )}
+      {orderDetails.services.length > 0 && (
+        <Grid item xs={12}>
+          <OrderAccordion title={t("servicesSummary")}>
+            <OrderServices />
+          </OrderAccordion>
+        </Grid>
+      )}
+      {orderDetails.visits.length > 0 && (
+        <Grid item xs={12}>
+          <OrderAccordion title={t("orderVisits")}>
+            <OrderVisits />
+          </OrderAccordion>
+        </Grid>
+      )}
+      {orderDetails.activity_log.length > 0 && (
+        <Grid item xs={12}>
+          <OrderAccordion title={t("activityLog")}>
+            <OrderActivityLog />
+          </OrderAccordion>
+        </Grid>
+      )}
 
-      <Grid item xs={12}>
-        <OrderAccordion title={t("materialsQuotation")}>
-          <OrderMaterials />
-        </OrderAccordion>
-      </Grid>
-
-      {(order.status === ORDER_STATUSES.requested ||
+      {(order.status === ORDER_STATUSES.created ||
         order.status === ORDER_STATUSES.pending) && (
         <Grid item xs={12} textAlign="right">
           <Button

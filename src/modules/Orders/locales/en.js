@@ -1,5 +1,6 @@
 const en = {
   maintenanceOrders: "Maintenance Orders",
+  cleaningOrders: "Cleaning Orders",
   searchOrders: "Search Orders",
   searchOrdersPlaceholder: "Order No, Property, Unit, or Service",
   orderNo: "Order No.",
@@ -10,25 +11,52 @@ const en = {
   services: "Services",
   cost: "Cost",
   type: "Type",
+  serviceDescription: "Service Description",
   status: "Status",
   sr: "SR",
   orderDetails: "Order Details",
   orderSummary: "Order Summary",
   servicesSummary: "Services Summary",
-  materialsQuotation: "Materials Quotation",
+  additionalServices: "Additional Services",
+  orderVisits: "Order Visits",
+
+  activityLog: "Activity Log",
+  timeStamp: "Time Stamp",
+
+  quotation: "Quotation",
+
+  newQuotations: "New Quotations",
+  remove: "Remove",
+  images: 'Images',
+  noImages: 'There is no attached Images',
+  material: "Material",
+
+  approvedQuotations: "Approved Quotations",
+  approveQuotation: "Approve Quotation",
+  rejectedQuotations: "Rejected Quotations",
+  invoice: "Invoice",
+  totalItems: 'Total Items',
+  dateTime: 'Date & Time',
+
+  visitNumber: "Visit Number",
+  visitDate: "Visit Date",
+  visitTime: "Visit Time",
+  description: "Description",
+
   createdAt: "Created at",
   startingAt: "Starting at",
   service: "Service",
-  material: "Material",
-  price: "Price",
+  unitPrice: "Unit price",
   quantity: "Quantity",
   totalPrice: "Total Price",
   actions: "Actions",
+  action: "Action",
   costWithoutVat: "Cost without VAT",
   vatCost: "VAT Cost",
   totalServicesInvoice: "Total Services Invoice",
   totalMaterialsInvoice: "Total Materials Invoice",
   noOrderMaterials: "There's no order materials yet.",
+
 
   byStartDate: "By Start Date",
   byCreatorRole: "By Creator Role",
@@ -57,7 +85,7 @@ const en = {
   canceled: "Canceled",
   approved: "Approved",
   rejected: "Rejected",
-  submitted: "Submitted",
+  created: "Created",
   spAssigned: "SP Assigned",
   assigningSp: "Assigning SP",
   waitingQuotation: "Waiting SP Quotation",
@@ -75,9 +103,18 @@ const en = {
 
   addmaintenanceOrderFormTitle: "New Maintanace Order",
   addcleaningOrderFormTitle: "New Cleaning Order",
-  selectProperty: "Select Property / Units",
+
+  selectPropertyUnits: "Select Property / Units",
   SelectServices: "Select Services",
   Preview: "Preview",
+
+  next: "Next",
+  addAdditionalService: "Add Additional Service",
+  addService: "Add Service",
+
+  selectProperty: "Select a property",
+  selectUnits: "Select Units",
+
 };
 
 export default en;

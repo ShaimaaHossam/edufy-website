@@ -8,11 +8,20 @@ const datetimeLocalesMap = { en: enLocale, ar: arLocale };
 export const formats = {
   be: "yyyy-MM-dd",
   dateShort: "dd/MM/yyyy",
+  dateShortSpaceSeparated: "dd MMM yyyy",
 
   dateTimeShort: "dd/MM/yyyy hh:mmaaa",
 };
 
-export const formatDate = (date, formatStr = formats.be, locale) => {
+export const formatDate = (date, formatStr = formats.be, locale, defaultFormat = true) => {
+  if (!defaultFormat) {
+    var dateArr = date.split("-");
+    var day = dateArr[0];
+    var month = dateArr[1];
+    var year = dateArr[2];
+    date = year + '-' + month + '-' + day;
+  }
+
   if (!date) return null;
 
   return locale

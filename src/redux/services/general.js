@@ -70,9 +70,9 @@ export const generalAPI = createApi({
       invalidatesTags: (res, error, { id }) =>
         res
           ? [
-              { type: "SERVICES-TREE", id },
-              { type: "SERVICES-LIST", id },
-            ]
+            { type: "SERVICES-TREE", id },
+            { type: "SERVICES-LIST", id },
+          ]
           : [],
     }),
   }),

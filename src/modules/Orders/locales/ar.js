@@ -15,12 +15,18 @@ const ar = {
   orderDetails: "تفاصيل الطلب",
   orderSummary: "ملخص الطلب",
   servicesSummary: "ملخص الخدمات",
+  quotation: "تسعيرة",
   materialsQuotation: "نسعير الخامات",
+  newQuotations: "الأسعار الجديدة",
+  approvedQuotations: "الأسعار الموافق عليها",
+  rejectedQuotations: "الأسعار المرفوضة",
   createdAt: "توقيت الإنشاء",
   startingAt: "توقيت البدء",
   service: "الخدمة",
+  images: 'صور',
+  noImages: 'لا يوجد صور مرفقة',
   material: "الخامة",
-  price: "السعر",
+  unitPrice: "سعر القطعة",
   quantity: "الكمية",
   totalPrice: "إجمالي السعر",
   actions: "الخيارات",
@@ -73,11 +79,19 @@ const ar = {
   unitOwner: "مالك الوحدة",
   unitTenant: "مستأجر الوحدة",
 
-  addmaintanaceOrderFormTitle: "New Maintanace Order",
-  addcleaningOrderFormTitle: "New Cleaning Order",
-  selectProperty: "اختيار عقار / وحدة",
+  addmaintenanceOrderFormTitle: "طلب صيانة جديد",
+  addcleaningOrderFormTitle: "طلب تنظيف جديد",
+  selectPropertyUnits: "اختيار عقار / وحدة",
+
   SelectServices: "اختر خدمة",
   Preview: "مراجعة نهائية",
+
+  next: "التالي",
+  addAdditionalService: "إضافة خدمة إضافية",
+  addService: "إضافة خدمة",
+
+  selectProperty: "اختر عقار",
+  selectUnits: "اختر الوحدات",
 };
 
 export default ar;

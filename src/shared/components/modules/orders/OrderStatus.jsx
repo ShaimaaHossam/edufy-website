@@ -7,10 +7,12 @@ import { Chip } from "@mui/material";
 import { ORDER_STATUSES } from "../../../../constants/system";
 
 const statusColorMap = {
-  [ORDER_STATUSES.requested]: "info",
-  [ORDER_STATUSES.pending]: "default",
+  [ORDER_STATUSES.created]: "info",
+  [ORDER_STATUSES.confirmed]: "default",
   [ORDER_STATUSES.assigned]: "info",
   [ORDER_STATUSES.in_progress]: "warning",
+  [ORDER_STATUSES.pending]: "info",
+  [ORDER_STATUSES.sp_done]: "info",
   [ORDER_STATUSES.completed]: "success",
   [ORDER_STATUSES.canceled]: "error",
 };

@@ -11,6 +11,7 @@ export const ordersAPI = createApi({
     /* ORDERS CRUD */
     getOrders: build.query({
       query: (queryParams) => ({ url: "/orders", params: queryParams }),
+      // query: (queryParams) => ({ url: "/orders" }),
       transformResponse: (res, meta, queryParams) => ({
         data: res.data,
         meta: res.meta,
