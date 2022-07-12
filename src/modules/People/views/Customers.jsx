@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { peopleSelector, setCustomerFilters } from "../state";
 
+import usePermissions from "../../../shared/hooks/usePermissions";
+
 import { useGetAllRolesByUserTypeQuery } from "../../../redux/services/roles";
 
 import { useTranslation } from "react-i18next";
@@ -21,6 +23,8 @@ import { USER_TYPES } from "../../../constants/system";
 
 function Customers() {
   const { t } = useTranslation("people");
+
+  const peoplePerms = usePermissions("people");
 
   const [userRole, setUserRole] = useState("");
 
@@ -80,16 +84,17 @@ function Customers() {
                 }}
               />
             </Grid>
-
-            <Grid item sx={{ ml: "auto" }}>
-              <Button
-                startIcon={<Icon icon={mdiPlus} />}
-                component={Link}
-                to="/people/customers/add"
-              >
-                {t("newUser")}
-              </Button>
-            </Grid>
+            {peoplePerms.create && (
+              <Grid item sx={{ ml: "auto" }}>
+                <Button
+                  startIcon={<Icon icon={mdiPlus} />}
+                  component={Link}
+                  to="/people/customers/add"
+                >
+                  {t("newUser")}
+                </Button>
+              </Grid>
+            )}
 
             <Grid item xs={12}>
               <CustomersTable />

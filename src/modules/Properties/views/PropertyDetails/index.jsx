@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import usePermissions from "../../../../shared/hooks/usePermissions";
+
 import { useParams } from "react-router-dom";
 
 import { useGetPropertyQuery } from "../../../../redux/services/properties";
@@ -21,6 +23,8 @@ import PropertyInformation from "../../components/PropertyInformation";
 
 function PropertyDetails() {
   const { t } = useTranslation("properties");
+
+  const unitsPerms = usePermissions("unit");
 
   const { propertyID } = useParams();
   const { isFetching, error } = useGetPropertyQuery(propertyID);
@@ -54,12 +58,15 @@ function PropertyDetails() {
               value={tabIdx}
               onChange={(e, newTabIdx) => setTabIdx(newTabIdx)}
             >
-              <Tab
-                label={t("units")}
-                value="units"
-                id="tab-units"
-                aria-controls="tabpanel-units"
-              />
+              {unitsPerms.access && (
+                <Tab
+                  label={t("units")}
+                  value="units"
+                  id="tab-units"
+                  aria-controls="tabpanel-units"
+                />
+              )}
+
               <Tab
                 label={t("assets")}
                 value="assets"
@@ -74,9 +81,11 @@ function PropertyDetails() {
               />
             </Tabs>
 
-            <TabPanel index="units" value={tabIdx}>
-              <Units />
-            </TabPanel>
+            {unitsPerms.access && (
+              <TabPanel index="units" value={tabIdx}>
+                <Units />
+              </TabPanel>
+            )}
 
             <TabPanel index="assets" value={tabIdx}>
               <Assets />

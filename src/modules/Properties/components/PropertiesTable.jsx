@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
+import usePermissions from "../../../shared/hooks/usePermissions";
+
 import { useSelector, useDispatch } from "react-redux";
 import { filtersSelector, setFilters } from "../state/propertiesFiltersSlice";
 
@@ -11,10 +13,11 @@ import {
 import { useTranslation } from "react-i18next";
 
 import { Grid, Typography } from "@mui/material";
-import { mdiPencil, mdiContentCopy } from "@mdi/js";
+import { mdiPencil, mdiContentCopy, mdiMinus } from "@mdi/js";
 
 import Table from "../../../shared/components/Table";
 import IconButton from "../../../shared/components/IconButton";
+import Icon from "../../../shared/components/Icon";
 import Link from "../../../shared/components/Link";
 import Switch from "../../../shared/components/inputs/Switch";
 import ServicesTableList from "../../../shared/components/modules/services/ServicesTableList";
@@ -25,6 +28,8 @@ import { WALLET_TYPES } from "../../../constants/system";
 
 function PropertiesTable() {
   const { t } = useTranslation("properties");
+
+  const propertiesPerms = usePermissions("property");
 
   const navigate = useNavigate();
 
@@ -49,7 +54,7 @@ function PropertiesTable() {
   const tableData = properties?.data?.map((item) => ({
     id: item.id,
     active: item.active,
-    clickable: true,
+    clickable: propertiesPerms.access_details,
     onClick: () => navigate(`/properties/${item.id}`),
     rowCells: [
       <Link to={`/properties/${item.id}`} onClick={(e) => e.stopPropagation()}>
@@ -114,40 +119,50 @@ function PropertiesTable() {
       ),
 
       <Grid container onClick={(e) => e.stopPropagation()}>
-        <Grid item>
-          <IconButton
-            aria-label="edit property"
-            size="small"
-            icon={mdiPencil}
-            disabled={!item.active}
-            component={Link}
-            to={`/properties/edit/${item.id}`}
-          />
-        </Grid>
-
-        <Grid item>
-          <IconButton
-            aria-label="clone property"
-            size="small"
-            icon={mdiContentCopy}
-            disabled={!item.active}
-            component={Link}
-            to={`/properties/clone/${item.id}`}
-          />
-        </Grid>
-
-        <Grid item sx={{ textAlign: "center", ml: 0.5, mt: 0.5 }}>
-          <Switch
-            color="primary"
-            checked={item.active}
-            onChange={() =>
-              updateProperty({ id: item.id, active: !item.active })
-            }
-          />
-          <Typography component="span" variant="caption" display="block">
-            {item.active ? t("active") : t("inactive")}
-          </Typography>
-        </Grid>
+        {propertiesPerms.update || propertiesPerms.create ? (
+          <>
+            {propertiesPerms.update && (
+              <Grid item>
+                <IconButton
+                  aria-label="edit property"
+                  size="small"
+                  icon={mdiPencil}
+                  disabled={!item.active}
+                  component={Link}
+                  to={`/properties/edit/${item.id}`}
+                />
+              </Grid>
+            )}
+            {propertiesPerms.create && (
+              <Grid item>
+                <IconButton
+                  aria-label="clone property"
+                  size="small"
+                  icon={mdiContentCopy}
+                  disabled={!item.active}
+                  component={Link}
+                  to={`/properties/clone/${item.id}`}
+                />
+              </Grid>
+            )}
+            {propertiesPerms.update && (
+              <Grid item sx={{ textAlign: "center", ml: 0.5, mt: 0.5 }}>
+                <Switch
+                  color="primary"
+                  checked={item.active}
+                  onChange={() =>
+                    updateProperty({ id: item.id, active: !item.active })
+                  }
+                />
+                <Typography component="span" variant="caption" display="block">
+                  {item.active ? t("active") : t("inactive")}
+                </Typography>
+              </Grid>
+            )}
+          </>
+        ) : (
+          <Icon icon={mdiMinus} size="medium" color="action" />
+        )}
       </Grid>,
     ],
   }));

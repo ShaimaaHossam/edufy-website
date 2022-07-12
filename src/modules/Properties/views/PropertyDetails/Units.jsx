@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import usePermissions from "../../../../shared/hooks/usePermissions";
+
 import { useParams } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -23,6 +25,8 @@ import UnitsFilters from "../../components/UnitsFilters";
 
 function Units() {
   const { t } = useTranslation("properties");
+
+  const unitsPerms = usePermissions("unit");
 
   const { propertyID } = useParams();
 
@@ -55,17 +59,18 @@ function Units() {
           onClick={(e) => setFiltersShown(!filtersShown)}
         />
       </Grid>
-
-      <Grid item sx={{ ml: "auto" }}>
-        <Button
-          startIcon={<Icon icon={mdiPlus} />}
-          component={Link}
-          to="/properties/units/add"
-          state={{ propertyID }}
-        >
-          {t("addUnit")}
-        </Button>
-      </Grid>
+      {unitsPerms.create && (
+        <Grid item sx={{ ml: "auto" }}>
+          <Button
+            startIcon={<Icon icon={mdiPlus} />}
+            component={Link}
+            to="/properties/units/add"
+            state={{ propertyID }}
+          >
+            {t("addUnit")}
+          </Button>
+        </Grid>
+      )}
 
       {/* <Grid item>
         <Menu
