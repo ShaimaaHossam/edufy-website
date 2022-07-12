@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import PropTypes from "prop-types";
 
 import { styled } from "@mui/material/styles";
@@ -48,9 +49,10 @@ const CustomIconButton = styled(MuiIconButton, {
   }),
 }));
 
-function IconButton({ icon, shape, variant, color, ...restProps }) {
-  return (
+const IconButton = forwardRef(
+  ({ icon, shape, variant, color, ...restProps }, ref) => (
     <CustomIconButton
+      ref={ref}
       color={color}
       shape={shape}
       variant={variant}
@@ -58,8 +60,8 @@ function IconButton({ icon, shape, variant, color, ...restProps }) {
     >
       <Icon icon={icon} size="small" />
     </CustomIconButton>
-  );
-}
+  )
+);
 
 IconButton.propTypes = {
   icon: PropTypes.string.isRequired,

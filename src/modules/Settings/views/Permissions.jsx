@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
 
-import usePermissions from "../../../shared/hooks/usePermissions";
-
 import { useTranslation } from "react-i18next";
 
 import {
@@ -15,6 +13,8 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 
 import { Typography, Box, Button, Grid, Paper } from "@mui/material";
+
+import usePermissions from "../../../shared/hooks/usePermissions";
 import CheckboxMenu from "../../../shared/components/inputs/CheckboxMenu";
 import Dialog from "../../../shared/components/Dialog";
 
@@ -49,6 +49,7 @@ function Permissions() {
         ...acc,
         [t(`${key}.${key}`)]: permesions[key].map((permission) => ({
           id: permission.id,
+          slug: permission.slug,
           value: selectedPermissionsIds.indexOf(permission.id) > -1,
           label: t(`${key}.${permission.slug}`),
         })),
@@ -80,64 +81,69 @@ function Permissions() {
   const handleOpen = () => setOpenDialog(true);
   const handleClose = () => setOpenDialog(false);
 
+  const handlePermissionsChange = (key, values) => {
+    const accessSlugs = ["access", "access_details"];
+    const mutationSlugs = ["create", "update", "delete"];
+
+    const canMutate = values.some(
+      ({ slug, value }) => mutationSlugs.indexOf(slug) > -1 && value
+    );
+    const refinedValues = canMutate
+      ? values.map((p) =>
+          accessSlugs.indexOf(p.slug) > -1 ? { ...p, value: true } : p
+        )
+      : values;
+
+    setPermsMap({ ...permsMap, [key]: refinedValues });
+  };
+
   if (role?.id !== roleID || !permsMap) return null;
 
   return (
-    <Grid container spacing={3}>
-      <Grid item>
-        <Typography component="h1" variant="h5">
-          {t("permission.permission")}
-        </Typography>
-      </Grid>
-      <Grid item>
-        <Paper sx={{ p: 5 }}>
-          <Box width="60%" mx="auto">
-            <Grid container spacing={3} direction="column">
-              <Grid item xs={12}>
-                <Typography component="h2" variant="h6">
-                  {t(role.name)}
-                </Typography>
-              </Grid>
+    <Paper sx={{ p: 5 }}>
+      <Box width="60%" mx="auto">
+        <Grid container spacing={3} direction="column">
+          <Grid item xs={12}>
+            <Typography component="h2" variant="h6">
+              {t(role.name)}
+            </Typography>
+          </Grid>
 
-              {role.name !== "Admin" ? (
-                <>
-                  {Object.keys(permsMap).map((key) => (
-                    <Grid key={key} item xs={12}>
-                      <CheckboxMenu
-                        title={t(key)}
-                        values={permsMap[key]}
-                        onChange={(values) =>
-                          setPermsMap({ ...permsMap, [key]: values })
-                        }
-                      />
-                    </Grid>
-                  ))}
+          {role.name !== "Admin" ? (
+            <>
+              {Object.keys(permsMap).map((key) => (
+                <Grid key={key} item xs={12}>
+                  <CheckboxMenu
+                    title={t(key)}
+                    values={permsMap[key]}
+                    onChange={(values) => handlePermissionsChange(key, values)}
+                  />
+                </Grid>
+              ))}
 
-                  {settingPerms.update && (
-                    <Grid item alignSelf="flex-end">
-                      <Button color="success" onClick={handleOpen}>
-                        {t("saveChanges")}
-                      </Button>
-                    </Grid>
-                  )}
-                </>
-              ) : (
-                <Typography p variant="subtitle1" color="error" align="center">
-                  {t("roleCantBeEdited")}
-                </Typography>
+              {settingPerms.update && (
+                <Grid item alignSelf="flex-end">
+                  <Button color="success" onClick={handleOpen}>
+                    {t("saveChanges")}
+                  </Button>
+                </Grid>
               )}
-            </Grid>
+            </>
+          ) : (
+            <Typography p variant="subtitle1" color="error" align="center">
+              {t("roleCantBeEdited")}
+            </Typography>
+          )}
+        </Grid>
 
-            <Dialog
-              title={t("saveMesage")}
-              open={openDialog}
-              onClose={handleClose}
-              onConfirm={handelSave}
-            />
-          </Box>
-        </Paper>
-      </Grid>
-    </Grid>
+        <Dialog
+          title={t("saveMesage")}
+          open={openDialog}
+          onClose={handleClose}
+          onConfirm={handelSave}
+        />
+      </Box>
+    </Paper>
   );
 }
 

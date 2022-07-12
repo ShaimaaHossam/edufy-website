@@ -161,7 +161,7 @@ CounterInput.propTypes = {
   onFocus: PropTypes.func,
 
   error: PropTypes.bool,
-  helperText: PropTypes.string,
+  helperText: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 export default CounterInput;

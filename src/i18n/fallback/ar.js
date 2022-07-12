@@ -1,4 +1,8 @@
 const ar = {
+  sr: "رس",
+
+  clear: "إلغاء",
+
   location: "الموقع",
   search_locations: "ابحث عن الموقع",
   long_keyword: "كلمة البحث طويلة جدًا، الحد الأقصى ١٠٠ حرف.",
@@ -35,6 +39,19 @@ const ar = {
 
   contactMunjz: "تواصل مع منجز",
   munjzMessage: "تواصل مع منجز لتحميل مستند ضريبه القيمه المضافه",
+
+  fromDate: "من تاريخ",
+  toDate: "إلى تاريخ",
+  requiredDate: "التاريخ مطلوب",
+  invalidDate: "تاريخ غير صحيح",
+  fromAfterTo: "البداية بعد النهاية",
+  toBeforeFrom: "النهاية قبل البداية",
+
+  browse: "تصفّح",
+  dndFile: "سحب ووضع الملف",
+  dndFiles: "سحب ووضع الملفات",
+  files_count: "تم رفع {{count}} ملف",
+  uploading: "جاري التحميل...",
 };
 
 export default ar;

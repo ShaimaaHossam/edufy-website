@@ -114,6 +114,7 @@ function Navigation() {
             width: 40,
             height: 40,
             borderRadius: "4px",
+            color: pathname.includes(item.navLink) ? "primary.main" : "inherit",
             backgroundImage: pathname.includes(item.navLink)
               ? "linear-gradient(45deg, #3EE6EF33 0%, #1E7AF033 100%)"
               : "linear-gradient(45deg, #EDF5FC 0%, #EDF5FC 100%)",
@@ -129,7 +130,10 @@ function Navigation() {
       <Typography
         component="span"
         variant={isSubItem ? "body2" : "body1"}
-        sx={{ flexGrow: 1 }}
+        sx={{
+          flexGrow: 1,
+          color: pathname.includes(item.navLink) ? "primary.main" : "inherit",
+        }}
       >
         {t(item.navName)}
       </Typography>
@@ -147,12 +151,12 @@ function Navigation() {
     !!item.subItems ? (
       <ListItemButton
         key={item.navName}
+        disableRipple
         expanded={isMenuOpen}
         onClick={() => {
           !isMenuOpen && dispatch(openMenu());
           setOpenedItem(openedItem !== item.navName ? item.navName : "");
         }}
-        sx={{ color: pathname.includes(item.navLink) ? "primary" : "inherit" }}
       >
         {renderListItemContent(item)}
       </ListItemButton>
@@ -162,14 +166,15 @@ function Navigation() {
         expanded={isMenuOpen}
         isSubItem={isSubItem}
         active={isSubItem && pathname.includes(item.navLink)}
-        sx={{ color: pathname.includes(item.navLink) ? "primary" : "inherit" }}
       >
         <Link
           to={item.navLink}
-          color={
-            pathname.includes(item.navLink) ? "primary.main" : "text.primary"
-          }
-          sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}
+          sx={{
+            flexGrow: 1,
+            display: "flex",
+            alignItems: "center",
+            color: "inherit",
+          }}
         >
           {renderListItemContent(item, isSubItem)}
         </Link>
@@ -187,8 +192,11 @@ function Navigation() {
                   {renderListItem(item)}
 
                   {!!item.subItems && (
-                    <Collapse in={item.navName === openedItem}>
-                      <List sx={{ ml: 5, mt: -2, mb: 2 }}>
+                    <Collapse
+                      in={item.navName === openedItem}
+                      sx={{ ml: 5, mt: -2, mb: 2 }}
+                    >
+                      <List>
                         {item.subItems.map(
                           (subItem) =>
                             subItem.active && renderListItem(subItem, true)
