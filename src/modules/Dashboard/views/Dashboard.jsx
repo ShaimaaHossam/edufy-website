@@ -1,3 +1,5 @@
+import { useGetAllRolesQuery } from "../../../redux/services/dashboard";
+import { useGetAllPropertiesQuery } from "../../../redux/services/properties";
 
 import { Box } from "@mui/material";
 
@@ -7,12 +9,15 @@ import MaterialSpending from "../components/MaterialSpending";
 import PropertyStats from "../components/PropertyStats";
 
 function Dashboard() {
+  const { data: allRoles = [] } = useGetAllRolesQuery();
+  const { data: allProperties = [] } = useGetAllPropertiesQuery();
+
   return (
     <Box>
-      <Orders />
+      <Orders allRoles={allRoles} allProperties={allProperties} />
       <JobsByService />
-      <MaterialSpending />
-      <PropertyStats />
+      <MaterialSpending allRoles={allRoles} allProperties={allProperties} />
+      <PropertyStats allRoles={allRoles} allProperties={allProperties} />
     </Box>
   );
 }

@@ -17,31 +17,17 @@ export const dashboardAPI = createApi({
         data: res.data,
         meta: res.meta,
       }),
-      providesTags: (res, err, queryParams) =>
-        res
-          ? [
-              ...res.data.map(({ id }) => ({ type: "Dashboard", id })),
-              { type: "Dashboard", id: "PARTIAL-LIST" },
-            ]
-          : [{ type: "Dashboard", id: "PARTIAL-LIST" }],
     }),
 
     getMaterialSpending: build.query({
       query: (queryParams) => ({
-        url: "/orders/material/spending",
+        url: "/orders/materials/spending",
         params: queryParams,
       }),
       transformResponse: (res) => ({
         data: res.data,
         meta: res.meta,
       }),
-      providesTags: (res, err, queryParams) =>
-        res
-          ? [
-              ...res.data.map(({ id }) => ({ type: "Dashboard", id })),
-              { type: "Dashboard", id: "PARTIAL-LIST" },
-            ]
-          : [{ type: "Dashboard", id: "PARTIAL-LIST" }],
     }),
 
     getTotalOrders: build.query({
@@ -76,6 +62,14 @@ export const dashboardAPI = createApi({
         meta: res.meta,
       }),
     }),
+
+    getAllRoles: build.query({
+      query: () => ({
+        url: "/roles",
+        params: { listing: "1" },
+      }),
+      transformResponse: (res) => res.data,
+    }),
   }),
 });
 
@@ -85,4 +79,5 @@ export const {
   useGetTotalOrdersQuery,
   useGetTotalOrdersByServiceQuery,
   useGetWalletOverviewQuery,
+  useGetAllRolesQuery,
 } = dashboardAPI;

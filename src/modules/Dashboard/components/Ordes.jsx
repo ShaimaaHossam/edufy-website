@@ -1,6 +1,9 @@
+import { useState } from "react";
+
 import { useGetTotalOrdersQuery } from "../../../redux/services/dashboard";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { dashboardSelector, setOrdersFilters } from "../state";
 
 import { useTranslation } from "react-i18next";
 
@@ -8,6 +11,9 @@ import { Grid, Typography, Paper } from "@mui/material";
 
 import Wallet from "./Wallet";
 import Autocomplete from "../../../shared/components/inputs/Autocomplete";
+import DateRangePicker from "../../../shared/components/inputs/DateRangePicker";
+
+import { formatDate } from "../../../helpers/datetime";
 
 import { Bar as OrdersBars } from "react-chartjs-2";
 import {
@@ -20,13 +26,7 @@ import {
   Legend,
 } from "chart.js";
 
-// import { ordersReqRes } from "../dashboardData";
-
-function Orders() {
-  const { t } = useTranslation("dashboard");
-
-  const dispatch = useDispatch();
-
+function Orders({ allRoles, allProperties }) {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -35,7 +35,18 @@ function Orders() {
     Tooltip,
     Legend
   );
-  const { isLoading, data: allOrders } = useGetTotalOrdersQuery();
+
+  const { t } = useTranslation("dashboard");
+
+  const [userRole, setUserRole] = useState("");
+  const [property, setProperty] = useState("");
+  const [dates, setDates] = useState([]);
+
+  const { ordersFilters } = useSelector(dashboardSelector);
+
+  const dispatch = useDispatch();
+
+  const { isLoading, data: allOrders } = useGetTotalOrdersQuery(ordersFilters);
 
   const totalOrders = allOrders?.data?.months.map(
     (item) => item.orders.total_orders
@@ -83,6 +94,7 @@ function Orders() {
     barThickness: 20,
     maxBarThickness: 10,
   };
+
   const datasets = orders.map((item, index) => ({
     ...item,
     ...options,
@@ -100,52 +112,73 @@ function Orders() {
               {t("totalOrders")}
             </Typography>
           </Grid>
+
           <Grid item container xs={12}>
-            <Grid item sx={{ width: 135, marginRight: 3 }}>
+            <Grid item xs={6} mr={1}>
+              <DateRangePicker
+                size="small"
+                spacing={2}
+                values={dates}
+                onChange={(dates) => {
+                  setDates(dates);
+                  dispatch(
+                    setOrdersFilters({
+                      ...ordersFilters,
+                      "filter[date_from]": dates[0] && formatDate(dates[0]),
+                      "filter[date_to]": dates[1] && formatDate(dates[1]),
+                    })
+                  );
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={2} mr={1}>
               <Autocomplete
                 name="property filter"
                 size="small"
                 label={t("byProperty")}
-                noOptionsText={t("noTypes")}
-                options={[]}
-                value={[]}
-                onChange={(e) => {}}
+                noOptionsText={t("noProperties")}
+                options={allProperties?.map((type) => ({
+                  value: type.id,
+                  label: type.title,
+                }))}
+                value={property}
+                onChange={(e) => {
+                  setProperty(e.target.value);
+                  dispatch(
+                    setOrdersFilters({
+                      ...ordersFilters,
+                      "filter[property_id]": e.target.value,
+                    })
+                  );
+                }}
               />
             </Grid>
-            <Grid item sx={{ width: 135, marginRight: 3 }}>
-              <Autocomplete
-                name="property filter"
-                size="small"
-                label={t("byProperty")}
-                noOptionsText={t("noTypes")}
-                options={[]}
-                value={[]}
-                onChange={(e) => {}}
-              />
-            </Grid>
-            <Grid item sx={{ width: 135, marginRight: 3 }}>
-              <Autocomplete
-                name="property filter"
-                size="small"
-                label={t("byProperty")}
-                noOptionsText={t("noTypes")}
-                options={[]}
-                value={[]}
-                onChange={(e) => {}}
-              />
-            </Grid>
-            <Grid item sx={{ width: 135 }}>
+
+            <Grid item xs={3}>
               <Autocomplete
                 name="roles filter"
                 size="small"
                 label={t("byUserRole")}
                 noOptionsText={t("noTypes")}
-                options={[]}
-                value={[]}
-                onChange={(e) => {}}
+                options={allRoles?.map((type) => ({
+                  value: type.name,
+                  label: type.name,
+                }))}
+                value={userRole}
+                onChange={(e) => {
+                  setUserRole(e.target.value);
+                  dispatch(
+                    setOrdersFilters({
+                      ...ordersFilters,
+                      "filter[user_role]": e.target.value,
+                    })
+                  );
+                }}
               />
             </Grid>
           </Grid>
+
           <Grid item xs={12}>
             <OrdersBars
               data={{
@@ -174,6 +207,7 @@ function Orders() {
                 {allOrders.data.total_orders}
               </Typography>
             </Grid>
+
             <Grid item xs={3} textAlign="center">
               <Typography component="p" variant="subtitle1" color="#237df0">
                 {t("openOrders")}
@@ -182,6 +216,7 @@ function Orders() {
                 {allOrders.data.open_orders}
               </Typography>
             </Grid>
+
             <Grid item xs={3} textAlign="center">
               <Typography component="p" variant="subtitle1" color="#29bf56">
                 {t("completedOrders")}
@@ -190,6 +225,7 @@ function Orders() {
                 {allOrders.data.completed_orders}
               </Typography>
             </Grid>
+
             <Grid item xs={3} textAlign="center">
               <Typography component="p" variant="subtitle1" color="#98abbb">
                 {t("cancelledOrders")}
@@ -200,6 +236,7 @@ function Orders() {
             </Grid>
           </Grid>
         </Grid>
+
         <Grid item xs={4}>
           <Wallet />
         </Grid>

@@ -16,6 +16,8 @@ import { appSlice } from "../modules/App/state";
 
 import { peopleSlice } from "../modules/People/state";
 
+import { dashboardSlice } from "../modules/Dashboard/state";
+
 import { propertiesFiltersSlice } from "../modules/Properties/state/propertiesFiltersSlice";
 import { propertyFormStepperSlice } from "../modules/Properties/state/propertyFormStepperSlice";
 
@@ -38,6 +40,8 @@ export const store = configureStore({
     [appSlice.name]: appSlice.reducer,
 
     [peopleSlice.name]: peopleSlice.reducer,
+
+    [dashboardSlice.name]: dashboardSlice.reducer,
 
     [propertiesFiltersSlice.name]: propertiesFiltersSlice.reducer,
     [propertyFormStepperSlice.name]: propertyFormStepperSlice.reducer,

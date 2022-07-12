@@ -15,8 +15,6 @@ import {
   Legend,
 } from "chart.js";
 
-// import { servicesReqRes } from "../dashboardData";
-
 function JobsByService() {
   const { t } = useTranslation("dashboard");
 
@@ -45,7 +43,7 @@ function JobsByService() {
       backgroundColor: "#237df0",
     },
   ];
-  
+
   const data = {
     labels,
     datasets,

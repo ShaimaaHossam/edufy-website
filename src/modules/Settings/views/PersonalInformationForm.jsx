@@ -78,7 +78,7 @@ function CompanyInformation() {
     if (isSuccess) {
       dispatch(clearState());
     }
-  }, [isError, isSuccess, errors]);
+  }, [isError, isSuccess, errors, dispatch, formik]);
 
   return (
     <Grid container spacing={3}>
