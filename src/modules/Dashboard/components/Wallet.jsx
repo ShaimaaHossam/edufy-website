@@ -7,7 +7,6 @@ import { Grid, Typography } from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
-// import { walletReqRes } from "../dashboardData";
 
 function Wallet() {
   const { t } = useTranslation("dashboard");
