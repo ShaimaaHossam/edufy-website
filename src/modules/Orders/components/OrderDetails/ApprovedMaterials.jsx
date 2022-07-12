@@ -163,6 +163,8 @@ function ApprovedMaterials() {
         </Grid>
       ))}
       <Dialog
+        withoutTitle
+        withoutConfirm
         size="extraLarge"
         open={openDialog}
         onClose={() => setOpenDialog(false)}

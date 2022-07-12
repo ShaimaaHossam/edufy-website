@@ -10,8 +10,6 @@ import properties from "../modules/Properties/locales";
 import people from "../modules/People/locales";
 import orders from "../modules/Orders/locales";
 import accounting from "../modules/Accounting/locales";
-import communication from "../modules/Communication/locales";
-import services from "../modules/Services/locales";
 import settings from "../modules/Settings/locales";
 import help from "../modules/Help/locales";
 
@@ -29,8 +27,6 @@ const resources = {
     people: people.ar,
     orders: orders.ar,
     accounting: accounting.ar,
-    communication: communication.ar,
-    services: services.ar,
     settings: settings.ar,
     help: help.ar,
   },
@@ -47,8 +43,6 @@ const resources = {
     people: people.en,
     orders: orders.en,
     accounting: accounting.en,
-    communication: communication.en,
-    services: services.en,
     settings: settings.en,
     help: help.en,
   },

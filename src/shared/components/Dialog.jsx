@@ -33,18 +33,21 @@ const sizeMapping = {
 };
 
 function SideDialog({
+  withoutTitle,
   title,
   titleColor,
+
+  withoutConfirm,
+  confirmLabel,
+  confirmColor,
+  onConfirm,
+
   open,
   onClose,
   size = "small",
   sided,
 
   onExited,
-
-  confirmLabel,
-  confirmColor,
-  onConfirm,
 
   children,
 }) {
@@ -74,15 +77,17 @@ function SideDialog({
         },
       })}
     >
-      {title && (
+      {!withoutTitle && (
         <DialogTitle color={titleColor} sx={{ pt: 3 }}>
           {title}
         </DialogTitle>
       )}
+
       <DialogContent>
         <Box sx={{ height: "100%" }}>{children}</Box>
       </DialogContent>
-      {!!onConfirm && (
+
+      {!withoutConfirm && (
         <DialogActions
           sx={{
             px: 3,

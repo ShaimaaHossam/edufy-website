@@ -9,7 +9,6 @@ export const formats = {
   be: "yyyy-MM-dd",
   dateShort: "dd/MM/yyyy",
   dateShortSpaceSeparated: "dd MMM yyyy",
-
   dateTimeShort: "dd/MM/yyyy hh:mmaaa",
 };
 

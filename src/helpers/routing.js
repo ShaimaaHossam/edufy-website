@@ -20,3 +20,13 @@ export const isUUIDValid = (uuid) => {
 };
 
 export const isNumericIDValid = (numericID) => numericID.match(/^\d+$/);
+
+export const downloadFile = (dataURL, name) => {
+  const link = document.createElement("a");
+  link.href = dataURL;
+  link.download = name;
+  document.body.appendChild(link);
+
+  link.click();
+  link.remove();
+};

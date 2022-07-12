@@ -75,6 +75,15 @@ export const generalAPI = createApi({
           ]
           : [],
     }),
+
+    uploadFiles: build.mutation({
+      query: (files) => {
+        const formData = new FormData();
+        files.forEach((file, idx) => formData.append(`file[${idx}]`, file));
+
+        return { url: "/actions/upload", method: "POST", body: formData };
+      },
+    }),
   }),
 });
 
@@ -89,4 +98,6 @@ export const {
   useGetPropertyServicesTreeQuery,
   useGetAllPropertyServicesQuery,
   useUpdatePropertyServicesMutation,
+
+  useUploadFilesMutation,
 } = generalAPI;

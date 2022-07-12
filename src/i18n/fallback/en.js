@@ -1,4 +1,8 @@
 const en = {
+  sr: "SR",
+
+  clear: "Clear",
+
   location: "Location",
   search_locations: "Search Locations",
   long_keyword: "Too long keyword, maximum 100 characters.",
@@ -37,6 +41,19 @@ const en = {
 
   contactMunjz: "Contact Munjz",
   munjzMessage: "Please contact Munjiz to upload a new VAT",
+
+  fromDate: "From Date",
+  toDate: "To Date",
+  requiredDate: "Date is required",
+  invalidDate: "Invalid Date",
+  fromAfterTo: "Start after end",
+  toBeforeFrom: "End before start",
+
+  browse: "Browse",
+  dndFile: "Drag and Drop File",
+  dndFiles: "Drag and Drop Files",
+  files_count: "{{count}} files uploaded",
+  uploading: "Uploading...",
 };
 
 export default en;

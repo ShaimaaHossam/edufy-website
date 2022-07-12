@@ -52,6 +52,7 @@ function DateTimePicker({
         disabled={disabled}
         value={value}
         onChange={(date) => onChange({ target: { name, value: date } })}
+        onOpen={() => onBlur({ target: { name } })}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -83,7 +84,7 @@ DateTimePicker.propTypes = {
   onBlur: PropTypes.func,
 
   error: PropTypes.bool,
-  helperText: PropTypes.string,
+  helperText: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 export default DateTimePicker;

@@ -108,7 +108,7 @@ SearchInput.propTypes = {
 
   onChange: PropTypes.func,
 
-  helperText: PropTypes.string,
+  helperText: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 export default SearchInput;
