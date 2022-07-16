@@ -19,7 +19,7 @@ import { useSelector, useDispatch } from "react-redux";
 function Roles() {
   const { t } = useTranslation("settings");
 
-  const settingPerms = usePermissions("setting");
+  const permissionPerms = usePermissions("permission");
 
   const dispatch = useDispatch();
   const { roles } = useSelector(settingsSelector);
@@ -39,7 +39,7 @@ function Roles() {
 
       role.name === "Admin" ? (
         <Icon icon={mdiMinus} size="medium" color="action" />
-      ) : settingPerms.access_details ? (
+      ) : permissionPerms.access ? (
         <IconButton
           aria-label="edit role"
           size="small"

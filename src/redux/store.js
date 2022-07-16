@@ -5,6 +5,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { propertiesAPI } from "./services/properties";
 import { peopleAPI } from "./services/people";
 import { rolesAPI } from "./services/roles";
+import { dashboardAPI } from "./services/dashboard";
 import { generalAPI } from "./services/general";
 import { accountingAPI } from "./services/accounting";
 
@@ -14,6 +15,8 @@ import { settingsSlice } from "./slices/settings";
 import { appSlice } from "../modules/App/state";
 
 import { peopleSlice } from "../modules/People/state";
+
+import { dashboardSlice } from "../modules/Dashboard/state";
 
 import { propertiesFiltersSlice } from "../modules/Properties/state/propertiesFiltersSlice";
 import { propertyFormStepperSlice } from "../modules/Properties/state/propertyFormStepperSlice";
@@ -27,6 +30,7 @@ export const store = configureStore({
     [propertiesAPI.reducerPath]: propertiesAPI.reducer,
     [peopleAPI.reducerPath]: peopleAPI.reducer,
     [rolesAPI.reducerPath]: rolesAPI.reducer,
+    [dashboardAPI.reducerPath]: dashboardAPI.reducer,
     [generalAPI.reducerPath]: generalAPI.reducer,
     [accountingAPI.reducerPath]: accountingAPI.reducer,
 
@@ -36,6 +40,8 @@ export const store = configureStore({
     [appSlice.name]: appSlice.reducer,
 
     [peopleSlice.name]: peopleSlice.reducer,
+
+    [dashboardSlice.name]: dashboardSlice.reducer,
 
     [propertiesFiltersSlice.name]: propertiesFiltersSlice.reducer,
     [propertyFormStepperSlice.name]: propertyFormStepperSlice.reducer,
@@ -49,6 +55,7 @@ export const store = configureStore({
       propertiesAPI.middleware,
       peopleAPI.middleware,
       rolesAPI.middleware,
+      dashboardAPI.middleware,
       generalAPI.middleware,
       accountingAPI.middleware,
     ]),

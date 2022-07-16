@@ -21,7 +21,7 @@ import Dialog from "../../../shared/components/Dialog";
 function Permissions() {
   const { t } = useTranslation("settings");
 
-  const settingPerms = usePermissions("setting");
+  const permissionPerms = usePermissions("permission");
 
   const { roleID } = useParams();
 
@@ -121,7 +121,7 @@ function Permissions() {
                 </Grid>
               ))}
 
-              {settingPerms.update && (
+              {permissionPerms.update && (
                 <Grid item alignSelf="flex-end">
                   <Button color="success" onClick={handleOpen}>
                     {t("saveChanges")}
