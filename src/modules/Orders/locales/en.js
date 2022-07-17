@@ -5,6 +5,8 @@ const en = {
   searchOrdersPlaceholder: "Order No, Property, Unit, or Service",
   orderNo: "Order No.",
   startDate: "Start Date",
+  selectStartDate: "Select Start Date",
+  selectEndDate: "Select End Date",
   createdBy: "Created by",
   property: "Property",
   units: "Units",
@@ -23,20 +25,19 @@ const en = {
   activityLog: "Activity Log",
   timeStamp: "Time Stamp",
 
-  quotation: "Quotation",
-
   newQuotations: "New Quotations",
   remove: "Remove",
   images: 'Images',
   noImages: 'There is no attached Images',
   material: "Material",
+  timeToProvide: "Time To Provide Service",
 
   approvedQuotations: "Approved Quotations",
   approveQuotation: "Approve Quotation",
   rejectedQuotations: "Rejected Quotations",
   invoice: "Invoice",
   totalItems: 'Total Items',
-  dateTime: 'Date & Time',
+  dateTime: 'Date And Time',
 
   visitNumber: "Visit Number",
   visitDate: "Visit Date",
@@ -59,6 +60,7 @@ const en = {
 
 
   byStartDate: "By Start Date",
+  byEndDate: "By End Date",
   byCreatorRole: "By Creator Role",
   byProperty: "By Property",
   byUnit: "By Unit",
@@ -80,7 +82,8 @@ const en = {
   requested: "Requested",
   pending: "Pending",
   assigned: "Assigned",
-  in_progress: "In Progress",
+  inprogress: "In Progress",
+  jobDone: "Job Done",
   completed: "Completed",
   canceled: "Canceled",
   approved: "Approved",
@@ -105,8 +108,8 @@ const en = {
   addcleaningOrderFormTitle: "New Cleaning Order",
 
   selectPropertyUnits: "Select Property / Units",
-  SelectServices: "Select Services",
-  Preview: "Preview",
+  selectServices: "Select Services",
+  preview: "Preview",
 
   next: "Next",
   addAdditionalService: "Add Additional Service",
@@ -115,6 +118,32 @@ const en = {
   selectProperty: "Select a property",
   selectUnits: "Select Units",
 
+  serviceType: "Service Type",
+  selectService: "Select Service",
+  servicePriceVatInfo: "All Services prices are Vat inclusive.",
+  selectDate: "Select Date",
+  visitTimeFrom: "Visit Time From",
+  visitTimeTo: "Visit Time To",
+  scheduleService: "Schedule Service",
+  addNote: "Add a note",
+  viewOrderNotes: "View Order Notes",
+  noteDescription: "Note Description",
+  image: "Image",
+  ok: "OK",
+
+  propertyAndUnits: "Property and Units",
+  item: 'Item',
+  back: "Back",
+  saveChanges: "Save Changes",
+  EditService: "Edit Service",
+  sendOrder: "Send Order",
+  totalServicesPrice: "Total Services Price",
+  rangeDateInvalid: "End date can't be before Start date",
+  rangeTimeInvalid: "End time can't be before Start time",
+
+  discardChanges: "Discard Changes",
+  orderFormLeaveMessage: "Are you sure you want to discard create order changes?",
+  frequency: "Frequency",
 };
 
 export default en;

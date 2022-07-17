@@ -11,7 +11,7 @@ import OrderStatus from "../../../../shared/components/modules/orders/OrderStatu
 import OrderUnits from "../../../../shared/components/modules/orders/OrderUnits";
 
 import { formatDate, formats, toTimeZone } from "../../../../helpers/datetime";
-
+import { format } from "date-fns";
 function OrderSummary() {
   const {
     t,
@@ -31,28 +31,24 @@ function OrderSummary() {
           <Typography variant="subtitle2">{t("createdAt")}</Typography>
         </Grid>
         <Grid item>
-          {/* <Typography variant="body2">
-            {formatDate(
-              toTimeZone(order.created_at),
-              formats.dateTimeShort,
-              language
-            )}
-          </Typography> */}
+          <Typography variant="body2">
+            {formatDate(order.visits?.[0]?.date, formats.dateShort, language)}
+          </Typography>
         </Grid>
       </Grid>
 
       <Grid item xs container spacing={1} direction="column">
         <Grid item>
-          <Typography variant="subtitle2">{t("startingAt")}</Typography>
+          <Typography variant="subtitle2">{t("timeToProvide")}</Typography>
         </Grid>
         <Grid item>
-          {/* <Typography variant="body2">
-            {formatDate(
-              `${order.due_date} ${order.due_time_from}`,
-              formats.dateTimeShort,
-              language
-            )}
-          </Typography> */}
+          <Typography variant="body2">
+            {
+              new Date(`05/10/2020, ${order.visits?.[0]?.time}`)
+                .toLocaleString()
+                .split(",")[1]
+            }
+          </Typography>
         </Grid>
       </Grid>
 

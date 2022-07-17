@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 
 import { orderFormStepsSelector } from "../state/orderFormSteps";
+import { updateVal } from "../state/orderFormData";
 
 import Breadcrumbs from "../../../shared/components/Breadcrumbs";
 import CreateOrderSteps from "../components/OrderServicesForm/CreateOrderSteps";
@@ -25,7 +26,19 @@ import CreateOrderContent from "../components/OrderServicesForm/CreateOrderConte
 function OrderForm({ formType }) {
   const { t } = useTranslation("orders");
   const { orderType } = useParams();
+  const dispatch = useDispatch();
   const { currentStep } = useSelector(orderFormStepsSelector);
+
+  const updateOrderType = () => {
+    dispatch(updateVal({ key: "type", val: `${orderType}` }));
+  };
+  useEffect(() => {
+    updateOrderType();
+  });
+
+  useEffect(() => {
+    dispatch(updateVal({ key: "editService", val: false }));
+  });
 
   return (
     <Grid container spacing={2} direction="column" flexGrow={1}>

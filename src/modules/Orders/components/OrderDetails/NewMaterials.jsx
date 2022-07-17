@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 
 import {
   useGetOrderQuery,
-  useApproveMaterialMutation,
-  useRejectMaterialMutation,
+  useApproveQuotationMutation,
+  useApproveRejectMaterialMutation,
 } from "../../../../redux/services/orders";
 // import { order } from "../../../../redux/services/ordersData";
 
@@ -17,14 +17,16 @@ import Icon from "../../../../shared/components/Icon";
 import OrderAccordion from "./OrderAccordion";
 import { Fragment } from "react";
 
+import { MATERIAL_STATUSES } from "../../../../constants/system";
+
 function NewMaterials() {
   const { t } = useTranslation("orders");
 
   const { orderID } = useParams();
 
   const { data: orderDetails } = useGetOrderQuery(orderID);
-  const [approveMaterial] = useApproveMaterialMutation();
-  const [rejectMaterial] = useRejectMaterialMutation();
+  const [approveQuotation] = useApproveQuotationMutation();
+  const [approveRejectMaterial] = useApproveRejectMaterialMutation();
 
   // if (!order.materials.length) {
   //   return (
@@ -52,7 +54,14 @@ function NewMaterials() {
                 <Button
                   variant="outlined"
                   color="success"
-                  onClick={() => approveMaterial(quotation.id)}
+                  onClick={() => {
+                    const { id } = quotation;
+                    const status = MATERIAL_STATUSES.confirmed;
+                    approveQuotation({
+                      id,
+                      status,
+                    });
+                  }}
                 >
                   {t("approveQuotation")}
                 </Button>
@@ -156,7 +165,14 @@ function NewMaterials() {
                           size="small"
                           variant="outlined"
                           color="error"
-                          onClick={() => rejectMaterial(material.id)}
+                          onClick={() => {
+                            const { id } = material;
+                            const status = MATERIAL_STATUSES.rejected;
+                            approveRejectMaterial({
+                              id,
+                              status,
+                            });
+                          }}
                         >
                           {t("remove")}
                         </Button>

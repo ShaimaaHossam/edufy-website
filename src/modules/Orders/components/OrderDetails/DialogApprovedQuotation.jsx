@@ -89,7 +89,7 @@ const DialogApprovedQuotation = ({ selectedQuotation }) => {
               variant="body2"
               color="success.main"
             >
-              Approved
+              {t("approved")}
             </Typography>
           </Grid>
         </Grid>

@@ -10,7 +10,7 @@ const statusColorMap = {
   [ORDER_STATUSES.created]: "info",
   [ORDER_STATUSES.confirmed]: "default",
   [ORDER_STATUSES.assigned]: "info",
-  [ORDER_STATUSES.in_progress]: "warning",
+  [ORDER_STATUSES.inprogress]: "warning",
   [ORDER_STATUSES.pending]: "info",
   [ORDER_STATUSES.sp_done]: "info",
   [ORDER_STATUSES.completed]: "success",
@@ -22,7 +22,7 @@ function OrderStatus({ status }) {
 
   return (
     <Chip
-      label={t(status)}
+      label={t(status.toLowerCase())}
       size="small"
       variant="outlined"
       color={statusColorMap[status]}

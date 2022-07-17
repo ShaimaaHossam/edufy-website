@@ -1,12 +1,15 @@
 import { useParams } from "react-router-dom";
 
-import { useGetOrderQuery } from "../../../../redux/services/orders";
+import {
+  useApproveRejectServiceMutation,
+  useGetOrderQuery,
+} from "../../../../redux/services/orders";
 
 import { useTranslation } from "react-i18next";
 
 import { Grid, Divider, Typography, Button } from "@mui/material";
 
-import { VAT_AMOUNT } from "../../../../constants/system";
+import { SERVICE_STATUSES, VAT_AMOUNT } from "../../../../constants/system";
 
 function AdditionalServices() {
   const {
@@ -17,6 +20,8 @@ function AdditionalServices() {
   const { orderID } = useParams();
 
   const { data: orderDetails } = useGetOrderQuery(orderID);
+
+  const [approveRejectService] = useApproveRejectServiceMutation();
 
   return (
     <Grid container spacing={2}>
@@ -78,7 +83,11 @@ function AdditionalServices() {
                 size="small"
                 variant="outlined"
                 color="success"
-                // onClick={() => approveMaterial(material.id)}
+                onClick={() => {
+                  const id = service.id;
+                  const status = SERVICE_STATUSES.created;
+                  approveRejectService({ id, status });
+                }}
               >
                 {t("approve")}
               </Button>
@@ -89,7 +98,11 @@ function AdditionalServices() {
                 size="small"
                 variant="outlined"
                 color="error"
-                // onClick={() => rejectMaterial(material.id)}
+                onClick={() => {
+                  const id = service.id;
+                  const status = SERVICE_STATUSES.rejected;
+                  approveRejectService({ id, status });
+                }}
               >
                 {t("reject")}
               </Button>

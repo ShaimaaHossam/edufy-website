@@ -53,27 +53,47 @@ export const ordersAPI = createApi({
     /* ORDERS ACTIONS */
     cancelOrder: build.mutation({
       query: (id) => ({
-        url: `/orders/cancel/${id}`,
+        url: `/orders/update/${id}`,
         method: "POST",
+        body: { status: "Canceled" },
       }),
       invalidatesTags: (res, error, id) => (res ? [{ type: "ORDER", id }] : []),
     }),
-    approveMaterial: build.mutation({
-      query: ({ id }) => ({
-        url: `/orders/materials/approve/${id}`,
-        method: "POST",
+    approveQuotation: build.mutation({
+      query: ({ id, ...status }) => ({
+        url: `/orders/quotations/update/${id}`,
+        method: "PATCH",
+        body: status,
       }),
       invalidatesTags: (res, error, { orderID }) =>
         res ? [{ type: "ORDER", id: orderID }] : [],
     }),
-    rejectMaterial: build.mutation({
-      query: ({ id }) => ({
-        url: `/orders/materials/reject/${id}`,
-        method: "POST",
+    approveRejectMaterial: build.mutation({
+      query: ({ id, ...status }) => ({
+        url: `/orders/materials/update/${id}`,
+        method: "PATCH",
+        body: status,
       }),
       invalidatesTags: (res, error, { orderID }) =>
         res ? [{ type: "ORDER", id: orderID }] : [],
     }),
+    approveRejectService: build.mutation({
+      query: ({ id, ...status }) => ({
+        url: `/orders/additional-services/update/${id}`,
+        method: "PATCH",
+        body: status,
+      }),
+      invalidatesTags: (res, error, { orderID }) =>
+        res ? [{ type: "ORDER", id: orderID }] : [],
+    }),
+    // rejectMaterial: build.mutation({
+    //   query: ({ id }) => ({
+    //     url: `/orders/materials/reject/${id}`,
+    //     method: "PATCH",
+    //   }),
+    //   invalidatesTags: (res, error, { orderID }) =>
+    //     res ? [{ type: "ORDER", id: orderID }] : [],
+    // }),
   }),
 });
 
@@ -82,8 +102,9 @@ export const {
   useGetOrderQuery,
   useAddOrderMutation,
   useUpdateOrderMutation,
-
+  useApproveRejectServiceMutation,
   useCancelOrderMutation,
-  useApproveMaterialMutation,
-  useRejectMaterialMutation,
+  useApproveQuotationMutation,
+  useApproveRejectMaterialMutation,
+  // useRejectMaterialMutation,
 } = ordersAPI;

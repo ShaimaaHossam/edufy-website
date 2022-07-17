@@ -36,8 +36,8 @@ function OrderDetails() {
 
   const { orderType, orderID } = useParams();
 
-  const { isFetching, error, data: orderDetails } = useGetOrderQuery(orderID);
-  console.log(orderDetails);
+  const { isFetching, data: orderDetails } = useGetOrderQuery(orderID);
+
   const [cancelOrder] = useCancelOrderMutation();
 
   if (isFetching) return <Loader />;

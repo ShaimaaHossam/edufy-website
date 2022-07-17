@@ -2,7 +2,8 @@ const orderListingReqURL = "/orders"; // GET
 const orderListingReqQueryParams = {
     'filter[service_type]': 'maintenance', //required
     "filter[keyword]": "",
-    'filter[due_date]': "2022-06-01",
+    'filter[from_date]': "2022-06-01",
+    'filter[to_date]': "2022-07-01",
     "filter[creator_role]": "Admin",
     "filter[property_id]": ["0001", "0002"], // UUID
     "filter[unit_id]": ["0001"], //UUID

@@ -1,5 +1,6 @@
 const ar = {
   maintenanceOrders: "طلبات الصيانة",
+  cleaningOrders: "طلبات التنظيف",
   searchOrders: "إبحث في الطلبات",
   searchOrdersPlaceholder: "رقم الطلب، العقار، الوحدة،أو الخدمة",
   orderNo: "رقم الطلب",
@@ -13,17 +14,34 @@ const ar = {
   status: "الحالة",
   sr: "رس",
   orderDetails: "تفاصيل الطلب",
+  additionalServices: "خدمات إضافية",
   orderSummary: "ملخص الطلب",
   servicesSummary: "ملخص الخدمات",
-  quotation: "تسعيرة",
+  quotation: "التسعير",
   materialsQuotation: "نسعير الخامات",
+  orderVisits: "الزيارات",
+
   newQuotations: "الأسعار الجديدة",
+  images: 'صور',
+  remove: "حذف",
+
   approvedQuotations: "الأسعار الموافق عليها",
+  approveQuotation: "الموافقة على الأسعار",
+  invoice: "الفاتورة",
+  totalItems: 'اجمالي العناصر',
+  dateTime: 'الوقت و التاريخ',
+
+
   rejectedQuotations: "الأسعار المرفوضة",
+
+  visitNumber: "رقم الزيارة",
+  visitDate: "تاريخ الزيارة",
+  visitTime: "وقت الزيارة",
+  description: "الوصف",
+  timeToProvide: "موعد تقديم الخدمة",
   createdAt: "توقيت الإنشاء",
   startingAt: "توقيت البدء",
   service: "الخدمة",
-  images: 'صور',
   noImages: 'لا يوجد صور مرفقة',
   material: "الخامة",
   unitPrice: "سعر القطعة",
@@ -36,6 +54,8 @@ const ar = {
   totalMaterialsInvoice: "إجمالي فاتورة الخامات",
   noOrderMaterials: "لا يوجد خامات لتنفيذ الطلب حتى الآن.",
 
+  byStartDate: "توقيت البدء",
+  byEndDate: "توقيت الإنتهاء",
   byDueDate: "بتاريخ التنفيذ",
   byCreatorRole: "بوظيفة المُنشِئ",
   byProperty: "بالعقار",
@@ -55,10 +75,15 @@ const ar = {
   invalidDate: "التاريخ غير صحيح",
   invalidDateRange: "خارج النطاق الصحيح",
 
+  created: "تم إنشاؤه",
+  confirming: "قيد التأكيد",
+  confirmed: "تم تأكيده",
   requested: "تم الطلب",
   pending: "قيد الإنتظار",
   assigned: "تم التكليف",
-  in_progress: "قيد التنفيذ",
+  inprogress: "قيد التنفيذ",
+  jobDone: "تم التنفيذ",
+
   completed: "تم الإنتهاء",
   canceled: "تم الإلغاء",
   approved: "تم القبول",
@@ -70,7 +95,7 @@ const ar = {
   waitingQuotationApproval: "إنتظار قبول التسعير",
   quotationApproved: "تم قبول التسعير",
   noQuotation: "لا يوجد تسعير",
-  quotation: "التسعير",
+
   inProgress: "قيد التنفيذ",
 
   admin: "المدير العام",
@@ -81,17 +106,48 @@ const ar = {
 
   addmaintenanceOrderFormTitle: "طلب صيانة جديد",
   addcleaningOrderFormTitle: "طلب تنظيف جديد",
-  selectPropertyUnits: "اختيار عقار / وحدة",
+  selectPropertyUnits: "اختيار عقار / وحدات",
 
-  SelectServices: "اختر خدمة",
-  Preview: "مراجعة نهائية",
+  selectServices: "اختر الخدمات",
+  preview: "مراجعة نهائية",
 
   next: "التالي",
-  addAdditionalService: "إضافة خدمة إضافية",
+  addAdditionalService: "إضافة خدمة اخرى",
   addService: "إضافة خدمة",
 
   selectProperty: "اختر عقار",
   selectUnits: "اختر الوحدات",
+
+  serviceType: "نوع الخدمة",
+  selectService: "اختر الخدمة",
+  servicePriceVatInfo: "جميع أسعار الخدمات شاملة ضريبة القيمة المضافة",
+  serviceDescription: "وصف الخدمة",
+  selectDate: "اختر التاريخ",
+  visitTimeFrom: "موعد الزيارة من",
+  visitTimeTo: "إلى",
+  scheduleService: "جدولة موعد الخدمة",
+  addNote: "إضافة ملاحظة",
+  viewOrderNotes: "عرض ملاحظات الطلب",
+  noteDescription: "وصف الملاحظة",
+  image: "صورة",
+  ok: "موافق",
+
+  propertyAndUnits: "العقار و الوحدات",
+  item: 'العنصر',
+  back: "رجوع",
+  saveChanges: "حفظ التغييرات",
+  EditService: "تعديل الخدمة",
+  sendOrder: "إرسال الطلب",
+  totalServicesPrice: "إجمالي سعر الخدمات",
+  rangeDateInvalid: "يجب ان يكون تاريخ الانتهاء بعد تاريخ البدء",
+  rangeTimeInvalid: "يجب ان يكون وقت الانتهاء بعد وقت البدء",
+
+  discardChanges: "تجاوز التعديلات",
+  orderFormLeaveMessage: "هل تريد تجاوز التعديلات على هذا الطلب ؟",
+  frequency: "التكرار",
+
+  selectStartDate: "اختر تاريخ البدء",
+  selectEndDate: "اختر تاريخ الانتهاء",
 };
 
 export default ar;

@@ -59,7 +59,8 @@ function OrdersFilters({ fixedFitlters, orderType }) {
     validateOnBlur: false,
     validateOnChange: false,
     initialValues: {
-      due_date: null,
+      from_date: null,
+      to_date: null,
       creator_role: [],
       property_id: fixedFitlters?.propertyID || "",
       unit_id: [],
@@ -81,55 +82,55 @@ function OrdersFilters({ fixedFitlters, orderType }) {
     }),
   });
 
-  const { values, validateForm } = formik;
-  useDebouncedEffect(
-    () => {
-      validateForm().then((errors) => {
-        if (Object.values(errors)) return;
+  // const { values, validateForm } = formik;
+  // useDebouncedEffect(
+  //   () => {
+  //     validateForm().then((errors) => {
+  //       if (Object.values(errors)) return;
 
-        dispatch(
-          setFilters({
-            key:
-              orderType === ORDER_TYPES.maintenance
-                ? "maintenanceFilters"
-                : "cleaningFilters",
-            value:
-              orderType === ORDER_TYPES.maintenance
-                ? {
-                    ...maintenanceFilters,
-                    page: "1",
-                    "filter[due_date]": formatDate(values.due_date),
-                    "filter[creator_role]": values.creator_role,
-                    "filter[property_id]": values.property_id,
-                    "filter[unit_id]": values.unit_id,
-                    "filter[service_id]": values.service_id,
-                    "filter[status]": values.status,
-                  }
-                : {
-                    ...cleaningFilters,
-                    page: "1",
-                    "filter[due_date]": formatDate(values.due_date),
-                    "filter[creator_role]": values.creator_role,
-                    "filter[property_id]": values.property_id,
-                    "filter[unit_id]": values.unit_id,
-                    "filter[service_id]": values.service_id,
-                    "filter[status]": values.status,
-                  },
-          })
-        );
-      });
-    },
-    [values],
-    500,
-    true,
-    false
-  );
+  //       dispatch(
+  //         setFilters({
+  //           key:
+  //             orderType === ORDER_TYPES.maintenance
+  //               ? "maintenanceFilters"
+  //               : "cleaningFilters",
+  //           value:
+  //             orderType === ORDER_TYPES.maintenance
+  //               ? {
+  //                   ...maintenanceFilters,
+  //                   page: "1",
+  //                   "filters[due_date]": formatDate(values.due_date),
+  //                   "filters[creator_role]": values.creator_role,
+  //                   "filters[property_id]": values.property_id,
+  //                   "filters[unit_id]": values.unit_id,
+  //                   "filters[service_id]": values.service_id,
+  //                   "filters[status]": values.status,
+  //                 }
+  //               : {
+  //                   ...cleaningFilters,
+  //                   page: "1",
+  //                   "filters[due_date]": formatDate(values.due_date),
+  //                   "filters[creator_role]": values.creator_role,
+  //                   "filters[property_id]": values.property_id,
+  //                   "filters[unit_id]": values.unit_id,
+  //                   "filters[service_id]": values.service_id,
+  //                   "filters[status]": values.status,
+  //                 },
+  //         })
+  //       );
+  //     });
+  //   },
+  //   [values],
+  //   500,
+  //   true,
+  //   false
+  // );
 
   const { property_id: propertyID } = formik.values;
 
   const { data: allProperties = [] } = useGetAllPropertiesQuery();
   const { data: allUnits = [] } = useGetAllUnitsQuery(
-    { "filter[property_id]": propertyID },
+    { "filters[property_id]": propertyID },
     { skip: !propertyID }
   );
 
@@ -157,11 +158,11 @@ function OrdersFilters({ fixedFitlters, orderType }) {
       <Grid item xs={4} lg={true}>
         <DatePicker
           size="small"
-          name="due_date"
+          name="from_date"
           label={t("byStartDate")}
-          value={formik.values.due_date}
+          value={formik.values.from_date}
           onChange={(e) => {
-            formik.setFieldValue("due_date", e.target.value);
+            formik.setFieldValue("from_date", e.target.value);
             dispatch(
               setFilters({
                 key:
@@ -173,19 +174,53 @@ function OrdersFilters({ fixedFitlters, orderType }) {
                     ? {
                         ...maintenanceFilters,
                         page: "1",
-                        "filter[due_date]": formatDate(e.target.value),
+                        "filters[from_date]": formatDate(e.target.value),
                       }
                     : {
                         ...cleaningFilters,
                         page: "1",
-                        "filter[due_date]": formatDate(e.target.value),
+                        "filters[from_date]": formatDate(e.target.value),
                       },
               })
             );
           }}
           onBlur={formik.handleBlur}
-          error={!!formik.touched.due_date && !!formik.errors.due_date}
-          helperText={!!formik.touched.due_date && formik.errors.due_date}
+          error={!!formik.touched.from_date && !!formik.errors.from_date}
+          helperText={!!formik.touched.from_date && formik.errors.from_date}
+        />
+      </Grid>
+      <Grid item xs={4} lg={true}>
+        <DatePicker
+          size="small"
+          name="to_date"
+          label={t("byEndDate")}
+          value={formik.values.to_date}
+          onChange={(e) => {
+            formik.setFieldValue("to_date", e.target.value);
+            dispatch(
+              setFilters({
+                key:
+                  orderType === ORDER_TYPES.maintenance
+                    ? "maintenanceFilters"
+                    : "cleaningFilters",
+                value:
+                  orderType === ORDER_TYPES.maintenance
+                    ? {
+                        ...maintenanceFilters,
+                        page: "1",
+                        "filters[to_date]": formatDate(e.target.value),
+                      }
+                    : {
+                        ...cleaningFilters,
+                        page: "1",
+                        "filters[to_date]": formatDate(e.target.value),
+                      },
+              })
+            );
+          }}
+          onBlur={formik.handleBlur}
+          error={!!formik.touched.to_date && !!formik.errors.to_date}
+          helperText={!!formik.touched.to_date && formik.errors.to_date}
         />
       </Grid>
 
@@ -214,12 +249,12 @@ function OrdersFilters({ fixedFitlters, orderType }) {
                     ? {
                         ...maintenanceFilters,
                         page: "1",
-                        "filter[creator_role]": e.target.value,
+                        "filters[creator_role]": e.target.value,
                       }
                     : {
                         ...cleaningFilters,
                         page: "1",
-                        "filter[creator_role]": e.target.value,
+                        "filters[creator_role]": e.target.value,
                       },
               })
             );
@@ -258,12 +293,12 @@ function OrdersFilters({ fixedFitlters, orderType }) {
                       ? {
                           ...maintenanceFilters,
                           page: "1",
-                          "filter[property_id]": e.target.value,
+                          "filters[property_id]": e.target.value,
                         }
                       : {
                           ...cleaningFilters,
                           page: "1",
-                          "filter[property_id]": e.target.value,
+                          "filters[property_id]": e.target.value,
                         },
                 })
               );
@@ -300,12 +335,12 @@ function OrdersFilters({ fixedFitlters, orderType }) {
                     ? {
                         ...maintenanceFilters,
                         page: "1",
-                        "filter[unit_id]": e.target.value,
+                        "filters[unit_id]": e.target.value,
                       }
                     : {
                         ...cleaningFilters,
                         page: "1",
-                        "filter[unit_id]": e.target.value,
+                        "filters[unit_id]": e.target.value,
                       },
               })
             );
@@ -359,12 +394,12 @@ function OrdersFilters({ fixedFitlters, orderType }) {
                     ? {
                         ...maintenanceFilters,
                         page: "1",
-                        "filter[status]": e.target.value,
+                        "filters[status]": e.target.value,
                       }
                     : {
                         ...cleaningFilters,
                         page: "1",
-                        "filter[status]": e.target.value,
+                        "filters[status]": e.target.value,
                       },
               })
             );

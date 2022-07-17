@@ -11,6 +11,7 @@ import { Grid, Divider, Typography } from "@mui/material";
 import { mdiEyeOutline } from "@mdi/js";
 
 import IconButton from "../../../../shared/components/IconButton";
+import Loader from "../../../../shared/components/Loader";
 
 function OrderVisits() {
   const {
@@ -22,12 +23,13 @@ function OrderVisits() {
 
   const { orderID } = useParams();
 
-  const { data: orderDetails } = useGetOrderQuery(orderID);
+  const { isLoading, data: orderDetails } = useGetOrderQuery(orderID);
 
   const handleDialogOpen = (selectedQuotation) => {
     setSelectedQuotation(selectedQuotation);
     setOpenDialog(true);
   };
+  if (isLoading) return <Loader />;
   return (
     <Grid container spacing={2}>
       <Grid item container>
@@ -47,7 +49,7 @@ function OrderVisits() {
         </Grid>
 
         <Grid item xs={2}>
-          <Typography variant="subtitle2">{t("Status")}</Typography>
+          <Typography variant="subtitle2">{t("status")}</Typography>
         </Grid>
       </Grid>
 
@@ -68,7 +70,7 @@ function OrderVisits() {
 
           <Grid item xs={2}>
             <Typography component="span" variant="body2">
-              {formatDate(visit.date, formats.dateShort, language, false)}
+              {formatDate(visit.date, formats.dateShort, language)}
             </Typography>
           </Grid>
 

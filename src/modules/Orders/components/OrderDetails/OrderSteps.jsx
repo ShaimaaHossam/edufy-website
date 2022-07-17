@@ -120,7 +120,7 @@ function OrderSteps() {
         completed={
           orderDetails.status === STATUSES.confirmed ||
           orderDetails.status === STATUSES.assigned ||
-          orderDetails.status === STATUSES.in_progress ||
+          orderDetails.status === STATUSES.inprogress ||
           orderDetails.status === STATUSES.sp_done ||
           orderDetails.status === STATUSES.completed
         }
@@ -139,7 +139,7 @@ function OrderSteps() {
         active={orderDetails.status === STATUSES.confirmed}
         completed={
           orderDetails.status === STATUSES.assigned ||
-          orderDetails.status === STATUSES.in_progress ||
+          orderDetails.status === STATUSES.inprogress ||
           orderDetails.status === STATUSES.sp_done ||
           orderDetails.status === STATUSES.completed
         }
@@ -157,7 +157,7 @@ function OrderSteps() {
       <Step
         active={orderDetails.status === STATUSES.assigned}
         completed={
-          orderDetails.status === STATUSES.in_progress ||
+          orderDetails.status === STATUSES.inprogress ||
           orderDetails.status === STATUSES.sp_done ||
           orderDetails.status === STATUSES.completed
         }
@@ -166,12 +166,12 @@ function OrderSteps() {
           StepIconComponent={StepIcon}
           // error={status === STATUSES.canceled && !isAssigned}
         >
-          {t("in_progress")}
+          {t("inprogress")}
         </StepLabel>
       </Step>
 
       <Step
-        active={orderDetails.status === STATUSES.in_progress}
+        active={orderDetails.status === STATUSES.inprogress}
         completed={
           orderDetails.status === STATUSES.sp_done ||
           orderDetails.status === STATUSES.completed
@@ -186,7 +186,7 @@ function OrderSteps() {
       </Step>
 
       {/* <Step
-        active={status === STATUSES.in_progress}
+        active={status === STATUSES.inprogress}
         completed={status === STATUSES.completed}
       >
         <StepLabel StepIconComponent={StepIcon}>{t("inProgress")}</StepLabel>

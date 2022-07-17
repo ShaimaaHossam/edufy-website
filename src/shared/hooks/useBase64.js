@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { authSelector } from "../../redux/slices/auth";
 
-function useBase64(initialValue, onChange, setImagePath, imagePath, error) {
+function useBase64(initialValue, onChange, pushToBaseImages, isMulti, setImagePath, imagePath, error) {
   const [baseImage, setBaseImage] = useState(initialValue);
   const { token } = useSelector(authSelector);
   const [err, setError] = useState(error);
@@ -54,6 +54,11 @@ function useBase64(initialValue, onChange, setImagePath, imagePath, error) {
   useEffect(() => {
     onChange(imagePath);
   }, [imagePath]);
+  useEffect(() => {
+    if (isMulti) {
+      pushToBaseImages(baseImage);
+    }
+  }, [baseImage, isMulti]);
 
   return [baseImage, uploadImage, setBaseImage, err, setError];
 }

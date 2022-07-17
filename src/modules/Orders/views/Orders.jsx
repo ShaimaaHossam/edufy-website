@@ -62,9 +62,12 @@ function Orders() {
                         orderType === ORDER_TYPES.maintenance
                           ? {
                               ...maintenanceFilters,
-                              "filter[keyword]": keyword,
+                              "filtes[reference]": keyword,
                             }
-                          : { ...cleaningFilters, "filter[keyword]": keyword },
+                          : {
+                              ...cleaningFilters,
+                              "filters[reference]": keyword,
+                            },
                     })
                   )
                 }
@@ -75,7 +78,7 @@ function Orders() {
               <IconButton
                 aria-label="toggle filters visibility"
                 icon={mdiTune}
-                size="large"
+                size="medium"
                 shape="rounded"
                 variant="contained"
                 color={filtersShown ? "primary" : "default"}

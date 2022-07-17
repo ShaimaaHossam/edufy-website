@@ -26,6 +26,7 @@ import OrderUnits from "./OrderUnits";
 
 import { formatDate, formats } from "../../../../helpers/datetime";
 import { ORDER_TYPES } from "../../../../constants/system";
+import Loader from "../../Loader";
 
 function OrdersTable({ orderType }) {
   const {
@@ -40,18 +41,22 @@ function OrdersTable({ orderType }) {
     ordersFiltersSelector
   );
 
-  const { isLoading, data: orders } = useGetOrdersQuery(
+  const {
+    isLoading,
+    isFetching,
+    data: orders,
+  } = useGetOrdersQuery(
     orderType === ORDER_TYPES.maintenance
       ? {
-          // "filter[service_type]": orderType,
+          "filters[type]": orderType,
           ...maintenanceFilters,
         }
       : {
-          // "filter[service_type]": orderType,
+          "filters[type]": orderType,
           ...cleaningFilters,
         }
   );
-  console.log(orders);
+
   const tableLabels = [
     t("orderNo"),
     t("startDate"),
@@ -85,17 +90,17 @@ function OrdersTable({ orderType }) {
       </Link>,
 
       <Typography component="span" variant="body2">
-        {formatDate(
-          item.schedule.date,
-          formats.dateShortSpaceSeparated,
-          language,
-          false
-        )}
+        {item.visits?.[0]?.date &&
+          formatDate(
+            item.visits?.[0]?.date,
+            formats.dateShortSpaceSeparated,
+            language
+          )}
       </Typography>,
       <Grid container>
         <Grid item xs={12}>
           <Typography component="span" variant="body2">
-            {item.user.name}
+            {item.user?.name}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -128,14 +133,14 @@ function OrdersTable({ orderType }) {
         </Typography>
       </Typography>,
       <Typography component="span" variant="body2">
-        {language === "en" ? item.category.name.en : item.category.name.ar}
+        {language === "en" ? item.category?.name?.en : item.category?.name?.ar}
       </Typography>,
 
       <Typography component="span" variant="body2">
         {orderType === ORDER_TYPES.maintenance
           ? language === "en"
-            ? item.category.description.en
-            : item.category.description.ar
+            ? item.category?.description?.en
+            : item.category?.description?.ar
           : "type"}
       </Typography>,
 
@@ -143,7 +148,7 @@ function OrdersTable({ orderType }) {
     ],
   }));
 
-  if (isLoading) return null;
+  // if (isLoading || isFetching) return <Loader />;
 
   return !!tableData?.length ? (
     <Table

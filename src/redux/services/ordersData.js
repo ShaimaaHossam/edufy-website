@@ -3,7 +3,7 @@ export const order = {
   order_number: "A200-1001", // string like "A05-10202"
 
   service_type: "maintenance", // one string of (maintenance | plumbing | cleaning | otherType)
-  status: "canceled", // one string of (requested | assigned | pending  | in_progress | completed | canceled)
+  status: "canceled", // one string of (requested | assigned | pending  | inprogress | completed | canceled)
   due_date: "2022-06-19", // date string yyyy-mm-dd
   due_time_from: "14:00:00", // time string hh:mm
   due_time_to: "23:12", // time string hh:mm
