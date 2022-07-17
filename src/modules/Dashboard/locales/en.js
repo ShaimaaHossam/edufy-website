@@ -25,6 +25,12 @@ const en = {
   noTypes: "No Types",
   sr: "SR",
   noProperties: "There is no properties",
+  detailedOrders:"Detailed Orders",
+  material:"Material Name",
+  materialCost:"Material Cost",
+  materialQuantity:"Material Quantity",
+  orderNumber:"Order Number",
+  unitName:"Unit Name"
 };
 
 export default en;

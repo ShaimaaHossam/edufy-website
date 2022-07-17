@@ -46,10 +46,10 @@ function Wallet() {
           width: "50%",
         }}
       >
-        <Typography component="p" variant="subtitle2" mb={2}>
+        <Typography component="h6" variant="subtitle2" mb={2}>
           {t("accountCapacity")}
         </Typography>
-        <Typography component="p" variant="h6">
+        <Typography component="h6" variant="h6">
           {`${walletOverview.data.spending_limit} ${t("sr")}`}
         </Typography>
       </Grid>
@@ -64,10 +64,10 @@ function Wallet() {
           width: "50%",
         }}
       >
-        <Typography component="p" variant="subtitle2" mb={2}>
+        <Typography component="h6" variant="subtitle2" mb={2}>
           {t("deposit")}
         </Typography>
-        <Typography component="p" variant="h6">
+        <Typography component="h6" variant="h6">
           {`${walletOverview.data.deposits} ${t("sr")}`}
         </Typography>
       </Grid>
@@ -82,10 +82,10 @@ function Wallet() {
           width: "50%",
         }}
       >
-        <Typography component="p" variant="subtitle2" mb={2} color="#237df0">
+        <Typography component="h6" variant="subtitle2" mb={2} color="#237df0">
           {t("availableBlance")}
         </Typography>
-        <Typography component="p" variant="h6">
+        <Typography component="h6" variant="h6">
           {`${walletOverview.data.current_balance} ${t("sr")}`}
         </Typography>
       </Grid>
@@ -98,10 +98,10 @@ function Wallet() {
           width: "50%",
         }}
       >
-        <Typography component="p" variant="subtitle2" mb={2} color="#29bf56">
+        <Typography component="h6" variant="subtitle2" mb={2} color="#29bf56">
           {t("totalSpending")}
         </Typography>
-        <Typography component="p" variant="h6">
+        <Typography component="h6" variant="h6">
           {`${walletOverview.data.total_spending} ${t("sr")}`}
         </Typography>
       </Grid>

@@ -13,6 +13,7 @@ import Table from "../../../shared/components/Table";
 import NoContent from "../../../shared/views/NoContent";
 import Autocomplete from "../../../shared/components/inputs/Autocomplete";
 import DateRangePicker from "../../../shared/components/inputs/DateRangePicker";
+import MaterialDetailsTaple from "./MaterialDetailsTaple";
 
 import { formatDate } from "../../../helpers/datetime";
 
@@ -33,11 +34,8 @@ function MaterialSpending({ allRoles, allProperties }) {
 
   const tableLabels = [
     t("propertyName"),
-    t("service"),
-    t("subService"),
     t("numberOfOrders"),
     t("completedOrders"),
-    t("vistOrders"),
     t("cost"),
   ];
 
@@ -47,13 +45,7 @@ function MaterialSpending({ allRoles, allProperties }) {
     active: true,
     rowCells: [
       <Typography component="span" variant="body2">
-        {item.property.name}
-      </Typography>,
-      <Typography component="span" variant="body2">
-        {item.service.name}
-      </Typography>,
-      <Typography component="span" variant="body2">
-        {item.sub_service.name}
+        {item.property.title}
       </Typography>,
       <Typography component="span" variant="body2">
         {item.total_orders}
@@ -62,17 +54,15 @@ function MaterialSpending({ allRoles, allProperties }) {
         {item.completed_orders}
       </Typography>,
       <Typography component="span" variant="body2">
-        {item.visted_orders}
-      </Typography>,
-      <Typography component="span" variant="body2">
         {item.total_cost}
       </Typography>,
     ],
+    rowDetails: <MaterialDetailsTaple itemId={item.property.id} />,
   }));
 
   if (isLoading) return null;
 
-  return !!tableData?.length ? (
+  return (
     <Paper sx={{ p: 5, mt: 4 }}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -92,8 +82,8 @@ function MaterialSpending({ allRoles, allProperties }) {
                 dispatch(
                   setMaterialSpendingFilters({
                     ...materialSpendingFilters,
-                    "filter[date_from]": dates[0] && formatDate(dates[0]),
-                    "filter[date_to]": dates[1] && formatDate(dates[1]),
+                    "filters[date_from]": dates[0] && formatDate(dates[0]),
+                    "filters[date_to]": dates[1] && formatDate(dates[1]),
                   })
                 );
               }}
@@ -116,7 +106,7 @@ function MaterialSpending({ allRoles, allProperties }) {
                 dispatch(
                   setMaterialSpendingFilters({
                     ...materialSpendingFilters,
-                    "filter[property_id]": e.target.value,
+                    "filters[property_id]": e.target.value,
                   })
                 );
               }}
@@ -139,7 +129,7 @@ function MaterialSpending({ allRoles, allProperties }) {
                 dispatch(
                   setMaterialSpendingFilters({
                     ...materialSpendingFilters,
-                    "filter[user_role]": e.target.value,
+                    "filters[user_role]": e.target.value,
                   })
                 );
               }}
@@ -148,31 +138,34 @@ function MaterialSpending({ allRoles, allProperties }) {
         </Grid>
 
         <Grid item xs={12}>
-          <Table
-            tableLabel="Material Spending List"
-            headLabels={tableLabels}
-            rowsData={tableData}
-            metadata={{
-              total: materialSpending.meta.total || 10, // note that these values is temporary because the mock do not return metadata
-              pages: materialSpending.meta.lastPage || 10,
-              perPage: materialSpending.meta.perPage || 3,
-              currentPage: materialSpending.meta.currentPage || 1,
-            }}
-            onPageChange={(page, perPage) =>
-              dispatch(
-                setMaterialSpendingFilters({
-                  ...materialSpendingFilters,
-                  page,
-                  perPage,
-                })
-              )
-            }
-          />
+          {!!tableData?.length ? (
+            <Table
+              tableLabel="Material Spending List"
+              headLabels={tableLabels}
+              rowsData={tableData}
+              expandable
+              metadata={{
+                total: materialSpending.meta.total,
+                pages: materialSpending.meta.lastPage,
+                perPage: materialSpending.meta.perPage,
+                currentPage: materialSpending.meta.currentPage,
+              }}
+              onPageChange={(page, perPage) =>
+                dispatch(
+                  setMaterialSpendingFilters({
+                    ...materialSpendingFilters,
+                    page,
+                    perPage,
+                  })
+                )
+              }
+            />
+          ) : (
+            <NoContent />
+          )}
         </Grid>
       </Grid>
     </Paper>
-  ) : (
-    <NoContent />
   );
 }
 

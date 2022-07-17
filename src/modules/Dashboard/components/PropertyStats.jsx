@@ -13,11 +13,13 @@ import Table from "../../../shared/components/Table";
 import NoContent from "../../../shared/views/NoContent";
 import Autocomplete from "../../../shared/components/inputs/Autocomplete";
 import DateRangePicker from "../../../shared/components/inputs/DateRangePicker";
+import PropertyStatsDetails from "./PropertyStatsDetails";
 
 import { formatDate } from "../../../helpers/datetime";
 
 function PropertyStats({ allRoles, allProperties }) {
   const { t } = useTranslation("dashboard");
+
   const [userRole, setUserRole] = useState("");
   const [property, setProperty] = useState("");
   const [dates, setDates] = useState([]);
@@ -31,33 +33,21 @@ function PropertyStats({ allRoles, allProperties }) {
 
   const tableLabels = [
     t("propertyName"),
-    t("unit"),
-    t("createdBy"),
     t("totalOrders"),
-    t("openOrders"),
     t("completedOrders"),
     t("cost"),
   ];
 
   const tableData = propertyState?.data?.map((item) => ({
-    id: item.id,
+    id: item.property.title,
     clickable: false,
     active: true,
     rowCells: [
       <Typography component="span" variant="body2">
-        {item.property.name}
-      </Typography>,
-      <Typography component="span" variant="body2">
-        {item.unit.name}
-      </Typography>,
-      <Typography component="span" variant="body2">
-        {item.created_by.name}
+        {item.property.title}
       </Typography>,
       <Typography component="span" variant="body2">
         {item.total_orders}
-      </Typography>,
-      <Typography component="span" variant="body2">
-        {item.open_orders}
       </Typography>,
       <Typography component="span" variant="body2">
         {item.completed_orders}
@@ -66,11 +56,12 @@ function PropertyStats({ allRoles, allProperties }) {
         {item.total_cost}
       </Typography>,
     ],
+    rowDetails: <PropertyStatsDetails itemId={item.property.id} />,
   }));
 
   if (isLoading) return null;
 
-  return !!tableData?.length ? (
+  return (
     <Paper sx={{ p: 5, mt: 4 }}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -90,8 +81,8 @@ function PropertyStats({ allRoles, allProperties }) {
                 dispatch(
                   setPropertyStatsFilters({
                     ...propertyStatsFilters,
-                    "filter[date_from]": dates[0] && formatDate(dates[0]),
-                    "filter[date_to]": dates[1] && formatDate(dates[1]),
+                    "filters[date_from]": dates[0] && formatDate(dates[0]),
+                    "filters[date_to]": dates[1] && formatDate(dates[1]),
                   })
                 );
               }}
@@ -114,7 +105,7 @@ function PropertyStats({ allRoles, allProperties }) {
                 dispatch(
                   setPropertyStatsFilters({
                     ...propertyStatsFilters,
-                    "filter[property_id]": e.target.value,
+                    "filters[property_id]": e.target.value,
                   })
                 );
               }}
@@ -146,31 +137,34 @@ function PropertyStats({ allRoles, allProperties }) {
         </Grid>
 
         <Grid item xs={12}>
-          <Table
-            tableLabel="Property Stats List"
-            headLabels={tableLabels}
-            rowsData={tableData}
-            metadata={{
-              total: propertyState.meta.total || 10, // note that these values is temporary because the mock do not return metadata
-              pages: propertyState.meta.lastPage || 10,
-              perPage: propertyState.meta.perPage || 3,
-              currentPage: propertyState.meta.currentPage || 1,
-            }}
-            onPageChange={(page, perPage) =>
-              dispatch(
-                setPropertyStatsFilters({
-                  ...propertyStatsFilters,
-                  page,
-                  perPage,
-                })
-              )
-            }
-          />
+          {!!tableData?.length ? (
+            <Table
+              expandable
+              tableLabel="Property Stats List"
+              headLabels={tableLabels}
+              rowsData={tableData}
+              metadata={{
+                total: propertyState.meta.total || 10, // note that these values is temporary because the mock do not return metadata
+                pages: propertyState.meta.lastPage || 10,
+                perPage: propertyState.meta.perPage || 3,
+                currentPage: propertyState.meta.currentPage || 1,
+              }}
+              onPageChange={(page, perPage) =>
+                dispatch(
+                  setPropertyStatsFilters({
+                    ...propertyStatsFilters,
+                    page,
+                    perPage,
+                  })
+                )
+              }
+            />
+          ) : (
+            <NoContent />
+          )}
         </Grid>
       </Grid>
     </Paper>
-  ) : (
-    <NoContent />
   );
 }
 
