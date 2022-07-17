@@ -6,6 +6,7 @@ import { propertiesAPI } from "./services/properties";
 import { peopleAPI } from "./services/people";
 import { ordersAPI } from "./services/orders";
 import { rolesAPI } from "./services/roles";
+import { dashboardAPI } from "./services/dashboard";
 import { generalAPI } from "./services/general";
 import { accountingAPI } from "./services/accounting";
 
@@ -18,6 +19,8 @@ import { orderFormDataSlice } from "../modules/Orders/state/orderFormData";
 import { appSlice } from "../modules/App/state";
 
 import { peopleSlice } from "../modules/People/state";
+
+import { dashboardSlice } from "../modules/Dashboard/state";
 
 import { propertiesFiltersSlice } from "../modules/Properties/state/propertiesFiltersSlice";
 import { propertyFormStepperSlice } from "../modules/Properties/state/propertyFormStepperSlice";
@@ -32,6 +35,7 @@ export const store = configureStore({
     [peopleAPI.reducerPath]: peopleAPI.reducer,
     [ordersAPI.reducerPath]: ordersAPI.reducer,
     [rolesAPI.reducerPath]: rolesAPI.reducer,
+    [dashboardAPI.reducerPath]: dashboardAPI.reducer,
     [generalAPI.reducerPath]: generalAPI.reducer,
     [accountingAPI.reducerPath]: accountingAPI.reducer,
 
@@ -45,6 +49,7 @@ export const store = configureStore({
     [ordersFiltersSlice.name]: ordersFiltersSlice.reducer,
     [orderFormStepsSlice.name]: orderFormStepsSlice.reducer,
     [orderFormDataSlice.name]: orderFormDataSlice.reducer,
+    [dashboardSlice.name]: dashboardSlice.reducer,
 
     [propertiesFiltersSlice.name]: propertiesFiltersSlice.reducer,
     [propertyFormStepperSlice.name]: propertyFormStepperSlice.reducer,
@@ -59,6 +64,7 @@ export const store = configureStore({
       peopleAPI.middleware,
       ordersAPI.middleware,
       rolesAPI.middleware,
+      dashboardAPI.middleware,
       generalAPI.middleware,
       accountingAPI.middleware,
     ]),

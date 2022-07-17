@@ -89,7 +89,7 @@ function Notifications() {
         sms: NotificationsData.sms,
       });
     }
-  }, [NotificationsData, secondaryList]);
+  }, [NotificationsData, secondaryList, setValues]);
 
   useEffect(() => {
     dispatch(getNotifications());
