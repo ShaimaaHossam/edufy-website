@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, Fragment } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { appSelector, openMenu } from "../../state";
+import { isMenuOpenSelector, openMenu } from "../../state";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -82,7 +82,7 @@ function Navigation() {
 
   const dispatch = useDispatch();
 
-  const { isMenuOpen } = useSelector(appSelector);
+  const isMenuOpen = useSelector(isMenuOpenSelector);
 
   const { pathname } = useLocation();
   const permissions = usePermissions();
@@ -94,11 +94,11 @@ function Navigation() {
   const [openedItem, setOpenedItem] = useState("");
 
   useEffect(() => {
-    if (pathname === "/") {
-      const link = routingItems.find((item) => item.active === true).navLink;
-      navigate(link, { replace: true });
-    }
-  }, [pathname]);
+    if (pathname !== "/") return;
+
+    const firstActiveItem = routingItems.find((i) => i.active).navLink;
+    navigate(firstActiveItem, { replace: true });
+  }, [routingItems, pathname, navigate]);
 
   useEffect(() => {
     !isMenuOpen && setOpenedItem("");

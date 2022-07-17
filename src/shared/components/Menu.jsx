@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-import { Menu as MuiMenu, Badge, useTheme } from "@mui/material";
+import { Menu as MuiMenu, useTheme } from "@mui/material";
 
 function Menu({
   label,
@@ -11,52 +11,32 @@ function Menu({
   AnchorComponentOpenProps,
 
   menuWidth,
-
-  badgeContent,
-  badgeColor,
-  hideBadgeOnOpen,
+  menuHeight,
 
   children,
+
+  onMenuOpen,
+  onMenuClose,
+  onMenuScroll,
 }) {
   const { direction } = useTheme();
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isBadgeHidden, setIsBadgeHidden] = useState(false);
-
-  const renderAnchorElement = () => (
-    <AnchorComponent
-      {...AnchorComponentProps}
-      {...(!!anchorEl && AnchorComponentOpenProps)}
-      onClick={(e) => {
-        e.stopPropagation();
-        setAnchorEl(e.currentTarget);
-        !!badgeContent &&
-          hideBadgeOnOpen &&
-          !isBadgeHidden &&
-          setIsBadgeHidden(true);
-      }}
-      aria-label={`open ${label} menu`}
-      aria-controls={`${label}-menu`}
-      aria-haspopup="true"
-    />
-  );
 
   return (
     <>
-      {!!badgeContent ? (
-        <Badge
-          color={badgeColor}
-          badgeContent={!isBadgeHidden ? badgeContent : null}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: direction === "ltr" ? "right" : "left",
-          }}
-        >
-          {renderAnchorElement()}
-        </Badge>
-      ) : (
-        renderAnchorElement()
-      )}
+      <AnchorComponent
+        {...AnchorComponentProps}
+        {...(!!anchorEl && AnchorComponentOpenProps)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setAnchorEl(e.currentTarget);
+          onMenuOpen && onMenuOpen();
+        }}
+        aria-label={`open ${label} menu`}
+        aria-controls={`${label}-menu`}
+        aria-haspopup="true"
+      />
 
       <MuiMenu
         id={`${label}-menu`}
@@ -76,15 +56,18 @@ function Menu({
         onClose={(e) => {
           e.stopPropagation();
           setAnchorEl(null);
+          onMenuClose && onMenuClose();
         }}
         MenuListProps={{
           dense: true,
           sx: {
+            position: "relative",
             minWidth: menuWidth || 180,
             maxWidth: menuWidth || 340,
-            maxHeight: 400,
+            maxHeight: menuHeight || 400,
           },
         }}
+        {...(onMenuScroll && { PaperProps: { onScroll: onMenuScroll } })}
       >
         {children}
       </MuiMenu>
@@ -101,17 +84,11 @@ Menu.propTypes = {
   AnchorComponentOpenProps: PropTypes.object,
 
   menuWidth: PropTypes.number,
+  menuHeight: PropTypes.number,
 
-  badgeContent: PropTypes.node,
-  badgeColor: PropTypes.oneOf([
-    "info",
-    "error",
-    "warning",
-    "success",
-    "primary",
-    "secondary",
-  ]),
-  hideBadgeOnOpen: PropTypes.bool,
+  onMenuOpen: PropTypes.func,
+  onMenuClose: PropTypes.func,
+  onMenuScroll: PropTypes.func,
 };
 
 export default Menu;

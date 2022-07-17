@@ -56,7 +56,7 @@ function Properties() {
               <IconButton
                 aria-label="toggle filters visibility"
                 icon={mdiTune}
-                size="medium"
+                size="large"
                 shape="rounded"
                 variant="contained"
                 color={filtersShown ? "primary" : "default"}

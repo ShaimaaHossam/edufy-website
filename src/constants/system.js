@@ -61,7 +61,7 @@ export const ORDER_STATUSES = {
   assigned: "SPAssigned",
   inprogress: "InProgress",
   pending: "Pending",
-  sp_done: 'SPDone',
+  sp_done: "SPDone",
   completed: "Completed",
   canceled: "Canceled",
 };
@@ -72,27 +72,35 @@ export const MATERIAL_STATUSES = {
   created: "Created",
   confirmed: "Confirmed",
   rejected: "Rejected",
-}
+};
 
 export const SERVICE_STATUSES = {
   created: "Created",
   confirmed: "Confirmed",
   rejected: "Rejected",
-}
+};
 
 export const CLEANING_FREQUENCY_TYPES = [
   {
-    id: '1',
+    id: "1",
     name: {
       en: "Daily",
       ar: "يومي",
     },
   },
   {
-    id: '2',
+    id: "2",
     name: {
       en: "Custom",
       ar: "مخصص",
-    }
+    },
   },
-]
+];
+
+export const NOTIF_TYPES = {
+  order: "Orders",
+};
+export const NOTIF_EVENTS = {
+  orderCreated: "CompanyOrderCreatedEvent",
+  orderUpdated: "CompanyOrderUpdatedEvent",
+};

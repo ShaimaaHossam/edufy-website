@@ -10,6 +10,8 @@ import {
   mdiHelpCircleOutline,
 } from "@mdi/js";
 
+import notif_default from "../assets/notifications/default.svg";
+
 export const MODS_ICONS = {
   dashboard: mdiChartBar,
   properties: mdiOrderBoolDescendingVariant,
@@ -20,4 +22,8 @@ export const MODS_ICONS = {
   services: mdiTools,
   settings: mdiCogs,
   help: mdiHelpCircleOutline,
+};
+
+export const NOTIF_ICONS = {
+  default: notif_default,
 };
