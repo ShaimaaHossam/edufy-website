@@ -70,9 +70,9 @@ export const generalAPI = createApi({
       invalidatesTags: (res, error, { id }) =>
         res
           ? [
-            { type: "SERVICES-TREE", id },
-            { type: "SERVICES-LIST", id },
-          ]
+              { type: "SERVICES-TREE", id },
+              { type: "SERVICES-LIST", id },
+            ]
           : [],
     }),
 
@@ -83,8 +83,8 @@ export const generalAPI = createApi({
       }),
       transformResponse: (res) => res.data,
     }),
-    markNotificationRead: build.mutation({
-      query: ({ id }) => ({ url: `notifications/read/${id}`, method: "POST" }),
+    markNotificationRead: build.query({
+      query: (id) => ({ url: `notifications/read/${id}` }),
     }),
 
     uploadFiles: build.mutation({
@@ -113,5 +113,5 @@ export const {
   useUploadFilesMutation,
 
   useLazyGetNotificationsQuery,
-  useMarkNotificationReadMutation,
+  useLazyMarkNotificationReadQuery,
 } = generalAPI;

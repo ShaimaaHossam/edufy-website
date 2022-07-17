@@ -31,7 +31,7 @@ export const appSlice = createSlice({
     },
     setNotificationRead: (state, { payload }) => {
       state.notifications.items = state.notifications.items.map((i) =>
-        i.id === payload ? { ...i, is_read: true } : i
+        i.id === payload ? { ...i, been_read: true } : i
       );
     },
   },
