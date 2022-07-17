@@ -50,16 +50,15 @@ const CustomIconButton = styled(MuiIconButton, {
 }));
 
 const IconButton = forwardRef(
-  ({ icon, shape, variant, size = "small", color, ...restProps }, ref) => (
+  ({ icon, shape, variant, color, ...restProps }, ref) => (
     <CustomIconButton
       ref={ref}
       color={color}
       shape={shape}
-      size={size}
       variant={variant}
       {...restProps}
     >
-      <Icon icon={icon} />
+      <Icon icon={icon} size="small" />
     </CustomIconButton>
   )
 );

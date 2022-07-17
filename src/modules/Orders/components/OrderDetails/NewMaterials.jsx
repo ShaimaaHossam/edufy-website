@@ -18,11 +18,13 @@ import OrderAccordion from "./OrderAccordion";
 import { Fragment } from "react";
 
 import { MATERIAL_STATUSES } from "../../../../constants/system";
+import usePermissions from "../../../../shared/hooks/usePermissions";
 
 function NewMaterials() {
   const { t } = useTranslation("orders");
 
   const { orderID } = useParams();
+  const ordersPerms = usePermissions("order_transaction");
 
   const { data: orderDetails } = useGetOrderQuery(orderID);
   const [approveQuotation] = useApproveQuotationMutation();
@@ -47,25 +49,27 @@ function NewMaterials() {
                   {t("quotation")} #1
                 </Typography>
                 <Typography variant="body1" component="span">
-                  - quotation name - 15/06/2022 10:00 am
+                  {/* - quotation name - 15/06/2022 10:00 am */}
                 </Typography>
               </Grid>
-              <Grid item sx={{ ml: "auto" }}>
-                <Button
-                  variant="outlined"
-                  color="success"
-                  onClick={() => {
-                    const { id } = quotation;
-                    const status = MATERIAL_STATUSES.confirmed;
-                    approveQuotation({
-                      id,
-                      status,
-                    });
-                  }}
-                >
-                  {t("approveQuotation")}
-                </Button>
-              </Grid>
+              {ordersPerms.update && (
+                <Grid item sx={{ ml: "auto" }}>
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    onClick={() => {
+                      const { id } = quotation;
+                      const status = MATERIAL_STATUSES.confirmed;
+                      approveQuotation({
+                        id,
+                        status,
+                      });
+                    }}
+                  >
+                    {t("approveQuotation")}
+                  </Button>
+                </Grid>
+              )}
             </Grid>
             <Grid item xs={12}>
               <Divider variant="fullWidth" />
@@ -89,10 +93,11 @@ function NewMaterials() {
               <Grid item xs={2} lg={2}>
                 <Typography variant="subtitle2">{t("totalPrice")}</Typography>
               </Grid>
-
-              <Grid item xs={3} lg={1}>
-                <Typography variant="subtitle2">{t("actions")}</Typography>
-              </Grid>
+              {ordersPerms.update && (
+                <Grid item xs={3} lg={1}>
+                  <Typography variant="subtitle2">{t("actions")}</Typography>
+                </Grid>
+              )}
             </Grid>
 
             <Grid item xs={12}>
@@ -158,26 +163,27 @@ function NewMaterials() {
                         {material.total.toFixed(2)} {t("sr")}
                       </Typography>
                     </Grid>
-
-                    <Grid item xs={3} lg={1} container spacing={2}>
-                      <Grid item>
-                        <Button
-                          size="small"
-                          variant="outlined"
-                          color="error"
-                          onClick={() => {
-                            const { id } = material;
-                            const status = MATERIAL_STATUSES.rejected;
-                            approveRejectMaterial({
-                              id,
-                              status,
-                            });
-                          }}
-                        >
-                          {t("remove")}
-                        </Button>
+                    {ordersPerms.update && (
+                      <Grid item xs={3} lg={1} container spacing={2}>
+                        <Grid item>
+                          <Button
+                            size="small"
+                            variant="outlined"
+                            color="error"
+                            onClick={() => {
+                              const { id } = material;
+                              const status = MATERIAL_STATUSES.rejected;
+                              approveRejectMaterial({
+                                id,
+                                status,
+                              });
+                            }}
+                          >
+                            {t("remove")}
+                          </Button>
+                        </Grid>
                       </Grid>
-                    </Grid>
+                    )}
                   </Grid>
                 )}
               </Fragment>
