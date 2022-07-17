@@ -25,6 +25,13 @@ const ar = {
   noTypes: "لايوجد",
   sr: "ريال",
   noProperties: " لا يوجد عقارات ",
+  detailedOrders:"تفاصيل الاوردرات ",
+  material:"اسم الخامة",
+  materialCost:"تكلفة الخامه",
+  materialQuantity:"العدد",
+  unitName:"اسم الوحده",
+  orderNumber:"رقم الطلب"
+
 };
 
 export default ar;

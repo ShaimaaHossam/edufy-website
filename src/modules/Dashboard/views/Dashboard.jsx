@@ -7,6 +7,7 @@ import Orders from "../components/Ordes";
 import JobsByService from "../components/JobsByService";
 import MaterialSpending from "../components/MaterialSpending";
 import PropertyStats from "../components/PropertyStats";
+import DetailedOrders from "../components/DetailedOrders";
 
 function Dashboard() {
   const { data: allRoles = [] } = useGetAllRolesQuery();
@@ -14,7 +15,8 @@ function Dashboard() {
 
   return (
     <Box>
-      <Orders allRoles={allRoles} allProperties={allProperties} />
+      <Orders/>
+      <DetailedOrders allRoles={allRoles} allProperties={allProperties} />
       <JobsByService />
       <MaterialSpending allRoles={allRoles} allProperties={allProperties} />
       <PropertyStats allRoles={allRoles} allProperties={allProperties} />
