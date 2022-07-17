@@ -55,10 +55,11 @@ const IconButton = forwardRef(
       ref={ref}
       color={color}
       shape={shape}
+      size={size}
       variant={variant}
       {...restProps}
     >
-      <Icon icon={icon} size={size} />
+      <Icon icon={icon} />
     </CustomIconButton>
   )
 );
