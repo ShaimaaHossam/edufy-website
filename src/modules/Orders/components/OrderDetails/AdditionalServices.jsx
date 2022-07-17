@@ -10,13 +10,14 @@ import { useTranslation } from "react-i18next";
 import { Grid, Divider, Typography, Button } from "@mui/material";
 
 import { SERVICE_STATUSES, VAT_AMOUNT } from "../../../../constants/system";
+import usePermissions from "../../../../shared/hooks/usePermissions";
 
 function AdditionalServices() {
   const {
     t,
     i18n: { language },
   } = useTranslation("orders");
-
+  const ordersPerms = usePermissions("order_transaction");
   const { orderID } = useParams();
 
   const { data: orderDetails } = useGetOrderQuery(orderID);
@@ -41,10 +42,11 @@ function AdditionalServices() {
         <Grid item xs={3}>
           <Typography variant="subtitle2">{t("totalPrice")}</Typography>
         </Grid>
-
-        <Grid item xs={3}>
-          <Typography variant="subtitle2">{t("status")}</Typography>
-        </Grid>
+        {ordersPerms.update && (
+          <Grid item xs={3}>
+            <Typography variant="subtitle2">{t("actions")}</Typography>
+          </Grid>
+        )}
       </Grid>
 
       <Grid item xs={12}>
@@ -76,38 +78,39 @@ function AdditionalServices() {
               {service.total.toFixed(2)} {t("sr")}
             </Typography>
           </Grid>
+          {ordersPerms.update && (
+            <Grid item container xs={3} spacing={2}>
+              <Grid item>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="success"
+                  onClick={() => {
+                    const id = service.id;
+                    const status = SERVICE_STATUSES.created;
+                    approveRejectService({ id, status });
+                  }}
+                >
+                  {t("approve")}
+                </Button>
+              </Grid>
 
-          <Grid item container xs={3} spacing={2}>
-            <Grid item>
-              <Button
-                size="small"
-                variant="outlined"
-                color="success"
-                onClick={() => {
-                  const id = service.id;
-                  const status = SERVICE_STATUSES.created;
-                  approveRejectService({ id, status });
-                }}
-              >
-                {t("approve")}
-              </Button>
+              <Grid item>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="error"
+                  onClick={() => {
+                    const id = service.id;
+                    const status = SERVICE_STATUSES.rejected;
+                    approveRejectService({ id, status });
+                  }}
+                >
+                  {t("reject")}
+                </Button>
+              </Grid>
             </Grid>
-
-            <Grid item>
-              <Button
-                size="small"
-                variant="outlined"
-                color="error"
-                onClick={() => {
-                  const id = service.id;
-                  const status = SERVICE_STATUSES.rejected;
-                  approveRejectService({ id, status });
-                }}
-              >
-                {t("reject")}
-              </Button>
-            </Grid>
-          </Grid>
+          )}
         </Grid>
       ))}
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
   useGetOrderQuery,
@@ -30,11 +30,13 @@ import RejectedMaterials from "../components/OrderDetails/RejectedMaterials";
 import OrderVisits from "../components/OrderDetails/OrderVisits";
 import OrderActivityLog from "../components/OrderDetails/OrderActivityLog";
 import AdditionalServices from "../components/OrderDetails/AdditionalServices";
+import usePermissions from "../../../shared/hooks/usePermissions";
 
 function OrderDetails() {
   const { t } = useTranslation("orders");
-
+  const navigate = useNavigate();
   const { orderType, orderID } = useParams();
+  const ordersPerms = usePermissions("order_transaction");
 
   const { isFetching, data: orderDetails } = useGetOrderQuery(orderID);
 
@@ -42,6 +44,13 @@ function OrderDetails() {
 
   if (isFetching) return <Loader />;
   // if (error?.status === 404) return <NotFound />;
+
+  const cancelOrderHandler = async () => {
+    cancelOrder(orderID)
+      .unwrap()
+      .then(() => navigate(`/orders/${orderType}`))
+      .catch((error) => console.log(error.date));
+  };
 
   return (
     <Grid container spacing={3}>
@@ -126,18 +135,19 @@ function OrderDetails() {
         </Grid>
       )}
 
-      {(order.status === ORDER_STATUSES.created ||
-        order.status === ORDER_STATUSES.pending) && (
-        <Grid item xs={12} textAlign="right">
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => cancelOrder(orderID)}
-          >
-            {t("cancelOrder")}
-          </Button>
-        </Grid>
-      )}
+      {(orderDetails.status === ORDER_STATUSES.created ||
+        orderDetails.status === ORDER_STATUSES.pending) &&
+        ordersPerms.update && (
+          <Grid item xs={12} textAlign="right">
+            <Button
+              variant="contained"
+              color="error"
+              onClick={cancelOrderHandler}
+            >
+              {t("cancelOrder")}
+            </Button>
+          </Grid>
+        )}
     </Grid>
   );
 }

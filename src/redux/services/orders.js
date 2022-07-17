@@ -54,7 +54,7 @@ export const ordersAPI = createApi({
     cancelOrder: build.mutation({
       query: (id) => ({
         url: `/orders/update/${id}`,
-        method: "POST",
+        method: "PATCH",
         body: { status: "Canceled" },
       }),
       invalidatesTags: (res, error, id) => (res ? [{ type: "ORDER", id }] : []),

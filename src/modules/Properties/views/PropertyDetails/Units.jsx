@@ -52,7 +52,7 @@ function Units() {
         <IconButton
           aria-label="toggle filters visibility"
           icon={mdiTune}
-          size="large"
+          size="medium"
           shape="rounded"
           variant="contained"
           color={filtersShown ? "primary" : "default"}

@@ -2,9 +2,13 @@ import { Button, Divider, Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { MATERIAL_STATUSES } from "../../../../constants/system";
 import { useApproveRejectMaterialMutation } from "../../../../redux/services/orders";
+import usePermissions from "../../../../shared/hooks/usePermissions";
+
 const DialogRejectedQuotation = ({ selectedQuotation }) => {
   const { t } = useTranslation("orders");
+  const ordersPerms = usePermissions("order_transaction");
   const [approveRejectMaterial] = useApproveRejectMaterialMutation();
+
   return (
     <Grid
       container
@@ -99,20 +103,22 @@ const DialogRejectedQuotation = ({ selectedQuotation }) => {
                 {t("rejected")}
               </Typography>
             </Grid>
-            <Grid item>
-              <Button
-                onClick={() => {
-                  const id = material.id;
-                  const status = MATERIAL_STATUSES.created;
-                  approveRejectMaterial({ id, status });
-                }}
-                size="small"
-                variant="outlined"
-                color="success"
-              >
-                {t("approve")}
-              </Button>
-            </Grid>
+            {ordersPerms.update && (
+              <Grid item>
+                <Button
+                  onClick={() => {
+                    const id = material.id;
+                    const status = MATERIAL_STATUSES.created;
+                    approveRejectMaterial({ id, status });
+                  }}
+                  size="small"
+                  variant="outlined"
+                  color="success"
+                >
+                  {t("approve")}
+                </Button>
+              </Grid>
+            )}
           </Grid>
         ))}
 

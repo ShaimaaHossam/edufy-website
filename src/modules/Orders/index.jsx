@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate, useParams } from "react-router-dom";
 
 import NotFound from "../../shared/views/NotFound";
+import PermissionValidator from "../../shared/components/PermissionValidator";
 
 import Orders from "./views/Orders";
 import OrderDetails from "./views/OrderDetails";
@@ -8,6 +9,7 @@ import OrderForm from "./views/OrderForm";
 
 import { isUUIDValid } from "../../helpers/routing";
 import { ORDER_TYPES } from "../../constants/system";
+import usePermissions from "../../shared/hooks/usePermissions";
 
 const OrderTypeValidator = ({ children }) => {
   const { orderType } = useParams();
@@ -19,19 +21,21 @@ const OrderTypeValidator = ({ children }) => {
 const OrderIDValidator = ({ children }) => {
   const { orderID } = useParams();
 
-  return children;
-
   return isUUIDValid(orderID) ? children : <NotFound />;
 };
 
 function OrdersRoot() {
+  const ordersPerms = usePermissions("order_transaction");
+
   return (
     <Routes>
       <Route
         path="/:orderType"
         element={
           <OrderTypeValidator>
-            <Orders />
+            <PermissionValidator hasAccess={ordersPerms.access}>
+              <Orders />
+            </PermissionValidator>
           </OrderTypeValidator>
         }
       />
@@ -40,7 +44,9 @@ function OrdersRoot() {
         element={
           <OrderTypeValidator>
             <OrderIDValidator>
-              <OrderDetails />
+              <PermissionValidator hasAccess={ordersPerms.access_details}>
+                <OrderDetails />
+              </PermissionValidator>
             </OrderIDValidator>
           </OrderTypeValidator>
         }
@@ -49,7 +55,9 @@ function OrdersRoot() {
         path="/:orderType/add"
         element={
           <OrderTypeValidator>
-            <OrderForm formType="add" />
+            <PermissionValidator hasAccess={ordersPerms.create}>
+              <OrderForm formType="add" />
+            </PermissionValidator>
           </OrderTypeValidator>
         }
       />
