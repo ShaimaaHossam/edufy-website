@@ -24,7 +24,7 @@ function Header() {
     <Grid container spacing={1.5} alignItems="center">
       <Grid item>
         <IconButton
-          size="large"
+          size="medium"
           icon={isMenuOpen ? mdiBackburger : mdiMenu}
           color={isMenuOpen ? "primary" : "default"}
           shape="rounded"

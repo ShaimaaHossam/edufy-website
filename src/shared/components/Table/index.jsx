@@ -159,7 +159,7 @@ function Table({
                 page={metadata.currentPage - 1}
                 count={metadata.total}
                 rowsPerPage={metadata.perPage}
-                rowsPerPageOptions={[20, 50, 100]}
+                rowsPerPageOptions={[15, 20, 50, 100]}
                 onPageChange={(e, nextPage) =>
                   onPageChange(nextPage + 1, metadata.perPage)
                 }

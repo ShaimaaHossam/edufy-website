@@ -15,7 +15,7 @@ function NotificationMenu() {
       AnchorComponent={IconButton}
       AnchorComponentProps={{
         icon: mdiBellRingOutline,
-        size: "large",
+        size: "small",
         color: "primary",
         variant: "contained",
       }}

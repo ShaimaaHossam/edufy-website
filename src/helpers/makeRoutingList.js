@@ -1,5 +1,5 @@
 import { MODS_ICONS } from "../constants/icons";
-
+import { ORDER_TYPES } from "../constants/system";
 function makeRoutingList({ permissions }) {
   const {
     dashboard: dashboardPerms,
@@ -44,6 +44,18 @@ function makeRoutingList({ permissions }) {
       navLink: "/orders",
       icon: MODS_ICONS.orders,
       active: orderPerms.access,
+      subItems: [
+        {
+          navName: "maintenance",
+          navLink: `/orders/${ORDER_TYPES.maintenance}`,
+          active: true,
+        },
+        {
+          navName: "cleaning",
+          navLink: `/orders/${ORDER_TYPES.cleaning}`,
+          active: true,
+        },
+      ],
     },
     {
       navName: "accounting",

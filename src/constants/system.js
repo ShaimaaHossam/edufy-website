@@ -49,3 +49,50 @@ export const TRANSACTION_TYPES = {
   walletRecharge: "wallet_recharge",
   creditNote: "credit_note",
 };
+
+export const ORDER_TYPES = {
+  maintenance: "maintenance",
+  cleaning: "cleaning",
+};
+
+export const ORDER_STATUSES = {
+  created: "Created",
+  confirmed: "Confirmed",
+  assigned: "SPAssigned",
+  inprogress: "InProgress",
+  pending: "Pending",
+  sp_done: 'SPDone',
+  completed: "Completed",
+  canceled: "Canceled",
+};
+
+export const VAT_AMOUNT = 0.15;
+
+export const MATERIAL_STATUSES = {
+  created: "Created",
+  confirmed: "Confirmed",
+  rejected: "Rejected",
+}
+
+export const SERVICE_STATUSES = {
+  created: "Created",
+  confirmed: "Confirmed",
+  rejected: "Rejected",
+}
+
+export const CLEANING_FREQUENCY_TYPES = [
+  {
+    id: '1',
+    name: {
+      en: "Daily",
+      ar: "يومي",
+    },
+  },
+  {
+    id: '2',
+    name: {
+      en: "Custom",
+      ar: "مخصص",
+    }
+  },
+]

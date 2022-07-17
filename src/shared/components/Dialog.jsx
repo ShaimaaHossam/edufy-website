@@ -25,7 +25,12 @@ const Transition = forwardRef(function Transition(
   return <Slide ref={ref} direction={slideDir} {...restProps} />;
 });
 
-const sizeMapping = { small: "xs", medium: "sm", large: "md" };
+const sizeMapping = {
+  small: "xs",
+  medium: "sm",
+  large: "md",
+  extraLarge: "lg",
+};
 
 function SideDialog({
   withoutTitle,
@@ -126,7 +131,7 @@ SideDialog.propTypes = {
   ]),
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  size: PropTypes.oneOf(["small", "medium", "large"]),
+  size: PropTypes.oneOf(["small", "medium", "large", "extraLarge"]),
   sided: PropTypes.bool,
 
   onExited: PropTypes.func,

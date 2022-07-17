@@ -4,6 +4,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 
 import { propertiesAPI } from "./services/properties";
 import { peopleAPI } from "./services/people";
+import { ordersAPI } from "./services/orders";
 import { rolesAPI } from "./services/roles";
 import { dashboardAPI } from "./services/dashboard";
 import { generalAPI } from "./services/general";
@@ -11,6 +12,9 @@ import { accountingAPI } from "./services/accounting";
 
 import { authSlice } from "./slices/auth";
 import { settingsSlice } from "./slices/settings";
+import { ordersFiltersSlice } from "./slices/ordersFilters";
+import { orderFormStepsSlice } from "../modules/Orders/state/orderFormSteps";
+import { orderFormDataSlice } from "../modules/Orders/state/orderFormData";
 
 import { appSlice } from "../modules/App/state";
 
@@ -29,6 +33,7 @@ export const store = configureStore({
   reducer: {
     [propertiesAPI.reducerPath]: propertiesAPI.reducer,
     [peopleAPI.reducerPath]: peopleAPI.reducer,
+    [ordersAPI.reducerPath]: ordersAPI.reducer,
     [rolesAPI.reducerPath]: rolesAPI.reducer,
     [dashboardAPI.reducerPath]: dashboardAPI.reducer,
     [generalAPI.reducerPath]: generalAPI.reducer,
@@ -41,6 +46,9 @@ export const store = configureStore({
 
     [peopleSlice.name]: peopleSlice.reducer,
 
+    [ordersFiltersSlice.name]: ordersFiltersSlice.reducer,
+    [orderFormStepsSlice.name]: orderFormStepsSlice.reducer,
+    [orderFormDataSlice.name]: orderFormDataSlice.reducer,
     [dashboardSlice.name]: dashboardSlice.reducer,
 
     [propertiesFiltersSlice.name]: propertiesFiltersSlice.reducer,
@@ -54,6 +62,7 @@ export const store = configureStore({
     getDefaultMiddleware().concat([
       propertiesAPI.middleware,
       peopleAPI.middleware,
+      ordersAPI.middleware,
       rolesAPI.middleware,
       dashboardAPI.middleware,
       generalAPI.middleware,

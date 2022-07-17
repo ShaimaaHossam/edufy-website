@@ -41,7 +41,7 @@ function NotificationMenu() {
       AnchorComponent={IconButton}
       AnchorComponentProps={{
         icon: mdiTranslate,
-        size: "large",
+        size: "small",
         color: "primary",
         variant: "contained",
       }}
