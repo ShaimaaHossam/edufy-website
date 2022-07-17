@@ -46,12 +46,12 @@ function makeRoutingList({ permissions }) {
       active: orderPerms.access,
       subItems: [
         {
-          navName: "maintenance",
+          navName: "maintenanceOrders",
           navLink: `/orders/${ORDER_TYPES.maintenance}`,
           active: true,
         },
         {
-          navName: "cleaning",
+          navName: "cleaningOrders",
           navLink: `/orders/${ORDER_TYPES.cleaning}`,
           active: true,
         },

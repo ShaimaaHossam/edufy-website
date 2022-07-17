@@ -5,6 +5,8 @@ const en = {
   properties: "Properties",
   people: "People",
   orders: "Orders",
+  maintenanceOrders: "Maintenance Orders",
+  cleaningOrders: "Cleaning Orders",
   accounting: "Accounting",
   wallet: "Wallet",
   invoices: "Invoices",

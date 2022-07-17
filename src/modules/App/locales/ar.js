@@ -5,6 +5,8 @@ const ar = {
   properties: "العقارات",
   people: "الأشخاص",
   orders: "الطلبات",
+  maintenanceOrders: "طلبات الصيانة",
+  cleaningOrders: "طلبات النظافة",
   accounting: "الحسابات",
   wallet: "المحفظة",
   invoices: "الفواتير",
