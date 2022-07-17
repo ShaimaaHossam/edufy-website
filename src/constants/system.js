@@ -98,25 +98,9 @@ export const CLEANING_FREQUENCY_TYPES = [
 ];
 
 export const NOTIF_TYPES = {
-  orders: "orders",
-  accounting: "accounting",
-  communication: "communication",
+  order: "Orders",
 };
 export const NOTIF_EVENTS = {
-  orderSubmitted: "order_submitted",
-  visitSubmitted: "visit_submitted",
-  visitReminder: "visit_reminder",
-  orderAssigned: "order_assigned",
-  orderStarted: "order_started",
-  materialQuoteAdded: "material_quote_added",
-  spFinished: "sp_finished",
-  orderFinished: "order_finished",
-  orderCanceled: "order_canceled",
-
-  invoiceAdded: "invoice_added",
-  invoicePaid: "invoice_paid",
-  creditNoteAdded: "credit_note_added",
-  walletRechargeFaild: "wallet_recharge_faild",
-
-  freshdeskUpdate: "freshdesk_update",
+  orderCreated: "CompanyOrderCreatedEvent",
+  orderUpdated: "CompanyOrderUpdatedEvent",
 };
