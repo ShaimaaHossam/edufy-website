@@ -63,7 +63,7 @@ function OrderForm({ formType }) {
           }}
         >
           <Grid container>
-            <Grid item xs={3} xl={2}>
+            <Grid item xs={3} xl={3}>
               <CreateOrderSteps currentStep={currentStep} />
             </Grid>
             <Grid item xs={9} xl={6}>

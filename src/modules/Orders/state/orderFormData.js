@@ -9,6 +9,7 @@ export const orderFormDataSlice = createSlice({
         selectedPropertyId: "",
         selectedUnits: [],
         categories: [],
+        totalPrice: 0,
         editService: true,
         selectedServiceIdxToEdit: null,
     },

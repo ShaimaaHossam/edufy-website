@@ -162,7 +162,10 @@ function RejectedMaterials() {
         open={openDialog}
         onClose={() => setOpenDialog(false)}
       >
-        <DialogRejectedQuotation selectedQuotation={selectedQuotation} />
+        <DialogRejectedQuotation
+          orderStatus={orderDetails.status}
+          selectedQuotation={selectedQuotation}
+        />
       </Dialog>
     </Grid>
   );

@@ -1,15 +1,6 @@
 import { useEffect, Fragment, useState } from "react";
 
 import { Button, Grid, Paper, Typography, Box, Divider } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { useFormik } from "formik";
-
-import * as Yup from "yup";
-
-import { incrementSteps } from "../../../state/orderFormSteps";
-import { useSelector, useDispatch } from "react-redux";
-import { orderFormDataSelector, updateVal } from "../../../state/orderFormData";
-
 import {
   mdiAlertCircle,
   mdiCheck,
@@ -18,34 +9,38 @@ import {
   mdiPencil,
   mdiPlus,
 } from "@mdi/js";
+import { useTranslation } from "react-i18next";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { endOfToday } from "date-fns";
 
+import { incrementSteps } from "../../../state/orderFormSteps";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  useGetAllCompanyServicesQuery,
+  useGetCompanyServicesTreeQuery,
+} from "../../../../../redux/services/general";
+import { ORDER_TYPES } from "../../../../../constants/system";
+import { orderFormDataSelector, updateVal } from "../../../state/orderFormData";
+
+import DatePicker from "../../../../../shared/components/inputs/DatePicker";
+import TimePicker from "../../../../../shared/components/inputs/TimePicker";
+import Dialog from "../../../../../shared/components/Dialog";
+import TextInput from "../../../../../shared/components/inputs/TextInput";
+import ImageDropbox from "../../../../../shared/components/inputs/ImageDropbox";
+import useNavigationBlocker from "../../../../../shared/hooks/useNavigationBlocker";
 import Icon from "../../../../../shared/components/Icon";
 import NumberInput from "../../../../../shared/components/inputs/NumberInput";
 import Autocomplete from "../../../../../shared/components/inputs/Autocomplete";
 import CounterInput from "../../../../../shared/components/inputs/CounterInput";
 import IconButton from "../../../../../shared/components/IconButton";
 
-import {
-  useGetAllCompanyServicesQuery,
-  useGetCompanyServicesTreeQuery,
-} from "../../../../../redux/services/general";
-import { ORDER_TYPES } from "../../../../../constants/system";
-
-import DatePicker from "../../../../../shared/components/inputs/DatePicker";
-import DateTimePicker from "../../../../../shared/components/inputs/DateTimePicker";
-import { endOfToday } from "date-fns";
-import TimePicker from "../../../../../shared/components/inputs/TimePicker";
-import Dialog from "../../../../../shared/components/Dialog";
-import TextInput from "../../../../../shared/components/inputs/TextInput";
-import ImageDropbox from "../../../../../shared/components/inputs/ImageDropbox";
-import useNavigationBlocker from "../../../../../shared/hooks/useNavigationBlocker";
-
 const SelectSerivces = () => {
   const {
     t,
     i18n: { language },
   } = useTranslation("orders");
-  const { categories } = useSelector(orderFormDataSelector);
+  const { categories, totalPrice } = useSelector(orderFormDataSelector);
   const dispatch = useDispatch();
   const [selectedIndex, setSelectedIndex] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
@@ -68,7 +63,8 @@ const SelectSerivces = () => {
       categories: [
         {
           service_type: "",
-          all_services_types: null,
+          service_type_label: "",
+
           services: [
             {
               category_id: "",
@@ -128,13 +124,19 @@ const SelectSerivces = () => {
     onSubmit: (values) => {
       // category.schedule.date.toLocaleString()
       var categories = values.categories;
+      var total;
       categories.forEach((category) => {
         category.schedule = {
           date_string: category.schedule.date.toLocaleString("en-US"),
           from_time_string: category.schedule.from_time.toLocaleString("en-US"),
           to_time_string: category.schedule.to_time.toLocaleString("en-US"),
         };
+        total = category.services.reduce((acc, service) => {
+          return acc + service.unit_cost * service.quantity;
+        }, 0);
       });
+
+      dispatch(updateVal({ key: "totalPrice", val: total }));
       dispatch(updateVal({ key: "categories", val: categories }));
 
       dispatch(incrementSteps());
@@ -278,6 +280,7 @@ const SelectSerivces = () => {
   const resetCategory = (index, serviceType) => {
     formik.setFieldValue(`categories[${index}]`, {
       service_type: serviceType,
+      // service_type_label: serviceType.name.en,
       services: [
         {
           category_id: "",
@@ -524,8 +527,8 @@ const SelectSerivces = () => {
                                     <Typography my={2} variant="subtitle1">
                                       {t("selectService")}
                                     </Typography>
-                                    <Grid container spacing={2}>
-                                      <Grid item xs={6}>
+                                    <Grid container spacing={1}>
+                                      <Grid item xs={12} xl={6}>
                                         <Autocomplete
                                           name={`categories[${index}].services[${idx}].category_id`}
                                           label={t("service")}
@@ -562,29 +565,8 @@ const SelectSerivces = () => {
                                               ?.services?.[idx]?.category_id
                                           }
                                         />
-                                        <Box
-                                          sx={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            mt: 1,
-                                          }}
-                                          component="div"
-                                        >
-                                          <Icon
-                                            icon={mdiAlertCircle}
-                                            size="small"
-                                            color="warning"
-                                          />
-                                          <Typography
-                                            ml={1}
-                                            color={"#FFA303"}
-                                            variant="subtitle2"
-                                          >
-                                            {t("servicePriceVatInfo")}
-                                          </Typography>
-                                        </Box>
                                       </Grid>
-                                      <Grid item xs={2}>
+                                      <Grid item xs={4} xl={2}>
                                         <CounterInput
                                           name={`categories[${index}].services[${idx}].quantity`}
                                           label={t("quantity")}
@@ -608,7 +590,7 @@ const SelectSerivces = () => {
                                           }
                                         />
                                       </Grid>
-                                      <Grid item xs={2}>
+                                      <Grid item xs={4} xl={2}>
                                         <NumberInput
                                           name="unit_cost"
                                           label={t("unitPrice")}
@@ -622,7 +604,7 @@ const SelectSerivces = () => {
                                           isDecimal
                                         />
                                       </Grid>
-                                      <Grid item xs={2}>
+                                      <Grid item xs={4} xl={2}>
                                         <NumberInput
                                           name="total_cost"
                                           label={t("totalPrice")}
@@ -636,6 +618,29 @@ const SelectSerivces = () => {
                                           fixedValue
                                           isDecimal
                                         />
+                                      </Grid>
+                                      <Grid item xs={12}>
+                                        <Box
+                                          sx={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            mt: 1,
+                                          }}
+                                          component="div"
+                                        >
+                                          <Icon
+                                            icon={mdiAlertCircle}
+                                            size="small"
+                                            color="warning"
+                                          />
+                                          <Typography
+                                            ml={1}
+                                            color={"#FFA303"}
+                                            variant="subtitle2"
+                                          >
+                                            {t("servicePriceVatInfo")}
+                                          </Typography>
+                                        </Box>
                                       </Grid>
                                       {service.category_id && (
                                         <Grid item xs={12}>
@@ -828,7 +833,7 @@ const SelectSerivces = () => {
                                           {t("selectService")}
                                         </Typography>
                                         <Grid container spacing={2}>
-                                          <Grid item xs={6}>
+                                          <Grid item xs={12} xl={6}>
                                             <Autocomplete
                                               name={`categories[${index}].services[${idx}].category_id`}
                                               label={t("service")}
@@ -871,29 +876,8 @@ const SelectSerivces = () => {
                                                 ]?.services?.[idx]?.category_id
                                               }
                                             />
-                                            <Box
-                                              sx={{
-                                                display: "flex",
-                                                alignItems: "center",
-                                                mt: 1,
-                                              }}
-                                              component="div"
-                                            >
-                                              <Icon
-                                                icon={mdiAlertCircle}
-                                                size="small"
-                                                color="warning"
-                                              />
-                                              <Typography
-                                                ml={1}
-                                                color={"#FFA303"}
-                                                variant="subtitle2"
-                                              >
-                                                {t("servicePriceVatInfo")}
-                                              </Typography>
-                                            </Box>
                                           </Grid>
-                                          <Grid item xs={2}>
+                                          <Grid item xs={4} xl={2}>
                                             <CounterInput
                                               name={`categories[${index}].services[${idx}].quantity`}
                                               label={t("quantity")}
@@ -921,7 +905,7 @@ const SelectSerivces = () => {
                                               }
                                             />
                                           </Grid>
-                                          <Grid item xs={2}>
+                                          <Grid item xs={4} xl={2}>
                                             <NumberInput
                                               name="unit_cost"
                                               label={t("unitPrice")}
@@ -935,7 +919,7 @@ const SelectSerivces = () => {
                                               isDecimal
                                             />
                                           </Grid>
-                                          <Grid item xs={2}>
+                                          <Grid item xs={4} xl={2}>
                                             <NumberInput
                                               name="total_cost"
                                               label={t("totalPrice")}
@@ -949,6 +933,29 @@ const SelectSerivces = () => {
                                               fixedValue
                                               isDecimal
                                             />
+                                          </Grid>
+                                          <Grid item xs={12}>
+                                            <Box
+                                              sx={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                mt: 1,
+                                              }}
+                                              component="div"
+                                            >
+                                              <Icon
+                                                icon={mdiAlertCircle}
+                                                size="small"
+                                                color="warning"
+                                              />
+                                              <Typography
+                                                ml={1}
+                                                color={"#FFA303"}
+                                                variant="subtitle2"
+                                              >
+                                                {t("servicePriceVatInfo")}
+                                              </Typography>
+                                            </Box>
                                           </Grid>
                                           {service.category_id && (
                                             <Grid item xs={12}>
@@ -1020,7 +1027,7 @@ const SelectSerivces = () => {
                             {t("scheduleService")}
                           </Typography>
                           <Grid container spacing={2}>
-                            <Grid item xs={6}>
+                            <Grid item xs={4} xl={6}>
                               <Paper>
                                 <DatePicker
                                   name={`categories[${index}].schedule.date`}
@@ -1046,7 +1053,7 @@ const SelectSerivces = () => {
                                 />
                               </Paper>
                             </Grid>
-                            <Grid item xs={3}>
+                            <Grid item xs={4} xl={3}>
                               <Paper>
                                 <TimePicker
                                   name={`categories[${index}].schedule.from_time`}
@@ -1069,7 +1076,7 @@ const SelectSerivces = () => {
                                 />
                               </Paper>
                             </Grid>
-                            <Grid item xs={3}>
+                            <Grid item xs={4} xl={3}>
                               <Paper>
                                 <TimePicker
                                   name={`categories[${index}].schedule.to_time`}
@@ -1112,7 +1119,13 @@ const SelectSerivces = () => {
           }}
         >
           <Button
-            disabled={!!formik.errors.categories}
+            disabled={
+              (!!formik.errors.categories &&
+                formik.values.categories.length > 1) ||
+              (formik.values.categories.length <= 1 && !formik.dirty) ||
+              (!!formik.errors.categories &&
+                formik.values.categories.length <= 1)
+            }
             variant="outlined"
             sx={{ mt: 1, mr: 1 }}
             onClick={addService}

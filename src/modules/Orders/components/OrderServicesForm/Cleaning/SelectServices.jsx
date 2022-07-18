@@ -145,10 +145,6 @@ const SelectSerivces = () => {
   const { setFieldValue, values, errors } = formik;
 
   useEffect(() => {
-    console.log(values);
-  }, [values]);
-
-  useEffect(() => {
     if (!isLoading) {
       setServicess(
         allServices.filter(

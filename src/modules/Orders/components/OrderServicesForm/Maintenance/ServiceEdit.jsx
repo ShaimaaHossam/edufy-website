@@ -444,7 +444,7 @@ const ServiceEdit = () => {
                                     {t("selectService")}
                                   </Typography>
                                   <Grid container spacing={2}>
-                                    <Grid item xs={6}>
+                                    <Grid item xs={12} xl={6}>
                                       <Autocomplete
                                         name={`category.services[${idx}].category_id`}
                                         label={t("service")}
@@ -484,29 +484,8 @@ const ServiceEdit = () => {
                                           ]?.category_id
                                         }
                                       />
-                                      <Box
-                                        sx={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                          mt: 1,
-                                        }}
-                                        component="div"
-                                      >
-                                        <Icon
-                                          icon={mdiAlertCircle}
-                                          size="small"
-                                          color="warning"
-                                        />
-                                        <Typography
-                                          ml={1}
-                                          color={"#FFA303"}
-                                          variant="subtitle2"
-                                        >
-                                          {t("servicePriceVatInfo")}
-                                        </Typography>
-                                      </Box>
                                     </Grid>
-                                    <Grid item xs={2}>
+                                    <Grid item xs={4} xl={2}>
                                       <CounterInput
                                         name={`category.services[${idx}].quantity`}
                                         label={t("quantity")}
@@ -534,7 +513,7 @@ const ServiceEdit = () => {
                                         }
                                       />
                                     </Grid>
-                                    <Grid item xs={2}>
+                                    <Grid item xs={4} xl={2}>
                                       <NumberInput
                                         name="unit_cost"
                                         label={t("unitPrice")}
@@ -548,7 +527,7 @@ const ServiceEdit = () => {
                                         isDecimal
                                       />
                                     </Grid>
-                                    <Grid item xs={2}>
+                                    <Grid item xs={4} xl={2}>
                                       <NumberInput
                                         name="total_cost"
                                         label={t("totalPrice")}
@@ -562,6 +541,29 @@ const ServiceEdit = () => {
                                         fixedValue
                                         isDecimal
                                       />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                      <Box
+                                        sx={{
+                                          display: "flex",
+                                          alignItems: "center",
+                                          mt: 1,
+                                        }}
+                                        component="div"
+                                      >
+                                        <Icon
+                                          icon={mdiAlertCircle}
+                                          size="small"
+                                          color="warning"
+                                        />
+                                        <Typography
+                                          ml={1}
+                                          color={"#FFA303"}
+                                          variant="subtitle2"
+                                        >
+                                          {t("servicePriceVatInfo")}
+                                        </Typography>
+                                      </Box>
                                     </Grid>
                                     {service.category_id && (
                                       <Grid item xs={12}>
@@ -754,7 +756,7 @@ const ServiceEdit = () => {
                                         {t("selectService")}
                                       </Typography>
                                       <Grid container spacing={2}>
-                                        <Grid item xs={6}>
+                                        <Grid item xs={12} xl={6}>
                                           <Autocomplete
                                             name={`category.services[${idx}].category_id`}
                                             label={t("service")}
@@ -792,29 +794,8 @@ const ServiceEdit = () => {
                                                 ?.services?.[idx]?.category_id
                                             }
                                           />
-                                          <Box
-                                            sx={{
-                                              display: "flex",
-                                              alignItems: "center",
-                                              mt: 1,
-                                            }}
-                                            component="div"
-                                          >
-                                            <Icon
-                                              icon={mdiAlertCircle}
-                                              size="small"
-                                              color="warning"
-                                            />
-                                            <Typography
-                                              ml={1}
-                                              color={"#FFA303"}
-                                              variant="subtitle2"
-                                            >
-                                              {t("servicePriceVatInfo")}
-                                            </Typography>
-                                          </Box>
                                         </Grid>
-                                        <Grid item xs={2}>
+                                        <Grid item xs={4} xl={2}>
                                           <CounterInput
                                             name={`category.services[${idx}].quantity`}
                                             label={t("quantity")}
@@ -838,7 +819,7 @@ const ServiceEdit = () => {
                                             }
                                           />
                                         </Grid>
-                                        <Grid item xs={2}>
+                                        <Grid item xs={4} xl={2}>
                                           <NumberInput
                                             name="unit_cost"
                                             label={t("unitPrice")}
@@ -852,7 +833,7 @@ const ServiceEdit = () => {
                                             isDecimal
                                           />
                                         </Grid>
-                                        <Grid item xs={2}>
+                                        <Grid item xs={4} xl={2}>
                                           <NumberInput
                                             name="total_cost"
                                             label={t("totalPrice")}
@@ -866,6 +847,29 @@ const ServiceEdit = () => {
                                             fixedValue
                                             isDecimal
                                           />
+                                        </Grid>
+                                        <Grid item xs={12} x>
+                                          <Box
+                                            sx={{
+                                              display: "flex",
+                                              alignItems: "center",
+                                              mt: 1,
+                                            }}
+                                            component="div"
+                                          >
+                                            <Icon
+                                              icon={mdiAlertCircle}
+                                              size="small"
+                                              color="warning"
+                                            />
+                                            <Typography
+                                              ml={1}
+                                              color={"#FFA303"}
+                                              variant="subtitle2"
+                                            >
+                                              {t("servicePriceVatInfo")}
+                                            </Typography>
+                                          </Box>
                                         </Grid>
                                         {service.category_id && (
                                           <Grid item xs={12}>
@@ -934,7 +938,7 @@ const ServiceEdit = () => {
                           {t("scheduleService")}
                         </Typography>
                         <Grid container spacing={2}>
-                          <Grid item xs={6}>
+                          <Grid item xs={4} xl={6}>
                             <Paper>
                               <DatePicker
                                 name={`category.schedule.date`}
@@ -956,7 +960,7 @@ const ServiceEdit = () => {
                               />
                             </Paper>
                           </Grid>
-                          <Grid item xs={3}>
+                          <Grid item xs={4} xl={3}>
                             <Paper>
                               <TimePicker
                                 name={`category.schedule.from_time`}
@@ -979,7 +983,7 @@ const ServiceEdit = () => {
                               />
                             </Paper>
                           </Grid>
-                          <Grid item xs={3}>
+                          <Grid item xs={4} xl={3}>
                             <Paper>
                               <TimePicker
                                 name={`category.schedule.to_time`}

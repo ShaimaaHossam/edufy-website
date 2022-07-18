@@ -69,19 +69,19 @@ export const ordersAPI = createApi({
         res ? [{ type: "ORDER", id: orderID }] : [],
     }),
     approveRejectMaterial: build.mutation({
-      query: ({ id, ...status }) => ({
+      query: ({ id, ...marafeq_status }) => ({
         url: `/orders/materials/update/${id}`,
         method: "PATCH",
-        body: status,
+        body: marafeq_status,
       }),
       invalidatesTags: (res, error, { orderID }) =>
         res ? [{ type: "ORDER", id: orderID }] : [],
     }),
     approveRejectService: build.mutation({
-      query: ({ id, ...status }) => ({
+      query: ({ id, ...marafeq_status }) => ({
         url: `/orders/additional-services/update/${id}`,
         method: "PATCH",
-        body: status,
+        body: marafeq_status,
       }),
       invalidatesTags: (res, error, { orderID }) =>
         res ? [{ type: "ORDER", id: orderID }] : [],

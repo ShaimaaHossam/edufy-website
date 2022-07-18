@@ -1,34 +1,17 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import {
-  useGetOrderQuery,
-  useApproveMaterialMutation,
-  useRejectMaterialMutation,
-} from "../../../../redux/services/orders";
-// import { order } from "../../../../redux/services/ordersData";
+import { useGetOrderQuery } from "../../../../redux/services/orders";
 
 import { useTranslation } from "react-i18next";
 
 import { Grid, Divider, Typography, Button, Chip } from "@mui/material";
-import { mdiCheck, mdiClose, mdiEyeOutline } from "@mdi/js";
-
-import Icon from "../../../../shared/components/Icon";
+import { mdiEyeOutline } from "@mdi/js";
 
 import IconButton from "../../../../shared/components/IconButton";
 import Dialog from "../../../../shared/components/Dialog";
-import DialogRejectedQuotation from "./DialogRejectedQuotation";
+
 import DialogApprovedQuotation from "./DialogApprovedQuotation";
-
-// function SimpleDialog(props) {
-//   const { onClose, open } = props;
-
-//   return (
-//     <Dialog onClose={onClose} open={open}>
-//       Hello
-//     </Dialog>
-//   );
-// }
 
 function ApprovedMaterials() {
   const { t } = useTranslation("orders");
@@ -169,7 +152,10 @@ function ApprovedMaterials() {
         open={openDialog}
         onClose={() => setOpenDialog(false)}
       >
-        <DialogApprovedQuotation selectedQuotation={selectedQuotation} />
+        <DialogApprovedQuotation
+          orderStatus={orderDetails.status}
+          selectedQuotation={selectedQuotation}
+        />
       </Dialog>
     </Grid>
   );

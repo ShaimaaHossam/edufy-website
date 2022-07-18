@@ -59,7 +59,7 @@ function OrdersFilters({ fixedFitlters, orderType }) {
     validateOnBlur: false,
     validateOnChange: false,
     initialValues: {
-      from_date: null,
+      date_from: null,
       to_date: null,
       creator_role: [],
       property_id: fixedFitlters?.propertyID || "",
@@ -158,11 +158,11 @@ function OrdersFilters({ fixedFitlters, orderType }) {
       <Grid item xs={4} lg={true}>
         <DatePicker
           size="small"
-          name="from_date"
+          name="date_from"
           label={t("byStartDate")}
-          value={formik.values.from_date}
+          value={formik.values.date_from}
           onChange={(e) => {
-            formik.setFieldValue("from_date", e.target.value);
+            formik.setFieldValue("date_from", e.target.value);
             dispatch(
               setFilters({
                 key:
@@ -174,19 +174,19 @@ function OrdersFilters({ fixedFitlters, orderType }) {
                     ? {
                         ...maintenanceFilters,
                         page: "1",
-                        "filters[from_date]": formatDate(e.target.value),
+                        "filters[date_from]": formatDate(e.target.value),
                       }
                     : {
                         ...cleaningFilters,
                         page: "1",
-                        "filters[from_date]": formatDate(e.target.value),
+                        "filters[date_from]": formatDate(e.target.value),
                       },
               })
             );
           }}
           onBlur={formik.handleBlur}
-          error={!!formik.touched.from_date && !!formik.errors.from_date}
-          helperText={!!formik.touched.from_date && formik.errors.from_date}
+          error={!!formik.touched.date_from && !!formik.errors.date_from}
+          helperText={!!formik.touched.date_from && formik.errors.date_from}
         />
       </Grid>
       <Grid item xs={4} lg={true}>

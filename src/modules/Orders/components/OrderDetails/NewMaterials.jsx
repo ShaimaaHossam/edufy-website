@@ -17,8 +17,12 @@ import Icon from "../../../../shared/components/Icon";
 import OrderAccordion from "./OrderAccordion";
 import { Fragment } from "react";
 
-import { MATERIAL_STATUSES } from "../../../../constants/system";
+import {
+  MATERIAL_STATUSES,
+  ORDER_STATUSES,
+} from "../../../../constants/system";
 import usePermissions from "../../../../shared/hooks/usePermissions";
+import { formats, formatDate } from "../../../../helpers/datetime";
 
 function NewMaterials() {
   const { t } = useTranslation("orders");
@@ -40,36 +44,50 @@ function NewMaterials() {
 
   return (
     <>
-      {orderDetails.new_quotations.map((quotation) => (
+      {orderDetails.new_quotations.map((quotation, idx) => (
         <Fragment key={quotation.id}>
-          <Grid container spacing={2}>
+          <Grid
+            container
+            spacing={2}
+            mt={idx !== 0 && 4}
+            sx={{
+              borderWidth: `${idx !== 0 ? "2.5px" : "0px"} 0px 0px 0px`,
+              borderColor: "divider",
+              backgroundColor: "white",
+              borderStyle: "dashed",
+              ml: 0,
+              width: "100%",
+            }}
+          >
             <Grid item container>
               <Grid item>
                 <Typography variant="subtitle1" component="span">
-                  {t("quotation")} #1
+                  {t("quotation")} #{quotation.reference}{" "}
                 </Typography>
                 <Typography variant="body1" component="span">
-                  {/* - quotation name - 15/06/2022 10:00 am */}
+                  {/*- quotation name  */}-{" "}
+                  {formatDate(quotation.created_at, formats.dateTimeShort)}
                 </Typography>
               </Grid>
-              {ordersPerms.update && (
-                <Grid item sx={{ ml: "auto" }}>
-                  <Button
-                    variant="outlined"
-                    color="success"
-                    onClick={() => {
-                      const { id } = quotation;
-                      const status = MATERIAL_STATUSES.confirmed;
-                      approveQuotation({
-                        id,
-                        status,
-                      });
-                    }}
-                  >
-                    {t("approveQuotation")}
-                  </Button>
-                </Grid>
-              )}
+              {ordersPerms.update &&
+                orderDetails.status !== ORDER_STATUSES.canceled && (
+                  <Grid item sx={{ ml: "auto" }}>
+                    <Button
+                      variant="outlined"
+                      color="success"
+                      onClick={() => {
+                        const { id } = quotation;
+                        const marafeq_status = MATERIAL_STATUSES.confirmed;
+                        approveQuotation({
+                          id,
+                          marafeq_status,
+                        });
+                      }}
+                    >
+                      {t("approveQuotation")}
+                    </Button>
+                  </Grid>
+                )}
             </Grid>
             <Grid item xs={12}>
               <Divider variant="fullWidth" />
@@ -93,11 +111,13 @@ function NewMaterials() {
               <Grid item xs={2} lg={2}>
                 <Typography variant="subtitle2">{t("totalPrice")}</Typography>
               </Grid>
-              {ordersPerms.update && (
-                <Grid item xs={3} lg={1}>
-                  <Typography variant="subtitle2">{t("actions")}</Typography>
-                </Grid>
-              )}
+              {ordersPerms.update &&
+                orderDetails.status !== ORDER_STATUSES.canceled &&
+                orderDetails.status !== ORDER_STATUSES.canceled && (
+                  <Grid item xs={3} lg={1}>
+                    <Typography variant="subtitle2">{t("actions")}</Typography>
+                  </Grid>
+                )}
             </Grid>
 
             <Grid item xs={12}>
@@ -120,14 +140,18 @@ function NewMaterials() {
                       }}
                     >
                       {material.attachments.length > 0 ? (
-                        <Grid item xs={2}>
-                          <img
-                            width={60}
-                            style={{ borderRadius: "5px" }}
-                            src="https://images.unsplash.com/photo-1581166931041-b62d92d52852?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-                            alt=""
-                          />
-                        </Grid>
+                        <>
+                          {material.attachments.map((attachment) => (
+                            <Grid item xs={2}>
+                              <img
+                                width={60}
+                                style={{ borderRadius: "5px" }}
+                                src={material.attachments}
+                                alt=""
+                              />
+                            </Grid>
+                          ))}
+                        </>
                       ) : (
                         <Grid item xs={12}>
                           <Typography component="span" variant="body2">
@@ -163,27 +187,29 @@ function NewMaterials() {
                         {material.total.toFixed(2)} {t("sr")}
                       </Typography>
                     </Grid>
-                    {ordersPerms.update && (
-                      <Grid item xs={3} lg={1} container spacing={2}>
-                        <Grid item>
-                          <Button
-                            size="small"
-                            variant="outlined"
-                            color="error"
-                            onClick={() => {
-                              const { id } = material;
-                              const status = MATERIAL_STATUSES.rejected;
-                              approveRejectMaterial({
-                                id,
-                                status,
-                              });
-                            }}
-                          >
-                            {t("remove")}
-                          </Button>
+                    {ordersPerms.update &&
+                      orderDetails.status !== ORDER_STATUSES.canceled && (
+                        <Grid item xs={3} lg={1} container spacing={2}>
+                          <Grid item>
+                            <Button
+                              size="small"
+                              variant="outlined"
+                              color="error"
+                              onClick={() => {
+                                const { id } = material;
+                                const marafeq_status =
+                                  MATERIAL_STATUSES.rejected;
+                                approveRejectMaterial({
+                                  id,
+                                  marafeq_status,
+                                });
+                              }}
+                            >
+                              {t("remove")}
+                            </Button>
+                          </Grid>
                         </Grid>
-                      </Grid>
-                    )}
+                      )}
                   </Grid>
                 )}
               </Fragment>
@@ -215,7 +241,8 @@ function NewMaterials() {
 
                 <Grid item xs={5} xl={3}>
                   <Typography component="span" variant="body2">
-                    {((quotation.total * 15) / 100).toFixed(2)} {t("sr")}
+                    {((quotation.total * VAT_AMOUNT) / 100).toFixed(2)}{" "}
+                    {t("sr")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -233,9 +260,10 @@ function NewMaterials() {
                     variant="subtitle1"
                     color="primary"
                   >
-                    {(quotation.total + (quotation.total * 15) / 100).toFixed(
-                      2
-                    )}{" "}
+                    {(
+                      quotation.total +
+                      (quotation.total * VAT_AMOUNT) / 100
+                    ).toFixed(2)}{" "}
                     {t("sr")}
                   </Typography>
                 </Grid>

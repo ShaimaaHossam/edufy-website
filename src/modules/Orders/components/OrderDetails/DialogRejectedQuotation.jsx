@@ -1,10 +1,14 @@
 import { Button, Divider, Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { MATERIAL_STATUSES } from "../../../../constants/system";
+import {
+  MATERIAL_STATUSES,
+  ORDER_STATUSES,
+  VAT_AMOUNT,
+} from "../../../../constants/system";
 import { useApproveRejectMaterialMutation } from "../../../../redux/services/orders";
 import usePermissions from "../../../../shared/hooks/usePermissions";
 
-const DialogRejectedQuotation = ({ selectedQuotation }) => {
+const DialogRejectedQuotation = ({ selectedQuotation, orderStatus }) => {
   const { t } = useTranslation("orders");
   const ordersPerms = usePermissions("order_transaction");
   const [approveRejectMaterial] = useApproveRejectMaterialMutation();
@@ -52,9 +56,11 @@ const DialogRejectedQuotation = ({ selectedQuotation }) => {
         <Grid item xs={2}>
           <Typography variant="subtitle2">{t("status")}</Typography>
         </Grid>
-        <Grid item xs={2}>
-          <Typography variant="subtitle2">{t("action")}</Typography>
-        </Grid>
+        {ordersPerms.update && orderStatus !== ORDER_STATUSES.canceled && (
+          <Grid item xs={2}>
+            <Typography variant="subtitle2">{t("action")}</Typography>
+          </Grid>
+        )}
       </Grid>
 
       <Grid item xs={12}>
@@ -103,13 +109,13 @@ const DialogRejectedQuotation = ({ selectedQuotation }) => {
                 {t("rejected")}
               </Typography>
             </Grid>
-            {ordersPerms.update && (
+            {ordersPerms.update && orderStatus !== ORDER_STATUSES.canceled && (
               <Grid item>
                 <Button
                   onClick={() => {
                     const id = material.id;
-                    const status = MATERIAL_STATUSES.created;
-                    approveRejectMaterial({ id, status });
+                    const marafeq_status = MATERIAL_STATUSES.created;
+                    approveRejectMaterial({ id, marafeq_status });
                   }}
                   size="small"
                   variant="outlined"
@@ -146,7 +152,8 @@ const DialogRejectedQuotation = ({ selectedQuotation }) => {
 
           <Grid item xs={5} xl={2}>
             <Typography component="span" variant="body2">
-              {((selectedQuotation.total * 15) / 100).toFixed(2)} {t("sr")}
+              {((selectedQuotation.total * VAT_AMOUNT) / 100).toFixed(2)}{" "}
+              {t("sr")}
             </Typography>
           </Grid>
         </Grid>
@@ -162,7 +169,7 @@ const DialogRejectedQuotation = ({ selectedQuotation }) => {
             <Typography component="span" variant="subtitle1" color="primary">
               {(
                 selectedQuotation.total +
-                (selectedQuotation.total * 15) / 100
+                (selectedQuotation.total * VAT_AMOUNT) / 100
               ).toFixed(2)}{" "}
               {t("sr")}
             </Typography>

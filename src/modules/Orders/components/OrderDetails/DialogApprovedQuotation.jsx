@@ -119,7 +119,8 @@ const DialogApprovedQuotation = ({ selectedQuotation }) => {
 
           <Grid item xs={5} xl={2}>
             <Typography component="span" variant="body2">
-              {((selectedQuotation.total * 15) / 100).toFixed(2)} {t("sr")}
+              {((selectedQuotation.total * VAT_AMOUNT) / 100).toFixed(2)}{" "}
+              {t("sr")}
             </Typography>
           </Grid>
         </Grid>
@@ -135,7 +136,7 @@ const DialogApprovedQuotation = ({ selectedQuotation }) => {
             <Typography component="span" variant="subtitle1" color="primary">
               {(
                 selectedQuotation.total +
-                (selectedQuotation.total * 15) / 100
+                (selectedQuotation.total * VAT_AMOUNT) / 100
               ).toFixed(2)}{" "}
               {t("sr")}
             </Typography>

@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -21,6 +21,7 @@ import Icon from "../../../../../shared/components/Icon";
 import { mdiAlertCircle, mdiDeleteOutline, mdiPencil } from "@mdi/js";
 import IconButton from "../../../../../shared/components/IconButton";
 import { useAddOrderMutation } from "../../../../../redux/services/orders";
+import { VAT_AMOUNT } from "../../../../../constants/system";
 
 const OrderSummery = () => {
   const {
@@ -30,9 +31,8 @@ const OrderSummery = () => {
   const { orderType } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { type, selectedPropertyId, selectedUnits, categories } = useSelector(
-    orderFormDataSelector
-  );
+  const { type, selectedPropertyId, selectedUnits, categories, totalPrice } =
+    useSelector(orderFormDataSelector);
   const [canLeave, setCanLeave] = useState(false);
   const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
 
@@ -65,10 +65,13 @@ const OrderSummery = () => {
     categories.forEach((category) => {
       formatedCategory.push({
         id: category.service_type,
-        note: {
-          attachments: category.attachments,
-          note: category.note,
-        },
+        note:
+          category.note === ""
+            ? null
+            : {
+                attachments: category.attachments,
+                note: category.note,
+              },
         schedule: {
           date: changeDateFormatToDDMMYYYY(
             category.schedule.date_string.split(",")[0]
@@ -264,16 +267,18 @@ const OrderSummery = () => {
               </Grid>
             </Grid>
             <Grid item container xs={12} spacing={3} direction="column">
-              <Grid item>
-                <Button
-                  color="primary"
-                  variant="text"
+              {!!category.note && (
+                <Grid item>
+                  <Button
+                    color="primary"
+                    variant="text"
 
-                  // onClick={() => handleDialogOpen(index)}
-                >
-                  {t("viewOrderNotes")}
-                </Button>
-              </Grid>
+                    // onClick={() => handleDialogOpen(index)}
+                  >
+                    {t("viewOrderNotes")}
+                  </Button>
+                </Grid>
+              )}
               <Grid item display={"flex"} justifyContent={"space-between"}>
                 <Typography variant="subtitle2">
                   {t("totalServicesPrice")}
@@ -287,6 +292,46 @@ const OrderSummery = () => {
           </Grid>
         </Fragment>
       ))}
+      <Grid item container my={3} spacing={1}>
+        <Grid item container>
+          <Grid item xs={10} xl={11}>
+            <Typography variant="subtitle2">{t("costWithoutVat")}</Typography>
+          </Grid>
+
+          <Grid item xs={2} xl={1}>
+            <Typography component="span" variant="body2">
+              {totalPrice.toFixed(2)} {t("sr")}
+            </Typography>
+          </Grid>
+        </Grid>
+
+        <Grid item container>
+          <Grid item xs={10} xl={11}>
+            <Typography variant="subtitle2">{t("vatCost")}</Typography>
+          </Grid>
+
+          <Grid item xs={2} xl={1}>
+            <Typography component="span" variant="body2">
+              {((totalPrice * VAT_AMOUNT) / 100).toFixed(2)} {t("sr")}
+            </Typography>
+          </Grid>
+        </Grid>
+
+        <Grid item container>
+          <Grid item xs={10} xl={11}>
+            <Typography variant="subtitle1" color="primary">
+              {t("totalMaterialsInvoice")}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={2} xl={1}>
+            <Typography component="span" variant="subtitle1" color="primary">
+              {(totalPrice + (totalPrice * VAT_AMOUNT) / 100).toFixed(2)}{" "}
+              {t("sr")}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
       <Grid item xs={12} display={"flex"} justifyContent={"space-between"}>
         <Button
           variant="outlined"
