@@ -103,16 +103,22 @@ function ActionsMenu() {
         }}
         MenuListProps={{ dense: true }}
       >
-        <MenuItem onClick={() => navigate("/people/add")}>
-          <ListItemText>{t("add_user")}</ListItemText>
-        </MenuItem>
-
-        <MenuItem onClick={() => navigate("/orders/add")}>
-          <ListItemText>{t("add_order")}</ListItemText>
-        </MenuItem>
-
         <MenuItem onClick={() => navigate("/properties/add")}>
-          <ListItemText>{t("add_property")}</ListItemText>
+          <ListItemText>{t("addProperty")}</ListItemText>
+        </MenuItem>
+
+        <MenuItem onClick={() => navigate("/people/customers/add")}>
+          <ListItemText>{t("addCustomer")}</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => navigate("/people/team/add")}>
+          <ListItemText>{t("addTeamMember")}</ListItemText>
+        </MenuItem>
+
+        <MenuItem onClick={() => navigate("/orders/maintenance/add")}>
+          <ListItemText>{t("addMaintenanceOrder")}</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => navigate("/orders/cleaning/add")}>
+          <ListItemText>{t("addCleaningOrder")}</ListItemText>
         </MenuItem>
       </Menu>
     </>

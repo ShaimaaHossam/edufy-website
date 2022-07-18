@@ -5,6 +5,8 @@ const en = {
   properties: "Properties",
   people: "People",
   orders: "Orders",
+  maintenanceOrders: "Maintenance Orders",
+  cleaningOrders: "Cleaning Orders",
   accounting: "Accounting",
   wallet: "Wallet",
   invoices: "Invoices",
@@ -21,13 +23,19 @@ const en = {
   rolesAndPermissions: "Roles And Permissions",
   servicesSettings: "Services Settings",
 
-  my_profile: "My Profile",
+  myProfile: "My Profile",
+
   logout: "Logout",
 
   add: "Add",
-  add_user: "Add User",
-  add_order: "Add Order",
-  add_property: "Add Property",
+  addProperty: "Add Property",
+  addCustomer: "Add Customer",
+  addTeamMember: "Add Team Member",
+  addMaintenanceOrder: "Add Maintenance Order",
+  addCleaningOrder: "Add Cleaning Order",
+
+  CompanyOrderCreatedEvent: "Order #{{model.reference}} is created.",
+  CompanyOrderUpdatedEvent: "Order #{{model.reference}} is updated.",
 };
 
 export default en;

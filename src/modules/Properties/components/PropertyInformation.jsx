@@ -32,7 +32,7 @@ function PropertyInformation() {
             <IconButton
               aria-label="edit property"
               icon={mdiPencil}
-              size="medium"
+              size="large"
               variant="contained"
               component={Link}
               to={`/properties/edit/${propertyID}`}

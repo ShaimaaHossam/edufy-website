@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { appSelector } from "../../state";
+import { isMenuOpenSelector } from "../../state";
 
 import {
   Box,
@@ -99,7 +99,7 @@ const Main = styled("main", {
 }));
 
 function AppContainer({ children }) {
-  const { isMenuOpen } = useSelector(appSelector);
+  const isMenuOpen = useSelector(isMenuOpenSelector);
 
   return (
     <Box minHeight="100vh" display="flex" flexDirection="column">

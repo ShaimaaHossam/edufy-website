@@ -40,6 +40,7 @@ const en = {
   createNewManager: "Add new manager",
   propertyServices: "Property Services",
   units: "Units",
+  specs: "Specs",
   assets: "Assets",
   orders: "Orders",
   searchUnits: "Search in Units",

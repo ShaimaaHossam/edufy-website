@@ -17,6 +17,7 @@ import Loader from "../../../../shared/components/Loader";
 import TabPanel from "../../../../shared/components/TabPanel";
 
 import Units from "./Units";
+import Specs from "./Specs";
 import Assets from "./Assets";
 import Orders from "./Orders";
 import PropertyInformation from "../../components/PropertyInformation";
@@ -68,6 +69,12 @@ function PropertyDetails() {
               )}
 
               <Tab
+                label={t("specs")}
+                value="specs"
+                id="tab-specs"
+                aria-controls="tabpanel-specs"
+              />
+              <Tab
                 label={t("assets")}
                 value="assets"
                 id="tab-assets"
@@ -86,6 +93,10 @@ function PropertyDetails() {
                 <Units />
               </TabPanel>
             )}
+
+            <TabPanel index="specs" value={tabIdx}>
+              <Specs />
+            </TabPanel>
 
             <TabPanel index="assets" value={tabIdx}>
               <Assets />

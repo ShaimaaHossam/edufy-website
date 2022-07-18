@@ -5,6 +5,8 @@ const ar = {
   properties: "العقارات",
   people: "الأشخاص",
   orders: "الطلبات",
+  maintenanceOrders: "طلبات الصيانة",
+  cleaningOrders: "طلبات النظافة",
   accounting: "الحسابات",
   wallet: "المحفظة",
   invoices: "الفواتير",
@@ -21,13 +23,19 @@ const ar = {
   rolesAndPermissions: "الادوار و التصاريح",
   servicesSettings: "اعدادات الخدمات ",
 
-  my_profile: "حسابي",
+  myProfile: "حسابي",
+
   logout: "تسجيل خروج",
 
   add: "إضافة",
-  add_user: "إضافة مستخدم",
-  add_order: "إضافة طلب",
-  add_property: "إضافة عقار",
+  addProperty: "إضافة عقار",
+  addCustomer: "إضافة عميل",
+  addTeamMember: "إضافة عضو بالفريق",
+  addMaintenanceOrder: "إضافة طلب صيانة",
+  addCleaningOrder: "إضافة طلب تنظيف",
+
+  CompanyOrderCreatedEvent: "تم إنشاء الطلب #{{model.referencs}}.",
+  CompanyOrderUpdatedEvent: "تم تحديث الطلب #{{model.referencs}}.",
 };
 
 export default ar;
