@@ -10,6 +10,7 @@ const en = {
   createdBy: "Created by",
   property: "Property",
   units: "Units",
+  unit: "Unit",
   services: "Services",
   cost: "Cost",
   type: "Type",
@@ -23,7 +24,7 @@ const en = {
   orderVisits: "Order Visits",
 
   activityLog: "Activity Log",
-  timeStamp: "Time Stamp",
+  timeStamp: "TimeStamp",
 
   newQuotations: "New Quotations",
   remove: "Remove",

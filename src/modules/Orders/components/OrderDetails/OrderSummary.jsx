@@ -83,7 +83,7 @@ function OrderSummary() {
 
       <Grid item xs container spacing={1} direction="column">
         <Grid item>
-          <Typography variant="subtitle2">{t("units")}</Typography>
+          <Typography variant="subtitle2">{t("unit")}</Typography>
         </Grid>
         <Grid item>
           <Typography variant="body2">{order.unit.title}</Typography>

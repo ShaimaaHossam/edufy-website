@@ -42,7 +42,7 @@ const ServiceEdit = () => {
   } = useTranslation("orders");
   const dispatch = useDispatch();
 
-  const { categories, selectedServiceIdxToEdit } = useSelector(
+  const { categories, selectedServiceIdxToEdit, totalPrice } = useSelector(
     orderFormDataSelector
   );
   const [canLeave, setCanLeave] = useState(false);
@@ -51,6 +51,8 @@ const ServiceEdit = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState("");
   const [imagePath, setImagePath] = useState("");
+  const [price, setPrice] = useState("");
+
   const {
     isLoading,
     isFetching,
@@ -125,6 +127,18 @@ const ServiceEdit = () => {
         },
       };
 
+      const total = data.services.reduce((acc, service) => {
+        return acc + service.unit_cost * service.quantity;
+      }, 0);
+
+      if (total !== price) {
+        dispatch(
+          updateVal({
+            key: "totalPrice",
+            val: totalPrice - price + total,
+          })
+        );
+      }
       dispatch(updateCategory({ index: selectedServiceIdxToEdit, val: data }));
       dispatch(updateVal({ key: "editService", val: false }));
     },
@@ -142,6 +156,14 @@ const ServiceEdit = () => {
       );
     }
   }, [isLoading, isFetching, allServices]);
+
+  useEffect(() => {
+    setPrice(
+      categories[selectedServiceIdxToEdit].services.reduce((acc, service) => {
+        return acc + service.unit_cost * service.quantity;
+      }, 0)
+    );
+  }, []);
 
   const handleClick = (index) => {
     if (selectedIndex === index) {
@@ -848,7 +870,7 @@ const ServiceEdit = () => {
                                             isDecimal
                                           />
                                         </Grid>
-                                        <Grid item xs={12} x>
+                                        <Grid item xs={12}>
                                           <Box
                                             sx={{
                                               display: "flex",

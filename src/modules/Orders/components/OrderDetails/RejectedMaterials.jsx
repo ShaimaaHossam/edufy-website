@@ -73,14 +73,14 @@ function RejectedMaterials() {
         <Grid key={quotation.id} item container>
           <Grid item xs={3}>
             <Typography component="span" variant="body2">
-              {quotation.reference}
+              #{quotation.reference}
             </Typography>
           </Grid>
           <Grid item xs={2}>
             <Typography component="span" variant="body2">
               {
                 quotation.materials.filter(
-                  (material) => material.status === "Rejected"
+                  (material) => material.marafeq_status === "Rejected"
                 ).length
               }
             </Typography>
@@ -163,7 +163,7 @@ function RejectedMaterials() {
         onClose={() => setOpenDialog(false)}
       >
         <DialogRejectedQuotation
-          orderStatus={orderDetails.status}
+          orderStatus={orderDetails.marafeq_status}
           selectedQuotation={selectedQuotation}
         />
       </Dialog>

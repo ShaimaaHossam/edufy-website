@@ -72,16 +72,22 @@ const OrderSummery = () => {
                 attachments: category.attachments,
                 note: category.note,
               },
-        schedule: {
-          date: changeDateFormatToDDMMYYYY(
-            category.schedule.date_string.split(",")[0]
-          ),
-          from_time: format(
-            new Date(category.schedule.from_time_string),
-            "HH:mm"
-          ),
-          to_time: format(new Date(category.schedule.to_time_string), "HH:mm"),
-        },
+        schedule: [
+          {
+            date: changeDateFormatToDDMMYYYY(
+              category.schedule.date_string.split(",")[0]
+            ),
+            date_to: null,
+            from_time: format(
+              new Date(category.schedule.from_time_string),
+              "HH:mm"
+            ),
+            to_time: format(
+              new Date(category.schedule.to_time_string),
+              "HH:mm"
+            ),
+          },
+        ],
         items: category.services.map((service) => ({
           id: service.category_id,
           quantity: service.quantity,
@@ -294,11 +300,11 @@ const OrderSummery = () => {
       ))}
       <Grid item container my={3} spacing={1}>
         <Grid item container>
-          <Grid item xs={10} xl={11}>
+          <Grid item xs={10}>
             <Typography variant="subtitle2">{t("costWithoutVat")}</Typography>
           </Grid>
 
-          <Grid item xs={2} xl={1}>
+          <Grid item xs={2}>
             <Typography component="span" variant="body2">
               {totalPrice.toFixed(2)} {t("sr")}
             </Typography>
@@ -306,11 +312,11 @@ const OrderSummery = () => {
         </Grid>
 
         <Grid item container>
-          <Grid item xs={10} xl={11}>
+          <Grid item xs={10}>
             <Typography variant="subtitle2">{t("vatCost")}</Typography>
           </Grid>
 
-          <Grid item xs={2} xl={1}>
+          <Grid item xs={2}>
             <Typography component="span" variant="body2">
               {((totalPrice * VAT_AMOUNT) / 100).toFixed(2)} {t("sr")}
             </Typography>
@@ -318,13 +324,13 @@ const OrderSummery = () => {
         </Grid>
 
         <Grid item container>
-          <Grid item xs={10} xl={11}>
+          <Grid item xs={10}>
             <Typography variant="subtitle1" color="primary">
               {t("totalMaterialsInvoice")}
             </Typography>
           </Grid>
 
-          <Grid item xs={2} xl={1}>
+          <Grid item xs={2}>
             <Typography component="span" variant="subtitle1" color="primary">
               {(totalPrice + (totalPrice * VAT_AMOUNT) / 100).toFixed(2)}{" "}
               {t("sr")}

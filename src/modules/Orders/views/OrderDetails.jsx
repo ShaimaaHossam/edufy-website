@@ -38,12 +38,14 @@ function OrderDetails() {
   const { orderType, orderID } = useParams();
   const ordersPerms = usePermissions("order_transaction");
 
-  const { isFetching, data: orderDetails } = useGetOrderQuery(orderID);
+  const {
+    isLoading,
+    isFetching,
+    error,
+    data: orderDetails,
+  } = useGetOrderQuery(orderID);
 
   const [cancelOrder] = useCancelOrderMutation();
-
-  if (isFetching) return <Loader />;
-  // if (error?.status === 404) return <NotFound />;
 
   const cancelOrderHandler = async () => {
     cancelOrder(orderID)
@@ -51,6 +53,9 @@ function OrderDetails() {
       .then(() => navigate(`/orders/${orderType}`))
       .catch((error) => console.log(error.date));
   };
+
+  if (isLoading || isFetching) return <Loader />;
+  if (error?.status === 404) return <NotFound />;
 
   return (
     <Grid container spacing={3}>
@@ -68,7 +73,7 @@ function OrderDetails() {
             variant="subtitle1"
             color="textSecondary"
           >
-            {orderDetails.reference}
+            #{orderDetails?.reference}
           </Typography>
         </Typography>
       </Grid>
@@ -77,14 +82,14 @@ function OrderDetails() {
         <OrderSteps />
       </Grid>
 
-      {orderDetails.additional_services.length > 0 && (
+      {orderDetails?.additional_services?.length > 0 && (
         <Grid item xs={12}>
           <OrderAccordion title={t("additionalServices")}>
             <AdditionalServices />
           </OrderAccordion>
         </Grid>
       )}
-      {orderDetails.new_quotations.length > 0 && (
+      {orderDetails?.new_quotations?.length > 0 && (
         <Grid item xs={12}>
           <OrderAccordion title={t("newQuotations")}>
             <NewMaterials />
@@ -99,35 +104,35 @@ function OrderDetails() {
           </OrderAccordion>
         </Grid>
       )}
-      {orderDetails.approved_quotations.length > 0 && (
+      {orderDetails?.approved_quotations?.length > 0 && (
         <Grid item xs={12}>
           <OrderAccordion title={t("approvedQuotations")}>
             <ApprovedMaterials />
           </OrderAccordion>
         </Grid>
       )}
-      {orderDetails.rejected_quotations.length > 0 && (
+      {orderDetails?.rejected_quotations?.length > 0 && (
         <Grid item xs={12}>
           <OrderAccordion title={t("rejectedQuotations")}>
             <RejectedMaterials />
           </OrderAccordion>
         </Grid>
       )}
-      {orderDetails.services.length > 0 && (
+      {orderDetails?.services?.length > 0 && (
         <Grid item xs={12}>
           <OrderAccordion title={t("servicesSummary")}>
             <OrderServices />
           </OrderAccordion>
         </Grid>
       )}
-      {orderDetails.visits.length > 0 && (
+      {orderDetails?.visits?.length > 0 && (
         <Grid item xs={12}>
           <OrderAccordion title={t("orderVisits")}>
             <OrderVisits />
           </OrderAccordion>
         </Grid>
       )}
-      {orderDetails.activity_log.length > 0 && (
+      {orderDetails?.activity_logs?.length > 0 && (
         <Grid item xs={12}>
           <OrderAccordion title={t("activityLog")}>
             <OrderActivityLog />
@@ -135,8 +140,8 @@ function OrderDetails() {
         </Grid>
       )}
 
-      {(orderDetails.status === ORDER_STATUSES.created ||
-        orderDetails.status === ORDER_STATUSES.pending) &&
+      {(orderDetails?.status === ORDER_STATUSES.created ||
+        orderDetails?.status === ORDER_STATUSES.pending) &&
         ordersPerms.update && (
           <Grid item xs={12} textAlign="right">
             <Button

@@ -8,6 +8,7 @@ const ar = {
   createdBy: "بواسطة",
   property: "العقار",
   units: "الوحدات",
+  unit: "الوحدة",
   services: "الخدمات",
   cost: "التكلفة",
   type: "النوع",

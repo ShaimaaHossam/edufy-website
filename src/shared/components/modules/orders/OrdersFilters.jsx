@@ -60,7 +60,7 @@ function OrdersFilters({ fixedFitlters, orderType }) {
     validateOnChange: false,
     initialValues: {
       date_from: null,
-      to_date: null,
+      date_to: null,
       creator_role: [],
       property_id: fixedFitlters?.propertyID || "",
       unit_id: [],
@@ -122,7 +122,7 @@ function OrdersFilters({ fixedFitlters, orderType }) {
   //   },
   //   [values],
   //   500,
-  //   true,
+  //  true,
   //   false
   // );
 
@@ -154,77 +154,90 @@ function OrdersFilters({ fixedFitlters, orderType }) {
   }, [dispatch, orderType]);
 
   return (
-    <Grid columns={12} container spacing={2} component="form">
-      <Grid item xs={4} lg={true}>
+    <Grid container spacing={2} component="form">
+      <Grid item xs={3} xl={true}>
         <DatePicker
           size="small"
           name="date_from"
           label={t("byStartDate")}
           value={formik.values.date_from}
           onChange={(e) => {
-            formik.setFieldValue("date_from", e.target.value);
-            dispatch(
-              setFilters({
-                key:
-                  orderType === ORDER_TYPES.maintenance
-                    ? "maintenanceFilters"
-                    : "cleaningFilters",
-                value:
-                  orderType === ORDER_TYPES.maintenance
-                    ? {
-                        ...maintenanceFilters,
-                        page: "1",
-                        "filters[date_from]": formatDate(e.target.value),
-                      }
-                    : {
-                        ...cleaningFilters,
-                        page: "1",
-                        "filters[date_from]": formatDate(e.target.value),
-                      },
-              })
-            );
+            if (
+              e?.target?.value?.getFullYear()?.toString()?.length === 4 ||
+              e?.target?.value === null
+            ) {
+              formik.setFieldValue("date_from", e.target.value);
+              dispatch(
+                setFilters({
+                  key:
+                    orderType === ORDER_TYPES.maintenance
+                      ? "maintenanceFilters"
+                      : "cleaningFilters",
+                  value:
+                    orderType === ORDER_TYPES.maintenance
+                      ? {
+                          ...maintenanceFilters,
+                          page: "1",
+                          "filters[date_from]":
+                            e?.target?.value !== null
+                              ? formatDate(e.target.value)
+                              : "",
+                        }
+                      : {
+                          ...cleaningFilters,
+                          page: "1",
+                          "filters[date_from]":
+                            e?.target?.value !== null
+                              ? formatDate(e.target.value)
+                              : "",
+                        },
+                })
+              );
+            }
           }}
           onBlur={formik.handleBlur}
           error={!!formik.touched.date_from && !!formik.errors.date_from}
           helperText={!!formik.touched.date_from && formik.errors.date_from}
         />
       </Grid>
-      <Grid item xs={4} lg={true}>
+      <Grid item xs={3} xl={true}>
         <DatePicker
           size="small"
-          name="to_date"
+          name="date_to"
           label={t("byEndDate")}
-          value={formik.values.to_date}
+          value={formik.values.date_to}
           onChange={(e) => {
-            formik.setFieldValue("to_date", e.target.value);
-            dispatch(
-              setFilters({
-                key:
-                  orderType === ORDER_TYPES.maintenance
-                    ? "maintenanceFilters"
-                    : "cleaningFilters",
-                value:
-                  orderType === ORDER_TYPES.maintenance
-                    ? {
-                        ...maintenanceFilters,
-                        page: "1",
-                        "filters[to_date]": formatDate(e.target.value),
-                      }
-                    : {
-                        ...cleaningFilters,
-                        page: "1",
-                        "filters[to_date]": formatDate(e.target.value),
-                      },
-              })
-            );
+            if (e?.target?.value?.getFullYear()?.toString()?.length === 4) {
+              formik.setFieldValue("date_to", e.target.value);
+              dispatch(
+                setFilters({
+                  key:
+                    orderType === ORDER_TYPES.maintenance
+                      ? "maintenanceFilters"
+                      : "cleaningFilters",
+                  value:
+                    orderType === ORDER_TYPES.maintenance
+                      ? {
+                          ...maintenanceFilters,
+                          page: "1",
+                          "filters[date_to]": formatDate(e.target.value),
+                        }
+                      : {
+                          ...cleaningFilters,
+                          page: "1",
+                          "filters[date_to]": formatDate(e.target.value),
+                        },
+                })
+              );
+            }
           }}
           onBlur={formik.handleBlur}
-          error={!!formik.touched.to_date && !!formik.errors.to_date}
-          helperText={!!formik.touched.to_date && formik.errors.to_date}
+          error={!!formik.touched.date_to && !!formik.errors.date_to}
+          helperText={!!formik.touched.date_to && formik.errors.date_to}
         />
       </Grid>
 
-      <Grid item xs={4} lg={true}>
+      <Grid item xs={3} xl={true}>
         <Autocomplete
           size="small"
           name="creator_role"
@@ -264,7 +277,7 @@ function OrdersFilters({ fixedFitlters, orderType }) {
       </Grid>
 
       {!fixedFitlters?.propertyID && (
-        <Grid item xs={4} lg={true}>
+        <Grid item xs={3} xl={true}>
           <Autocomplete
             size="small"
             name="property_id"
@@ -308,7 +321,7 @@ function OrdersFilters({ fixedFitlters, orderType }) {
         </Grid>
       )}
 
-      <Grid item xs={4} lg={true}>
+      <Grid item xs={3} xl={true}>
         <Autocomplete
           size="small"
           name="unit_id"
@@ -349,7 +362,7 @@ function OrdersFilters({ fixedFitlters, orderType }) {
         />
       </Grid>
 
-      {/* <Grid item xs={4} lg={true}>
+      {/* <Grid item xs={3} xl={true}>
         <Autocomplete
           size="small"
           name="service_id"
@@ -369,7 +382,7 @@ function OrdersFilters({ fixedFitlters, orderType }) {
         />
       </Grid> */}
 
-      <Grid item xs={4} lg={true}>
+      <Grid item xs={3} xl={true}>
         <Autocomplete
           size="small"
           name="status"

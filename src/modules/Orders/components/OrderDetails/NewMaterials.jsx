@@ -20,6 +20,7 @@ import { Fragment } from "react";
 import {
   MATERIAL_STATUSES,
   ORDER_STATUSES,
+  VAT_AMOUNT,
 } from "../../../../constants/system";
 import usePermissions from "../../../../shared/hooks/usePermissions";
 import { formats, formatDate } from "../../../../helpers/datetime";
@@ -141,8 +142,8 @@ function NewMaterials() {
                     >
                       {material.attachments.length > 0 ? (
                         <>
-                          {material.attachments.map((attachment) => (
-                            <Grid item xs={2}>
+                          {material.attachments.map((attachment, indx) => (
+                            <Grid key={indx} item xs={2}>
                               <img
                                 width={60}
                                 style={{ borderRadius: "5px" }}
@@ -219,15 +220,15 @@ function NewMaterials() {
               <Divider variant="fullWidth" />
             </Grid>
 
-            <Grid item container>
+            <Grid item container spacing={1}>
               <Grid item container>
-                <Grid item xs={7} xl={9}>
+                <Grid item xs={9}>
                   <Typography variant="subtitle2">
                     {t("costWithoutVat")}
                   </Typography>
                 </Grid>
 
-                <Grid item xs={5} xl={3}>
+                <Grid item xs={3}>
                   <Typography component="span" variant="body2">
                     {quotation.total.toFixed(2)} {t("sr")}
                   </Typography>
@@ -235,11 +236,19 @@ function NewMaterials() {
               </Grid>
 
               <Grid item container>
-                <Grid item xs={7} xl={9}>
+                <Grid
+                  item
+                  // xs={7}
+                  xs={9}
+                >
                   <Typography variant="subtitle2">{t("vatCost")}</Typography>
                 </Grid>
 
-                <Grid item xs={5} xl={3}>
+                <Grid
+                  item
+                  // xs={5}
+                  xs={3}
+                >
                   <Typography component="span" variant="body2">
                     {((quotation.total * VAT_AMOUNT) / 100).toFixed(2)}{" "}
                     {t("sr")}
@@ -248,13 +257,13 @@ function NewMaterials() {
               </Grid>
 
               <Grid item container>
-                <Grid item xs={7} xl={9}>
+                <Grid item xs={9}>
                   <Typography variant="subtitle1" color="primary">
                     {t("totalMaterialsInvoice")}
                   </Typography>
                 </Grid>
 
-                <Grid item xs={5} xl={3}>
+                <Grid item xs={3}>
                   <Typography
                     component="span"
                     variant="subtitle1"

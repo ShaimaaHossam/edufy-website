@@ -59,10 +59,11 @@ function OrdersTable({ orderType }) {
 
   const tableLabels = [
     t("orderNo"),
+    t("createdAt"),
     t("startDate"),
     t("createdBy"),
     t("property"),
-    t("units"),
+    t("unit"),
     t("cost"),
     t("services"),
     t(orderType === ORDER_TYPES.maintenance ? "serviceDescription" : "type"),
@@ -89,6 +90,14 @@ function OrdersTable({ orderType }) {
         </Typography>
       </Link>,
 
+      <Typography component="span" variant="body2">
+        {item.created_at &&
+          formatDate(
+            item.created_at.split(",")[0],
+            formats.dateShortSpaceSeparated,
+            language
+          )}
+      </Typography>,
       <Typography component="span" variant="body2">
         {item.visits?.[0]?.date &&
           formatDate(

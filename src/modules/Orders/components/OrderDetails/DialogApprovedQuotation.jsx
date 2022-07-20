@@ -1,5 +1,7 @@
 import { Divider, Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { VAT_AMOUNT } from "../../../../constants/system";
+import { formatDate, formats } from "../../../../helpers/datetime";
 
 const DialogApprovedQuotation = ({ selectedQuotation }) => {
   const { t } = useTranslation("orders");
@@ -16,10 +18,10 @@ const DialogApprovedQuotation = ({ selectedQuotation }) => {
     >
       <Grid item>
         <Typography variant="subtitle1" component="span">
-          {t("quotation")} #1
+          {t("quotation")} #{selectedQuotation.reference}{" "}
         </Typography>
         <Typography variant="body1" component="span">
-          - quotation name - 15/06/2022 10:00 am
+          - {formatDate(selectedQuotation.created_at, formats.dateTimeShort)}
         </Typography>
       </Grid>
 
@@ -99,13 +101,13 @@ const DialogApprovedQuotation = ({ selectedQuotation }) => {
         <Divider variant="fullWidth" />
       </Grid>
 
-      <Grid item container>
+      <Grid item container spacing={1}>
         <Grid item container>
-          <Grid item xs={7} xl={10}>
+          <Grid item xs={10}>
             <Typography variant="subtitle2">{t("costWithoutVat")}</Typography>
           </Grid>
 
-          <Grid item xs={5} xl={2}>
+          <Grid item xs={2}>
             <Typography component="span" variant="body2">
               {selectedQuotation.total.toFixed(2)} {t("sr")}
             </Typography>
@@ -113,11 +115,11 @@ const DialogApprovedQuotation = ({ selectedQuotation }) => {
         </Grid>
 
         <Grid item container>
-          <Grid item xs={7} xl={10}>
+          <Grid item xs={10}>
             <Typography variant="subtitle2">{t("vatCost")}</Typography>
           </Grid>
 
-          <Grid item xs={5} xl={2}>
+          <Grid item xs={2}>
             <Typography component="span" variant="body2">
               {((selectedQuotation.total * VAT_AMOUNT) / 100).toFixed(2)}{" "}
               {t("sr")}
@@ -126,13 +128,13 @@ const DialogApprovedQuotation = ({ selectedQuotation }) => {
         </Grid>
 
         <Grid item container>
-          <Grid item xs={7} xl={10}>
+          <Grid item xs={10}>
             <Typography variant="subtitle1" color="primary">
               {t("totalMaterialsInvoice")}
             </Typography>
           </Grid>
 
-          <Grid item xs={5} xl={2}>
+          <Grid item xs={2}>
             <Typography component="span" variant="subtitle1" color="primary">
               {(
                 selectedQuotation.total +

@@ -5,6 +5,7 @@ import {
   ORDER_STATUSES,
   VAT_AMOUNT,
 } from "../../../../constants/system";
+import { formatDate, formats } from "../../../../helpers/datetime";
 import { useApproveRejectMaterialMutation } from "../../../../redux/services/orders";
 import usePermissions from "../../../../shared/hooks/usePermissions";
 
@@ -26,10 +27,10 @@ const DialogRejectedQuotation = ({ selectedQuotation, orderStatus }) => {
     >
       <Grid item>
         <Typography variant="subtitle1" component="span">
-          {t("quotation")} #1
+          {t("quotation")} #{selectedQuotation.reference}{" "}
         </Typography>
         <Typography variant="body1" component="span">
-          - quotation name - 15/06/2022 10:00 am
+          - {formatDate(selectedQuotation.created_at, formats.dateTimeShort)}
         </Typography>
       </Grid>
 
@@ -68,7 +69,7 @@ const DialogRejectedQuotation = ({ selectedQuotation, orderStatus }) => {
       </Grid>
 
       {selectedQuotation.materials
-        .filter((material) => material.status === "Rejected")
+        .filter((material) => material.marafeq_status === "Rejected")
         .map((material) => (
           <Grid key={material.id} item container>
             <Grid item xs={2}>

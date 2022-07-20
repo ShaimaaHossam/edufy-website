@@ -61,7 +61,7 @@ function ApprovedMaterials() {
         <Grid key={quotation.id} item container>
           <Grid item xs={2}>
             <Typography component="span" variant="body2">
-              quotation name
+              #{quotation.reference}
             </Typography>
           </Grid>
           <Grid item xs={2}>

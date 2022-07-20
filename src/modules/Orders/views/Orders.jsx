@@ -62,7 +62,7 @@ function Orders() {
                         orderType === ORDER_TYPES.maintenance
                           ? {
                               ...maintenanceFilters,
-                              "filtes[reference]": keyword,
+                              "filters[reference]": keyword,
                             }
                           : {
                               ...cleaningFilters,

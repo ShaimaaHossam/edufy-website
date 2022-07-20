@@ -12,6 +12,7 @@ import { mdiEyeOutline } from "@mdi/js";
 
 import IconButton from "../../../../shared/components/IconButton";
 import Loader from "../../../../shared/components/Loader";
+import OrderStatus from "../../../../shared/components/modules/orders/OrderStatus";
 
 function OrderVisits() {
   const {
@@ -57,10 +58,12 @@ function OrderVisits() {
         <Divider variant="fullWidth" />
       </Grid>
 
-      {orderDetails.visits.map((visit) => (
+      {orderDetails.visits.map((visit, idx) => (
         <Grid key={visit.id} item container>
           <Grid item xs={3}>
-            <Typography component="span" variant="body2"></Typography>
+            <Typography component="span" variant="body2">
+              #{idx + 1}
+            </Typography>
           </Grid>
           <Grid item xs={2}>
             <Typography component="span" variant="body2">
@@ -80,7 +83,9 @@ function OrderVisits() {
             </Typography>
           </Grid>
           <Grid item xs={2}>
-            <Typography component="span" variant="body2"></Typography>
+            <Typography component="span" variant="body2">
+              <OrderStatus status={visit.status} />
+            </Typography>
           </Grid>
         </Grid>
       ))}

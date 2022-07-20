@@ -48,7 +48,7 @@ const SelectSerivces = () => {
   const [canLeave, setCanLeave] = useState(false);
   const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
   const [imagePath, setImagePath] = useState("");
-  const [servicess, setServicess] = useState([]);
+  const [services, setServices] = useState([]);
 
   const DATE = new Date();
 
@@ -146,24 +146,14 @@ const SelectSerivces = () => {
   const { setFieldValue, values, errors, dirty } = formik;
 
   useNavigationBlocker(dirty && !canLeave, () => setLeaveDialogOpen(true));
-  servicess
-    .filter((service) => {
-      return !formik.values.categories
-        .map((category) => category.service_type)
-        .includes(service.id);
-    })
-    .map((service) => ({
-      value: service.id,
-      label: language === "en" ? service.name.en : service.name.ar,
-    }));
 
   useEffect(() => {
     if (!isLoading) {
-      setServicess(
-        allServices.filter(
-          (service) => service.slug.en === ORDER_TYPES.maintenance
-        )[0].children
+      const maintenanceServices = allServices?.filter(
+        (service) => service?.slug?.en === ORDER_TYPES.maintenance
       );
+      maintenanceServices.length > 0 &&
+        setServices(maintenanceServices?.[0]?.children);
     }
   }, [isLoading, allServices]);
 
@@ -366,7 +356,7 @@ const SelectSerivces = () => {
                     required
                     name={`categories[${index}].service_type`}
                     label={t("serviceType")}
-                    options={servicess
+                    options={services
                       .filter((service) => {
                         return !formik.values.categories
                           .filter(
@@ -441,7 +431,7 @@ const SelectSerivces = () => {
                                   rowSpacing={3}
                                   columnSpacing={6}
                                 >
-                                  {servicess
+                                  {services
                                     .filter(
                                       (service) =>
                                         service.id === category.service_type
@@ -740,7 +730,7 @@ const SelectSerivces = () => {
                                       rowSpacing={3}
                                       columnSpacing={6}
                                     >
-                                      {servicess
+                                      {services
                                         .filter(
                                           (service) =>
                                             service.id === category.service_type

@@ -107,60 +107,45 @@ function OrderSteps() {
       <Step completed>
         <StepLabel
           StepIconComponent={StepIcon}
-          error={orderDetails.status === STATUSES.canceled}
+          error={orderDetails?.status === STATUSES.canceled}
         >
-          {orderDetails.status === STATUSES.canceled
+          {orderDetails?.status === STATUSES.canceled
             ? t("canceled")
             : t("created")}
         </StepLabel>
       </Step>
 
       <Step
-        active={orderDetails.status === STATUSES.created}
-        completed={
-          orderDetails.status === STATUSES.confirmed ||
-          orderDetails.status === STATUSES.assigned ||
-          orderDetails.status === STATUSES.inprogress ||
-          orderDetails.status === STATUSES.sp_done ||
-          orderDetails.status === STATUSES.completed
-        }
+        active={orderDetails?.status === STATUSES.created}
+        completed={STATUSES.confirmed in orderDetails?.status_logs}
       >
         <StepLabel
           StepIconComponent={StepIcon}
           // error={status === STATUSES.canceled && !isAssigned}
         >
-          {orderDetails.status === STATUSES.confirmed
+          {orderDetails?.status === STATUSES.confirmed
             ? t("confirmed")
             : t("confirming")}
         </StepLabel>
       </Step>
 
       <Step
-        active={orderDetails.status === STATUSES.confirmed}
-        completed={
-          orderDetails.status === STATUSES.assigned ||
-          orderDetails.status === STATUSES.inprogress ||
-          orderDetails.status === STATUSES.sp_done ||
-          orderDetails.status === STATUSES.completed
-        }
+        active={orderDetails?.status === STATUSES.confirmed}
+        completed={STATUSES.assigned in orderDetails?.status_logs}
       >
         <StepLabel
           StepIconComponent={StepIcon}
           // error={status === STATUSES.canceled && !isAssigned}
         >
-          {orderDetails.status === STATUSES.assigned
+          {orderDetails?.status === STATUSES.assigned
             ? t("spAssigned")
             : t("assigningSp")}
         </StepLabel>
       </Step>
 
       <Step
-        active={orderDetails.status === STATUSES.assigned}
-        completed={
-          orderDetails.status === STATUSES.inprogress ||
-          orderDetails.status === STATUSES.sp_done ||
-          orderDetails.status === STATUSES.completed
-        }
+        active={orderDetails?.status === STATUSES.assigned}
+        completed={STATUSES.inprogress in orderDetails?.status_logs}
       >
         <StepLabel
           StepIconComponent={StepIcon}
@@ -171,11 +156,8 @@ function OrderSteps() {
       </Step>
 
       <Step
-        active={orderDetails.status === STATUSES.inprogress}
-        completed={
-          orderDetails.status === STATUSES.sp_done ||
-          orderDetails.status === STATUSES.completed
-        }
+        active={orderDetails?.status === STATUSES.inprogress}
+        completed={STATUSES.sp_done in orderDetails?.status_logs}
       >
         <StepLabel
           StepIconComponent={StepIcon}
@@ -185,16 +167,9 @@ function OrderSteps() {
         </StepLabel>
       </Step>
 
-      {/* <Step
-        active={status === STATUSES.inprogress}
-        completed={status === STATUSES.completed}
-      >
-        <StepLabel StepIconComponent={StepIcon}>{t("inProgress")}</StepLabel>
-      </Step> */}
-
       <Step
-        active={orderDetails.status === STATUSES.sp_done}
-        completed={orderDetails.status === STATUSES.completed}
+        active={orderDetails?.status === STATUSES.sp_done}
+        completed={orderDetails?.status === STATUSES.completed}
       >
         <StepLabel StepIconComponent={StepIcon}>{t("completed")}</StepLabel>
       </Step>
